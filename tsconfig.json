@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"inlineSourceMap": true,
+		"lib": ["es2016", "dom"],
+		"outDir": "dist",
+		"moduleResolution": "node",
+		"rootDir": "src",
+		"strict": true
+	},
+	"include": ["src/**/*"]
+}

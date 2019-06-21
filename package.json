@@ -1,0 +1,41 @@
+{
+	"name": "prettier-plugin-pug",
+	"version": "1.0.0-alpha.1",
+	"description": "Plugin for Prettier to format pug code",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "tsc",
+		"lint": "",
+		"test": "jest"
+	},
+	"keywords": [
+		"pug",
+		"prettier",
+		"prettier-plugin"
+	],
+	"author": {
+		"name": "Christopher Quadflieg",
+		"email": "chrissi92@hotmail.de"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Shinigami92/prettier-plugin-pug.git"
+	},
+	"bugs": "https://github.com/Shinigami92/prettier-plugin-pug/issues",
+	"license": "MIT",
+	"dependencies": {
+		"prettier": "~1.18.2",
+		"pug-lexer": "~4.1.0",
+		"pug-parser": "~5.0.1"
+	},
+	"devDependencies": {
+		"@types/jest": "~24.0.15",
+		"@types/prettier": "~1.16.4",
+		"jest": "~24.8.0",
+		"ts-jest": "~24.0.2",
+		"typescript": "~3.5.2"
+	},
+	"peerDependencies": {
+		"prettier": "^1.18.0"
+	}
+}
