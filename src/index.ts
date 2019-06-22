@@ -28,7 +28,6 @@ export const plugin: Plugin = {
 				// console.log('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
 				return tokens;
 			},
-			// The name of the AST
 			astFormat: 'pug-ast',
 			hasPragma(text: string): boolean {
 				console.log('[parsers:pug:hasPragma]:', { text });
@@ -50,13 +49,7 @@ export const plugin: Plugin = {
 	},
 	printers: {
 		'pug-ast': {
-			print(
-				// Path to the AST node to print
-				path: FastPath,
-				options: object,
-				// Recursively print a child node
-				print: (path: FastPath) => Doc
-			): Doc {
+			print(path: FastPath, options: object, print: (path: FastPath) => Doc): Doc {
 				console.log('[printers:pug-ast:print]:', JSON.stringify(path, undefined, 2));
 				// console.log('[printers:pug-ast:print]:', { path, options, print });
 				const tokens = path.stack[0];
@@ -104,14 +97,9 @@ export const plugin: Plugin = {
 				return result;
 			},
 			embed(
-				// Path to the current AST node
 				path: FastPath,
-				// Print a node with the current printer
 				print: (path: FastPath) => Doc,
-				// Parse and print some text using a different parser.
-				// You should set `options.parser` to specify which parser to use.
 				textToDoc: (text: string, options: object) => Doc,
-				// Current options
 				options: object
 			): Doc | null {
 				console.log('[printers:pug-ast:embed]:', JSON.stringify(path, undefined, 2));
