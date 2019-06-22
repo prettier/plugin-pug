@@ -1,8 +1,7 @@
 import { AST, Doc, FastPath, Plugin } from 'prettier';
 // @ts-ignore
 import * as lex from 'pug-lexer';
-// @ts-ignore
-import * as parse from 'pug-parser';
+import { Token } from './pug-token';
 
 export const plugin: Plugin = {
 	languages: [
@@ -52,13 +51,13 @@ export const plugin: Plugin = {
 			print(path: FastPath, options: object, print: (path: FastPath) => Doc): Doc {
 				// console.log('[printers:pug-ast:print]:', JSON.stringify(path, undefined, 2));
 				// console.log('[printers:pug-ast:print]:', { path, options, print });
-				const tokens = path.stack[0];
+				const tokens: Token[] = path.stack[0];
 
 				let result: string = '';
 				let indentLevel: number = 1;
 
 				for (let index: number = 0; index < tokens.length; index++) {
-					const token = tokens[index];
+					const token: Token = tokens[index];
 					console.log('[printers:pug-ast:print]:', JSON.stringify(token));
 					switch (token.type) {
 						case 'tag':
@@ -70,8 +69,7 @@ export const plugin: Plugin = {
 							result += '(';
 							break;
 						case 'attribute':
-							const val: string = token.val;
-							result += `${token.name}="${val.substring(1, val.length - 1)}"`;
+							result += `${token.name}="${token.val.substring(1, token.val.length - 1)}"`;
 							break;
 						case 'end-attributes':
 							result += ')';
@@ -94,7 +92,7 @@ export const plugin: Plugin = {
 							// result += `\n`;
 							break;
 						default:
-							throw new Error('Unhandled token-type: ' + token.type);
+							throw new Error('Unhandled token: ' + JSON.stringify(token));
 					}
 				}
 
