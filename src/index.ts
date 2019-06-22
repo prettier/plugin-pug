@@ -23,7 +23,7 @@ export const plugin: Plugin = {
 			parse(text: string, parsers: object, options: object): AST {
 				console.log('[parsers:pug:parse]:', { text });
 				const tokens = lex(text, {});
-				console.log('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
+				// console.log('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
 				// const ast: AST = parse(tokens, {});
 				// console.log('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
 				return tokens;
@@ -50,17 +50,21 @@ export const plugin: Plugin = {
 	printers: {
 		'pug-ast': {
 			print(path: FastPath, options: object, print: (path: FastPath) => Doc): Doc {
-				console.log('[printers:pug-ast:print]:', JSON.stringify(path, undefined, 2));
+				// console.log('[printers:pug-ast:print]:', JSON.stringify(path, undefined, 2));
 				// console.log('[printers:pug-ast:print]:', { path, options, print });
 				const tokens = path.stack[0];
 
 				let result: string = '';
 				let indentLevel: number = 1;
 
-				for (const token of tokens) {
+				for (let index: number = 0; index < tokens.length; index++) {
+					const token = tokens[index];
+					console.log('[printers:pug-ast:print]:', JSON.stringify(token));
 					switch (token.type) {
 						case 'tag':
-							result += token.val;
+							if (!(token.val === 'div' && tokens[index + 1].type === 'class')) {
+								result += token.val;
+							}
 							break;
 						case 'start-attributes':
 							result += '(';
@@ -87,7 +91,7 @@ export const plugin: Plugin = {
 							result += `.${token.val}`;
 							break;
 						case 'eos':
-							result += `\n`;
+							// result += `\n`;
 							break;
 						default:
 							throw new Error('Unhandled token-type: ' + token.type);
@@ -102,7 +106,7 @@ export const plugin: Plugin = {
 				textToDoc: (text: string, options: object) => Doc,
 				options: object
 			): Doc | null {
-				console.log('[printers:pug-ast:embed]:', JSON.stringify(path, undefined, 2));
+				// console.log('[printers:pug-ast:embed]:', JSON.stringify(path, undefined, 2));
 				return null;
 			},
 			insertPragma(text: string): string {
