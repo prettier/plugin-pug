@@ -5,7 +5,9 @@
 		"outDir": "dist",
 		"moduleResolution": "node",
 		"rootDir": "src",
-		"strict": true
+		"strict": true,
+		"removeComments": true
 	},
-	"include": ["src/**/*"]
+	"include": ["src/**/*"],
+	"exclude": ["node_modules"]
 }
