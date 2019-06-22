@@ -91,6 +91,18 @@ export const plugin: Plugin = {
 						case 'eos':
 							// result += `\n`;
 							break;
+						case 'comment':
+							result += `//-${token.val}`;
+							break;
+						case 'newline':
+							result += '\n';
+							break;
+						case 'text':
+							result += `${token.val.replace(/\s\s+/g, ' ')}`;
+							break;
+						case 'interpolated-code':
+							result += `#{${token.val}}`;
+							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
 					}
