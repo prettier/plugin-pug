@@ -29,8 +29,7 @@ export const plugin: Plugin = {
 			},
 			astFormat: 'pug-ast',
 			hasPragma(text: string): boolean {
-				console.log('[parsers:pug:hasPragma]:', { text });
-				return false;
+				return text.startsWith('//- @prettier\n') || text.startsWith('//- @format\n');
 			},
 			locStart(node: object): number {
 				console.log('[parsers:pug:locStart]:', { node });
