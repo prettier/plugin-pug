@@ -49,6 +49,32 @@ export interface EosToken {
 	loc: Loc;
 }
 
+export interface CommentToken {
+	type: 'comment';
+	loc: Loc;
+	val: string;
+	buffer: boolean;
+}
+
+export interface NewlineToken {
+	type: 'newline';
+	loc: Loc;
+}
+
+export interface TextToken {
+	type: 'text';
+	loc: Loc;
+	val: string;
+}
+
+export interface InterpolatedCodeToken {
+	type: 'interpolated-code';
+	loc: Loc;
+	mustEscape: boolean;
+	buffer: boolean;
+	val: string;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -57,4 +83,8 @@ export type Token =
 	| IndentToken
 	| ClassToken
 	| OutdentToken
-	| EosToken;
+	| EosToken
+	| CommentToken
+	| NewlineToken
+	| TextToken
+	| InterpolatedCodeToken;
