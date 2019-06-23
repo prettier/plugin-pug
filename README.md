@@ -1,3 +1,5 @@
+# Currently not published and in heavy development
+
 <p align="center">
   &nbsp;&nbsp;<img alt="Prettier"
   src="https://cdn.rawgit.com/prettier/prettier-logo/master/images/prettier-icon-light.svg">&nbsp;&nbsp;
@@ -9,8 +11,6 @@
 <h2 align="center">Prettier Pug plugin</h2>
 
 <p align="center">
-  <strong style="color: red; font-size: 2em;">Currently not published and in heavy development</strong>
-  <br>
   <a href="https://github.com/Shinigami92/prettier-plugin-pug/blob/master/LICENSE">
     <img alt="license: MIT" src="https://img.shields.io/github/license/Shinigami92/prettier-plugin-pug.svg?style=flat-square"><!--
   --></a>
