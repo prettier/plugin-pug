@@ -97,9 +97,9 @@ export const plugin: Plugin = {
 							) {
 								// Handle class attribute
 								let val = token.val;
+								val = val.substring(1, val.length - 1);
 								val = val.trim();
 								val = val.replace(/\s\s+/g, ' ');
-								val = val.substring(1, val.length - 1);
 								const classes: string[] = val.split(' ');
 								const specialClasses: string[] = [];
 								const validClassNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
@@ -119,6 +119,28 @@ export const plugin: Plugin = {
 								} else {
 									break;
 								}
+							} else if (
+								token.name === 'id' &&
+								typeof token.val === 'string' &&
+								(token.val.startsWith('"') || token.val.startsWith("'"))
+							) {
+								// Handle id attribute
+								let val = token.val;
+								val = val.substring(1, val.length - 1);
+								val = val.trim();
+								// Write css-id in front of css-classes
+								let lastPositionOfNewline = result.lastIndexOf('\n');
+								if (lastPositionOfNewline === -1) {
+									// If no newline was found, set position to zero
+									lastPositionOfNewline = 0;
+								}
+								let position: number = result.indexOf('.', lastPositionOfNewline);
+								if (position === -1) {
+									position = result.indexOf('(', lastPositionOfNewline);
+								}
+								result = [result.slice(0, position), `#${val}`, result.slice(position)].join('');
+								result = result.replace(/div#/, '#');
+								break;
 							}
 
 							if (previousToken && previousToken.type === 'attribute') {
@@ -203,6 +225,10 @@ export const plugin: Plugin = {
 							result += `//-${token.val}`;
 							break;
 						case 'newline':
+							if (previousToken && token.loc.start.line - previousToken.loc.end.line > 1) {
+								// Insert an empty extra line
+								result += '\n';
+							}
 							result += '\n';
 							break;
 						case 'text':
@@ -234,7 +260,19 @@ export const plugin: Plugin = {
 							result += `- ${token.val}`;
 							break;
 						case 'id':
-							result += `#${token.val}`;
+							// Handle id attribute
+							let idVal = token.val;
+							// Write css-id in front of css-classes
+							let lastPositionOfNewline = result.lastIndexOf('\n');
+							if (lastPositionOfNewline === -1) {
+								// If no newline was found, set position to zero
+								lastPositionOfNewline = 0;
+							}
+							let position: number = result.indexOf('.', lastPositionOfNewline);
+							if (position === -1) {
+								position = result.length;
+							}
+							result = [result.slice(0, position), `#${idVal}`, result.slice(position)].join('');
 							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
