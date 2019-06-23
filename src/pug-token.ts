@@ -83,6 +83,12 @@ export interface CodeToken {
 	buffer: boolean;
 }
 
+export interface IdToken {
+	type: 'id';
+	loc: Loc;
+	val: string;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -96,4 +102,5 @@ export type Token =
 	| NewlineToken
 	| TextToken
 	| InterpolatedCodeToken
-	| CodeToken;
+	| CodeToken
+	| IdToken;

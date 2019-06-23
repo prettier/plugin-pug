@@ -80,7 +80,7 @@ export const plugin: Plugin = {
 					console.log('[printers:pug-ast:print]:', JSON.stringify(token));
 					switch (token.type) {
 						case 'tag':
-							if (!(token.val === 'div' && nextToken.type === 'class')) {
+							if (!(token.val === 'div' && (nextToken.type === 'class' || nextToken.type === 'id'))) {
 								result += token.val;
 							}
 							break;
@@ -232,6 +232,9 @@ export const plugin: Plugin = {
 							break;
 						case 'code':
 							result += `- ${token.val}`;
+							break;
+						case 'id':
+							result += `#${token.val}`;
 							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
