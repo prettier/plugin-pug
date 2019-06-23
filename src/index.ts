@@ -72,6 +72,37 @@ export const plugin: Plugin = {
 							}
 							break;
 						case 'attribute':
+							if (
+								token.name === 'class' &&
+								typeof token.val === 'string' &&
+								(token.val.startsWith('"') || token.val.startsWith("'"))
+							) {
+								// Handle class attribute
+								let val = token.val;
+								val = val.trim();
+								val = val.replace(/\s\s+/g, ' ');
+								val = val.substring(1, val.length - 1);
+								const classes: string[] = val.split(' ');
+								const specialClasses: string[] = [];
+								const validClassNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
+								for (const className of classes) {
+									if (!validClassNameRegex.test(className)) {
+										specialClasses.push(className);
+										continue;
+									}
+									// Write css-class in front of attributes
+									const position = result.lastIndexOf('(');
+									result = [result.slice(0, position), `.${className}`, result.slice(position)].join(
+										''
+									);
+								}
+								if (specialClasses.length > 0) {
+									token.val = `"${specialClasses.join(' ')}"`;
+								} else {
+									break;
+								}
+							}
+
 							if (previousToken && previousToken.type === 'attribute') {
 								result += `, `;
 							}
@@ -100,7 +131,10 @@ export const plugin: Plugin = {
 							}
 							break;
 						case 'end-attributes':
-							if (previousToken && previousToken.type === 'attribute') {
+							if (result.charAt(result.length - 1) === '(') {
+								// There were no attributes
+								result = result.substring(0, result.length - 1);
+							} else if (previousToken && previousToken.type === 'attribute') {
 								result += ')';
 							}
 							if (nextToken && nextToken.type === 'text') {
