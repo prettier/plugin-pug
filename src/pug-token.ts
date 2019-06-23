@@ -18,7 +18,7 @@ export interface Attribute {
 	type: 'attribute';
 	loc: Loc;
 	name: string;
-	val: string;
+	val: string | boolean;
 	mustEscape: boolean;
 }
 

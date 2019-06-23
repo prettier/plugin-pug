@@ -57,6 +57,7 @@ export const plugin: Plugin = {
 
 				for (let index: number = 0; index < tokens.length; index++) {
 					const token: Token = tokens[index];
+					const previousToken = tokens[index - 1];
 					console.log('[printers:pug-ast:print]:', JSON.stringify(token));
 					switch (token.type) {
 						case 'tag':
@@ -68,7 +69,26 @@ export const plugin: Plugin = {
 							result += '(';
 							break;
 						case 'attribute':
-							result += `${token.name}="${token.val.substring(1, token.val.length - 1)}"`;
+							if (previousToken && previousToken.type === 'attribute') {
+								result += `, `;
+							}
+
+							result += `${token.name}`;
+							if (typeof token.val === 'boolean') {
+								if (token.val !== true) {
+									result += `=${token.val}`;
+								}
+							} else {
+								let val = token.val;
+								if (val.startsWith("'")) {
+									// Swap single and double quotes
+									val = val.replace(/[\'\"]/g, (match) => (match === '"' ? "'" : '"'));
+								} else if (val === 'true') {
+									// The value is exactly true and is not quoted
+									break;
+								}
+								result += `=${val}`;
+							}
 							break;
 						case 'end-attributes':
 							result += ')';
@@ -97,6 +117,10 @@ export const plugin: Plugin = {
 							result += '\n';
 							break;
 						case 'text':
+							if (previousToken && previousToken.type === 'newline') {
+								result += '|';
+							}
+
 							result += `${token.val.replace(/\s\s+/g, ' ')}`;
 							break;
 						case 'interpolated-code':
