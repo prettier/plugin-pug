@@ -3,6 +3,24 @@ import { AST, Doc, FastPath, Plugin } from 'prettier';
 import * as lex from 'pug-lexer';
 import { Token } from './pug-token';
 
+function quotationType(code: string): 'SINGLE' | 'DOUBLE' | undefined {
+	const indexOfSingleQuote: number = code.indexOf("'");
+	const indexOfDoubleQuote: number = code.indexOf('"');
+	console.log({ code, indexOfSingleQuote, indexOfDoubleQuote });
+	if (indexOfSingleQuote === -1 && indexOfDoubleQuote === -1) {
+		return undefined;
+	} else if (indexOfSingleQuote === -1 && indexOfDoubleQuote !== -1) {
+		return 'DOUBLE';
+	} else if (indexOfDoubleQuote === -1 && indexOfSingleQuote !== -1) {
+		return 'SINGLE';
+	} else if (indexOfSingleQuote < indexOfDoubleQuote) {
+		return 'SINGLE';
+	} else if (indexOfDoubleQuote < indexOfSingleQuote) {
+		return 'DOUBLE';
+	}
+	return;
+}
+
 export const plugin: Plugin = {
 	languages: [
 		{
@@ -114,7 +132,18 @@ export const plugin: Plugin = {
 								}
 							} else {
 								let val = token.val;
-								if (val.startsWith("'")) {
+								// Format Vue v-bind
+								if (token.name.startsWith(':') || token.name.startsWith('v-bind:')) {
+									// Expect js-code
+									val = val.trim();
+									val = val.replace(/\s\s+/g, ' ');
+									val = val.replace('[ {', '[{').replace('} ]', '}]');
+									val = val.replace('[ (', '[(').replace(') ]', ')]');
+									if (quotationType(val) === 'SINGLE') {
+										// Swap single and double quotes
+										val = val.replace(/[\'\"]/g, (match) => (match === '"' ? "'" : '"'));
+									}
+								} else if (val.startsWith("'")) {
 									// Swap single and double quotes
 									val = val.replace(/[\'\"]/g, (match) => (match === '"' ? "'" : '"'));
 								} else if (val === 'true') {
@@ -149,14 +178,26 @@ export const plugin: Plugin = {
 							indentLevel++;
 							break;
 						case 'outdent':
+							if (previousToken && previousToken.loc.end.line + 2 >= token.loc.start.line) {
+								// Insert an empty extra line
+								result += '\n';
+							}
 							result += '\n';
 							indentLevel--;
 							break;
 						case 'class':
 							result += `.${token.val}`;
+							if (nextToken && nextToken.type === 'text') {
+								result += ' ';
+							}
 							break;
 						case 'eos':
-							// result += `\n`;
+							// Remove all newlines at the end
+							while (result.endsWith('\n')) {
+								result = result.substring(0, result.length - 1);
+							}
+							// Insert one newline
+							result += `\n`;
 							break;
 						case 'comment':
 							result += `//-${token.val}`;
@@ -168,8 +209,23 @@ export const plugin: Plugin = {
 							if (previousToken && previousToken.type === 'newline') {
 								result += '|';
 							}
-
-							result += `${token.val.replace(/\s\s+/g, ' ')}`;
+							let val = token.val;
+							val = val.replace(/\s\s+/g, ' ');
+							// Only trim if it's not a single whitespace
+							if (val !== ' ') {
+								val = val.trim();
+							}
+							// Format mustache code like in Vue
+							if (val.startsWith('{{') && val.endsWith('}}')) {
+								let code: string = val.substring(2, val.length - 2);
+								code = code.trim();
+								if (quotationType(code) === 'DOUBLE') {
+									val = '{{ ';
+									val += code.replace(/[\'\"]/g, (match) => (match === '"' ? "'" : '"'));
+									val += ' }}';
+								}
+							}
+							result += val;
 							break;
 						case 'interpolated-code':
 							result += `#{${token.val}}`;
@@ -182,6 +238,7 @@ export const plugin: Plugin = {
 					}
 				}
 
+				console.log(result);
 				return result;
 			},
 			embed(
