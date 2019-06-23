@@ -75,6 +75,14 @@ export interface InterpolatedCodeToken {
 	val: string;
 }
 
+export interface CodeToken {
+	type: 'code';
+	loc: Loc;
+	val: string;
+	mustEscape: boolean;
+	buffer: boolean;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -87,4 +95,5 @@ export type Token =
 	| CommentToken
 	| NewlineToken
 	| TextToken
-	| InterpolatedCodeToken;
+	| InterpolatedCodeToken
+	| CodeToken;

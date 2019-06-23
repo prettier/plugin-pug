@@ -58,10 +58,11 @@ export const plugin: Plugin = {
 				for (let index: number = 0; index < tokens.length; index++) {
 					const token: Token = tokens[index];
 					const previousToken = tokens[index - 1];
+					const nextToken = tokens[index + 1];
 					console.log('[printers:pug-ast:print]:', JSON.stringify(token));
 					switch (token.type) {
 						case 'tag':
-							if (!(token.val === 'div' && tokens[index + 1].type === 'class')) {
+							if (!(token.val === 'div' && nextToken.type === 'class')) {
 								result += token.val;
 							}
 							break;
@@ -86,12 +87,21 @@ export const plugin: Plugin = {
 								} else if (val === 'true') {
 									// The value is exactly true and is not quoted
 									break;
+								} else {
+									// The value is not quoted and may be js-code
+									val = val.trim().replace(/\s\s+/g, ' ');
+									if (val.startsWith('{ ')) {
+										val = `{${val.substring(2, val.length)}`;
+									}
 								}
 								result += `=${val}`;
 							}
 							break;
 						case 'end-attributes':
 							result += ')';
+							if (nextToken && nextToken.type === 'text') {
+								result += ' ';
+							}
 							break;
 						case 'indent':
 							result += '\n';
@@ -125,6 +135,9 @@ export const plugin: Plugin = {
 							break;
 						case 'interpolated-code':
 							result += `#{${token.val}}`;
+							break;
+						case 'code':
+							result += `- ${token.val}`;
 							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
