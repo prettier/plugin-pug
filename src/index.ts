@@ -67,7 +67,9 @@ export const plugin: Plugin = {
 							}
 							break;
 						case 'start-attributes':
-							result += '(';
+							if (nextToken && nextToken.type === 'attribute') {
+								result += '(';
+							}
 							break;
 						case 'attribute':
 							if (previousToken && previousToken.type === 'attribute') {
@@ -98,7 +100,9 @@ export const plugin: Plugin = {
 							}
 							break;
 						case 'end-attributes':
-							result += ')';
+							if (previousToken && previousToken.type === 'attribute') {
+								result += ')';
+							}
 							if (nextToken && nextToken.type === 'text') {
 								result += ' ';
 							}
