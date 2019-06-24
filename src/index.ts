@@ -71,7 +71,9 @@ export const plugin: Plugin = {
 				const tokens: Token[] = path.stack[0];
 
 				let result: string = '';
-				let indentLevel: number = 1;
+				let indentLevel: number = 0;
+				let indent: string = '  ';
+				let pipelessText: boolean = false;
 
 				for (let index: number = 0; index < tokens.length; index++) {
 					const token: Token = tokens[index];
@@ -80,6 +82,7 @@ export const plugin: Plugin = {
 					console.log('[printers:pug-ast:print]:', JSON.stringify(token));
 					switch (token.type) {
 						case 'tag':
+							result += indent.repeat(indentLevel);
 							if (!(token.val === 'div' && (nextToken.type === 'class' || nextToken.type === 'id'))) {
 								result += token.val;
 							}
@@ -194,17 +197,19 @@ export const plugin: Plugin = {
 							break;
 						case 'indent':
 							result += '\n';
-							for (let index: number = 0; index < indentLevel; index++) {
-								result += '  ';
-							}
+							result += indent.repeat(indentLevel);
 							indentLevel++;
 							break;
 						case 'outdent':
-							if (previousToken && previousToken.loc.end.line + 2 >= token.loc.start.line) {
-								// Insert an empty extra line
-								result += '\n';
+							if (previousToken) {
+								if (previousToken.loc.end.line + 2 >= token.loc.start.line) {
+									// Insert an empty extra line
+									result += '\n';
+								}
+								if (previousToken.type !== 'text') {
+									result += '\n';
+								}
 							}
-							result += '\n';
 							indentLevel--;
 							break;
 						case 'class':
@@ -222,7 +227,8 @@ export const plugin: Plugin = {
 							result += `\n`;
 							break;
 						case 'comment':
-							result += `//-${token.val}`;
+							result += indent.repeat(indentLevel);
+							result += `//${token.buffer ? '' : '-'}${token.val.replace(/\s\s+/g, ' ')}`;
 							break;
 						case 'newline':
 							if (previousToken && token.loc.start.line - previousToken.loc.end.line > 1) {
@@ -232,15 +238,24 @@ export const plugin: Plugin = {
 							result += '\n';
 							break;
 						case 'text':
-							if (previousToken && previousToken.type === 'newline') {
-								result += '|';
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+										if (pipelessText === false) {
+											result += '|';
+										} else {
+											result += indent.repeat(indentLevel);
+											result += indent;
+										}
+										break;
+									case 'start-pipeless-text':
+										result += indent;
+										break;
+								}
 							}
 							let val = token.val;
 							val = val.replace(/\s\s+/g, ' ');
-							// Only trim if it's not a single whitespace
-							if (val !== ' ') {
-								val = val.trim();
-							}
+							val = val.trim();
 							// Format mustache code like in Vue
 							if (val.startsWith('{{') && val.endsWith('}}')) {
 								let code: string = val.substring(2, val.length - 2);
@@ -250,6 +265,9 @@ export const plugin: Plugin = {
 									val += code.replace(/[\'\"]/g, (match) => (match === '"' ? "'" : '"'));
 									val += ' }}';
 								}
+							}
+							if (previousToken && previousToken.type === 'tag') {
+								val = ` ${val}`;
 							}
 							result += val;
 							break;
@@ -273,6 +291,15 @@ export const plugin: Plugin = {
 								position = result.length;
 							}
 							result = [result.slice(0, position), `#${idVal}`, result.slice(position)].join('');
+							break;
+						case 'start-pipeless-text':
+							pipelessText = true;
+							result += '\n';
+							result += indent.repeat(indentLevel);
+							break;
+						case 'end-pipeless-text':
+							pipelessText = false;
+							// result += '\n';
 							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));

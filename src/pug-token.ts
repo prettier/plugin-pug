@@ -89,6 +89,16 @@ export interface IdToken {
 	val: string;
 }
 
+export interface StartPipelessTextToken {
+	type: 'start-pipeless-text';
+	loc: Loc;
+}
+
+export interface EndPipelessTextToken {
+	type: 'end-pipeless-text';
+	loc: Loc;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -103,4 +113,6 @@ export type Token =
 	| TextToken
 	| InterpolatedCodeToken
 	| CodeToken
-	| IdToken;
+	| IdToken
+	| StartPipelessTextToken
+	| EndPipelessTextToken;
