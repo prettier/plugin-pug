@@ -297,6 +297,9 @@ export const plugin: Plugin = {
 							result += val;
 							break;
 						case 'interpolated-code':
+							if (previousToken && previousToken.type === 'tag') {
+								result += ' ';
+							}
 							result += `#{${token.val}}`;
 							break;
 						case 'code':
@@ -354,8 +357,7 @@ export const plugin: Plugin = {
 				return null;
 			},
 			insertPragma(text: string): string {
-				console.log('[printers:pug-ast:insertPragma]:', { text });
-				return text;
+				return `//- @prettier\n${text}`;
 			}
 		}
 	},
