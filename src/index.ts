@@ -1,4 +1,4 @@
-import { AST, Doc, FastPath, Plugin } from 'prettier';
+import { AST, Doc, FastPath, Options, ParserOptions, Plugin } from 'prettier';
 // @ts-ignore
 import * as lex from 'pug-lexer';
 import { Token } from './pug-token';
@@ -65,14 +65,30 @@ export const plugin: Plugin = {
 	},
 	printers: {
 		'pug-ast': {
-			print(path: FastPath, options: object, print: (path: FastPath) => Doc): Doc {
+			print(path: FastPath, options: ParserOptions, print: (path: FastPath) => Doc): Doc {
 				// console.log('[printers:pug-ast:print]:', JSON.stringify(path, undefined, 2));
 				// console.log('[printers:pug-ast:print]:', { path, options, print });
+				let _options: ParserOptions = { ...options };
+				for (const plugin of options.plugins) {
+					if (typeof plugin !== 'string') {
+						if (plugin.parsers && plugin.parsers.hasOwnProperty('pug')) {
+							_options = { ..._options, ...plugin.defaultOptions, ...plugin.options };
+						}
+					}
+				}
+
+				const useTabs: boolean = _options.useTabs;
+				const tabWidth: number = _options.tabWidth;
+				const singleQuote: boolean = false;
+
 				const tokens: Token[] = path.stack[0];
 
 				let result: string = '';
 				let indentLevel: number = 0;
-				let indent: string = '  ';
+				let indent: string = ' '.repeat(tabWidth);
+				if (useTabs) {
+					indent = '\t';
+				}
 				let pipelessText: boolean = false;
 
 				for (let index: number = 0; index < tokens.length; index++) {
@@ -82,7 +98,13 @@ export const plugin: Plugin = {
 					console.log('[printers:pug-ast:print]:', JSON.stringify(token));
 					switch (token.type) {
 						case 'tag':
-							result += indent.repeat(indentLevel);
+							if (previousToken) {
+								if (previousToken.type !== 'indent') {
+									result += indent.repeat(indentLevel);
+								} else {
+									result += indent;
+								}
+							}
 							if (!(token.val === 'div' && (nextToken.type === 'class' || nextToken.type === 'id'))) {
 								result += token.val;
 							}
@@ -213,6 +235,9 @@ export const plugin: Plugin = {
 							indentLevel--;
 							break;
 						case 'class':
+							if (previousToken && previousToken.type === 'newline') {
+								result += indent.repeat(indentLevel);
+							}
 							result += `.${token.val}`;
 							if (nextToken && nextToken.type === 'text') {
 								result += ' ';
@@ -266,7 +291,7 @@ export const plugin: Plugin = {
 									val += ' }}';
 								}
 							}
-							if (previousToken && previousToken.type === 'tag') {
+							if (previousToken && (previousToken.type === 'tag' || previousToken.type === 'id')) {
 								val = ` ${val}`;
 							}
 							result += val;
@@ -290,7 +315,11 @@ export const plugin: Plugin = {
 							if (position === -1) {
 								position = result.length;
 							}
-							result = [result.slice(0, position), `#${idVal}`, result.slice(position)].join('');
+							let _indent = '';
+							if (previousToken && previousToken.type === 'newline') {
+								_indent += indent.repeat(indentLevel);
+							}
+							result = [result.slice(0, position), _indent, `#${idVal}`, result.slice(position)].join('');
 							break;
 						case 'start-pipeless-text':
 							pipelessText = true;
@@ -300,6 +329,12 @@ export const plugin: Plugin = {
 						case 'end-pipeless-text':
 							pipelessText = false;
 							// result += '\n';
+							break;
+						case 'doctype':
+							result += `doctype ${token.val}`;
+							break;
+						case 'dot':
+							result += '.';
 							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
@@ -312,8 +347,8 @@ export const plugin: Plugin = {
 			embed(
 				path: FastPath,
 				print: (path: FastPath) => Doc,
-				textToDoc: (text: string, options: object) => Doc,
-				options: object
+				textToDoc: (text: string, options: Options) => Doc,
+				options: ParserOptions
 			): Doc | null {
 				// console.log('[printers:pug-ast:embed]:', JSON.stringify(path, undefined, 2));
 				return null;

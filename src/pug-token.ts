@@ -99,6 +99,17 @@ export interface EndPipelessTextToken {
 	loc: Loc;
 }
 
+export interface DoctypeToken {
+	type: 'doctype';
+	loc: Loc;
+	val: string;
+}
+
+export interface DotToken {
+	type: 'dot';
+	loc: Loc;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -115,4 +126,6 @@ export type Token =
 	| CodeToken
 	| IdToken
 	| StartPipelessTextToken
-	| EndPipelessTextToken;
+	| EndPipelessTextToken
+	| DoctypeToken
+	| DotToken;
