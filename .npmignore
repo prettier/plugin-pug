@@ -1,0 +1,4 @@
+.editorconfig
+.prettierrc.json
+jest.config.js
+test/
