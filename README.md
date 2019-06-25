@@ -1,4 +1,4 @@
-# Currently not published and in heavy development
+# Currently in heavy development
 
 <p align="center">
   &nbsp;&nbsp;<img alt="Prettier"
