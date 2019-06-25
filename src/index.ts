@@ -291,6 +291,9 @@ export const plugin: Plugin = {
 											result += indent;
 										}
 										break;
+									case 'indent':
+										result += '| ';
+										break;
 									case 'start-pipeless-text':
 										result += indent;
 										break;
