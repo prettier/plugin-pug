@@ -186,6 +186,7 @@ export const plugin: Plugin = {
 									val = val.replace(/\s\s+/g, ' ');
 									val = val.replace('[ {', '[{').replace('} ]', '}]');
 									val = val.replace('[ (', '[(').replace(') ]', ')]');
+									val = val.replace('[ ', '[').replace(' ]', ']');
 									if (quotationType(val) === 'SINGLE') {
 										// Swap single and double quotes
 										val = val.replace(/[\'\"]/g, (match) => (match === '"' ? "'" : '"'));
@@ -224,7 +225,7 @@ export const plugin: Plugin = {
 							break;
 						case 'outdent':
 							if (previousToken) {
-								if (previousToken.loc.end.line + 2 >= token.loc.start.line) {
+								if (token.loc.start.line - previousToken.loc.end.line >= 1) {
 									// Insert an empty extra line
 									result += '\n';
 								}
@@ -235,8 +236,15 @@ export const plugin: Plugin = {
 							indentLevel--;
 							break;
 						case 'class':
-							if (previousToken && previousToken.type === 'newline') {
-								result += indent.repeat(indentLevel);
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
 							}
 							result += `.${token.val}`;
 							if (nextToken && nextToken.type === 'text') {
@@ -267,7 +275,11 @@ export const plugin: Plugin = {
 								switch (previousToken.type) {
 									case 'newline':
 										if (pipelessText === false) {
+											result += indent.repeat(indentLevel);
 											result += '|';
+											if (/.*\S.*/.test(token.val)) {
+												result += ' ';
+											}
 										} else {
 											result += indent.repeat(indentLevel);
 											result += indent;
