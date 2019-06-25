@@ -166,8 +166,15 @@ export const plugin: Plugin = {
 									lastPositionOfNewline = 0;
 								}
 								let position: number = result.indexOf('.', lastPositionOfNewline);
-								if (position === -1) {
-									position = result.indexOf('(', lastPositionOfNewline);
+								const firstPositionOfStartAttributes: number = result.indexOf(
+									'(',
+									lastPositionOfNewline
+								);
+								if (
+									position === -1 ||
+									(firstPositionOfStartAttributes !== -1 && position > firstPositionOfStartAttributes)
+								) {
+									position = firstPositionOfStartAttributes;
 								}
 								result = [result.slice(0, position), `#${val}`, result.slice(position)].join('');
 								result = result.replace(/div#/, '#');
