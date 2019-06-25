@@ -1,12 +1,18 @@
-import { AST, Doc, FastPath, Options, ParserOptions, Plugin } from 'prettier';
+import { AST, Doc, FastPath, Options, Parser, ParserOptions, Plugin } from 'prettier';
 // @ts-ignore
 import * as lex from 'pug-lexer';
+import { createLogger, Logger, LogLevel } from './logger';
 import { Token } from './pug-token';
+
+const logger: Logger = createLogger(console);
+if (process.env.NODE_ENV === 'test') {
+	logger.setLogLevel(LogLevel.DEBUG);
+}
 
 function quotationType(code: string): 'SINGLE' | 'DOUBLE' | undefined {
 	const indexOfSingleQuote: number = code.indexOf("'");
 	const indexOfDoubleQuote: number = code.indexOf('"');
-	console.log({ code, indexOfSingleQuote, indexOfDoubleQuote });
+	logger.debug({ code, indexOfSingleQuote, indexOfDoubleQuote });
 	if (indexOfSingleQuote === -1 && indexOfDoubleQuote === -1) {
 		return undefined;
 	} else if (indexOfSingleQuote === -1 && indexOfDoubleQuote !== -1) {
@@ -37,28 +43,28 @@ export const plugin: Plugin = {
 	],
 	parsers: {
 		pug: {
-			parse(text: string, parsers: object, options: object): AST {
-				console.log('[parsers:pug:parse]:', { text });
+			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): AST {
+				logger.debug('[parsers:pug:parse]:', { text });
 				const tokens = lex(text, {});
-				// console.log('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
+				// logger.debug('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
 				// const ast: AST = parse(tokens, {});
-				// console.log('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
+				// logger.debug('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
 				return tokens;
 			},
 			astFormat: 'pug-ast',
 			hasPragma(text: string): boolean {
 				return text.startsWith('//- @prettier\n') || text.startsWith('//- @format\n');
 			},
-			locStart(node: object): number {
-				console.log('[parsers:pug:locStart]:', { node });
+			locStart(node: any): number {
+				logger.debug('[parsers:pug:locStart]:', { node });
 				return 0;
 			},
-			locEnd(node: object): number {
-				console.log('[parsers:pug:locEnd]:', { node });
+			locEnd(node: any): number {
+				logger.debug('[parsers:pug:locEnd]:', { node });
 				return 0;
 			},
-			preprocess(text: string, options: object): string {
-				console.log('[parsers:pug:preprocess]:', { text });
+			preprocess(text: string, options: ParserOptions): string {
+				logger.debug('[parsers:pug:preprocess]:', { text });
 				return text;
 			}
 		}
@@ -66,8 +72,8 @@ export const plugin: Plugin = {
 	printers: {
 		'pug-ast': {
 			print(path: FastPath, options: ParserOptions, print: (path: FastPath) => Doc): Doc {
-				// console.log('[printers:pug-ast:print]:', JSON.stringify(path, undefined, 2));
-				// console.log('[printers:pug-ast:print]:', { path, options, print });
+				// logger.debug('[printers:pug-ast:print]:', JSON.stringify(path, undefined, 2));
+				// logger.debug('[printers:pug-ast:print]:', { path, options, print });
 				let _options: ParserOptions = { ...options };
 				for (const plugin of options.plugins) {
 					if (typeof plugin !== 'string') {
@@ -95,7 +101,7 @@ export const plugin: Plugin = {
 					const token: Token = tokens[index];
 					const previousToken = tokens[index - 1];
 					const nextToken = tokens[index + 1];
-					console.log('[printers:pug-ast:print]:', JSON.stringify(token));
+					logger.debug('[printers:pug-ast:print]:', JSON.stringify(token));
 					switch (token.type) {
 						case 'tag':
 							if (previousToken) {
@@ -356,7 +362,7 @@ export const plugin: Plugin = {
 					}
 				}
 
-				console.log(result);
+				logger.debug(result);
 				return result;
 			},
 			embed(
@@ -365,7 +371,7 @@ export const plugin: Plugin = {
 				textToDoc: (text: string, options: Options) => Doc,
 				options: ParserOptions
 			): Doc | null {
-				// console.log('[printers:pug-ast:embed]:', JSON.stringify(path, undefined, 2));
+				// logger.debug('[printers:pug-ast:embed]:', JSON.stringify(path, undefined, 2));
 				return null;
 			},
 			insertPragma(text: string): string {
