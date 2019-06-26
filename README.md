@@ -1,5 +1,3 @@
-# Currently in heavy development
-
 <p align="center">
   &nbsp;&nbsp;<img alt="Prettier"
   src="https://cdn.rawgit.com/prettier/prettier-logo/master/images/prettier-icon-light.svg">&nbsp;&nbsp;
