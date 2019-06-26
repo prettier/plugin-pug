@@ -314,6 +314,11 @@ export const plugin: Plugin = {
 									case 'start-pipeless-text':
 										result += indent;
 										break;
+									case 'interpolated-code':
+										if (/^ .+$/.test(val)) {
+											result += ' ';
+										}
+										break;
 								}
 							}
 							val = val.trim();

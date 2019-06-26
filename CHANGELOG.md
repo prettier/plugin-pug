@@ -4,6 +4,8 @@
 
 -   Correct some unnecessary blank lines
 
+-   Correct a missing whitespace after `interpolated-code` token
+
 -   Handle new Tokens
 
     -   [`block`](https://pugjs.org/language/inheritance.html#block-append-prepend)
