@@ -9,6 +9,10 @@
 -   Handle new Tokens
 
     -   [`block`](https://pugjs.org/language/inheritance.html#block-append-prepend)
+    -   [`extends`](https://pugjs.org/language/inheritance.html)
+    -   [`path`](https://pugjs.org/language/inheritance.html)
+    -   [`start-pug-interpolation`](https://pugjs.org/language/interpolation.html#tag-interpolation)
+    -   [`end-pug-interpolation`](https://pugjs.org/language/interpolation.html#tag-interpolation)
 
 -   Improve space formatting
 

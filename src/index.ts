@@ -105,7 +105,9 @@ export const plugin: Plugin = {
 					switch (token.type) {
 						case 'tag':
 							if (previousToken) {
-								if (previousToken.type !== 'indent') {
+								if (previousToken.type === 'start-pug-interpolation') {
+									// Don't indent
+								} else if (previousToken.type !== 'indent') {
 									result += indent.repeat(indentLevel);
 								} else {
 									result += indent;
@@ -389,6 +391,18 @@ export const plugin: Plugin = {
 								result += token.mode;
 							}
 							result += token.val;
+							break;
+						case 'extends':
+							result += 'extends ';
+							break;
+						case 'path':
+							result += token.val;
+							break;
+						case 'start-pug-interpolation':
+							result += '#[';
+							break;
+						case 'end-pug-interpolation':
+							result += ']';
 							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));

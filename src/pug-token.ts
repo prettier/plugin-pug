@@ -117,6 +117,27 @@ export interface BlockToken {
 	mode: 'replace' | 'prepend' | 'append';
 }
 
+export interface ExtendsToken {
+	type: 'extends';
+	loc: Loc;
+}
+
+export interface PathToken {
+	type: 'path';
+	loc: Loc;
+	val: string;
+}
+
+export interface StartPugInterpolationToken {
+	type: 'start-pug-interpolation';
+	loc: Loc;
+}
+
+export interface EndPugInterpolationToken {
+	type: 'end-pug-interpolation';
+	loc: Loc;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -136,4 +157,8 @@ export type Token =
 	| EndPipelessTextToken
 	| DoctypeToken
 	| DotToken
-	| BlockToken;
+	| BlockToken
+	| ExtendsToken
+	| PathToken
+	| StartPugInterpolationToken
+	| EndPugInterpolationToken;
