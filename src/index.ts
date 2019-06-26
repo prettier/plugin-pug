@@ -239,7 +239,7 @@ export const plugin: Plugin = {
 						case 'outdent':
 							if (previousToken) {
 								if (token.loc.start.line - previousToken.loc.end.line >= 1) {
-									// Insert an empty extra line
+									// Insert one extra blank line
 									result += '\n';
 								}
 								if (previousToken.type !== 'text') {
@@ -278,7 +278,7 @@ export const plugin: Plugin = {
 							break;
 						case 'newline':
 							if (previousToken && token.loc.start.line - previousToken.loc.end.line > 1) {
-								// Insert an empty extra line
+								// Insert one extra blank line
 								result += '\n';
 							}
 							result += '\n';
