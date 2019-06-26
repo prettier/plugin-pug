@@ -4,6 +4,10 @@
 
 -   Correct some unnecessary blank lines
 
+-   Handle new Tokens
+
+    -   [`block`](https://pugjs.org/language/inheritance.html#block-append-prepend)
+
 -   Improve space formatting
 
     Use recommended solutions [link](https://pugjs.org/language/plain-text.html#recommended-solutions)

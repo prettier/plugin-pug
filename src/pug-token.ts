@@ -110,6 +110,13 @@ export interface DotToken {
 	loc: Loc;
 }
 
+export interface BlockToken {
+	type: 'block';
+	loc: Loc;
+	val: string;
+	mode: 'replace' | 'prepend' | 'append';
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -128,4 +135,5 @@ export type Token =
 	| StartPipelessTextToken
 	| EndPipelessTextToken
 	| DoctypeToken
-	| DotToken;
+	| DotToken
+	| BlockToken;

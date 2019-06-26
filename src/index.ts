@@ -375,6 +375,16 @@ export const plugin: Plugin = {
 						case 'dot':
 							result += '.';
 							break;
+						case 'block':
+							if (previousToken && previousToken.type === 'indent') {
+								result += indent;
+							}
+							result += 'block ';
+							if (token.mode !== 'replace') {
+								result += token.mode;
+							}
+							result += token.val;
+							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
 					}
