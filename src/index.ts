@@ -242,7 +242,11 @@ export const plugin: Plugin = {
 									// Insert one extra blank line
 									result += '\n';
 								}
-								if (previousToken.type !== 'text') {
+								if (
+									previousToken.type !== 'text' &&
+									previousToken.type !== 'outdent' &&
+									previousToken.type !== 'tag'
+								) {
 									result += '\n';
 								}
 							}
