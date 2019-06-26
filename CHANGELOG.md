@@ -13,6 +13,8 @@
     -   [`path`](https://pugjs.org/language/inheritance.html)
     -   [`start-pug-interpolation`](https://pugjs.org/language/interpolation.html#tag-interpolation)
     -   [`end-pug-interpolation`](https://pugjs.org/language/interpolation.html#tag-interpolation)
+    -   [`include`](https://pugjs.org/language/includes.html)
+    -   [`filter`](https://pugjs.org/language/filters.html)
 
 -   Improve space formatting
 

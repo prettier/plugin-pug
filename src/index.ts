@@ -229,7 +229,7 @@ export const plugin: Plugin = {
 							} else if (previousToken && previousToken.type === 'attribute') {
 								result += ')';
 							}
-							if (nextToken && nextToken.type === 'text') {
+							if (nextToken && (nextToken.type === 'text' || nextToken.type === 'path')) {
 								result += ' ';
 							}
 							break;
@@ -403,6 +403,15 @@ export const plugin: Plugin = {
 							break;
 						case 'end-pug-interpolation':
 							result += ']';
+							break;
+						case 'include':
+							if (previousToken && previousToken.type === 'indent') {
+								result += indent;
+							}
+							result += 'include';
+							break;
+						case 'filter':
+							result += `:${token.val}`;
 							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
