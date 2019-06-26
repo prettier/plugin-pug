@@ -288,11 +288,17 @@ export const plugin: Plugin = {
 							result += '\n';
 							break;
 						case 'text':
+							let val = token.val;
+							val = val.replace(/\s\s+/g, ' ');
 							if (previousToken) {
 								switch (previousToken.type) {
 									case 'newline':
 										if (pipelessText === false) {
 											result += indent.repeat(indentLevel);
+											if (/^ .+$/.test(val)) {
+												result += '|\n';
+												result += indent.repeat(indentLevel);
+											}
 											result += '|';
 											if (/.*\S.*/.test(token.val)) {
 												result += ' ';
@@ -310,8 +316,6 @@ export const plugin: Plugin = {
 										break;
 								}
 							}
-							let val = token.val;
-							val = val.replace(/\s\s+/g, ' ');
 							val = val.trim();
 							// Format mustache code like in Vue
 							if (val.startsWith('{{') && val.endsWith('}}')) {
