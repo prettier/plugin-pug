@@ -360,7 +360,6 @@ export const plugin: Plugin = {
 							break;
 						case 'id':
 							// Handle id attribute
-							let idVal = token.val;
 							// Write css-id in front of css-classes
 							let lastPositionOfNewline = result.lastIndexOf('\n');
 							if (lastPositionOfNewline === -1) {
@@ -383,7 +382,9 @@ export const plugin: Plugin = {
 										break;
 								}
 							}
-							result = [result.slice(0, position), _indent, `#${idVal}`, result.slice(position)].join('');
+							result = [result.slice(0, position), _indent, `#${token.val}`, result.slice(position)].join(
+								''
+							);
 							break;
 						case 'start-pipeless-text':
 							pipelessText = true;
