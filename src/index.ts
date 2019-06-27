@@ -77,7 +77,7 @@ export const plugin: Plugin = {
 				let _options: ParserOptions = { ...options };
 				for (const plugin of options.plugins) {
 					if (typeof plugin !== 'string') {
-						if (plugin.parsers && plugin.parsers.hasOwnProperty('pug')) {
+						if (plugin.parsers && Object.prototype.hasOwnProperty.call(plugin.parsers, 'pug')) {
 							_options = { ..._options, ...plugin.defaultOptions, ...plugin.options };
 						}
 					}
@@ -184,7 +184,7 @@ export const plugin: Plugin = {
 							}
 
 							if (previousToken && previousToken.type === 'attribute') {
-								result += `, `;
+								result += ', ';
 							}
 
 							result += `${token.name}`;
@@ -204,11 +204,11 @@ export const plugin: Plugin = {
 									val = val.replace('[ ', '[').replace(' ]', ']');
 									if (quotationType(val) === 'SINGLE') {
 										// Swap single and double quotes
-										val = val.replace(/[\'\"]/g, (match) => (match === '"' ? "'" : '"'));
+										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									}
 								} else if (val.startsWith("'")) {
 									// Swap single and double quotes
-									val = val.replace(/[\'\"]/g, (match) => (match === '"' ? "'" : '"'));
+									val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 								} else if (val === 'true') {
 									// The value is exactly true and is not quoted
 									break;
@@ -271,7 +271,7 @@ export const plugin: Plugin = {
 								result = result.substring(0, result.length - 1);
 							}
 							// Insert one newline
-							result += `\n`;
+							result += '\n';
 							break;
 						case 'comment':
 							result += indent.repeat(indentLevel);
@@ -333,7 +333,7 @@ export const plugin: Plugin = {
 								code = code.trim();
 								if (quotationType(code) === 'DOUBLE') {
 									val = '{{ ';
-									val += code.replace(/[\'\"]/g, (match) => (match === '"' ? "'" : '"'));
+									val += code.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									val += ' }}';
 								}
 							}

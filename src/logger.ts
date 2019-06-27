@@ -24,7 +24,7 @@ export class Logger implements ILogger {
 		'error'
 	];
 
-	constructor(private readonly logger: ILogger = console, private level: LogLevel = LogLevel.INFO) {}
+	public constructor(private readonly logger: ILogger = console, private level: LogLevel = LogLevel.INFO) {}
 
 	public setLogLevel(level: LogLevel): void {
 		this.level = level;
