@@ -2,7 +2,9 @@
 
 [diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.2...master)
 
--   Insert an extra indent for `code`
+-   Improvement of indents, empty lines and spaces
+
+-   Keep indent for `code` if wanted
 
     ```pug
     //- Input
