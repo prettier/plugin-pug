@@ -2,6 +2,8 @@
 
 [diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.4...master)
 
+-   Fix indentation of piped text
+
 # 1.0.0-alpha.4
 
 [diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.3...1.0.0-alpha.4)
