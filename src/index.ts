@@ -239,18 +239,12 @@ export const plugin: Plugin = {
 							indentLevel++;
 							break;
 						case 'outdent':
-							if (previousToken) {
-								if (token.loc.start.line - previousToken.loc.end.line >= 1) {
+							if (previousToken && previousToken.type !== 'outdent') {
+								if (token.loc.start.line - previousToken.loc.end.line > 1) {
 									// Insert one extra blank line
 									result += '\n';
 								}
-								if (
-									previousToken.type !== 'text' &&
-									previousToken.type !== 'outdent' &&
-									previousToken.type !== 'tag'
-								) {
-									result += '\n';
-								}
+								result += '\n';
 							}
 							indentLevel--;
 							break;
