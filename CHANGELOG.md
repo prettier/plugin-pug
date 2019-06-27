@@ -2,6 +2,25 @@
 
 [diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.2...master)
 
+-   Insert an extra indent for `code`
+
+    ```pug
+    //- Input
+    block page_meta
+      - var page_title = "Markdown"
+      - var page_description = "This is a page description."
+
+    //- Output (1.0.0-alpha.2)
+    block page_meta
+    - var page_title = "Markdown"
+    - var page_description = "This is a page description."
+
+    //- Output (next)
+    block page_meta
+      - var page_title = "Markdown"
+      - var page_description = "This is a page description."
+    ```
+
 # 1.0.0-alpha.2
 
 [diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.1...1.0.0-alpha.2)
@@ -35,7 +54,7 @@
       v-icon save
       | {{ $t('mylangkeys.crud.save') }}
 
-    //- Output (next)
+    //- Output (1.0.0-alpha.2)
     v-btn(color="primary", name="save", @click="save", :disabled="saving", :loading="saving")
       v-icon save
       |
