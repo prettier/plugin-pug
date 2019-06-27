@@ -252,6 +252,7 @@ export const plugin: Plugin = {
 							if (previousToken) {
 								switch (previousToken.type) {
 									case 'newline':
+									case 'outdent':
 										result += indent.repeat(indentLevel);
 										break;
 									case 'indent':
@@ -370,6 +371,7 @@ export const plugin: Plugin = {
 							if (previousToken) {
 								switch (previousToken.type) {
 									case 'newline':
+									case 'outdent':
 										_indent = indent.repeat(indentLevel);
 										break;
 									case 'indent':
@@ -396,10 +398,14 @@ export const plugin: Plugin = {
 							break;
 						case 'block':
 							if (previousToken) {
-								if (previousToken.type === 'indent') {
-									result += indent;
-								} else if (previousToken.type === 'newline') {
-									result += indent.repeat(indentLevel);
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
 								}
 							}
 							result += 'block ';

@@ -11,3 +11,18 @@ html
 			This paragraph has class!
 		.firstDiv A div with a class.
 		#secondDiv A div with an id.
+
+		// Things
+		div(v-if="things")
+			.box.flex-box
+				.flex-main-wrapper
+					.flex-box.header {{ $t('mylangkey.things') }}
+
+					.flex-box.select(v-if="things[0].visible")
+						v-autocomplete(name="things[0].name", v-model="things[0].value", item-text="name", item-value="id", :items="mythings")
+
+					.flex-box.select(v-if="things[1].visible")
+						v-autocomplete(name="things[1].name", v-model="things[1].value", item-text="name", item-value="id", :items="mythings")
+
+					#use-of-id(test)
+						span Hello
