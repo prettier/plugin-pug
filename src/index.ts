@@ -323,6 +323,10 @@ export const plugin: Plugin = {
 										break;
 								}
 							}
+							let needsTrailingWhitespace: boolean = false;
+							if (nextToken && nextToken.type === 'interpolated-code' && val.endsWith(' ')) {
+								needsTrailingWhitespace = true;
+							}
 							val = val.trim();
 							// Format mustache code like in Vue
 							if (val.startsWith('{{') && val.endsWith('}}')) {
@@ -338,6 +342,9 @@ export const plugin: Plugin = {
 								val = ` ${val}`;
 							}
 							result += val;
+							if (needsTrailingWhitespace) {
+								result += ' ';
+							}
 							break;
 						case 'interpolated-code':
 							if (previousToken && previousToken.type === 'tag') {
@@ -366,8 +373,15 @@ export const plugin: Plugin = {
 								position = result.length;
 							}
 							let _indent = '';
-							if (previousToken && previousToken.type === 'newline') {
-								_indent += indent.repeat(indentLevel);
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+										_indent = indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										_indent = indent;
+										break;
+								}
 							}
 							result = [result.slice(0, position), _indent, `#${idVal}`, result.slice(position)].join('');
 							break;
@@ -387,8 +401,12 @@ export const plugin: Plugin = {
 							result += '.';
 							break;
 						case 'block':
-							if (previousToken && previousToken.type === 'indent') {
-								result += indent;
+							if (previousToken) {
+								if (previousToken.type === 'indent') {
+									result += indent;
+								} else if (previousToken.type === 'newline') {
+									result += indent.repeat(indentLevel);
+								}
 							}
 							result += 'block ';
 							if (token.mode !== 'replace') {
