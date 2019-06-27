@@ -346,6 +346,10 @@ export const plugin: Plugin = {
 							result += `#{${token.val}}`;
 							break;
 						case 'code':
+							if (indentLevel > 0) {
+								// Insert one extra indent
+								result += indent;
+							}
 							result += `- ${token.val}`;
 							break;
 						case 'id':
