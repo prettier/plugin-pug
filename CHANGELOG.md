@@ -1,6 +1,10 @@
 # Next
 
-[diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.2...master)
+[diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.3...master)
+
+# 1.0.0-alpha.3
+
+[diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.2...1.0.0-alpha.3)
 
 -   Improvement of indents, empty lines and spaces
 
@@ -17,7 +21,7 @@
     - var page_title = "Markdown"
     - var page_description = "This is a page description."
 
-    //- Output (next)
+    //- Output (1.0.0-alpha.3)
     block page_meta
       - var page_title = "Markdown"
       - var page_description = "This is a page description."
