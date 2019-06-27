@@ -2,6 +2,8 @@
 
 [diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.3...master)
 
+-   Fix indentation after `outdent`
+
 # 1.0.0-alpha.3
 
 [diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.2...1.0.0-alpha.3)
