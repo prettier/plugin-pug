@@ -1,0 +1,37 @@
+{
+	"env": {
+		"es6": true,
+		"jest": true,
+		"node": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
+		"prettier",
+		"prettier/@typescript-eslint"
+	],
+	"globals": {
+		"Atomics": "readonly",
+		"SharedArrayBuffer": "readonly"
+	},
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"project": "./tsconfig.json"
+	},
+	"plugins": ["@typescript-eslint", "prettier"],
+	"rules": {
+		"linebreak-style": ["error", "unix"],
+		"no-case-declarations": "warn",
+		"quotes": ["error", "single", { "avoidEscape": true }],
+		"semi": ["error", "always"],
+
+		"@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
+		"@typescript-eslint/indent": ["error", "tab"],
+		"@typescript-eslint/interface-name-prefix": "off",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-inferrable-types": "off",
+		"@typescript-eslint/no-parameter-properties": "off",
+		"@typescript-eslint/prefer-string-starts-ends-with": "error"
+	}
+}
