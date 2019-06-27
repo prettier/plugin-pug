@@ -36,13 +36,13 @@ Pug code with custom formatting:
 
 <!-- prettier-ignore -->
 ```pug
-div.text( color =   "primary"  )
+div.text( color =   "primary",  disabled  ="true"  )
 ```
 
 Prettified code:
 
 ```pug
-div.text(color="primary")
+.text(color="primary", disabled)
 ```
 ````
 
