@@ -306,7 +306,11 @@ export const plugin: Plugin = {
 										}
 										break;
 									case 'indent':
-										result += '| ';
+										result += indent;
+										result += '|';
+										if (/.*\S.*/.test(token.val)) {
+											result += ' ';
+										}
 										break;
 									case 'start-pipeless-text':
 										result += indent;
