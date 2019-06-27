@@ -223,7 +223,7 @@ export const plugin: Plugin = {
 							}
 							break;
 						case 'end-attributes':
-							if (result.charAt(result.length - 1) === '(') {
+							if (result.endsWith('(')) {
 								// There were no attributes
 								result = result.substring(0, result.length - 1);
 							} else if (previousToken && previousToken.type === 'attribute') {

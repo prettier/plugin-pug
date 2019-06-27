@@ -31,6 +31,7 @@
 		"@typescript-eslint/interface-name-prefix": "off",
 		"@typescript-eslint/no-explicit-any": "off",
 		"@typescript-eslint/no-inferrable-types": "off",
-		"@typescript-eslint/no-parameter-properties": "off"
+		"@typescript-eslint/no-parameter-properties": "off",
+		"@typescript-eslint/prefer-string-starts-ends-with": "error"
 	}
 }
