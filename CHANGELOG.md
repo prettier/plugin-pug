@@ -3,6 +3,7 @@
 [diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.5...master)
 
 -   Setup eslint with TypeScript configuration ([#4])
+-   Setup [Azure Pipelines](https://dev.azure.com/shinigami92/prettier-plugin-pug/_build?definitionId=1)
 
 [#4]: https://github.com/Shinigami92/prettier-plugin-pug/pull/4
 
