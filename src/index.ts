@@ -213,19 +213,19 @@ export const plugin: Plugin = {
 									val = val.replace('[ ', '[').replace(' ]', ']');
 									const type: QuotationType | undefined = quotationType(val);
 									if (
-										(type === 'SINGLE' && useSingleQuote) ||
-										(type === 'DOUBLE' && !useSingleQuote)
+										(type === 'SINGLE' && !useSingleQuote) ||
+										(type === 'DOUBLE' && useSingleQuote)
 									) {
 										// Swap single and double quotes
 										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									}
 								} else if (val.startsWith("'")) {
-									if (useSingleQuote) {
+									if (!useSingleQuote) {
 										// Swap single and double quotes
 										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									}
 								} else if (val.startsWith('"')) {
-									if (!useSingleQuote) {
+									if (useSingleQuote) {
 										// Swap single and double quotes
 										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									}
@@ -362,7 +362,7 @@ export const plugin: Plugin = {
 								let code: string = val.substring(2, val.length - 2);
 								code = code.trim();
 								const type: QuotationType | undefined = quotationType(code);
-								if ((type === 'SINGLE' && !useSingleQuote) || (type === 'DOUBLE' && useSingleQuote)) {
+								if ((type === 'SINGLE' && useSingleQuote) || (type === 'DOUBLE' && !useSingleQuote)) {
 									val = '{{ ';
 									val += code.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									val += ' }}';
