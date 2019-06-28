@@ -105,12 +105,14 @@ export const plugin: Plugin = {
 					switch (token.type) {
 						case 'tag':
 							if (previousToken) {
-								if (previousToken.type === 'start-pug-interpolation') {
-									// Don't indent
-								} else if (previousToken.type !== 'indent') {
-									result += indent.repeat(indentLevel);
-								} else {
-									result += indent;
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
 								}
 							}
 							if (!(token.val === 'div' && (nextToken.type === 'class' || nextToken.type === 'id'))) {
