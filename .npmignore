@@ -3,3 +3,6 @@
 jest.config.js
 test/
 coverage/
+azure-pipelines.yml
+.eslintrc.json
+.vscode/
