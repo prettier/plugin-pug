@@ -76,6 +76,12 @@ yarn add --dev prettier prettier-plugin-pug
 yarn prettier --write "**/*.pug"
 ```
 
+### Prettier Options
+
+-   `singleQuote`
+    On top-level this is used for JS-Code. So by default it is set to false and pug will use single quotes because the JS-Code in pug uses double quotes.
+    If you want to use double quotes in pug and double quotes in JS, use prettier's override.
+
 ## Integration with editors
 
 If you are using a text editor that supports Prettier integration (e.g. [Atom](https://atom.io/packages/prettier-atom)), you can have all Prettier perks for your Pug code too!
