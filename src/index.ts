@@ -274,7 +274,17 @@ export const plugin: Plugin = {
 							result += '\n';
 							break;
 						case 'comment':
-							result += indent.repeat(indentLevel);
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
+							}
 							result += `//${token.buffer ? '' : '-'}${token.val.replace(/\s\s+/g, ' ')}`;
 							break;
 						case 'newline':
