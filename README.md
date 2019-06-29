@@ -1,9 +1,10 @@
 <p align="center">
-  &nbsp;&nbsp;<img alt="Prettier"
-  src="https://cdn.rawgit.com/prettier/prettier-logo/master/images/prettier-icon-light.svg">&nbsp;&nbsp;
-  &nbsp;&nbsp;<img alt="Pug"
-  height="210"
-  src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg">&nbsp;&nbsp;
+  &nbsp;&nbsp;<a href="https://prettier.io">
+    <img alt="Prettier" src="https://cdn.rawgit.com/prettier/prettier-logo/master/images/prettier-icon-light.svg"><!--
+  --></a>&nbsp;&nbsp;
+  &nbsp;&nbsp;<a href="https://pugjs.org">
+    <img alt="Pug" src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="210"><!--
+  --></a>&nbsp;&nbsp;
 </p>
 
 <h2 align="center">Prettier Pug plugin</h2>
