@@ -13,7 +13,14 @@ div.content(class="text-success bg-dark")
 .content(class="text-success")
 .content(class="text-success bg-dark")
 .content(class="text-success   bg-dark")
+.content.aaa.ad(:with="code()", class="text-success")
 .content.aaa.ad(class="text-success    #ad  bg-dark")
+.content.aaa.ad(other, attributes="with many long text", class="text-success    #ad  bg-dark", so="it", will="wrap", the="line")
+.content.aaa.ad(another="long line", :but="withCode()", class="text-success    #ad  bg-dark")
 - const classes = ['foo', 'bar', 'baz']
 a(class=classes, class="bing", class="fizz")
 a.bang(class=classes, class=['bing'], class="fizz bib")
+
+v-text-field(:label="$t('search.label')", class="search", prepend-inner-icon="search", v-model="search", single-line)
+
+span.testclass(class="ab", id="testid", class="cd", other="attribute", class="ef", class="hi", class="jk", other2="attribute2")
