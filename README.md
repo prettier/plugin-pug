@@ -79,7 +79,9 @@ yarn prettier --write "**/*.pug"
 
 ### Prettier Options
 
-- `singleQuote`
+- `printWidth`  
+  _Currently not very accurate, but works_
+- `singleQuote`  
   If you want to configure different quotes for pug than for js code, you can use prettier's override.
   ```json
   {
@@ -95,6 +97,11 @@ yarn prettier --write "**/*.pug"
     ]
   }
   ```
+- `tabWidth`  
+  Use spaces for indentation
+- `useTabs`  
+  Use tab for indentation
+  Overrides `tabWidth`
 
 ## Integration with editors
 
