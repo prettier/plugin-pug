@@ -78,22 +78,11 @@ export const plugin: Plugin = {
 	},
 	printers: {
 		'pug-ast': {
-			print(path: FastPath, options: ParserOptions, print: (path: FastPath) => Doc): Doc {
-				// logger.debug('[printers:pug-ast:print]:', JSON.stringify(path, undefined, 2));
-				// logger.debug('[printers:pug-ast:print]:', { path, options, print });
-				let _options: ParserOptions = { ...options };
-				for (const plugin of options.plugins) {
-					if (typeof plugin !== 'string') {
-						if (plugin.parsers && Object.prototype.hasOwnProperty.call(plugin.parsers, 'pug')) {
-							_options = { ..._options, ...plugin.defaultOptions, ...plugin.options };
-						}
-					}
-				}
-
-				const useTabs: boolean = _options.useTabs;
-				const tabWidth: number = _options.tabWidth;
-				const useSingleQuote: boolean = _options.singleQuote;
-
+			print(
+				path: FastPath,
+				{ singleQuote, tabWidth, useTabs }: ParserOptions,
+				print: (path: FastPath) => Doc
+			): Doc {
 				const tokens: Token[] = path.stack[0];
 
 				let result: string = '';
@@ -157,7 +146,7 @@ export const plugin: Plugin = {
 									);
 								}
 								if (specialClasses.length > 0) {
-									token.val = quote(useSingleQuote, specialClasses.join(' '));
+									token.val = quote(singleQuote, specialClasses.join(' '));
 								} else {
 									break;
 								}
@@ -212,20 +201,17 @@ export const plugin: Plugin = {
 									val = val.replace('[ (', '[(').replace(') ]', ')]');
 									val = val.replace('[ ', '[').replace(' ]', ']');
 									const type: QuotationType | undefined = quotationType(val);
-									if (
-										(type === 'SINGLE' && !useSingleQuote) ||
-										(type === 'DOUBLE' && useSingleQuote)
-									) {
+									if ((type === 'SINGLE' && !singleQuote) || (type === 'DOUBLE' && singleQuote)) {
 										// Swap single and double quotes
 										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									}
 								} else if (val.startsWith("'")) {
-									if (!useSingleQuote) {
+									if (!singleQuote) {
 										// Swap single and double quotes
 										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									}
 								} else if (val.startsWith('"')) {
-									if (useSingleQuote) {
+									if (singleQuote) {
 										// Swap single and double quotes
 										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									}
@@ -362,7 +348,7 @@ export const plugin: Plugin = {
 								let code: string = val.substring(2, val.length - 2);
 								code = code.trim();
 								const type: QuotationType | undefined = quotationType(code);
-								if ((type === 'SINGLE' && useSingleQuote) || (type === 'DOUBLE' && !useSingleQuote)) {
+								if ((type === 'SINGLE' && singleQuote) || (type === 'DOUBLE' && !singleQuote)) {
 									val = '{{ ';
 									val += code.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									val += ' }}';
