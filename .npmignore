@@ -6,3 +6,4 @@ coverage/
 azure-pipelines.yml
 .eslintrc.json
 .vscode/
+.history/
