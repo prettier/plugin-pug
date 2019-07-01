@@ -92,7 +92,7 @@ export const plugin: Plugin = {
 
 				const useTabs: boolean = _options.useTabs;
 				const tabWidth: number = _options.tabWidth;
-				const useSingleQuote: boolean = !_options.singleQuote;
+				const useSingleQuote: boolean = _options.singleQuote;
 
 				const tokens: Token[] = path.stack[0];
 

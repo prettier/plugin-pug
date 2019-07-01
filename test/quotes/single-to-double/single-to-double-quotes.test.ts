@@ -7,12 +7,14 @@ describe('Quotes', () => {
 	test('should format single to double quotes', () => {
 		const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-		const actual: string = format(code, {
-			parser: 'pug' as any,
-			plugins: [plugin],
-			// This is the JS quotation and will be swapped for pug
-			singleQuote: true
-		});
+		const actual: string = format(code, { parser: 'pug' as any, plugins: [plugin], singleQuote: false });
+
+		expect(actual).toBe(expected);
+	});
+	test('should use double quotes by default', () => {
+		const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
+		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
+		const actual: string = format(code, { parser: 'pug' as any, plugins: [plugin] });
 
 		expect(actual).toBe(expected);
 	});

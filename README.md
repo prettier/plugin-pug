@@ -78,9 +78,22 @@ yarn prettier --write "**/*.pug"
 
 ### Prettier Options
 
--   `singleQuote`
-    On top-level this is used for JS-Code. So by default it is set to false and pug will use single quotes because the JS-Code in pug uses double quotes.
-    If you want to use double quotes in pug and double quotes in JS, use prettier's override.
+- `singleQuote`
+  If you want to configure different quotes for pug than for js code, you can use prettier's override.
+  ```json
+  {
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.pug",
+        "options": {
+          "parser": "pug",
+          "singleQuote": true
+        }
+      }
+    ]
+  }
+  ```
 
 ## Integration with editors
 
@@ -112,10 +125,10 @@ If you’re interested in contributing to the development of Prettier for Pug, y
 
 To run `prettier-plugin-pug` locally:
 
--   Clone this repository.
--   Execute `yarn install`.
--   Execute `yarn lint` to make sure that the code passes formatting and linting.
--   Execute `yarn test` to make sure that TypeScript successfully compiles into JavaScript and and all unit tests pass.
+- Clone this repository.
+- Execute `yarn install`.
+- Execute `yarn lint` to make sure that the code passes formatting and linting.
+- Execute `yarn test` to make sure that TypeScript successfully compiles into JavaScript and and all unit tests pass.
 
 ## Credits
 
