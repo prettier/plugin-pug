@@ -3,8 +3,22 @@ a#main-link
 #content
 
 span#testid.testclass
+span#testid.testclass.ab.cd
+span#testid.testclass.ab.cd(other="attribute")
+span#testid.testclass.ab.cd(other="attribute")
+span#testid.testclass.ab.cd(
+  other="attribute",
+  with="many",
+  many="attributes",
+  in="this line"
+)
 span#testid.testclass
 span#testid.testclass
 span#testid.testclass.testclass2
 
-v-text-field#search(:label="$t('search.label')", prepend-inner-icon="search", v-model="search", single-line)
+v-text-field#search(
+  :label="$t('search.label')",
+  prepend-inner-icon="search",
+  v-model="search",
+  single-line
+)

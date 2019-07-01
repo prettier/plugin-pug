@@ -14,7 +14,7 @@ export interface StartAttributesToken {
 	loc: Loc;
 }
 
-export interface Attribute {
+export interface AttributeToken {
 	type: 'attribute';
 	loc: Loc;
 	name: string;
@@ -152,7 +152,7 @@ export interface FilterToken {
 export type Token =
 	| TagToken
 	| StartAttributesToken
-	| Attribute
+	| AttributeToken
 	| EndAttributesToken
 	| IndentToken
 	| ClassToken

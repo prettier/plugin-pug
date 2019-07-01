@@ -13,7 +13,33 @@ div
 .content.text-success
 .content.text-success.bg-dark
 .content.text-success.bg-dark
+.content.aaa.ad.text-success(:with="code()")
 .content.aaa.ad.text-success.bg-dark(class="#ad")
+.content.aaa.ad.text-success.bg-dark(
+  other,
+  attributes="with many long text",
+  class="#ad",
+  so="it",
+  will="wrap",
+  the="line"
+)
+.content.aaa.ad.text-success.bg-dark(
+  another="long line",
+  :but="withCode()",
+  class="#ad"
+)
 - const classes = ['foo', 'bar', 'baz']
 a.bing.fizz(class=classes)
 a.bang.fizz.bib(class=classes, class=['bing'])
+
+v-text-field.search(
+  :label="$t('search.label')",
+  prepend-inner-icon="search",
+  v-model="search",
+  single-line
+)
+
+span#testid.testclass.ab.cd.ef.hi.jk(
+  other="attribute",
+  other2="attribute2"
+)

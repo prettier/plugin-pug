@@ -2,7 +2,7 @@ import { AST, Doc, FastPath, Options, Parser, ParserOptions, Plugin, util } from
 // @ts-ignore
 import * as lex from 'pug-lexer';
 import { createLogger, Logger, LogLevel } from './logger';
-import { Token } from './pug-token';
+import { AttributeToken, EndAttributesToken, Token } from './pug-token';
 
 const { makeString } = util;
 
@@ -27,6 +27,21 @@ function quotationType(code: string): QuotationType | undefined {
 		return 'SINGLE';
 	} else if (indexOfDoubleQuote < indexOfSingleQuote) {
 		return 'DOUBLE';
+	}
+	return;
+}
+
+function previousNormalAttributeToken(tokens: Token[], index: number): AttributeToken | undefined {
+	for (let i: number = index - 1; i > 0; i--) {
+		const token: Token = tokens[i];
+		if (token.type === 'start-attributes') {
+			return;
+		}
+		if (token.type === 'attribute') {
+			if (token.name !== 'class' && token.name !== 'id') {
+				return token;
+			}
+		}
 	}
 	return;
 }
@@ -77,7 +92,7 @@ export const plugin: Plugin = {
 		'pug-ast': {
 			print(
 				path: FastPath,
-				{ singleQuote, tabWidth, useTabs }: ParserOptions,
+				{ printWidth, singleQuote, tabWidth, useTabs }: ParserOptions,
 				print: (path: FastPath) => Doc
 			): Doc {
 				const tokens: Token[] = path.stack[0];
@@ -90,10 +105,15 @@ export const plugin: Plugin = {
 				}
 				let pipelessText: boolean = false;
 
+				let startTagPosition: number = 0;
+				let startAttributePosition: number = 0;
+				let previousAttributeRemapped: boolean = false;
+				let wrapAttributes: boolean = false;
+
 				for (let index: number = 0; index < tokens.length; index++) {
 					const token: Token = tokens[index];
-					const previousToken = tokens[index - 1];
-					const nextToken = tokens[index + 1];
+					const previousToken: Token | undefined = tokens[index - 1];
+					const nextToken: Token | undefined = tokens[index + 1];
 					logger.debug('[printers:pug-ast:print]:', JSON.stringify(token));
 					switch (token.type) {
 						case 'tag':
@@ -111,10 +131,26 @@ export const plugin: Plugin = {
 							if (!(token.val === 'div' && (nextToken.type === 'class' || nextToken.type === 'id'))) {
 								result += token.val;
 							}
+							startTagPosition = result.length;
 							break;
 						case 'start-attributes':
 							if (nextToken && nextToken.type === 'attribute') {
+								previousAttributeRemapped = false;
+								startAttributePosition = result.length;
 								result += '(';
+								const start: number = result.lastIndexOf('\n') + 1;
+								let lineLength: number = result.substring(start).length;
+								console.info(lineLength, printWidth);
+								let tempToken: AttributeToken | EndAttributesToken = nextToken;
+								let tempIndex: number = index + 1;
+								while (tempToken.type === 'attribute') {
+									lineLength += tempToken.name.length + 1 + tempToken.val.toString().length;
+									console.info(lineLength, printWidth);
+									tempToken = tokens[++tempIndex] as AttributeToken | EndAttributesToken;
+								}
+								if (lineLength > printWidth) {
+									wrapAttributes = true;
+								}
 							}
 							break;
 						case 'attribute':
@@ -137,14 +173,17 @@ export const plugin: Plugin = {
 										continue;
 									}
 									// Write css-class in front of attributes
-									const position = result.lastIndexOf('(');
+									const position: number = startAttributePosition;
 									result = [result.slice(0, position), `.${className}`, result.slice(position)].join(
 										''
 									);
+									startAttributePosition += 1 + className.length;
 								}
 								if (specialClasses.length > 0) {
 									token.val = makeString(specialClasses.join(' '), singleQuote ? "'" : '"', false);
+									previousAttributeRemapped = false;
 								} else {
+									previousAttributeRemapped = true;
 									break;
 								}
 							} else if (
@@ -157,29 +196,35 @@ export const plugin: Plugin = {
 								val = val.substring(1, val.length - 1);
 								val = val.trim();
 								// Write css-id in front of css-classes
-								let lastPositionOfNewline = result.lastIndexOf('\n');
-								if (lastPositionOfNewline === -1) {
-									// If no newline was found, set position to zero
-									lastPositionOfNewline = 0;
-								}
-								let position: number = result.indexOf('.', lastPositionOfNewline);
-								const firstPositionOfStartAttributes: number = result.indexOf(
-									'(',
-									lastPositionOfNewline
-								);
-								if (
-									position === -1 ||
-									(firstPositionOfStartAttributes !== -1 && position > firstPositionOfStartAttributes)
-								) {
-									position = firstPositionOfStartAttributes;
-								}
+								const position: number = startTagPosition;
 								result = [result.slice(0, position), `#${val}`, result.slice(position)].join('');
+								startAttributePosition += 1 + val.length;
 								result = result.replace(/div#/, '#');
+								if (previousToken.type === 'attribute' && previousToken.name !== 'class') {
+									previousAttributeRemapped = true;
+								}
 								break;
 							}
 
-							if (previousToken && previousToken.type === 'attribute') {
-								result += ', ';
+							const hasNormalPreviousToken: AttributeToken | undefined = previousNormalAttributeToken(
+								tokens,
+								index
+							);
+							if (
+								previousToken &&
+								previousToken.type === 'attribute' &&
+								(!previousAttributeRemapped || hasNormalPreviousToken)
+							) {
+								result += ',';
+								if (!wrapAttributes) {
+									result += ' ';
+								}
+							}
+							previousAttributeRemapped = false;
+
+							if (wrapAttributes) {
+								result += '\n';
+								result += indent.repeat(indentLevel + 1);
 							}
 
 							result += `${token.name}`;
@@ -202,16 +247,8 @@ export const plugin: Plugin = {
 										// Swap single and double quotes
 										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									}
-								} else if (val.startsWith("'")) {
-									if (!singleQuote) {
-										// Swap single and double quotes
-										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
-									}
-								} else if (val.startsWith('"')) {
-									if (singleQuote) {
-										// Swap single and double quotes
-										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
-									}
+								} else if (/^["'](.*)["']$/.test(val)) {
+									val = makeString(val.slice(1, -1), singleQuote ? "'" : '"', false);
 								} else if (val === 'true') {
 									// The value is exactly true and is not quoted
 									break;
@@ -226,6 +263,11 @@ export const plugin: Plugin = {
 							}
 							break;
 						case 'end-attributes':
+							if (wrapAttributes) {
+								result += '\n';
+								result += indent.repeat(indentLevel);
+							}
+							wrapAttributes = false;
 							if (result.endsWith('(')) {
 								// There were no attributes
 								result = result.substring(0, result.length - 1);

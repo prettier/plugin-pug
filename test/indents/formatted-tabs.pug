@@ -19,10 +19,22 @@ html
 					.flex-box.header {{ $t('mylangkey.things') }}
 
 					.flex-box.select(v-if="things[0].visible")
-						v-autocomplete(name="things[0].name", v-model="things[0].value", item-text="name", item-value="id", :items="mythings")
+						v-autocomplete(
+							name="things[0].name",
+							v-model="things[0].value",
+							item-text="name",
+							item-value="id",
+							:items="mythings"
+						)
 
 					.flex-box.select(v-if="things[1].visible")
-						v-autocomplete(name="things[1].name", v-model="things[1].value", item-text="name", item-value="id", :items="mythings")
+						v-autocomplete(
+							name="things[1].name",
+							v-model="things[1].value",
+							item-text="name",
+							item-value="id",
+							:items="mythings"
+						)
 
 					#use-of-id(test)
 						span Hello

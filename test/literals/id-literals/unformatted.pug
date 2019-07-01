@@ -3,6 +3,10 @@ a#main-link
 div#content
 
 span.testclass(id="testid")
+span.testclass(id="testid", class="ab cd")
+span.testclass(id="testid", class="ab cd", other="attribute")
+span.testclass(class="ab", id="testid", class="cd", other="attribute")
+span.testclass(id="testid", class="ab cd", other="attribute" with="many", many="attributes", in="this line")
 span#testid.testclass
 span.testclass#testid
 span.testclass#testid(class="testclass2")
