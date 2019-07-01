@@ -6,7 +6,7 @@
 
 [diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.6...1.0.0-alpha.7)
 
-- Support for wrap after `printWidth` ([#8])
+- Support for wrap after `printWidth` ([#8])  
   _Currently not very accurate, but works_
 
 [#8]: https://github.com/Shinigami92/prettier-plugin-pug/pull/8
