@@ -1,8 +1,10 @@
-import { AST, Doc, FastPath, Options, Parser, ParserOptions, Plugin } from 'prettier';
+import { AST, Doc, FastPath, Options, Parser, ParserOptions, Plugin, util } from 'prettier';
 // @ts-ignore
 import * as lex from 'pug-lexer';
 import { createLogger, Logger, LogLevel } from './logger';
 import { Token } from './pug-token';
+
+const { makeString } = util;
 
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {
@@ -27,11 +29,6 @@ function quotationType(code: string): QuotationType | undefined {
 		return 'DOUBLE';
 	}
 	return;
-}
-
-function quote(useSingleQuote: boolean, value: string): string {
-	const quote: string = useSingleQuote ? "'" : '"';
-	return `${quote}${value}${quote}`;
 }
 
 export const plugin: Plugin = {
@@ -146,7 +143,7 @@ export const plugin: Plugin = {
 									);
 								}
 								if (specialClasses.length > 0) {
-									token.val = quote(singleQuote, specialClasses.join(' '));
+									token.val = makeString(specialClasses.join(' '), singleQuote ? "'" : '"', false);
 								} else {
 									break;
 								}
