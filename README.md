@@ -77,6 +77,25 @@ yarn add --dev prettier prettier-plugin-pug
 yarn prettier --write "**/*.pug"
 ```
 
+### Prettier Options
+
+- `singleQuote`
+  If you want to configure different quotes for pug than for js code, you can use prettier's override.
+  ```json
+  {
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.pug",
+        "options": {
+          "parser": "pug",
+          "singleQuote": true
+        }
+      }
+    ]
+  }
+  ```
+
 ## Integration with editors
 
 If you are using a text editor that supports Prettier integration (e.g. [Atom](https://atom.io/packages/prettier-atom)), you can have all Prettier perks for your Pug code too!
@@ -107,10 +126,10 @@ If you’re interested in contributing to the development of Prettier for Pug, y
 
 To run `prettier-plugin-pug` locally:
 
--   Clone this repository.
--   Execute `yarn install`.
--   Execute `yarn lint` to make sure that the code passes formatting and linting.
--   Execute `yarn test` to make sure that TypeScript successfully compiles into JavaScript and and all unit tests pass.
+- Clone this repository.
+- Execute `yarn install`.
+- Execute `yarn lint` to make sure that the code passes formatting and linting.
+- Execute `yarn test` to make sure that TypeScript successfully compiles into JavaScript and and all unit tests pass.
 
 ## Credits
 

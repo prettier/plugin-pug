@@ -4,6 +4,7 @@
 
 -   Fix indentation for comments
 -   Improve indentation for tags
+-   Support `singleQuote` option
 -   Setup eslint with TypeScript configuration ([#4])
 -   Setup [Azure Pipelines](https://dev.azure.com/shinigami92/prettier-plugin-pug/_build?definitionId=1)
 
