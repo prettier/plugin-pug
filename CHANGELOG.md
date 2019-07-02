@@ -2,6 +2,8 @@
 
 [diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.7...master)
 
+- Suppress log output in production
+
 # 1.0.0-alpha.7
 
 [diff](https://github.com/Shinigami92/prettier-plugin-pug/compare/1.0.0-alpha.6...1.0.0-alpha.7)
