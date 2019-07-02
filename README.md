@@ -22,8 +22,8 @@
   <a href="#badge">
     <img alt="code style: Prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"><!--
   --></a>
-  <a href="https://dev.azure.com/shinigami92/prettier-plugin-pug/_build/latest?definitionId=1&branchName=master">
-    <img alt="Build Status" src="https://dev.azure.com/shinigami92/prettier-plugin-pug/_apis/build/status/Shinigami92.prettier-plugin-pug?branchName=master"><!--
+  <a href="https://dev.azure.com/shinigami92/Prettier%20Pug%20plugin/_build/latest?definitionId=2&branchName=master">
+    <img alt="Build Status" src="https://dev.azure.com/shinigami92/Prettier%20Pug%20plugin/_apis/build/status/Prettier%20Pug%20plugin?branchName=master"><!--
   --></a>
 </p>
 
