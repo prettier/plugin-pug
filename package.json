@@ -1,6 +1,6 @@
 {
 	"name": "prettier-plugin-pug",
-	"version": "1.0.0-alpha.8",
+	"version": "1.0.0-alpha.9",
 	"description": "Plugin for Prettier to format pug code",
 	"main": "dist/index.js",
 	"scripts": {
