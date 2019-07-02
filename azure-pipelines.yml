@@ -1,20 +1,20 @@
 pool:
-  vmImage: 'ubuntu-latest'
+    vmImage: 'ubuntu-latest'
 
 steps:
-- task: YarnInstaller@3
-  inputs:
-    versionSpec: '1.x'
-  displayName: 'Install Yarn'
+    - task: YarnInstaller@3
+      inputs:
+          versionSpec: '1.x'
+      displayName: 'Install Yarn'
 
-- script: yarn
-  displayName: 'Install dependencies'
+    - script: yarn
+      displayName: 'Install dependencies'
 
-- script: yarn lint
-  displayName: 'Lint'
+    - script: yarn lint
+      displayName: 'Lint'
 
-- script: yarn test --silent
-  displayName: 'Test'
+    - script: yarn test --silent
+      displayName: 'Test'
 
-- script: yarn build
-  displayName: 'Build'
+    - script: yarn build
+      displayName: 'Build'
