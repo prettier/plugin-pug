@@ -140,12 +140,12 @@ export const plugin: Plugin = {
 								result += '(';
 								const start: number = result.lastIndexOf('\n') + 1;
 								let lineLength: number = result.substring(start).length;
-								console.info(lineLength, printWidth);
+								logger.debug(lineLength, printWidth);
 								let tempToken: AttributeToken | EndAttributesToken = nextToken;
 								let tempIndex: number = index + 1;
 								while (tempToken.type === 'attribute') {
 									lineLength += tempToken.name.length + 1 + tempToken.val.toString().length;
-									console.info(lineLength, printWidth);
+									logger.debug(lineLength, printWidth);
 									tempToken = tokens[++tempIndex] as AttributeToken | EndAttributesToken;
 								}
 								if (lineLength > printWidth) {
