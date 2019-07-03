@@ -141,4 +141,4 @@ To run `@prettier/plugin-pug` locally:
 ## Credits
 
 This project was inspired by https://github.com/gicentre/prettier-plugin-elm.  
-Many thanks also to @j-f1, @lipis and @azz for the help in transferring this repos to the prettier orga.
+Many thanks also to [@j-f1](https://github.com/j-f1), [@lipis](https://github.com/lipis) and [@azz](https://github.com/azz) for the help in transferring this repos to the prettier orga.
