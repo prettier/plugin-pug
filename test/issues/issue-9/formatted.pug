@@ -1,0 +1,5 @@
+.without-apostrophe(foo="{{ 'hello world' | uppercase }}")
+  | {{ 'hello world' | uppercase }}
+
+.with-apostrophe(foo="{{ 'it\'s me' | uppercase }}")
+  | {{ "it's me" | uppercase }}
