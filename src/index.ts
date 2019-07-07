@@ -234,8 +234,8 @@ export const plugin: Plugin = {
 								}
 							} else {
 								let val = token.val;
-								// Format Vue v-bind
 								if (token.name.startsWith(':') || token.name.startsWith('v-bind:')) {
+									// Format Vue v-bind
 									// Expect js-code
 									val = val.trim();
 									val = val.replace(/\s\s+/g, ' ');
@@ -247,6 +247,11 @@ export const plugin: Plugin = {
 										// Swap single and double quotes
 										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									}
+								} else if (/^(["']{{)(.*)(}}["'])$/.test(val)) {
+									// Format Angular code
+									val = val.slice(3, -3);
+									val = val.trim();
+									val = `"{{ ${val} }}"`;
 								} else if (/^["'](.*)["']$/.test(val)) {
 									val = makeString(val.slice(1, -1), singleQuote ? "'" : '"', false);
 								} else if (val === 'true') {
@@ -382,8 +387,8 @@ export const plugin: Plugin = {
 								needsTrailingWhitespace = true;
 							}
 							val = val.trim();
-							// Format mustache code like in Vue
 							if (val.startsWith('{{') && val.endsWith('}}')) {
+								// Format mustache code like in Vue
 								let code: string = val.substring(2, val.length - 2);
 								code = code.trim();
 								const type: QuotationType | undefined = quotationType(code);
