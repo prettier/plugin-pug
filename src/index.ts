@@ -393,10 +393,18 @@ export const plugin: Plugin = {
 								code = code.trim();
 								const type: QuotationType | undefined = quotationType(code);
 								if ((type === 'SINGLE' && singleQuote) || (type === 'DOUBLE' && !singleQuote)) {
-									val = '{{ ';
-									val += code.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
-									val += ' }}';
+									code = code.replace(/['"]/g, (match: string, index: number, raw: string) => {
+										if (index !== 0 || index !== raw.length - 1) {
+											const prevChar = raw[index - 1];
+											const nextChar = raw[index + 1];
+											if (/[\S]/.test(prevChar) && /[\S ]/.test(nextChar)) {
+												return match;
+											}
+										}
+										return match === '"' ? "'" : '"';
+									});
 								}
+								val = `{{ ${code} }}`;
 							}
 							if (previousToken && (previousToken.type === 'tag' || previousToken.type === 'id')) {
 								val = ` ${val}`;
