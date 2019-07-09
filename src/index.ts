@@ -259,6 +259,11 @@ export const plugin: Plugin = {
 										val = `{${val.substring(2, val.length)}`;
 									}
 								}
+
+								if (token.mustEscape === false) {
+									result += '!';
+								}
+
 								result += `=${val}`;
 							}
 							break;
@@ -408,11 +413,19 @@ export const plugin: Plugin = {
 							result += `#{${token.val}}`;
 							break;
 						case 'code':
-							if (indentLevel > 0) {
-								// Insert one extra indent
-								result += indent;
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
 							}
-							result += `- ${token.val}`;
+							result += token.buffer ? '=' : '-';
+							result += ` ${token.val}`;
 							break;
 						case 'id':
 							// Handle id attribute
@@ -479,6 +492,9 @@ export const plugin: Plugin = {
 							result += 'extends ';
 							break;
 						case 'path':
+							if (previousToken && previousToken.type === 'include') {
+								result += ' ';
+							}
 							result += token.val;
 							break;
 						case 'start-pug-interpolation':
@@ -495,6 +511,88 @@ export const plugin: Plugin = {
 							break;
 						case 'filter':
 							result += `:${token.val}`;
+							break;
+						case 'call':
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
+							}
+							result += `+${token.val}`;
+							let callArgs: string | null = token.args;
+							if (callArgs) {
+								callArgs = callArgs.trim();
+								callArgs = callArgs.replace(/\s\s+/g, ' ');
+								result += `(${callArgs})`;
+							}
+							break;
+						case 'mixin':
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
+							}
+							result += `mixin ${token.val}`;
+							let mixinArgs: string | null = token.args;
+							if (mixinArgs) {
+								mixinArgs = mixinArgs.trim();
+								mixinArgs = mixinArgs.replace(/\s\s+/g, ' ');
+								result += `(${mixinArgs})`;
+							}
+							break;
+						case 'if':
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
+							}
+							result += `if ${token.val}`;
+							break;
+						case 'mixin-block':
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
+							}
+							result += 'block';
+							break;
+						case 'else':
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
+							}
+							result += 'else';
 							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));

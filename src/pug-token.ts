@@ -149,6 +149,37 @@ export interface FilterToken {
 	val: string;
 }
 
+export interface CallToken {
+	type: 'call';
+	loc: Loc;
+	val: string;
+	args: string;
+}
+
+export interface MixinToken {
+	type: 'mixin';
+	loc: Loc;
+	val: string;
+	args: string | null;
+}
+
+export interface IfToken {
+	type: 'if';
+	loc: Loc;
+	val: string;
+}
+
+export interface MixinBlockToken {
+	type: 'mixin-block';
+	loc: Loc;
+}
+
+export interface ElseToken {
+	type: 'else';
+	loc: Loc;
+	val: string;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -174,4 +205,9 @@ export type Token =
 	| StartPugInterpolationToken
 	| EndPugInterpolationToken
 	| IncludeToken
-	| FilterToken;
+	| FilterToken
+	| CallToken
+	| MixinToken
+	| IfToken
+	| MixinBlockToken
+	| ElseToken;
