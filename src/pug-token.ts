@@ -149,6 +149,13 @@ export interface FilterToken {
 	val: string;
 }
 
+export interface CallToken {
+	type: 'call';
+	loc: Loc;
+	val: string;
+	args: string;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -174,4 +181,5 @@ export type Token =
 	| StartPugInterpolationToken
 	| EndPugInterpolationToken
 	| IncludeToken
-	| FilterToken;
+	| FilterToken
+	| CallToken;
