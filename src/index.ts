@@ -511,7 +511,13 @@ export const plugin: Plugin = {
 										break;
 								}
 							}
-							result += `+${token.val}(${token.args})`;
+							result += `+${token.val}`;
+							let callArgs: string | null = token.args;
+							if (callArgs) {
+								callArgs = callArgs.trim();
+								callArgs = callArgs.replace(/\s\s+/g, ' ');
+								result += `(${callArgs})`;
+							}
 							break;
 						case 'mixin':
 							if (previousToken) {
