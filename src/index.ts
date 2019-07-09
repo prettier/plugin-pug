@@ -259,6 +259,11 @@ export const plugin: Plugin = {
 										val = `{${val.substring(2, val.length)}`;
 									}
 								}
+
+								if (token.mustEscape === false) {
+									result += '!';
+								}
+
 								result += `=${val}`;
 							}
 							break;
