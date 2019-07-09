@@ -504,6 +504,24 @@ export const plugin: Plugin = {
 							result += `+${token.val}(${token.args})`;
 							break;
 						case 'mixin':
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
+							}
+							result += `mixin ${token.val}`;
+							let mixinArgs: string | null = token.args;
+							if (mixinArgs) {
+								mixinArgs = mixinArgs.trim();
+								mixinArgs = mixinArgs.replace(/\s\s+/g, ' ');
+								result += `(${mixinArgs})`;
+							}
 							break;
 						case 'if':
 							break;
