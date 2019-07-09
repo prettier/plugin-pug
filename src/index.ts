@@ -503,6 +503,14 @@ export const plugin: Plugin = {
 							result += indent;
 							result += `+${token.val}(${token.args})`;
 							break;
+						case 'mixin':
+							break;
+						case 'if':
+							break;
+						case 'mixin-block':
+							break;
+						case 'else':
+							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
 					}
