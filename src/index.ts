@@ -46,6 +46,21 @@ function previousNormalAttributeToken(tokens: Token[], index: number): Attribute
 	return;
 }
 
+function printIndent(previousToken: Token, result: string, indent: string, indentLevel: number): string {
+	if (previousToken) {
+		switch (previousToken.type) {
+			case 'newline':
+			case 'outdent':
+				result += indent.repeat(indentLevel);
+				break;
+			case 'indent':
+				result += indent;
+				break;
+		}
+	}
+	return result;
+}
+
 export const plugin: Plugin = {
 	languages: [
 		{
@@ -117,17 +132,7 @@ export const plugin: Plugin = {
 					logger.debug('[printers:pug-ast:print]:', JSON.stringify(token));
 					switch (token.type) {
 						case 'tag':
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-									case 'outdent':
-										result += indent.repeat(indentLevel);
-										break;
-									case 'indent':
-										result += indent;
-										break;
-								}
-							}
+							result = printIndent(previousToken, result, indent, indentLevel);
 							if (!(token.val === 'div' && (nextToken.type === 'class' || nextToken.type === 'id'))) {
 								result += token.val;
 							}
@@ -299,17 +304,7 @@ export const plugin: Plugin = {
 							indentLevel--;
 							break;
 						case 'class':
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-									case 'outdent':
-										result += indent.repeat(indentLevel);
-										break;
-									case 'indent':
-										result += indent;
-										break;
-								}
-							}
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `.${token.val}`;
 							if (nextToken && nextToken.type === 'text') {
 								result += ' ';
@@ -324,17 +319,7 @@ export const plugin: Plugin = {
 							result += '\n';
 							break;
 						case 'comment':
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-									case 'outdent':
-										result += indent.repeat(indentLevel);
-										break;
-									case 'indent':
-										result += indent;
-										break;
-								}
-							}
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `//${token.buffer ? '' : '-'}${token.val.replace(/\s\s+/g, ' ')}`;
 							break;
 						case 'newline':
@@ -413,17 +398,7 @@ export const plugin: Plugin = {
 							result += `#{${token.val}}`;
 							break;
 						case 'code':
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-									case 'outdent':
-										result += indent.repeat(indentLevel);
-										break;
-									case 'indent':
-										result += indent;
-										break;
-								}
-							}
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += token.buffer ? '=' : '-';
 							result += ` ${token.val}`;
 							break;
@@ -471,17 +446,7 @@ export const plugin: Plugin = {
 							result += '.';
 							break;
 						case 'block':
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-									case 'outdent':
-										result += indent.repeat(indentLevel);
-										break;
-									case 'indent':
-										result += indent;
-										break;
-								}
-							}
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += 'block ';
 							if (token.mode !== 'replace') {
 								result += token.mode;
@@ -513,17 +478,7 @@ export const plugin: Plugin = {
 							result += `:${token.val}`;
 							break;
 						case 'call':
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-									case 'outdent':
-										result += indent.repeat(indentLevel);
-										break;
-									case 'indent':
-										result += indent;
-										break;
-								}
-							}
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `+${token.val}`;
 							let callArgs: string | null = token.args;
 							if (callArgs) {
@@ -533,17 +488,7 @@ export const plugin: Plugin = {
 							}
 							break;
 						case 'mixin':
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-									case 'outdent':
-										result += indent.repeat(indentLevel);
-										break;
-									case 'indent':
-										result += indent;
-										break;
-								}
-							}
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `mixin ${token.val}`;
 							let mixinArgs: string | null = token.args;
 							if (mixinArgs) {
@@ -553,45 +498,15 @@ export const plugin: Plugin = {
 							}
 							break;
 						case 'if':
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-									case 'outdent':
-										result += indent.repeat(indentLevel);
-										break;
-									case 'indent':
-										result += indent;
-										break;
-								}
-							}
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `if ${token.val}`;
 							break;
 						case 'mixin-block':
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-									case 'outdent':
-										result += indent.repeat(indentLevel);
-										break;
-									case 'indent':
-										result += indent;
-										break;
-								}
-							}
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += 'block';
 							break;
 						case 'else':
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-									case 'outdent':
-										result += indent.repeat(indentLevel);
-										break;
-									case 'indent':
-										result += indent;
-										break;
-								}
-							}
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += 'else';
 							break;
 						default:
