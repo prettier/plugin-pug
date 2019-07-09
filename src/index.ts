@@ -534,6 +534,18 @@ export const plugin: Plugin = {
 							}
 							break;
 						case 'if':
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
+							}
+							result += `if ${token.val}`;
 							break;
 						case 'mixin-block':
 							break;
