@@ -479,6 +479,9 @@ export const plugin: Plugin = {
 							result += 'extends ';
 							break;
 						case 'path':
+							if (previousToken && previousToken.type === 'include') {
+								result += ' ';
+							}
 							result += token.val;
 							break;
 						case 'start-pug-interpolation':
