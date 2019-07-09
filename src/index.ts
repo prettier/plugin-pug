@@ -496,6 +496,10 @@ export const plugin: Plugin = {
 						case 'filter':
 							result += `:${token.val}`;
 							break;
+						case 'call':
+							result += indent;
+							result += `+${token.val}(${token.args})`;
+							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
 					}
