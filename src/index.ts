@@ -554,8 +554,32 @@ export const plugin: Plugin = {
 							result += `if ${token.val}`;
 							break;
 						case 'mixin-block':
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
+							}
+							result += 'block';
 							break;
 						case 'else':
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
+							}
+							result += 'else';
 							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
