@@ -500,7 +500,17 @@ export const plugin: Plugin = {
 							result += `:${token.val}`;
 							break;
 						case 'call':
-							result += indent;
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'newline':
+									case 'outdent':
+										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
+										result += indent;
+										break;
+								}
+							}
 							result += `+${token.val}(${token.args})`;
 							break;
 						case 'mixin':
