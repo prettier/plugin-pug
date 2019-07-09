@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.8...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.9...master)
+
+# 1.0.0-alpha.9
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.8...1.0.0-alpha.9)
+
+- Support mixins ([#11])
+- Fix some issues with indentation
+- Fix buffered attributes
+
+[#11]: https://github.com/prettier/plugin-pug/pull/11
 
 # 1.0.0-alpha.8
 
