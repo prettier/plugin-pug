@@ -2,6 +2,11 @@
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.9...master)
 
+- Correct quotes for Angular attributes
+  - Cherry-Picked from ([#10])
+
+[#10]: https://github.com/prettier/plugin-pug/pull/10
+
 # 1.0.0-alpha.9
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.8...1.0.0-alpha.9)
