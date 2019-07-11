@@ -252,6 +252,12 @@ export const plugin: Plugin = {
 										// Swap single and double quotes
 										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
 									}
+								} else if (/^(["']{{)(.*)(}}["'])$/.test(val)) {
+									// Format Angular code
+									val = val.slice(3, -3);
+									val = val.trim();
+									const quotes: "'" | '"' = singleQuote ? "'" : '"';
+									val = `${quotes}{{ ${val} }}${quotes}`;
 								} else if (/^["'](.*)["']$/.test(val)) {
 									val = makeString(val.slice(1, -1), singleQuote ? "'" : '"', false);
 								} else if (val === 'true') {
