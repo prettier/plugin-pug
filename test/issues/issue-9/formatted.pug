@@ -3,3 +3,6 @@
 
 .with-apostrophe(foo="{{ 'it\'s me' | uppercase }}")
   | {{ "it's me" | uppercase }}
+
+.very-special-case
+  | {{ `"${`Jean ${'"John"'} d'Arc`.toUpperCase()}"` }}
