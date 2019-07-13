@@ -1,4 +1,4 @@
-import { AST, Doc, FastPath, Options, Parser, ParserOptions, Plugin, util } from 'prettier';
+import { AST, Doc, FastPath, format, Options, Parser, ParserOptions, Plugin, util } from 'prettier';
 // @ts-ignore
 import * as lex from 'pug-lexer';
 import { createLogger, Logger, LogLevel } from './logger';
@@ -382,12 +382,11 @@ export const plugin: Plugin = {
 								// Format mustache code like in Vue
 								let code: string = val.substring(2, val.length - 2);
 								code = code.trim();
-								const type: QuotationType | undefined = quotationType(code);
-								if ((type === 'SINGLE' && singleQuote) || (type === 'DOUBLE' && !singleQuote)) {
-									val = '{{ ';
-									val += code.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
-									val += ' }}';
+								code = format(code, { parser: 'babel', singleQuote: !singleQuote, printWidth: 9000 });
+								if (code.endsWith(';\n')) {
+									code = code.slice(0, -2);
 								}
+								val = `{{ ${code} }}`;
 							}
 							if (previousToken && (previousToken.type === 'tag' || previousToken.type === 'id')) {
 								val = ` ${val}`;
