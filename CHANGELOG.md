@@ -1,6 +1,10 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.9...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.10...master)
+
+# 1.0.0-alpha.10
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.9...1.0.0-alpha.10)
 
 - Correct quotes for Angular attributes ([#10])
 
