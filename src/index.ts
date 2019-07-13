@@ -382,7 +382,7 @@ export const plugin: Plugin = {
 								// Format mustache code like in Vue
 								let code: string = val.substring(2, val.length - 2);
 								code = code.trim();
-								code = format(code, { parser: 'babel', singleQuote: !singleQuote });
+								code = format(code, { parser: 'babel', singleQuote: !singleQuote, printWidth: 9000 });
 								if (code.endsWith(';\n')) {
 									code = code.slice(0, -2);
 								}

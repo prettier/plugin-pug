@@ -6,3 +6,5 @@
 
 .very-special-case
   | {{ `"${ `Jean ${ '"John"' } d'Arc`.toUpperCase() }"` }}
+
+span {{ $t('a-language-key.that-is.very-long', { it:  "also", have: 'some',    properties: 'that makes the line very long...' }) }}
