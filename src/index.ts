@@ -158,7 +158,7 @@ export const plugin: Plugin = {
 								}
 							}
 							break;
-						case 'attribute':
+						case 'attribute': {
 							if (
 								token.name === 'class' &&
 								typeof token.val === 'string' &&
@@ -279,6 +279,7 @@ export const plugin: Plugin = {
 								result += `=${val}`;
 							}
 							break;
+						}
 						case 'end-attributes':
 							if (wrapAttributes) {
 								result += '\n';
@@ -336,7 +337,7 @@ export const plugin: Plugin = {
 							}
 							result += '\n';
 							break;
-						case 'text':
+						case 'text': {
 							let val = token.val;
 							val = val.replace(/\s\s+/g, ' ');
 							if (previousToken) {
@@ -397,6 +398,7 @@ export const plugin: Plugin = {
 								result += ' ';
 							}
 							break;
+						}
 						case 'interpolated-code':
 							if (previousToken && previousToken.type === 'tag') {
 								result += ' ';
@@ -408,7 +410,7 @@ export const plugin: Plugin = {
 							result += token.buffer ? '=' : '-';
 							result += ` ${token.val}`;
 							break;
-						case 'id':
+						case 'id': {
 							// Handle id attribute
 							// Write css-id in front of css-classes
 							let lastPositionOfNewline = result.lastIndexOf('\n');
@@ -436,6 +438,7 @@ export const plugin: Plugin = {
 								''
 							);
 							break;
+						}
 						case 'start-pipeless-text':
 							pipelessText = true;
 							result += '\n';
@@ -483,26 +486,28 @@ export const plugin: Plugin = {
 						case 'filter':
 							result += `:${token.val}`;
 							break;
-						case 'call':
+						case 'call': {
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `+${token.val}`;
-							let callArgs: string | null = token.args;
-							if (callArgs) {
-								callArgs = callArgs.trim();
-								callArgs = callArgs.replace(/\s\s+/g, ' ');
-								result += `(${callArgs})`;
+							let args: string | null = token.args;
+							if (args) {
+								args = args.trim();
+								args = args.replace(/\s\s+/g, ' ');
+								result += `(${args})`;
 							}
 							break;
-						case 'mixin':
+						}
+						case 'mixin': {
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `mixin ${token.val}`;
-							let mixinArgs: string | null = token.args;
-							if (mixinArgs) {
-								mixinArgs = mixinArgs.trim();
-								mixinArgs = mixinArgs.replace(/\s\s+/g, ' ');
-								result += `(${mixinArgs})`;
+							let args: string | null = token.args;
+							if (args) {
+								args = args.trim();
+								args = args.replace(/\s\s+/g, ' ');
+								result += `(${args})`;
 							}
 							break;
+						}
 						case 'if':
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `if ${token.val}`;
