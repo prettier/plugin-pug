@@ -2,6 +2,8 @@
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.10...master)
 
+- Fix preceding div if there is a _normal_ class attribute
+
 # 1.0.0-alpha.10
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.9...1.0.0-alpha.10)
