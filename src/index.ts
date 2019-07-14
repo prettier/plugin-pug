@@ -183,6 +183,7 @@ export const plugin: Plugin = {
 										''
 									);
 									startAttributePosition += 1 + className.length;
+									result = result.replace(/div\./, '.');
 								}
 								if (specialClasses.length > 0) {
 									token.val = makeString(specialClasses.join(' '), singleQuote ? "'" : '"', false);
