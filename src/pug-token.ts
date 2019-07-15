@@ -180,6 +180,12 @@ export interface ElseToken {
 	val: string;
 }
 
+export interface AndAttributesToken {
+	type: '&attributes';
+	loc: Loc;
+	val: string;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -210,4 +216,5 @@ export type Token =
 	| MixinToken
 	| IfToken
 	| MixinBlockToken
-	| ElseToken;
+	| ElseToken
+	| AndAttributesToken;
