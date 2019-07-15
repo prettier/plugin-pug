@@ -11,6 +11,24 @@ if (process.env.NODE_ENV === 'test') {
 	logger.setLogLevel(LogLevel.DEBUG);
 }
 
+const CATEGORY_PUG: string = 'Pug';
+
+export interface PugParserOptions {
+	attributeSeparator: 'always' | 'as-needed';
+}
+
+function resolveAttributeSeparatorOption(attributeSeparator: 'always' | 'as-needed'): boolean {
+	switch (attributeSeparator) {
+		case 'always':
+			return true;
+		case 'as-needed':
+			return false;
+	}
+	throw new Error(
+		`Invalid option for pug attributeSeparator. Found '${attributeSeparator}'. Possible options: 'always' or 'as-needed'`
+	);
+}
+
 type QuotationType = 'SINGLE' | 'DOUBLE';
 
 function quotationType(code: string): QuotationType | undefined {
@@ -137,7 +155,7 @@ export const plugin: Plugin = {
 		'pug-ast': {
 			print(
 				path: FastPath,
-				{ printWidth, singleQuote, tabWidth, useTabs }: ParserOptions,
+				{ printWidth, singleQuote, tabWidth, useTabs, attributeSeparator }: ParserOptions & PugParserOptions,
 				print: (path: FastPath) => Doc
 			): Doc {
 				const tokens: Token[] = path.stack[0];
@@ -149,6 +167,8 @@ export const plugin: Plugin = {
 					indent = '\t';
 				}
 				let pipelessText: boolean = false;
+
+				const alwaysUseAttributeSeparator: boolean = resolveAttributeSeparatorOption(attributeSeparator);
 
 				let startTagPosition: number = 0;
 				let startAttributePosition: number = 0;
@@ -251,7 +271,9 @@ export const plugin: Plugin = {
 								previousToken.type === 'attribute' &&
 								(!previousAttributeRemapped || hasNormalPreviousToken)
 							) {
-								result += ',';
+								if (alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name)) {
+									result += ',';
+								}
 								if (!wrapAttributes) {
 									result += ' ';
 								}
@@ -563,7 +585,27 @@ export const plugin: Plugin = {
 			}
 		}
 	},
-	options: [],
+	options: {
+		attributeSeparator: {
+			since: '1.0.0',
+			category: CATEGORY_PUG,
+			type: 'choice',
+			default: 'always',
+			description: 'Change when attributes are separated by commas in tags.',
+			choices: [
+				{
+					value: 'always',
+					description:
+						'Always separate attributes with commas. Example: `button(type="submit", (click)="play()", disabled)`'
+				},
+				{
+					value: 'as-needed',
+					description:
+						'Only add commas between attributes where required. Example: `button(type="submit", (click)="play()" disabled)`'
+				}
+			]
+		}
+	} as any,
 	defaultOptions: {}
 };
 
