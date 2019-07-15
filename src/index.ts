@@ -61,6 +61,36 @@ function printIndent(previousToken: Token, result: string, indent: string, inden
 	return result;
 }
 
+function formatText(text: string, singleQuote: boolean): string {
+	let result: string = '';
+	while (text) {
+		const start = text.indexOf('{{');
+		if (start !== -1) {
+			result += text.slice(0, start);
+			text = text.substring(start + 2);
+			const end = text.indexOf('}}');
+			if (end !== -1) {
+				let code = text.slice(0, end);
+				code = code.trim();
+				code = format(code, { parser: 'babel', singleQuote: !singleQuote, printWidth: 9000 });
+				if (code.endsWith(';\n')) {
+					code = code.slice(0, -2);
+				}
+				result += `{{ ${code} }}`;
+				text = text.slice(end + 2);
+			} else {
+				result += '{{';
+				result += text;
+				text = '';
+			}
+		} else {
+			result += text;
+			text = '';
+		}
+	}
+	return result;
+}
+
 export const plugin: Plugin = {
 	languages: [
 		{
@@ -380,16 +410,7 @@ export const plugin: Plugin = {
 								needsTrailingWhitespace = true;
 							}
 							val = val.trim();
-							if (val.startsWith('{{') && val.endsWith('}}')) {
-								// Format mustache code like in Vue
-								let code: string = val.substring(2, val.length - 2);
-								code = code.trim();
-								code = format(code, { parser: 'babel', singleQuote: !singleQuote, printWidth: 9000 });
-								if (code.endsWith(';\n')) {
-									code = code.slice(0, -2);
-								}
-								val = `{{ ${code} }}`;
-							}
+							val = formatText(val, singleQuote);
 							if (previousToken && (previousToken.type === 'tag' || previousToken.type === 'id')) {
 								val = ` ${val}`;
 							}
