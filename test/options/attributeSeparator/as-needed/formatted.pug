@@ -1,2 +1,22 @@
 button(type="submit", (click)="play()" disabled)
 hello-framework([name]="name", [version]="version", (release)="onVersionRelease()")
+
+nav-component(locale-relative-redirect="true" highlight="home" pin="false")
+
+mixin anchor({ href, isExternal })
+  if !isExternal
+    - href = `${LOCALE_ROOT}/${href}`
+  a(href=`${href}`)&attributes(attributes)
+    if block
+      block
+
++anchor({ href: "contact/" }).extra-class(data-popup)
+
+.wrapper(
+  data-nav
+  data-next="Next"
+  data-prev="Prev"
+  data-slides=4
+  data-arr=[1,2,3,4,5,6]
+  data-obj={att: 1, attr2: 2}
+)
