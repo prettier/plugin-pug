@@ -4,8 +4,10 @@
 
 - Fix preceding div if there is a _normal_ class attribute
 - Improve interpolation in text
-- Introduce new option `attributeSeparator`  
+- Introduce new option `attributeSeparator` ([#13])  
   Possible values: `always` and `as-needed`
+
+[#13]: https://github.com/prettier/plugin-pug/pull/13
 
 # 1.0.0-alpha.10
 
