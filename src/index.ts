@@ -279,15 +279,14 @@ export const plugin: Plugin = {
 									// Format Vue v-bind
 									// Expect js-code
 									val = val.trim();
-									val = val.replace(/\s\s+/g, ' ');
-									val = val.replace('[ {', '[{').replace('} ]', '}]');
-									val = val.replace('[ (', '[(').replace(') ]', ')]');
-									val = val.replace('[ ', '[').replace(' ]', ']');
-									const type: QuotationType | undefined = quotationType(val);
-									if ((type === 'SINGLE' && !singleQuote) || (type === 'DOUBLE' && singleQuote)) {
-										// Swap single and double quotes
-										val = val.replace(/['"]/g, (match) => (match === '"' ? "'" : '"'));
-									}
+									val = val.slice(1, -1);
+									val = format(val, {
+										parser: '__vue_expression' as any,
+										singleQuote: !singleQuote,
+										printWidth: 9000
+									});
+									const quotes: "'" | '"' = singleQuote ? "'" : '"';
+									val = `${quotes}${val}${quotes}`;
 								} else if (/^(["']{{)(.*)(}}["'])$/.test(val)) {
 									// Format Angular code
 									val = val.slice(3, -3);
