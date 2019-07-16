@@ -4,6 +4,8 @@
 
 - Fix preceding div if there is a _normal_ class attribute
 - Improve interpolation in text
+- Introduce new option `attributeSeparator`  
+  Possible values: `always` and `as-needed`
 
 # 1.0.0-alpha.10
 
