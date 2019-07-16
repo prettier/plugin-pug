@@ -2,6 +2,7 @@ import { AST, Doc, FastPath, format, Options, Parser, ParserOptions, Plugin, uti
 // @ts-ignore
 import * as lex from 'pug-lexer';
 import { createLogger, Logger, LogLevel } from './logger';
+import { options as pugOptions, PugParserOptions, resolveAttributeSeparatorOption } from './options';
 import { AttributeToken, EndAttributesToken, Token } from './pug-token';
 
 const { makeString } = util;
@@ -137,7 +138,7 @@ export const plugin: Plugin = {
 		'pug-ast': {
 			print(
 				path: FastPath,
-				{ printWidth, singleQuote, tabWidth, useTabs }: ParserOptions,
+				{ printWidth, singleQuote, tabWidth, useTabs, attributeSeparator }: ParserOptions & PugParserOptions,
 				print: (path: FastPath) => Doc
 			): Doc {
 				const tokens: Token[] = path.stack[0];
@@ -149,6 +150,8 @@ export const plugin: Plugin = {
 					indent = '\t';
 				}
 				let pipelessText: boolean = false;
+
+				const alwaysUseAttributeSeparator: boolean = resolveAttributeSeparatorOption(attributeSeparator);
 
 				let startTagPosition: number = 0;
 				let startAttributePosition: number = 0;
@@ -251,7 +254,9 @@ export const plugin: Plugin = {
 								previousToken.type === 'attribute' &&
 								(!previousAttributeRemapped || hasNormalPreviousToken)
 							) {
-								result += ',';
+								if (alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name)) {
+									result += ',';
+								}
 								if (!wrapAttributes) {
 									result += ' ';
 								}
@@ -566,7 +571,7 @@ export const plugin: Plugin = {
 			}
 		}
 	},
-	options: [],
+	options: pugOptions as any,
 	defaultOptions: {}
 };
 
