@@ -158,6 +158,8 @@ export const plugin: Plugin = {
 				let previousAttributeRemapped: boolean = false;
 				let wrapAttributes: boolean = false;
 
+				const codeInterpolationOptions = { singleQuote: !singleQuote, printWidth: 9000 };
+
 				for (let index: number = 0; index < tokens.length; index++) {
 					const token: Token = tokens[index];
 					const previousToken: Token | undefined = tokens[index - 1];
@@ -275,22 +277,42 @@ export const plugin: Plugin = {
 								}
 							} else {
 								let val = token.val;
-								if (token.name.startsWith(':') || token.name.startsWith('v-bind:')) {
-									// Format Vue v-bind
-									// Expect js-code
+								if (/^((v-bind|v-on)?:|v-model|@).*/.test(token.name)) {
+									// Format Vue expression
 									val = val.trim();
 									val = val.slice(1, -1);
 									val = format(val, {
 										parser: '__vue_expression' as any,
-										singleQuote: !singleQuote,
-										printWidth: 9000
+										...codeInterpolationOptions
 									});
 									const quotes: "'" | '"' = singleQuote ? "'" : '"';
 									val = `${quotes}${val}${quotes}`;
+								} else if (/^(\(.*\)|\[.*\])$/.test(token.name)) {
+									// Format Angular action or binding
+									val = val.trim();
+									val = val.slice(1, -1);
+									val = format(val, {
+										parser: '__ng_interpolation' as any,
+										...codeInterpolationOptions
+									});
+									const quotes: "'" | '"' = singleQuote ? "'" : '"';
+									val = `${quotes}${val}${quotes}`;
+								} else if (/^\*.*$/.test(token.name)) {
+									// Format Angular directive
+									val = val.trim();
+									val = val.slice(1, -1);
+									val = format(val, { parser: '__ng_directive' as any, ...codeInterpolationOptions });
+									const quotes: "'" | '"' = singleQuote ? "'" : '"';
+									val = `${quotes}${val}${quotes}`;
 								} else if (/^(["']{{)(.*)(}}["'])$/.test(val)) {
-									// Format Angular code
+									// Format Angular interpolation
 									val = val.slice(3, -3);
 									val = val.trim();
+									val = val.replace(/\s\s+/g, ' ');
+									// val = format(val, {
+									// 	parser: '__ng_interpolation' as any,
+									// 	...codeInterpolationOptions
+									// });
 									const quotes: "'" | '"' = singleQuote ? "'" : '"';
 									val = `${quotes}{{ ${val} }}${quotes}`;
 								} else if (/^["'](.*)["']$/.test(val)) {
@@ -300,7 +322,8 @@ export const plugin: Plugin = {
 									break;
 								} else {
 									// The value is not quoted and may be js-code
-									val = val.trim().replace(/\s\s+/g, ' ');
+									val = val.trim();
+									val = val.replace(/\s\s+/g, ' ');
 									if (val.startsWith('{ ')) {
 										val = `{${val.substring(2, val.length)}`;
 									}
