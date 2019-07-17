@@ -1,9 +1,13 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.10...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.11...master)
+
+# 1.0.0-alpha.11
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.10...1.0.0-alpha.11)
 
 - Fix preceding div if there is a _normal_ class attribute
-- Improve interpolation in text
+- Improve interpolation in text and bindings
 - Introduce new option `attributeSeparator` ([#13])  
   Possible values: `always` and `as-needed`
 
