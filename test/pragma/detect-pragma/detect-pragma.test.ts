@@ -3,6 +3,8 @@ import { resolve } from 'path';
 import { parsers } from './../../../src/index';
 import { Parser } from 'prettier';
 
+/* eslint @typescript-eslint/no-non-null-assertion: off */
+
 // ts-jest needs the exclamation mark, so it does not have the impression that the variables are undefined
 const pugParser: Parser = parsers!.pug;
 
