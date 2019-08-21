@@ -1,6 +1,12 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.11...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.0...master)
+
+# 1.0.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.0-alpha.11...1.0.0)
+
+- No real changes to `1.0.0-alpha.11`
 
 # 1.0.0-alpha.11
 
