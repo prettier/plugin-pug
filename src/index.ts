@@ -12,26 +12,6 @@ if (process.env.NODE_ENV === 'test') {
 	logger.setLogLevel(LogLevel.DEBUG);
 }
 
-type QuotationType = 'SINGLE' | 'DOUBLE';
-
-function quotationType(code: string): QuotationType | undefined {
-	const indexOfSingleQuote: number = code.indexOf("'");
-	const indexOfDoubleQuote: number = code.indexOf('"');
-	logger.debug({ code, indexOfSingleQuote, indexOfDoubleQuote });
-	if (indexOfSingleQuote === -1 && indexOfDoubleQuote === -1) {
-		return undefined;
-	} else if (indexOfSingleQuote === -1 && indexOfDoubleQuote !== -1) {
-		return 'DOUBLE';
-	} else if (indexOfDoubleQuote === -1 && indexOfSingleQuote !== -1) {
-		return 'SINGLE';
-	} else if (indexOfSingleQuote < indexOfDoubleQuote) {
-		return 'SINGLE';
-	} else if (indexOfDoubleQuote < indexOfSingleQuote) {
-		return 'DOUBLE';
-	}
-	return;
-}
-
 function previousNormalAttributeToken(tokens: Token[], index: number): AttributeToken | undefined {
 	for (let i: number = index - 1; i > 0; i--) {
 		const token: Token = tokens[i];
