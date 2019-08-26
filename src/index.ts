@@ -477,7 +477,10 @@ export const plugin: Plugin = {
 							// result += '\n';
 							break;
 						case 'doctype':
-							result += `doctype ${token.val}`;
+							result += 'doctype';
+							if (token.val) {
+								result += ` ${token.val}`;
+							}
 							break;
 						case 'dot':
 							result += '.';
