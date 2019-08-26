@@ -506,9 +506,7 @@ export const plugin: Plugin = {
 							result += ']';
 							break;
 						case 'include':
-							if (previousToken && previousToken.type === 'indent') {
-								result += indent;
-							}
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += 'include';
 							break;
 						case 'filter':
