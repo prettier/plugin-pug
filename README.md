@@ -107,8 +107,7 @@ yarn prettier --write "**/*.pug"
 
 If you are using a text editor that supports Prettier integration (e.g. [Atom](https://atom.io/packages/prettier-atom)), you can have all Prettier perks for your Pug code too!
 
-> Use of this plugin in [VSCode extension](https://github.com/prettier/prettier-vscode) seems to be blocked by [prettier/prettier-vscode#395](https://github.com/prettier/prettier-vscode/issues/395).
-> Feel free to help!
+Use [VSCode extension](https://github.com/prettier/prettier-vscode) to get support for [VSCode](https://code.visualstudio.com).
 
 In order to get `@prettier/plugin-pug` working in projects that do not have local npm dependencies, you can install this plugin globally:
 
