@@ -8,12 +8,16 @@
 
 - Fix spaces around interpolated tags ([#20])
 
+[#20]: https://github.com/prettier/plugin-pug/issues/20
+
 # 1.0.1
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.0.0...1.0.1)
 
 - Fix indent for `include` ([#18])
 - Fix space after `doctype` if there is no value
+
+[#18]: https://github.com/prettier/plugin-pug/issues/18
 
 # 1.0.0
 
@@ -30,7 +34,7 @@
 - Introduce new option `attributeSeparator` ([#13])  
   Possible values: `always` and `as-needed`
 
-[#13]: https://github.com/prettier/plugin-pug/pull/13
+[#13]: https://github.com/prettier/plugin-pug/issues/13
 
 # 1.0.0-alpha.10
 
@@ -48,7 +52,7 @@
 - Fix some issues with indentation
 - Fix buffered attributes
 
-[#11]: https://github.com/prettier/plugin-pug/pull/11
+[#11]: https://github.com/prettier/plugin-pug/issues/11
 
 # 1.0.0-alpha.8
 
