@@ -406,6 +406,7 @@ export const plugin: Plugin = {
 										result += indent;
 										break;
 									case 'interpolated-code':
+									case 'end-pug-interpolation':
 										if (/^ .+$/.test(val)) {
 											result += ' ';
 										}
@@ -413,8 +414,13 @@ export const plugin: Plugin = {
 								}
 							}
 							let needsTrailingWhitespace: boolean = false;
-							if (nextToken && nextToken.type === 'interpolated-code' && val.endsWith(' ')) {
-								needsTrailingWhitespace = true;
+							if (nextToken && val.endsWith(' ')) {
+								switch (nextToken.type) {
+									case 'interpolated-code':
+									case 'start-pug-interpolation':
+										needsTrailingWhitespace = true;
+										break;
+								}
 							}
 							val = val.trim();
 							val = formatText(val, singleQuote);
