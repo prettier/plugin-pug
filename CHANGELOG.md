@@ -1,12 +1,18 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.1...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.2...master)
+
+# 1.0.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.1...1.0.2)
+
+- Fix spaces around interpolated tags ([#20])
 
 # 1.0.1
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.0.0...1.0.1)
 
-- Fix indent for `include`
+- Fix indent for `include` ([#18])
 - Fix space after `doctype` if there is no value
 
 # 1.0.0
