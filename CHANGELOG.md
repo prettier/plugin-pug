@@ -1,8 +1,12 @@
 # Next
 
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.3...master)
+
+# 1.0.3
+
 - Format Vue `v-slot`
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.2...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.2...1.0.3)
 
 # 1.0.2
 
