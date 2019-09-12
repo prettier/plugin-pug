@@ -257,7 +257,7 @@ export const plugin: Plugin = {
 								}
 							} else {
 								let val = token.val;
-								if (/^((v-bind|v-on)?:|v-model|@).*/.test(token.name)) {
+								if (/^((v-bind|v-on|v-slot)?:|v-model|v-on|@).*/.test(token.name)) {
 									// Format Vue expression
 									val = val.trim();
 									val = val.slice(1, -1);
