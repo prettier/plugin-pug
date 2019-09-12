@@ -2,3 +2,5 @@ input(type="radio", v-model="picked", value="a")
 input(type="checkbox", v-model="toggle")
 select(v-model="selected")
   option(value="abc") ABC
+input(v-model.lazy="msg")
+input(v-model.number="age", type="number")
