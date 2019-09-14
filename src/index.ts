@@ -42,6 +42,29 @@ function printIndent(previousToken: Token, result: string, indent: string, inden
 	return result;
 }
 
+function compareAttributeToken(a: AttributeToken, b: AttributeToken, sortAttributes: string[]): number {
+	const compare: number = sortAttributes.indexOf(a.name) - sortAttributes.indexOf(b.name);
+	if (compare === 0) {
+		if (a.name < b.name) {
+			return -1;
+		}
+		if (a.name > b.name) {
+			return 1;
+		}
+		return 0;
+	}
+	return compare;
+}
+
+function partialSort<T>(arr: T[], start: number, end: number, compareFn?: (a: T, b: T) => number): T[] {
+	const preSorted = arr.slice(0, start);
+	const postSorted = arr.slice(end);
+	const sorted = arr.slice(start, end).sort(compareFn);
+	arr.length = 0;
+	arr.push(...preSorted.concat(sorted).concat(postSorted));
+	return arr;
+}
+
 function formatText(text: string, singleQuote: boolean): string {
 	let result: string = '';
 	while (text) {
@@ -118,10 +141,18 @@ export const plugin: Plugin = {
 		'pug-ast': {
 			print(
 				path: FastPath,
-				{ printWidth, singleQuote, tabWidth, useTabs, attributeSeparator }: ParserOptions & PugParserOptions,
+				{
+					printWidth,
+					singleQuote,
+					tabWidth,
+					useTabs,
+					attributeSeparator,
+					enableSortAttributes,
+					sortAttributes
+				}: ParserOptions & PugParserOptions,
 				print: (path: FastPath) => Doc
 			): Doc {
-				const tokens: Token[] = path.stack[0];
+				let tokens: Token[] = path.stack[0];
 
 				let result: string = '';
 				let indentLevel: number = 0;
@@ -167,6 +198,12 @@ export const plugin: Plugin = {
 									lineLength += tempToken.name.length + 1 + tempToken.val.toString().length;
 									logger.debug(lineLength, printWidth);
 									tempToken = tokens[++tempIndex] as AttributeToken | EndAttributesToken;
+								}
+								if (enableSortAttributes) {
+									const startAttributesIndex: number = tokens.indexOf(token);
+									tokens = partialSort(tokens, startAttributesIndex, tempIndex, (a, b) =>
+										compareAttributeToken(a as AttributeToken, b as AttributeToken, sortAttributes)
+									);
 								}
 								if (lineLength > printWidth) {
 									wrapAttributes = true;
