@@ -50,7 +50,7 @@ export const options = {
 		category: CATEGORY_PUG,
 		type: 'path',
 		array: true,
-		default: [{ value: [] }],
+		default: [{ value: ['src', 'alt'] }],
 		description: 'Order of attributes'
 	}
 };
