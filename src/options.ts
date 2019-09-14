@@ -2,6 +2,8 @@ export const CATEGORY_PUG: string = 'Pug';
 
 export interface PugParserOptions {
 	attributeSeparator: 'always' | 'as-needed';
+	enableSortAttributes: boolean;
+	sortAttributes: string[];
 }
 
 export function resolveAttributeSeparatorOption(attributeSeparator: 'always' | 'as-needed'): boolean {
@@ -35,5 +37,20 @@ export const options = {
 					'Only add commas between attributes where required. Example: `button(type="submit", (click)="play()" disabled)`'
 			}
 		]
+	},
+	enableSortAttributes: {
+		since: '1.1.0',
+		category: CATEGORY_PUG,
+		type: 'boolean',
+		default: false,
+		description: 'Enable the sorting of attributes'
+	},
+	sortAttributes: {
+		since: '1.1.0',
+		category: CATEGORY_PUG,
+		type: 'path',
+		array: true,
+		default: [{ value: [] }],
+		description: 'Order of attributes'
 	}
 };
