@@ -43,7 +43,15 @@ function printIndent(previousToken: Token, result: string, indent: string, inden
 }
 
 function compareAttributeToken(a: AttributeToken, b: AttributeToken, sortAttributes: string[]): number {
-	const compare: number = sortAttributes.indexOf(a.name) - sortAttributes.indexOf(b.name);
+	const aIndex: number = sortAttributes.indexOf(a.name);
+	const bIndex: number = sortAttributes.indexOf(b.name);
+	if (aIndex !== -1 && bIndex === -1) {
+		return -1;
+	}
+	if (aIndex === -1 && bIndex !== -1) {
+		return 1;
+	}
+	const compare: number = aIndex - bIndex;
 	if (compare === 0) {
 		if (a.name < b.name) {
 			return -1;
@@ -57,9 +65,9 @@ function compareAttributeToken(a: AttributeToken, b: AttributeToken, sortAttribu
 }
 
 function partialSort<T>(arr: T[], start: number, end: number, compareFn?: (a: T, b: T) => number): T[] {
-	const preSorted = arr.slice(0, start);
-	const postSorted = arr.slice(end);
-	const sorted = arr.slice(start, end).sort(compareFn);
+	const preSorted: T[] = arr.slice(0, start);
+	const postSorted: T[] = arr.slice(end);
+	const sorted: T[] = arr.slice(start, end).sort(compareFn);
 	arr.length = 0;
 	arr.push(...preSorted.concat(sorted).concat(postSorted));
 	return arr;
@@ -201,7 +209,8 @@ export const plugin: Plugin = {
 								}
 								if (enableSortAttributes) {
 									const startAttributesIndex: number = tokens.indexOf(token);
-									tokens = partialSort(tokens, startAttributesIndex, tempIndex, (a, b) =>
+									const endAttributesIndex: number = tempIndex;
+									tokens = partialSort(tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
 										compareAttributeToken(a as AttributeToken, b as AttributeToken, sortAttributes)
 									);
 								}
