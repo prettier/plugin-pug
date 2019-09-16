@@ -210,9 +210,19 @@ export const plugin: Plugin = {
 								if (enableSortAttributes) {
 									const startAttributesIndex: number = tokens.indexOf(token);
 									const endAttributesIndex: number = tempIndex;
-									tokens = partialSort(tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
-										compareAttributeToken(a as AttributeToken, b as AttributeToken, sortAttributes)
-									);
+									if (endAttributesIndex - startAttributesIndex > 2) {
+										tokens = partialSort(
+											tokens,
+											startAttributesIndex + 1,
+											endAttributesIndex,
+											(a, b) =>
+												compareAttributeToken(
+													a as AttributeToken,
+													b as AttributeToken,
+													sortAttributes
+												)
+										);
+									}
 								}
 								if (lineLength > printWidth) {
 									wrapAttributes = true;
