@@ -561,7 +561,7 @@ export const plugin: Plugin = {
 							break;
 						case 'text-html':
 							result = printIndent(previousToken, result, indent, indentLevel);
-							const match: RegExpExecArray | null = /^<(.*?)>(.*)\<\/(.*?)>$/.exec(token.val);
+							const match: RegExpExecArray | null = /^<(.*?)>(.*)<\/(.*?)>$/.exec(token.val);
 							logger.debug(match);
 							if (match) {
 								result += `${match[1]} ${match[2]}`;
