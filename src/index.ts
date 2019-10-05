@@ -4,6 +4,7 @@ import * as lex from 'pug-lexer';
 import { createLogger, Logger, LogLevel } from './logger';
 import { options as pugOptions, PugParserOptions, resolveAttributeSeparatorOption } from './options';
 import { AttributeToken, EndAttributesToken, Token } from './pug-token';
+import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 
 const { makeString } = util;
 
@@ -560,6 +561,19 @@ export const plugin: Plugin = {
 							break;
 						case 'text-html':
 							result = printIndent(previousToken, result, indent, indentLevel);
+							const match: RegExpExecArray | null = /^<(.*?)>(.*)\<\/(.*?)>$/.exec(token.val);
+							logger.debug(match);
+							if (match) {
+								result += `${match[1]} ${match[2]}`;
+								break;
+							}
+							const entry = Object.entries(DOCTYPE_SHORTCUT_REGISTRY).find(
+								([key]) => key === token.val.toLowerCase()
+							);
+							if (entry) {
+								result += entry[1];
+								break;
+							}
 							result += token.val;
 							break;
 						default:
