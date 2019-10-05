@@ -186,6 +186,12 @@ export interface AndAttributesToken {
 	val: string;
 }
 
+export interface TextHtmlToken {
+	type: 'text-html';
+	loc: Loc;
+	val: string;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -217,4 +223,5 @@ export type Token =
 	| IfToken
 	| MixinBlockToken
 	| ElseToken
-	| AndAttributesToken;
+	| AndAttributesToken
+	| TextHtmlToken;
