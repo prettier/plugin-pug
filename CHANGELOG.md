@@ -1,12 +1,20 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.3...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.4...master)
+
+# 1.0.4
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.3...1.0.4)
+
+- Handle `text-html` token ([#24])
+
+[#24]: https://github.com/prettier/plugin-pug/issues/24
 
 # 1.0.3
 
-- Format Vue `v-slot`
-
 [diff](https://github.com/prettier/plugin-pug/compare/1.0.2...1.0.3)
+
+- Format Vue `v-slot`
 
 # 1.0.2
 
