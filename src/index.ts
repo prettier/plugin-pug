@@ -558,6 +558,10 @@ export const plugin: Plugin = {
 						case '&attributes':
 							result += `&attributes(${token.val})`;
 							break;
+						case 'text-html':
+							result = printIndent(previousToken, result, indent, indentLevel);
+							result += token.val;
+							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
 					}
