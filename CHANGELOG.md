@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.4...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.5...master)
+
+# 1.0.5
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.4...1.0.5)
+
+- Fix handling with `interpolated-code` token ([#27])
+
+[#27]: https://github.com/prettier/plugin-pug/issues/27
 
 # 1.0.4
 
