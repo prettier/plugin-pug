@@ -435,11 +435,17 @@ export const plugin: Plugin = {
 							break;
 						}
 						case 'interpolated-code':
-							if (
-								previousToken &&
-								(previousToken.type === 'tag' || previousToken.type === 'end-attributes')
-							) {
-								result += ' ';
+							if (previousToken) {
+								switch (previousToken.type) {
+									case 'tag':
+									case 'end-attributes':
+										result += ' ';
+										break;
+									case 'indent':
+										result = printIndent(previousToken, result, indent, indentLevel);
+										result += '| ';
+										break;
+								}
 							}
 							result += `#{${token.val}}`;
 							break;
