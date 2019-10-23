@@ -435,7 +435,10 @@ export const plugin: Plugin = {
 							break;
 						}
 						case 'interpolated-code':
-							if (previousToken && previousToken.type === 'tag') {
+							if (
+								previousToken &&
+								(previousToken.type === 'tag' || previousToken.type === 'end-attributes')
+							) {
 								result += ' ';
 							}
 							result += `#{${token.val}}`;
