@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.5...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.6...master)
+
+# 1.0.6
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.5...1.0.6)
+
+- Handle `each` token ([#29])
+
+[#29]: https://github.com/prettier/plugin-pug/issues/29
 
 # 1.0.5
 
