@@ -192,6 +192,14 @@ export interface TextHtmlToken {
 	val: string;
 }
 
+export interface EachToken {
+	type: 'each';
+	loc: Loc;
+	val: string;
+	key: null;
+	code: string;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -224,4 +232,5 @@ export type Token =
 	| MixinBlockToken
 	| ElseToken
 	| AndAttributesToken
-	| TextHtmlToken;
+	| TextHtmlToken
+	| EachToken;
