@@ -592,6 +592,16 @@ export const plugin: Plugin = {
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `each ${token.val} in ${token.code}`;
 							break;
+						case 'while':
+							break;
+						case 'case':
+							break;
+						case 'when':
+							break;
+						case ':':
+							break;
+						case 'default':
+							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
 					}
