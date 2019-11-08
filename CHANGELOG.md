@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.7...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.8...master)
+
+# 1.0.8
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.7...1.0.8)
+
+- Handle `while` and `case` token ([#34])
+
+[#34]: https://github.com/prettier/plugin-pug/issues/34
 
 # 1.0.7
 
