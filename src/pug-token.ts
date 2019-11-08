@@ -200,6 +200,34 @@ export interface EachToken {
 	code: string;
 }
 
+export interface WhileToken {
+	type: 'while';
+	loc: Loc;
+	val: string;
+}
+
+export interface CaseToken {
+	type: 'case';
+	loc: Loc;
+	val: string;
+}
+
+export interface WhenToken {
+	type: 'when';
+	loc: Loc;
+	val: string;
+}
+
+export interface ColonToken {
+	type: ':';
+	loc: Loc;
+}
+
+export interface DefaultToken {
+	type: 'default';
+	loc: Loc;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -233,4 +261,9 @@ export type Token =
 	| ElseToken
 	| AndAttributesToken
 	| TextHtmlToken
-	| EachToken;
+	| EachToken
+	| WhileToken
+	| CaseToken
+	| WhenToken
+	| ColonToken
+	| DefaultToken;
