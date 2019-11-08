@@ -103,6 +103,23 @@ yarn prettier --write "**/*.pug"
   Use tab for indentation
   Overrides `tabWidth`
 
+#### prettier-pug specific options
+
+These are specific options only for prettier-pug  
+They should be set via `Prettier`'s `overrides` option
+
+- `attributeSeparator`  
+  Change when attributes are separated by commas in tags.
+
+  Choices:
+
+  - `'always'` -> Always separate attributes with commas.  
+    Example: `button(type="submit", (click)="play()", disabled)`
+  - `'as-needed'` -> Only add commas between attributes where required.  
+    Example: `button(type="submit", (click)="play()" disabled)`
+
+The definitions for these options can be found in [src/options.ts](https://github.com/prettier/plugin-pug/blob/master/src/options.ts)
+
 ## Integration with editors
 
 If you are using a text editor that supports Prettier integration (e.g. [Atom](https://atom.io/packages/prettier-atom)), you can have all Prettier perks for your Pug code too!
