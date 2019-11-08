@@ -1,6 +1,15 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.6...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.7...master)
+
+# 1.0.7
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.6...1.0.7)
+
+- Handle `mustEscape` for buffered `code` token ([#31])
+- Updated README.md
+
+[#31]: https://github.com/prettier/plugin-pug/issues/31
 
 # 1.0.6
 
