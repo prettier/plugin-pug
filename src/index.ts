@@ -1,10 +1,10 @@
 import { AST, Doc, FastPath, format, Options, Parser, ParserOptions, Plugin, util } from 'prettier';
 // @ts-ignore
 import * as lex from 'pug-lexer';
+import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
 import { options as pugOptions, PugParserOptions, resolveAttributeSeparatorOption } from './options';
 import { AttributeToken, EndAttributesToken, Token } from './pug-token';
-import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 
 const { makeString } = util;
 
