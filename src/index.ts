@@ -571,7 +571,7 @@ export const plugin: Plugin = {
 						case '&attributes':
 							result += `&attributes(${token.val})`;
 							break;
-						case 'text-html':
+						case 'text-html': {
 							result = printIndent(previousToken, result, indent, indentLevel);
 							const match: RegExpExecArray | null = /^<(.*?)>(.*)<\/(.*?)>$/.exec(token.val);
 							logger.debug(match);
@@ -588,6 +588,7 @@ export const plugin: Plugin = {
 							}
 							result += token.val;
 							break;
+						}
 						case 'each':
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `each ${token.val} in ${token.code}`;
