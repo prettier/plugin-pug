@@ -29,16 +29,14 @@ function previousNormalAttributeToken(tokens: Token[], index: number): Attribute
 }
 
 function printIndent(previousToken: Token, result: string, indent: string, indentLevel: number): string {
-	if (previousToken) {
-		switch (previousToken.type) {
-			case 'newline':
-			case 'outdent':
-				result += indent.repeat(indentLevel);
-				break;
-			case 'indent':
-				result += indent;
-				break;
-		}
+	switch (previousToken?.type) {
+		case 'newline':
+		case 'outdent':
+			result += indent.repeat(indentLevel);
+			break;
+		case 'indent':
+			result += indent;
+			break;
 	}
 	return result;
 }
@@ -155,7 +153,7 @@ export const plugin: Plugin = {
 							startTagPosition = result.length;
 							break;
 						case 'start-attributes':
-							if (nextToken && nextToken.type === 'attribute') {
+							if (nextToken?.type === 'attribute') {
 								previousAttributeRemapped = false;
 								startAttributePosition = result.length;
 								result += '(';
@@ -233,8 +231,7 @@ export const plugin: Plugin = {
 								index
 							);
 							if (
-								previousToken &&
-								previousToken.type === 'attribute' &&
+								previousToken?.type === 'attribute' &&
 								(!previousAttributeRemapped || hasNormalPreviousToken)
 							) {
 								if (alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name)) {
@@ -327,10 +324,10 @@ export const plugin: Plugin = {
 							if (result.endsWith('(')) {
 								// There were no attributes
 								result = result.substring(0, result.length - 1);
-							} else if (previousToken && previousToken.type === 'attribute') {
+							} else if (previousToken?.type === 'attribute') {
 								result += ')';
 							}
-							if (nextToken && (nextToken.type === 'text' || nextToken.type === 'path')) {
+							if (nextToken?.type === 'text' || nextToken?.type === 'path') {
 								result += ' ';
 							}
 							break;
@@ -340,7 +337,7 @@ export const plugin: Plugin = {
 							indentLevel++;
 							break;
 						case 'outdent':
-							if (previousToken && previousToken.type !== 'outdent') {
+							if (previousToken?.type !== 'outdent') {
 								if (token.loc.start.line - previousToken.loc.end.line > 1) {
 									// Insert one extra blank line
 									result += '\n';
@@ -352,7 +349,7 @@ export const plugin: Plugin = {
 						case 'class':
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `.${token.val}`;
-							if (nextToken && nextToken.type === 'text') {
+							if (nextToken?.type === 'text') {
 								result += ' ';
 							}
 							break;
@@ -378,41 +375,39 @@ export const plugin: Plugin = {
 						case 'text': {
 							let val = token.val;
 							val = val.replace(/\s\s+/g, ' ');
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-										if (pipelessText === false) {
+							switch (previousToken?.type) {
+								case 'newline':
+									if (pipelessText === false) {
+										result += indent.repeat(indentLevel);
+										if (/^ .+$/.test(val)) {
+											result += '|\n';
 											result += indent.repeat(indentLevel);
-											if (/^ .+$/.test(val)) {
-												result += '|\n';
-												result += indent.repeat(indentLevel);
-											}
-											result += '|';
-											if (/.*\S.*/.test(token.val)) {
-												result += ' ';
-											}
-										} else {
-											result += indent.repeat(indentLevel);
-											result += indent;
 										}
-										break;
-									case 'indent':
-										result += indent;
 										result += '|';
 										if (/.*\S.*/.test(token.val)) {
 											result += ' ';
 										}
-										break;
-									case 'start-pipeless-text':
+									} else {
+										result += indent.repeat(indentLevel);
 										result += indent;
-										break;
-									case 'interpolated-code':
-									case 'end-pug-interpolation':
-										if (/^ .+$/.test(val)) {
-											result += ' ';
-										}
-										break;
-								}
+									}
+									break;
+								case 'indent':
+									result += indent;
+									result += '|';
+									if (/.*\S.*/.test(token.val)) {
+										result += ' ';
+									}
+									break;
+								case 'start-pipeless-text':
+									result += indent;
+									break;
+								case 'interpolated-code':
+								case 'end-pug-interpolation':
+									if (/^ .+$/.test(val)) {
+										result += ' ';
+									}
+									break;
 							}
 							let needsTrailingWhitespace: boolean = false;
 							if (nextToken && val.endsWith(' ')) {
@@ -425,7 +420,7 @@ export const plugin: Plugin = {
 							}
 							val = val.trim();
 							val = formatText(val, singleQuote);
-							if (previousToken && (previousToken.type === 'tag' || previousToken.type === 'id')) {
+							if (previousToken?.type === 'tag' || previousToken?.type === 'id') {
 								val = ` ${val}`;
 							}
 							result += val;
@@ -435,17 +430,15 @@ export const plugin: Plugin = {
 							break;
 						}
 						case 'interpolated-code':
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'tag':
-									case 'end-attributes':
-										result += ' ';
-										break;
-									case 'indent':
-										result = printIndent(previousToken, result, indent, indentLevel);
-										result += '| ';
-										break;
-								}
+							switch (previousToken?.type) {
+								case 'tag':
+								case 'end-attributes':
+									result += ' ';
+									break;
+								case 'indent':
+									result = printIndent(previousToken, result, indent, indentLevel);
+									result += '| ';
+									break;
 							}
 							result += `#{${token.val}}`;
 							break;
@@ -470,16 +463,14 @@ export const plugin: Plugin = {
 								position = result.length;
 							}
 							let _indent = '';
-							if (previousToken) {
-								switch (previousToken.type) {
-									case 'newline':
-									case 'outdent':
-										_indent = indent.repeat(indentLevel);
-										break;
-									case 'indent':
-										_indent = indent;
-										break;
-								}
+							switch (previousToken?.type) {
+								case 'newline':
+								case 'outdent':
+									_indent = indent.repeat(indentLevel);
+									break;
+								case 'indent':
+									_indent = indent;
+									break;
 							}
 							result = [result.slice(0, position), _indent, `#${token.val}`, result.slice(position)].join(
 								''
@@ -516,7 +507,7 @@ export const plugin: Plugin = {
 							result += 'extends ';
 							break;
 						case 'path':
-							if (previousToken && previousToken.type === 'include') {
+							if (previousToken?.type === 'include') {
 								result += ' ';
 							}
 							result += token.val;
