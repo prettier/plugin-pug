@@ -1,6 +1,18 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.8...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.9...master)
+
+# 1.0.9
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.8...1.0.9)
+
+- Move `prettier` to `devDependencies` ([#37])
+- Some minor changes like
+  - formatting
+  - using TS 3.7 optional chaining
+  - output test coverage
+
+[#37]: https://github.com/prettier/plugin-pug/pull/37
 
 # 1.0.8
 
