@@ -3,247 +3,154 @@ export interface Loc {
 	end: { line: number; column: number };
 }
 
-export interface TagToken {
-	type: 'tag';
+export interface LexToken<Type extends string> {
+	type: Type;
 	loc: Loc;
+}
+
+export interface TagToken extends LexToken<'tag'> {
 	val: string;
 }
 
-export interface StartAttributesToken {
-	type: 'start-attributes';
-	loc: Loc;
-}
+export type StartAttributesToken = LexToken<'start-attributes'>;
 
-export interface AttributeToken {
-	type: 'attribute';
-	loc: Loc;
+export interface AttributeToken extends LexToken<'attribute'> {
 	name: string;
 	val: string | boolean;
 	mustEscape: boolean;
 }
 
-export interface EndAttributesToken {
-	type: 'end-attributes';
-	loc: Loc;
-}
+export type EndAttributesToken = LexToken<'end-attributes'>;
 
-export interface IndentToken {
-	type: 'indent';
-	loc: Loc;
+export interface IndentToken extends LexToken<'indent'> {
 	val: number;
 }
 
-export interface ClassToken {
-	type: 'class';
-	loc: Loc;
+export interface ClassToken extends LexToken<'class'> {
 	val: string;
 }
 
-export interface OutdentToken {
-	type: 'outdent';
-	loc: Loc;
-}
+export type OutdentToken = LexToken<'outdent'>;
 
-export interface EosToken {
-	type: 'eos';
-	loc: Loc;
-}
+export type EosToken = LexToken<'eos'>;
 
-export interface CommentToken {
-	type: 'comment';
-	loc: Loc;
+export interface CommentToken extends LexToken<'comment'> {
 	val: string;
 	buffer: boolean;
 }
 
-export interface NewlineToken {
-	type: 'newline';
-	loc: Loc;
-}
+export type NewlineToken = LexToken<'newline'>;
 
-export interface TextToken {
-	type: 'text';
-	loc: Loc;
+export interface TextToken extends LexToken<'text'> {
 	val: string;
 }
 
-export interface InterpolatedCodeToken {
-	type: 'interpolated-code';
-	loc: Loc;
+export interface InterpolatedCodeToken extends LexToken<'interpolated-code'> {
 	mustEscape: boolean;
 	buffer: boolean;
 	val: string;
 }
 
-export interface CodeToken {
-	type: 'code';
-	loc: Loc;
+export interface CodeToken extends LexToken<'code'> {
 	val: string;
 	mustEscape: boolean;
 	buffer: boolean;
 }
 
-export interface IdToken {
-	type: 'id';
-	loc: Loc;
+export interface IdToken extends LexToken<'id'> {
 	val: string;
 }
 
-export interface StartPipelessTextToken {
-	type: 'start-pipeless-text';
-	loc: Loc;
-}
+export type StartPipelessTextToken = LexToken<'start-pipeless-text'>;
 
-export interface EndPipelessTextToken {
-	type: 'end-pipeless-text';
-	loc: Loc;
-}
+export type EndPipelessTextToken = LexToken<'end-pipeless-text'>;
 
-export interface DoctypeToken {
-	type: 'doctype';
-	loc: Loc;
+export interface DoctypeToken extends LexToken<'doctype'> {
 	val: string;
 }
 
-export interface DotToken {
-	type: 'dot';
-	loc: Loc;
-}
+export type DotToken = LexToken<'dot'>;
 
-export interface BlockToken {
-	type: 'block';
-	loc: Loc;
+export interface BlockToken extends LexToken<'block'> {
 	val: string;
 	mode: 'replace' | 'prepend' | 'append';
 }
 
-export interface ExtendsToken {
-	type: 'extends';
-	loc: Loc;
-}
+export type ExtendsToken = LexToken<'extends'>;
 
-export interface PathToken {
-	type: 'path';
-	loc: Loc;
+export interface PathToken extends LexToken<'path'> {
 	val: string;
 }
 
-export interface StartPugInterpolationToken {
-	type: 'start-pug-interpolation';
-	loc: Loc;
-}
+export type StartPugInterpolationToken = LexToken<'start-pug-interpolation'>;
 
-export interface EndPugInterpolationToken {
-	type: 'end-pug-interpolation';
-	loc: Loc;
-}
+export type EndPugInterpolationToken = LexToken<'end-pug-interpolation'>;
 
-export interface InterpolationToken {
-	type: 'interpolation';
-	loc: Loc;
+export interface InterpolationToken extends LexToken<'interpolation'> {
 	val: string;
 }
 
-export interface IncludeToken {
-	type: 'include';
-	loc: Loc;
-}
+export type IncludeToken = LexToken<'include'>;
 
-export interface FilterToken {
-	type: 'filter';
-	loc: Loc;
+export interface FilterToken extends LexToken<'filter'> {
 	val: string;
 }
 
-export interface CallToken {
-	type: 'call';
-	loc: Loc;
+export interface CallToken extends LexToken<'call'> {
 	val: string;
 	args: string;
 }
 
-export interface MixinToken {
-	type: 'mixin';
-	loc: Loc;
+export interface MixinToken extends LexToken<'mixin'> {
 	val: string;
 	args: string | null;
 }
 
-export interface IfToken {
-	type: 'if';
-	loc: Loc;
+export interface IfToken extends LexToken<'if'> {
 	val: string;
 }
 
-export interface MixinBlockToken {
-	type: 'mixin-block';
-	loc: Loc;
-}
+export type MixinBlockToken = LexToken<'mixin-block'>;
 
-export interface ElseToken {
-	type: 'else';
-	loc: Loc;
+export interface ElseToken extends LexToken<'else'> {
 	val: string;
 }
 
-export interface AndAttributesToken {
-	type: '&attributes';
-	loc: Loc;
+export interface AndAttributesToken extends LexToken<'&attributes'> {
 	val: string;
 }
 
-export interface TextHtmlToken {
-	type: 'text-html';
-	loc: Loc;
+export interface TextHtmlToken extends LexToken<'text-html'> {
 	val: string;
 }
 
-export interface EachToken {
-	type: 'each';
-	loc: Loc;
+export interface EachToken extends LexToken<'each'> {
 	val: string;
 	key: null;
 	code: string;
 }
 
-export interface WhileToken {
-	type: 'while';
-	loc: Loc;
+export interface WhileToken extends LexToken<'while'> {
 	val: string;
 }
 
-export interface CaseToken {
-	type: 'case';
-	loc: Loc;
+export interface CaseToken extends LexToken<'case'> {
 	val: string;
 }
 
-export interface WhenToken {
-	type: 'when';
-	loc: Loc;
+export interface WhenToken extends LexToken<'when'> {
 	val: string;
 }
 
-export interface ColonToken {
-	type: ':';
-	loc: Loc;
-}
+export type ColonToken = LexToken<':'>;
 
-export interface DefaultToken {
-	type: 'default';
-	loc: Loc;
-}
+export type DefaultToken = LexToken<'default'>;
 
-export interface ElseIfToken {
-	type: 'else-if';
-	loc: Loc;
+export interface ElseIfToken extends LexToken<'else-if'> {
 	val: string;
 }
 
-export interface BlockcodeToken {
-	type: 'blockcode';
-	loc: Loc;
-}
+export type BlockcodeToken = LexToken<'blockcode'>;
 
 export type Token =
 	| TagToken
