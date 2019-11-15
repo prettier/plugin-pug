@@ -116,7 +116,14 @@ export const plugin: Plugin = {
 		'pug-ast': {
 			print(
 				path: FastPath,
-				{ printWidth, singleQuote, tabWidth, useTabs, attributeSeparator }: ParserOptions & PugParserOptions,
+				{
+					printWidth,
+					singleQuote,
+					tabWidth,
+					useTabs,
+					attributeSeparator,
+					semi
+				}: ParserOptions & PugParserOptions,
 				print: (path: FastPath) => Doc
 			): Doc {
 				const tokens: Token[] = path.stack[0];
@@ -465,14 +472,27 @@ export const plugin: Plugin = {
 							result += token.mustEscape ? '#' : '!';
 							result += `{${token.val}}`;
 							break;
-						case 'code':
+						case 'code': {
 							result = printIndent(previousToken, result, indent, indentLevel);
 							if (!token.mustEscape && token.buffer) {
 								result += '!';
 							}
 							result += token.buffer ? '=' : '-';
-							result += ` ${token.val}`;
+							let useSemi = semi;
+							if (useSemi && (token.mustEscape || token.buffer)) {
+								useSemi = false;
+							}
+							let val = token.val;
+							val = format(val, {
+								parser: 'babel',
+								...codeInterpolationOptions,
+								semi: useSemi,
+								endOfLine: 'lf'
+							});
+							val = val.slice(0, -1);
+							result += ` ${val}`;
 							break;
+						}
 						case 'id': {
 							// Handle id attribute
 							// Write css-id in front of css-classes

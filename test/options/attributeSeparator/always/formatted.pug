@@ -5,7 +5,7 @@ nav-component(locale-relative-redirect="true", highlight="home", pin="false")
 
 mixin anchor({ href, isExternal })
   if !isExternal
-    - href = `${LOCALE_ROOT}/${href}`
+    - href = `${LOCALE_ROOT}/${href}`;
   a(href=`${href}`)&attributes(attributes)
     if block
       block
