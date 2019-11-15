@@ -3,7 +3,50 @@ export interface Loc {
 	end: { line: number; column: number };
 }
 
-export interface LexToken<Type extends string> {
+export type LexTokenType =
+	| 'tag'
+	| 'start-attributes'
+	| 'attribute'
+	| 'end-attributes'
+	| 'indent'
+	| 'class'
+	| 'outdent'
+	| 'eos'
+	| 'comment'
+	| 'newline'
+	| 'text'
+	| 'interpolated-code'
+	| 'code'
+	| 'id'
+	| 'start-pipeless-text'
+	| 'end-pipeless-text'
+	| 'doctype'
+	| 'dot'
+	| 'block'
+	| 'extends'
+	| 'path'
+	| 'start-pug-interpolation'
+	| 'end-pug-interpolation'
+	| 'interpolation'
+	| 'include'
+	| 'filter'
+	| 'call'
+	| 'mixin'
+	| 'if'
+	| 'mixin-block'
+	| 'else'
+	| '&attributes'
+	| 'text-html'
+	| 'each'
+	| 'while'
+	| 'case'
+	| 'when'
+	| ':'
+	| 'default'
+	| 'else-if'
+	| 'blockcode';
+
+export interface LexToken<Type extends LexTokenType> {
 	type: Type;
 	loc: Loc;
 }
