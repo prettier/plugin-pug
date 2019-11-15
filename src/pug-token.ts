@@ -240,6 +240,11 @@ export interface ElseIfToken {
 	val: string;
 }
 
+export interface BlockcodeToken {
+	type: 'blockcode';
+	loc: Loc;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -280,4 +285,5 @@ export type Token =
 	| WhenToken
 	| ColonToken
 	| DefaultToken
-	| ElseIfToken;
+	| ElseIfToken
+	| BlockcodeToken;

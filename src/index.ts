@@ -611,6 +611,10 @@ export const plugin: Plugin = {
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `else if ${token.val}`;
 							break;
+						case 'blockcode':
+							result = printIndent(previousToken, result, indent, indentLevel);
+							result += '-';
+							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
 					}
