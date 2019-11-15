@@ -129,6 +129,7 @@ export const plugin: Plugin = {
 					indent = '\t';
 				}
 				let pipelessText: boolean = false;
+				let pipelessComment: boolean = false;
 
 				const alwaysUseAttributeSeparator: boolean = resolveAttributeSeparatorOption(attributeSeparator);
 
@@ -364,6 +365,9 @@ export const plugin: Plugin = {
 						case 'comment':
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `//${token.buffer ? '' : '-'}${token.val.replace(/\s\s+/g, ' ')}`;
+							if (nextToken.type === 'start-pipeless-text') {
+								pipelessComment = true;
+							}
 							break;
 						case 'newline':
 							if (previousToken && token.loc.start.line - previousToken.loc.end.line > 1) {
@@ -374,10 +378,36 @@ export const plugin: Plugin = {
 							break;
 						case 'text': {
 							let val = token.val;
-							val = val.replace(/\s\s+/g, ' ');
-							switch (previousToken?.type) {
-								case 'newline':
-									if (pipelessText === false) {
+							let needsTrailingWhitespace: boolean = false;
+
+							if (pipelessText) {
+								switch (previousToken?.type) {
+									case 'newline':
+										result += indent.repeat(indentLevel);
+										result += indent;
+										break;
+									case 'start-pipeless-text':
+										result += indent;
+										break;
+								}
+
+								if (pipelessComment) {
+									val = val.replace(/\s\s+/g, ' ');
+								}
+							} else {
+								if (nextToken && val.endsWith(' ')) {
+									switch (nextToken.type) {
+										case 'interpolated-code':
+										case 'start-pug-interpolation':
+											needsTrailingWhitespace = true;
+											break;
+									}
+								}
+
+								val = val.replace(/\s\s+/g, ' ');
+
+								switch (previousToken?.type) {
+									case 'newline':
 										result += indent.repeat(indentLevel);
 										if (/^ .+$/.test(val)) {
 											result += '|\n';
@@ -387,42 +417,30 @@ export const plugin: Plugin = {
 										if (/.*\S.*/.test(token.val)) {
 											result += ' ';
 										}
-									} else {
-										result += indent.repeat(indentLevel);
+										break;
+									case 'indent':
 										result += indent;
-									}
-									break;
-								case 'indent':
-									result += indent;
-									result += '|';
-									if (/.*\S.*/.test(token.val)) {
-										result += ' ';
-									}
-									break;
-								case 'start-pipeless-text':
-									result += indent;
-									break;
-								case 'interpolated-code':
-								case 'end-pug-interpolation':
-									if (/^ .+$/.test(val)) {
-										result += ' ';
-									}
-									break;
-							}
-							let needsTrailingWhitespace: boolean = false;
-							if (nextToken && val.endsWith(' ')) {
-								switch (nextToken.type) {
+										result += '|';
+										if (/.*\S.*/.test(token.val)) {
+											result += ' ';
+										}
+										break;
 									case 'interpolated-code':
-									case 'start-pug-interpolation':
-										needsTrailingWhitespace = true;
+									case 'end-pug-interpolation':
+										if (/^ .+$/.test(val)) {
+											result += ' ';
+										}
 										break;
 								}
+
+								val = val.trim();
+								val = formatText(val, singleQuote);
 							}
-							val = val.trim();
-							val = formatText(val, singleQuote);
+
 							if (previousToken?.type === 'tag' || previousToken?.type === 'id') {
 								val = ` ${val}`;
 							}
+
 							result += val;
 							if (needsTrailingWhitespace) {
 								result += ' ';
@@ -485,7 +503,7 @@ export const plugin: Plugin = {
 							break;
 						case 'end-pipeless-text':
 							pipelessText = false;
-							// result += '\n';
+							pipelessComment = false;
 							break;
 						case 'doctype':
 							result += 'doctype';
@@ -610,6 +628,10 @@ export const plugin: Plugin = {
 						case 'else-if':
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `else if ${token.val}`;
+							break;
+						case 'blockcode':
+							result = printIndent(previousToken, result, indent, indentLevel);
+							result += '-';
 							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
