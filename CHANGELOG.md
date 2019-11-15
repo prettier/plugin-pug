@@ -1,6 +1,20 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.9...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.10...master)
+
+# 1.0.10
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.9...1.0.10)
+
+- Handle `else if` token ([#38])
+- Handle `interpolation` token ([#39])
+- Handle `blockcode` token ([#40])
+- Handle `mustEscape` for `interpolated-code` token ([d8f6446])
+
+[#38]: https://github.com/prettier/plugin-pug/issues/38
+[#39]: https://github.com/prettier/plugin-pug/issues/39
+[#40]: https://github.com/prettier/plugin-pug/issues/40
+[d8f6446]: https://github.com/prettier/plugin-pug/commit/d8f64466114a5f13fef3363efa77fee6cdb62ebf
 
 # 1.0.9
 
