@@ -603,6 +603,10 @@ export const plugin: Plugin = {
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += 'default';
 							break;
+						case 'else-if':
+							result = printIndent(previousToken, result, indent, indentLevel);
+							result += `else if ${token.val}`;
+							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
 					}

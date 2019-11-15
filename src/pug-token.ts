@@ -228,6 +228,12 @@ export interface DefaultToken {
 	loc: Loc;
 }
 
+export interface ElseIfToken {
+	type: 'else-if';
+	loc: Loc;
+	val: string;
+}
+
 export type Token =
 	| TagToken
 	| StartAttributesToken
@@ -266,4 +272,5 @@ export type Token =
 	| CaseToken
 	| WhenToken
 	| ColonToken
-	| DefaultToken;
+	| DefaultToken
+	| ElseIfToken;
