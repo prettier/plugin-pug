@@ -568,10 +568,13 @@ export const plugin: Plugin = {
 							}
 							break;
 						}
-						case 'if':
+						case 'if': {
 							result = printIndent(previousToken, result, indent, indentLevel);
-							result += `if ${token.val}`;
+							const match = /^!\((.*)\)$/.exec(token.val);
+							logger.debug(match);
+							result += !match ? `if ${token.val}` : `unless ${match[1]}`;
 							break;
+						}
 						case 'mixin-block':
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += 'block';
