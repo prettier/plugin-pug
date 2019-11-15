@@ -11,12 +11,18 @@
 - Handle `blockcode` token ([#40])
 - Handle `mustEscape` for `interpolated-code` token ([d8f6446])
 - Add support for `unless` ([ca0b537])
+- Improve formatting of style attribute ([47c0355])
+- Apply semicolons correctly ([48c58b8])  
+  This could lead to a slight change  
+  You can override the `semi` attribute and set it to `false`, if semicolons are not wanted
 
 [#38]: https://github.com/prettier/plugin-pug/issues/38
 [#39]: https://github.com/prettier/plugin-pug/issues/39
 [#40]: https://github.com/prettier/plugin-pug/issues/40
 [d8f6446]: https://github.com/prettier/plugin-pug/commit/d8f64466114a5f13fef3363efa77fee6cdb62ebf
 [ca0b537]: https://github.com/prettier/plugin-pug/commit/ca0b53722e25896ec09c49e11b42907162607ab9
+[47c0355]: https://github.com/prettier/plugin-pug/commit/47c03551dc078665053c40c9c144bd5f584da55b
+[48c58b8]: https://github.com/prettier/plugin-pug/commit/48c58b80dd1a9845572034f7e0082c51ad70e02c
 
 # 1.0.9
 
