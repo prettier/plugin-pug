@@ -518,6 +518,9 @@ export const plugin: Plugin = {
 						case 'end-pug-interpolation':
 							result += ']';
 							break;
+						case 'interpolation':
+							result += `#{${token.val}}`;
+							break;
 						case 'include':
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += 'include';
