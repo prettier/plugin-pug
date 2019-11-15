@@ -33,7 +33,7 @@ steps:
     - script: yarn lint
       displayName: 'Lint'
 
-    - script: yarn jest --ci --reporters=default --reporters=jest-junit
+    - script: yarn jest --ci --silent --reporters=default --reporters=jest-junit
       displayName: 'Test'
 
     - task: PublishTestResults@2
