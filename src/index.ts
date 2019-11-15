@@ -70,6 +70,8 @@ function formatText(text: string, singleQuote: boolean): string {
 	return result;
 }
 
+// Make a change
+
 export const plugin: Plugin = {
 	languages: [
 		{
