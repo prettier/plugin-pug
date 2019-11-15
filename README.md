@@ -81,6 +81,22 @@ yarn prettier --write "**/*.pug"
 
 - `printWidth`  
   _Currently not very accurate, but works_
+- `semi`  
+  If you want to configure different semi for pug than for js code, you can use prettier's override.
+  ```json
+  {
+    "semi": true,
+    "overrides": [
+      {
+        "files": "*.pug",
+        "options": {
+          "parser": "pug",
+          "singleQuote": false
+        }
+      }
+    ]
+  }
+  ```
 - `singleQuote`  
   If you want to configure different quotes for pug than for js code, you can use prettier's override.
   ```json
