@@ -53,7 +53,7 @@ function formatText(text: string, singleQuote: boolean): string {
 				code = code.trim();
 				code = format(code, { parser: 'babel', singleQuote: !singleQuote, printWidth: 9000 });
 				if (code.endsWith(';\n')) {
-					code = code.slice(0, -2);
+					code = code.slice(0, -3);
 				}
 				result += `{{ ${code} }}`;
 				text = text.slice(end + 2);
