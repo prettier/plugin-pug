@@ -1,10 +1,9 @@
-import { AST, Doc, FastPath, format, Options, Parser, ParserOptions, Plugin, util } from 'prettier';
-// @ts-ignore
+import { Doc, FastPath, format, Options, Parser, ParserOptions, Plugin, util } from 'prettier';
 import * as lex from 'pug-lexer';
+import { AttributeToken, EndAttributesToken, Token } from 'pug-lexer';
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
 import { options as pugOptions, PugParserOptions, resolveAttributeSeparatorOption } from './options';
-import { AttributeToken, EndAttributesToken, Token } from './pug-token';
 
 const { makeString } = util;
 
@@ -87,9 +86,9 @@ export const plugin: Plugin = {
 	],
 	parsers: {
 		pug: {
-			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): AST {
+			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): Token[] {
 				logger.debug('[parsers:pug:parse]:', { text });
-				const tokens = lex(text, {});
+				const tokens = lex(text);
 				// logger.debug('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
 				// const ast: AST = parse(tokens, {});
 				// logger.debug('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
