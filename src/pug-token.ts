@@ -138,6 +138,12 @@ export interface EndPugInterpolationToken {
 	loc: Loc;
 }
 
+export interface InterpolationToken {
+	type: 'interpolation';
+	loc: Loc;
+	val: string;
+}
+
 export interface IncludeToken {
 	type: 'include';
 	loc: Loc;
@@ -258,6 +264,7 @@ export type Token =
 	| PathToken
 	| StartPugInterpolationToken
 	| EndPugInterpolationToken
+	| InterpolationToken
 	| IncludeToken
 	| FilterToken
 	| CallToken

@@ -440,7 +440,8 @@ export const plugin: Plugin = {
 									result += '| ';
 									break;
 							}
-							result += `#{${token.val}}`;
+							result += token.mustEscape ? '#' : '!';
+							result += `{${token.val}}`;
 							break;
 						case 'code':
 							result = printIndent(previousToken, result, indent, indentLevel);
@@ -517,6 +518,9 @@ export const plugin: Plugin = {
 							break;
 						case 'end-pug-interpolation':
 							result += ']';
+							break;
+						case 'interpolation':
+							result += `#{${token.val}}`;
 							break;
 						case 'include':
 							result = printIndent(previousToken, result, indent, indentLevel);
