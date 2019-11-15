@@ -7,3 +7,4 @@ azure-pipelines.yml
 .eslintrc.json
 .vscode/
 .history/
+junit.xml
