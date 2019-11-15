@@ -302,14 +302,14 @@ export const plugin: Plugin = {
 									val = `${quotes}{{ ${val} }}${quotes}`;
 								} else if (/^["'](.*)["']$/.test(val)) {
 									val = makeString(val.slice(1, -1), singleQuote ? "'" : '"', false);
-								} else if (token.name === 'style' && token.mustEscape) {
+								} else if (val === 'true') {
+									// The value is exactly true and is not quoted
+									break;
+								} else if (token.mustEscape) {
 									val = format(val, {
 										parser: '__js_expression' as any,
 										...codeInterpolationOptions
 									});
-								} else if (val === 'true') {
-									// The value is exactly true and is not quoted
-									break;
 								} else {
 									// The value is not quoted and may be js-code
 									val = val.trim();
