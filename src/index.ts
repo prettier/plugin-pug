@@ -440,7 +440,8 @@ export const plugin: Plugin = {
 									result += '| ';
 									break;
 							}
-							result += `#{${token.val}}`;
+							result += token.mustEscape ? '#' : '!';
+							result += `{${token.val}}`;
 							break;
 						case 'code':
 							result = printIndent(previousToken, result, indent, indentLevel);
