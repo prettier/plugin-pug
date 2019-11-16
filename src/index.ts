@@ -483,12 +483,16 @@ export const plugin: Plugin = {
 								useSemi = false;
 							}
 							let val = token.val;
-							val = format(val, {
-								parser: 'babel',
-								...codeInterpolationOptions,
-								semi: useSemi,
-								endOfLine: 'lf'
-							});
+							try {
+								val = format(val, {
+									parser: 'babel',
+									...codeInterpolationOptions,
+									semi: useSemi,
+									endOfLine: 'lf'
+								});
+							} catch (error) {
+								logger.warn(error);
+							}
 							val = val.slice(0, -1);
 							result += ` ${val}`;
 							break;
