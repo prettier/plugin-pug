@@ -448,7 +448,7 @@ export const plugin: Plugin = {
 								val = formatText(val, singleQuote);
 							}
 
-							if (previousToken?.type === 'tag' || previousToken?.type === 'id') {
+							if (['tag', 'id', 'interpolation', 'call'].includes(previousToken?.type)) {
 								val = ` ${val}`;
 							}
 
