@@ -490,10 +490,10 @@ export const plugin: Plugin = {
 									semi: useSemi,
 									endOfLine: 'lf'
 								});
+								val = val.slice(0, -1);
 							} catch (error) {
 								logger.warn(error);
 							}
-							val = val.slice(0, -1);
 							result += ` ${val}`;
 							break;
 						}
