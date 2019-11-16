@@ -484,6 +484,7 @@ export const plugin: Plugin = {
 							}
 							let val = token.val;
 							try {
+								const valBackup = val;
 								val = format(val, {
 									parser: 'babel',
 									...codeInterpolationOptions,
@@ -491,6 +492,9 @@ export const plugin: Plugin = {
 									endOfLine: 'lf'
 								});
 								val = val.slice(0, -1);
+								if (val.includes('\n')) {
+									val = valBackup;
+								}
 							} catch (error) {
 								logger.warn(error);
 							}
