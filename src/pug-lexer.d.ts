@@ -39,6 +39,7 @@ declare module 'pug-lexer' {
 			| 'newline'
 			| 'outdent'
 			| 'path'
+			| 'slash'
 			| 'start-attributes'
 			| 'start-pipeless-text'
 			| 'start-pug-interpolation'
@@ -200,6 +201,8 @@ declare module 'pug-lexer' {
 
 		export type YieldToken = LexToken<'yield'>;
 
+		export type SlashToken = LexToken<'slash'>;
+
 		export type Token =
 			| AndAttributesToken
 			| AttributeToken
@@ -234,6 +237,7 @@ declare module 'pug-lexer' {
 			| NewlineToken
 			| OutdentToken
 			| PathToken
+			| SlashToken
 			| StartAttributesToken
 			| StartPipelessTextToken
 			| StartPugInterpolationToken

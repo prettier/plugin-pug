@@ -562,6 +562,7 @@ export const plugin: Plugin = {
 							result += ']';
 							break;
 						case 'interpolation':
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `#{${token.val}}`;
 							break;
 						case 'include':
@@ -663,6 +664,9 @@ export const plugin: Plugin = {
 						case 'yield':
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += 'yield';
+							break;
+						case 'slash':
+							result += '/';
 							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
