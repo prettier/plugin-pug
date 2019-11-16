@@ -46,7 +46,8 @@ declare module 'pug-lexer' {
 			| 'text-html'
 			| 'text'
 			| 'when'
-			| 'while';
+			| 'while'
+			| 'yield';
 
 		export interface LexToken<Type extends LexTokenType> {
 			type: Type;
@@ -197,6 +198,8 @@ declare module 'pug-lexer' {
 
 		export type BlockcodeToken = LexToken<'blockcode'>;
 
+		export type YieldToken = LexToken<'yield'>;
+
 		export type Token =
 			| AndAttributesToken
 			| AttributeToken
@@ -238,7 +241,8 @@ declare module 'pug-lexer' {
 			| TextHtmlToken
 			| TextToken
 			| WhenToken
-			| WhileToken;
+			| WhileToken
+			| YieldToken;
 
 		export type LexerFunction = (type: string, exp?: any) => boolean;
 		export interface LexerOptions {

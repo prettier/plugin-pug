@@ -660,6 +660,10 @@ export const plugin: Plugin = {
 							result = printIndent(previousToken, result, indent, indentLevel);
 							result += '-';
 							break;
+						case 'yield':
+							result = printIndent(previousToken, result, indent, indentLevel);
+							result += 'yield';
+							break;
 						default:
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
 					}
