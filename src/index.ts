@@ -375,6 +375,9 @@ export const plugin: Plugin = {
 							break;
 						case 'comment':
 							result = printIndent(previousToken, result, indent, indentLevel);
+							if (previousToken && !['newline', 'indent', 'outdent'].includes(previousToken.type)) {
+								result += ' ';
+							}
 							result += `//${token.buffer ? '' : '-'}${token.val.replace(/\s\s+/g, ' ')}`;
 							if (nextToken.type === 'start-pipeless-text') {
 								pipelessComment = true;
@@ -448,7 +451,7 @@ export const plugin: Plugin = {
 								val = formatText(val, singleQuote);
 							}
 
-							if (['tag', 'id', 'interpolation', 'call'].includes(previousToken?.type)) {
+							if (['tag', 'id', 'interpolation', 'call', '&attributes'].includes(previousToken?.type)) {
 								val = ` ${val}`;
 							}
 
@@ -461,8 +464,12 @@ export const plugin: Plugin = {
 						case 'interpolated-code':
 							switch (previousToken?.type) {
 								case 'tag':
+								case 'class':
 								case 'end-attributes':
 									result += ' ';
+									break;
+								case 'start-pug-interpolation':
+									result += '| ';
 									break;
 								case 'indent':
 									result = printIndent(previousToken, result, indent, indentLevel);
@@ -551,6 +558,7 @@ export const plugin: Plugin = {
 							result += 'block ';
 							if (token.mode !== 'replace') {
 								result += token.mode;
+								result += ' ';
 							}
 							result += token.val;
 							break;
@@ -578,6 +586,7 @@ export const plugin: Plugin = {
 							result += 'include';
 							break;
 						case 'filter':
+							result = printIndent(previousToken, result, indent, indentLevel);
 							result += `:${token.val}`;
 							break;
 						case 'call': {
