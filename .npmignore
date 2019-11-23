@@ -8,3 +8,4 @@ azure-pipelines.yml
 .vscode/
 .history/
 junit.xml
+release.sh
