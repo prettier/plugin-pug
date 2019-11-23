@@ -184,57 +184,64 @@ export const plugin: Plugin = {
 							}
 							break;
 						case 'attribute': {
-							if (
-								token.name === 'class' &&
-								typeof token.val === 'string' &&
-								(token.val.startsWith('"') || token.val.startsWith("'"))
-							) {
-								// Handle class attribute
-								let val = token.val;
-								val = val.substring(1, val.length - 1);
-								val = val.trim();
-								val = val.replace(/\s\s+/g, ' ');
-								const classes: string[] = val.split(' ');
-								const specialClasses: string[] = [];
-								const validClassNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
-								for (const className of classes) {
-									if (!validClassNameRegex.test(className)) {
-										specialClasses.push(className);
-										continue;
+							if (typeof token.val === 'string') {
+								const surroundedByQuotes: boolean =
+									(token.val.startsWith('"') && token.val.endsWith('"')) ||
+									(token.val.startsWith("'") && token.val.endsWith("'"));
+								if (surroundedByQuotes) {
+									if (token.name === 'class') {
+										// Handle class attribute
+										let val = token.val;
+										val = val.substring(1, val.length - 1);
+										val = val.trim();
+										val = val.replace(/\s\s+/g, ' ');
+										const classes: string[] = val.split(' ');
+										const specialClasses: string[] = [];
+										const validClassNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
+										for (const className of classes) {
+											if (!validClassNameRegex.test(className)) {
+												specialClasses.push(className);
+												continue;
+											}
+											// Write css-class in front of attributes
+											const position: number = startAttributePosition;
+											result = [
+												result.slice(0, position),
+												`.${className}`,
+												result.slice(position)
+											].join('');
+											startAttributePosition += 1 + className.length;
+											result = result.replace(/div\./, '.');
+										}
+										if (specialClasses.length > 0) {
+											token.val = makeString(
+												specialClasses.join(' '),
+												singleQuote ? "'" : '"',
+												false
+											);
+											previousAttributeRemapped = false;
+										} else {
+											previousAttributeRemapped = true;
+											break;
+										}
+									} else if (token.name === 'id') {
+										// Handle id attribute
+										let val = token.val;
+										val = val.substring(1, val.length - 1);
+										val = val.trim();
+										// Write css-id in front of css-classes
+										const position: number = startTagPosition;
+										result = [result.slice(0, position), `#${val}`, result.slice(position)].join(
+											''
+										);
+										startAttributePosition += 1 + val.length;
+										result = result.replace(/div#/, '#');
+										if (previousToken.type === 'attribute' && previousToken.name !== 'class') {
+											previousAttributeRemapped = true;
+										}
+										break;
 									}
-									// Write css-class in front of attributes
-									const position: number = startAttributePosition;
-									result = [result.slice(0, position), `.${className}`, result.slice(position)].join(
-										''
-									);
-									startAttributePosition += 1 + className.length;
-									result = result.replace(/div\./, '.');
 								}
-								if (specialClasses.length > 0) {
-									token.val = makeString(specialClasses.join(' '), singleQuote ? "'" : '"', false);
-									previousAttributeRemapped = false;
-								} else {
-									previousAttributeRemapped = true;
-									break;
-								}
-							} else if (
-								token.name === 'id' &&
-								typeof token.val === 'string' &&
-								(token.val.startsWith('"') || token.val.startsWith("'"))
-							) {
-								// Handle id attribute
-								let val = token.val;
-								val = val.substring(1, val.length - 1);
-								val = val.trim();
-								// Write css-id in front of css-classes
-								const position: number = startTagPosition;
-								result = [result.slice(0, position), `#${val}`, result.slice(position)].join('');
-								startAttributePosition += 1 + val.length;
-								result = result.replace(/div#/, '#');
-								if (previousToken.type === 'attribute' && previousToken.name !== 'class') {
-									previousAttributeRemapped = true;
-								}
-								break;
 							}
 
 							const hasNormalPreviousToken: AttributeToken | undefined = previousNormalAttributeToken(
