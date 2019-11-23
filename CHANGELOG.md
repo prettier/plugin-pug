@@ -1,6 +1,40 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.10...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.11...master)
+
+# 1.0.11
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.10...1.0.11)
+
+- Handle `yield` token ([94fdc0c])
+- Handle `slash` token ([194f103])
+- Dont format `code` if formatter produces error ([e105bae])
+- Dont format `code` is multiline ([49b4b4c])
+- Fix code slicing ([8478562])
+- Fix whitespace issues ([b7d26c7])
+- Fix whitespace after `interpolation` and `call` ([7670ade])
+- Fix whitespace after `filter` token ([4ac7812])
+- Fix missing `key` for `each` token ([aff4969])
+- Fix whitespace before `start-pug-interpolation`token ([09e96a3])
+- Fix escaping of non-interpolated `text` ([e5c3944])
+- Fix only text body ([c32a8d1])
+- Fix indent after newline for `interpolated-code` token ([bfb90c6])
+- Fix partial quoted surrounded `attribute` token ([20be986])
+
+[94fdc0c]: https://github.com/prettier/plugin-pug/commit/94fdc0cd708ad011ee609908d1a3cfe53c796688
+[194f103]: https://github.com/prettier/plugin-pug/commit/194f1036b0406a4844f921d122769b91d4d2f899
+[e105bae]: https://github.com/prettier/plugin-pug/commit/e105bae5707fda5978317ba461c978f9b0be48d1
+[49b4b4c]: https://github.com/prettier/plugin-pug/commit/49b4b4cdec7d3bdea079c8a801aece71524ce011
+[8478562]: https://github.com/prettier/plugin-pug/commit/8478562a7401927a276f9d80f6db6c7b4ff7a27e
+[b7d26c7]: https://github.com/prettier/plugin-pug/commit/b7d26c7692b1146cb2717175a092d48bf9673e1e
+[7670ade]: https://github.com/prettier/plugin-pug/commit/7670adec9370cff64cbeda83f553988fbebd5b7f
+[4ac7812]: https://github.com/prettier/plugin-pug/commit/4ac7812d0f98ad41431173e017ecf80577e5ea16
+[aff4969]: https://github.com/prettier/plugin-pug/commit/aff4969872bd06f91db474ebaa7715200d82637b
+[09e96a3]: https://github.com/prettier/plugin-pug/commit/09e96a38750f86f5de6fe31f4cd55a0f4ac76b4c
+[e5c3944]: https://github.com/prettier/plugin-pug/commit/e5c3944e634906b10c641a801f1afeb301cf4a80
+[c32a8d1]: https://github.com/prettier/plugin-pug/commit/c32a8d170604b8a308ba70730066d5c644487193
+[bfb90c6]: https://github.com/prettier/plugin-pug/commit/bfb90c6a4c06b58fb1593255448bc403b375c2d4
+[20be986]: https://github.com/prettier/plugin-pug/commit/20be986be4303c379f76acdd30d8b1a99bc2e30b
 
 # 1.0.10
 
