@@ -451,7 +451,11 @@ export const plugin: Plugin = {
 								val = formatText(val, singleQuote);
 							}
 
-							if (['tag', 'id', 'interpolation', 'call', '&attributes'].includes(previousToken?.type)) {
+							if (
+								['tag', 'id', 'interpolation', 'call', '&attributes', 'filter'].includes(
+									previousToken?.type
+								)
+							) {
 								val = ` ${val}`;
 							}
 
@@ -566,7 +570,7 @@ export const plugin: Plugin = {
 							result += 'extends ';
 							break;
 						case 'path':
-							if (previousToken?.type === 'include') {
+							if (['include', 'filter'].includes(previousToken?.type)) {
 								result += ' ';
 							}
 							result += token.val;
