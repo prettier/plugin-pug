@@ -482,6 +482,7 @@ export const plugin: Plugin = {
 									result += '| ';
 									break;
 								case 'indent':
+								case 'newline':
 									result = printIndent(previousToken, result, indent, indentLevel);
 									result += '| ';
 									break;
