@@ -428,7 +428,7 @@ export const plugin: Plugin = {
 											result += indent.repeat(indentLevel);
 										}
 										result += '|';
-										if (/.*\S.*/.test(token.val)) {
+										if (/.*\S.*/.test(token.val) || nextToken?.type === 'start-pug-interpolation') {
 											result += ' ';
 										}
 										break;
