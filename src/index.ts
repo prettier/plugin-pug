@@ -653,7 +653,11 @@ export const plugin: Plugin = {
 						}
 						case 'each':
 							result = printIndent(previousToken, result, indent, indentLevel);
-							result += `each ${token.val} in ${token.code}`;
+							result += `each ${token.val}`;
+							if (token.key !== null) {
+								result += `, ${token.key}`;
+							}
+							result += ` in ${token.code}`;
 							break;
 						case 'while':
 							result = printIndent(previousToken, result, indent, indentLevel);
