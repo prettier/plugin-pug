@@ -146,6 +146,10 @@ export const plugin: Plugin = {
 
 				const codeInterpolationOptions = { singleQuote: !singleQuote, printWidth: 9000 };
 
+				if (tokens[0]?.type === 'text') {
+					result += '| ';
+				}
+
 				for (let index: number = 0; index < tokens.length; index++) {
 					const token: Token = tokens[index];
 					const previousToken: Token | undefined = tokens[index - 1];
