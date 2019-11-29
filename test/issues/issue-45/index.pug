@@ -1,0 +1,12 @@
+extends ./layout.pug
+
+block main
+  h2='Hello World'
+  div.lorem
+    +lorem(4)
+  div.lists
+    each index in [1, 2, 3, 4]
+      - const base = index + ((index - 1) * 2)
+      +list([`test ${base}`, `test ${base + 1}`, `test ${base + 2}`])(class=`list--${index}`).list
+  +b('image', 'div').image--svg
+    include ./public/star.svg

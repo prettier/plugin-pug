@@ -1,0 +1,10 @@
+- const text = 'Footer &copy;applelo'
+- const md = ['footer--test', 'footer--test2'];
+-
+  function insert(word) {
+    word = word.toLowerCase();
+    word = word.replace(' ', '<br>');
+    return word;
+  }
++b('footer')(class=md).grid.grid--footer
+  p!=insert(text)
