@@ -134,6 +134,18 @@ They should be set via `Prettier`'s `overrides` option
   - `'as-needed'` -> Only add commas between attributes where required.  
     Example: `button(type="submit", (click)="play()" disabled)`
 
+- `commentPreserveSpaces`  
+  Change behavior of spaces within comments.
+
+  Choices:
+
+  - `'keep-all'` -> Keep all spaces within comments.  
+    Example: `// ___this _is __a __comment_`
+  - `'keep-leading'` -> Keep leading spaces within comments.  
+    Example: `// ___this is a comment`
+  - `'trim-all'` -> Trim all spaces within comments.  
+    Example: `// this is a comment`
+
 The definitions for these options can be found in [src/options.ts](https://github.com/prettier/plugin-pug/blob/master/src/options.ts)
 
 ## Integration with editors
