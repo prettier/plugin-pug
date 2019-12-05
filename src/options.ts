@@ -21,8 +21,15 @@ export function resolveAttributeSeparatorOption(attributeSeparator: 'always' | '
 
 export function formatCommentPreserveSpaces(input: string, commentPreserveSpaces: CommentPreserveSpaces): string {
 	switch (commentPreserveSpaces) {
-		case 'keep-leading':
-			return input.replace(/\s\s+/g, ' ');
+		case 'keep-leading': {
+			let result: string = '';
+			let firstNonSpace = 0;
+			for (firstNonSpace; firstNonSpace < input.length && input[firstNonSpace] === ' '; firstNonSpace++) {
+				result += ' ';
+			}
+			result += input.substring(firstNonSpace).replace(/\s\s+/g, ' ');
+			return result;
+		}
 		case 'trim-all':
 			return input.replace(/\s\s+/g, ' ');
 		case 'keep-all':
