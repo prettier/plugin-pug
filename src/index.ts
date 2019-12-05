@@ -3,7 +3,12 @@ import * as lex from 'pug-lexer';
 import { AttributeToken, EndAttributesToken, Token } from 'pug-lexer';
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
-import { options as pugOptions, PugParserOptions, resolveAttributeSeparatorOption } from './options';
+import {
+	formatCommentPreserveSpaces,
+	options as pugOptions,
+	PugParserOptions,
+	resolveAttributeSeparatorOption
+} from './options';
 
 const { makeString } = util;
 
@@ -122,6 +127,7 @@ export const plugin: Plugin = {
 					tabWidth,
 					useTabs,
 					attributeSeparator,
+					commentPreserveSpaces,
 					semi
 				}: ParserOptions & PugParserOptions,
 				print: (path: FastPath) => Doc
@@ -393,9 +399,7 @@ export const plugin: Plugin = {
 							if (!token.buffer) {
 								result += '-';
 							}
-							let val: string = token.val;
-							val = val.replace(/\s\s+/g, ' ');
-							result += val;
+							result += formatCommentPreserveSpaces(token.val, commentPreserveSpaces);
 							if (nextToken.type === 'start-pipeless-text') {
 								pipelessComment = true;
 							}
@@ -424,7 +428,7 @@ export const plugin: Plugin = {
 								}
 
 								if (pipelessComment) {
-									val = val.replace(/\s\s+/g, ' ');
+									val = formatCommentPreserveSpaces(val, commentPreserveSpaces);
 								}
 							} else {
 								if (nextToken && val.endsWith(' ')) {
