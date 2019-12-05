@@ -384,16 +384,23 @@ export const plugin: Plugin = {
 							// Insert one newline
 							result += '\n';
 							break;
-						case 'comment':
+						case 'comment': {
 							result = printIndent(previousToken, result, indent, indentLevel);
 							if (previousToken && !['newline', 'indent', 'outdent'].includes(previousToken.type)) {
 								result += ' ';
 							}
-							result += `//${token.buffer ? '' : '-'}${token.val.replace(/\s\s+/g, ' ')}`;
+							result += '//';
+							if (!token.buffer) {
+								result += '-';
+							}
+							let val: string = token.val;
+							val = val.replace(/\s\s+/g, ' ');
+							result += val;
 							if (nextToken.type === 'start-pipeless-text') {
 								pipelessComment = true;
 							}
 							break;
+						}
 						case 'newline':
 							if (previousToken && token.loc.start.line - previousToken.loc.end.line > 1) {
 								// Insert one extra blank line
