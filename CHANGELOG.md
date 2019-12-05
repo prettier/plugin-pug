@@ -1,6 +1,15 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.0.11...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.0...master)
+
+# 1.1.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.0.11...1.1.0)
+
+- Introduce new option `commentPreserveSpaces` ([#47])  
+  Possible values: `keep-all`, `keep-leading` and `trim-all`
+
+[#47]: https://github.com/prettier/plugin-pug/issues/47
 
 # 1.0.11
 
