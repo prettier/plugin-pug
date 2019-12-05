@@ -428,7 +428,7 @@ export const plugin: Plugin = {
 								}
 
 								if (pipelessComment) {
-									val = formatCommentPreserveSpaces(val, commentPreserveSpaces);
+									val = formatCommentPreserveSpaces(val, commentPreserveSpaces, true);
 								}
 							} else {
 								if (nextToken && val.endsWith(' ')) {

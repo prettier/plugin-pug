@@ -19,7 +19,11 @@ export function resolveAttributeSeparatorOption(attributeSeparator: 'always' | '
 	);
 }
 
-export function formatCommentPreserveSpaces(input: string, commentPreserveSpaces: CommentPreserveSpaces): string {
+export function formatCommentPreserveSpaces(
+	input: string,
+	commentPreserveSpaces: CommentPreserveSpaces,
+	pipeless: boolean = false
+): string {
 	switch (commentPreserveSpaces) {
 		case 'keep-leading': {
 			let result: string = '';
@@ -30,8 +34,14 @@ export function formatCommentPreserveSpaces(input: string, commentPreserveSpaces
 			result += input.substring(firstNonSpace).replace(/\s\s+/g, ' ');
 			return result;
 		}
-		case 'trim-all':
-			return input.replace(/\s\s+/g, ' ');
+		case 'trim-all': {
+			let result: string = input.trim();
+			result = result.replace(/\s\s+/g, ' ');
+			if (!pipeless && input.startsWith(' ')) {
+				result = ` ${result}`;
+			}
+			return result;
+		}
 		case 'keep-all':
 		default:
 			// Don't touch comment
