@@ -31,7 +31,10 @@ export function formatCommentPreserveSpaces(
 			for (firstNonSpace; firstNonSpace < input.length && input[firstNonSpace] === ' '; firstNonSpace++) {
 				result += ' ';
 			}
-			result += input.substring(firstNonSpace).replace(/\s\s+/g, ' ');
+			result += input
+				.substring(firstNonSpace)
+				.trim()
+				.replace(/\s\s+/g, ' ');
 			return result;
 		}
 		case 'trim-all': {
