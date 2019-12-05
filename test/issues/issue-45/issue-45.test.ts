@@ -9,11 +9,13 @@ describe('Issues', () => {
 			return dirent.isFile() && dirent.name.endsWith('.pug');
 		}
 
+		const formatOptions = { singleQuote: true, attributeSeparator: 'as-needed' };
+
 		function testPugFile(relativeFilename: string): void {
 			test(relativeFilename, () => {
 				const expected: string = readFileSync(resolve(__dirname, relativeFilename), 'utf8');
 				const code: string = expected;
-				const actual: string = format(code, { parser: 'pug' as any, plugins: [plugin] });
+				const actual: string = format(code, { parser: 'pug' as any, plugins: [plugin], ...formatOptions });
 
 				expect(actual).toBe(expected);
 			});
