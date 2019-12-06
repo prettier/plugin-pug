@@ -1,4 +1,4 @@
-- const text = 'Footer &copy;applelo'
+- const text = 'Footer &copy;applelo';
 - const md = ['footer--test', 'footer--test2'];
 -
   function insert(word) {
@@ -7,4 +7,4 @@
     return word;
   }
 +b('footer')(class=md).grid.grid--footer
-  p!=insert(text)
+  p!= insert(text)
