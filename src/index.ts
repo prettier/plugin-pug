@@ -3,7 +3,12 @@ import * as lex from 'pug-lexer';
 import { AttributeToken, EndAttributesToken, Token } from 'pug-lexer';
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
-import { options as pugOptions, PugParserOptions, resolveAttributeSeparatorOption } from './options';
+import {
+	formatCommentPreserveSpaces,
+	options as pugOptions,
+	PugParserOptions,
+	resolveAttributeSeparatorOption
+} from './options';
 
 const { makeString } = util;
 
@@ -122,6 +127,7 @@ export const plugin: Plugin = {
 					tabWidth,
 					useTabs,
 					attributeSeparator,
+					commentPreserveSpaces,
 					semi
 				}: ParserOptions & PugParserOptions,
 				print: (path: FastPath) => Doc
@@ -384,16 +390,21 @@ export const plugin: Plugin = {
 							// Insert one newline
 							result += '\n';
 							break;
-						case 'comment':
+						case 'comment': {
 							result = printIndent(previousToken, result, indent, indentLevel);
 							if (previousToken && !['newline', 'indent', 'outdent'].includes(previousToken.type)) {
 								result += ' ';
 							}
-							result += `//${token.buffer ? '' : '-'}${token.val.replace(/\s\s+/g, ' ')}`;
+							result += '//';
+							if (!token.buffer) {
+								result += '-';
+							}
+							result += formatCommentPreserveSpaces(token.val, commentPreserveSpaces);
 							if (nextToken.type === 'start-pipeless-text') {
 								pipelessComment = true;
 							}
 							break;
+						}
 						case 'newline':
 							if (previousToken && token.loc.start.line - previousToken.loc.end.line > 1) {
 								// Insert one extra blank line
@@ -417,7 +428,7 @@ export const plugin: Plugin = {
 								}
 
 								if (pipelessComment) {
-									val = val.replace(/\s\s+/g, ' ');
+									val = formatCommentPreserveSpaces(val, commentPreserveSpaces, true);
 								}
 							} else {
 								if (nextToken && val.endsWith(' ')) {
