@@ -127,6 +127,7 @@ export const plugin: Plugin = {
 					tabWidth,
 					useTabs,
 					attributeSeparator,
+					attributeSingleQuote,
 					commentPreserveSpaces,
 					semi
 				}: ParserOptions & PugParserOptions,
@@ -150,7 +151,7 @@ export const plugin: Plugin = {
 				let previousAttributeRemapped: boolean = false;
 				let wrapAttributes: boolean = false;
 
-				const codeInterpolationOptions = { singleQuote: !singleQuote, printWidth: 9000 };
+				const codeInterpolationOptions = { singleQuote, printWidth: 9000 };
 
 				if (tokens[0]?.type === 'text') {
 					result += '| ';
@@ -285,9 +286,10 @@ export const plugin: Plugin = {
 									val = val.slice(1, -1);
 									val = format(val, {
 										parser: '__vue_expression' as any,
-										...codeInterpolationOptions
+										...codeInterpolationOptions,
+										singleQuote: !attributeSingleQuote
 									});
-									const quotes: "'" | '"' = singleQuote ? "'" : '"';
+									const quotes: "'" | '"' = attributeSingleQuote ? "'" : '"';
 									val = `${quotes}${val}${quotes}`;
 								} else if (/^(\(.*\)|\[.*\])$/.test(token.name)) {
 									// Format Angular action or binding
@@ -295,16 +297,21 @@ export const plugin: Plugin = {
 									val = val.slice(1, -1);
 									val = format(val, {
 										parser: '__ng_interpolation' as any,
-										...codeInterpolationOptions
+										...codeInterpolationOptions,
+										singleQuote: !attributeSingleQuote
 									});
-									const quotes: "'" | '"' = singleQuote ? "'" : '"';
+									const quotes: "'" | '"' = attributeSingleQuote ? "'" : '"';
 									val = `${quotes}${val}${quotes}`;
 								} else if (/^\*.*$/.test(token.name)) {
 									// Format Angular directive
 									val = val.trim();
 									val = val.slice(1, -1);
-									val = format(val, { parser: '__ng_directive' as any, ...codeInterpolationOptions });
-									const quotes: "'" | '"' = singleQuote ? "'" : '"';
+									val = format(val, {
+										parser: '__ng_directive' as any,
+										...codeInterpolationOptions,
+										singleQuote: !attributeSingleQuote
+									});
+									const quotes: "'" | '"' = attributeSingleQuote ? "'" : '"';
 									val = `${quotes}${val}${quotes}`;
 								} else if (/^(["']{{)(.*)(}}["'])$/.test(val)) {
 									// Format Angular interpolation
@@ -315,10 +322,10 @@ export const plugin: Plugin = {
 									// 	parser: '__ng_interpolation' as any,
 									// 	...codeInterpolationOptions
 									// });
-									const quotes: "'" | '"' = singleQuote ? "'" : '"';
+									const quotes: "'" | '"' = attributeSingleQuote ? "'" : '"';
 									val = `${quotes}{{ ${val} }}${quotes}`;
 								} else if (/^["'](.*)["']$/.test(val)) {
-									val = makeString(val.slice(1, -1), singleQuote ? "'" : '"', false);
+									val = makeString(val.slice(1, -1), attributeSingleQuote ? "'" : '"', false);
 								} else if (val === 'true') {
 									// The value is exactly true and is not quoted
 									break;
@@ -470,7 +477,7 @@ export const plugin: Plugin = {
 								}
 
 								val = val.trim();
-								val = formatText(val, singleQuote);
+								val = formatText(val, attributeSingleQuote);
 							}
 
 							val = val.replace(/^#(\{|\[)/g, '\\#$1');
@@ -741,7 +748,9 @@ export const plugin: Plugin = {
 		}
 	},
 	options: pugOptions as any,
-	defaultOptions: {}
+	defaultOptions: {
+		singleQuote: true
+	}
 };
 
 export const languages = plugin.languages;
