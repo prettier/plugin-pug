@@ -4,6 +4,7 @@ export type CommentPreserveSpaces = 'keep-all' | 'keep-leading' | 'trim-all';
 
 export interface PugParserOptions {
 	attributeSeparator: 'always' | 'as-needed';
+	attributeSingleQuote: boolean;
 	commentPreserveSpaces: CommentPreserveSpaces;
 }
 
@@ -71,6 +72,13 @@ export const options = {
 					'Only add commas between attributes where required. Example: `button(type="submit", (click)="play()" disabled)`'
 			}
 		]
+	},
+	attributeSingleQuote: {
+		since: '1.2.0',
+		category: CATEGORY_PUG,
+		type: 'boolean',
+		default: false,
+		description: 'If possible, use single quotes instead of double quotes for pug attributes.'
 	},
 	commentPreserveSpaces: {
 		since: '1.1.0',
