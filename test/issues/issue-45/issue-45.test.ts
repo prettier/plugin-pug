@@ -9,7 +9,7 @@ describe('Issues', () => {
 			return dirent.isFile() && dirent.name.endsWith('.pug');
 		}
 
-		const formatOptions = { singleQuote: true, attributeSeparator: 'as-needed' };
+		const formatOptions = { singleQuote: true, attributeSingleQuote: true, attributeSeparator: 'as-needed' };
 
 		function testPugFile(relativeFilename: string): void {
 			test(relativeFilename, () => {
