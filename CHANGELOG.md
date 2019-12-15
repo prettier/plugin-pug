@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.1...master)
+
+# 1.1.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.0...1.1.1)
+
+- Fix space after `id` followed by `interpolated` code ([#49])
+
+[#49]: https://github.com/prettier/plugin-pug/issues/49
 
 # 1.1.0
 
