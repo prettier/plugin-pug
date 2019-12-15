@@ -493,6 +493,7 @@ export const plugin: Plugin = {
 							switch (previousToken?.type) {
 								case 'tag':
 								case 'class':
+								case 'id':
 								case 'end-attributes':
 									result += ' ';
 									break;
