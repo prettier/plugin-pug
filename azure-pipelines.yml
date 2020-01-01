@@ -3,9 +3,6 @@ pool:
 
 strategy:
     matrix:
-        node_8.x_carbon:
-            # End-of-life: December 2019
-            node_version: 8.x
         node_10.x_dubnium:
             # End-of-life: April 2021
             node_version: 10.x
