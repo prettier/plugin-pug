@@ -148,6 +148,42 @@ They should be set via `Prettier`'s `overrides` option
 
 The definitions for these options can be found in [src/options.ts](https://github.com/prettier/plugin-pug/blob/master/src/options.ts)
 
+## Some workarounds
+
+There are some code examples that are not formatted well with this plugin and can damage your code.  
+But there are workarounds for it. These generate even better pug code!
+
+### Examples
+
+[Issue 53](https://github.com/prettier/plugin-pug/issues/53)
+
+```pug
+input(onClick="methodname(\"" + variable + "\", this)")
+// transforms to
+input(onClick="methodname(\"\" + variable + \"\", this)")
+
+// better write
+input(onClick="methodname('" + variable + "', this)")
+// or
+input(onClick=`methodname("${variable}", this)`)
+// or you could also add the " inside the methodname-method
+```
+
+[Issue 54](https://github.com/prettier/plugin-pug/issues/54)
+
+```pug
+- const id = 42
+- const collapsed = true
+
+div(id=id, class='collapse' + (collapsed ? '' : ' show') + ' cardcontent')
+// transforms to
+.cardcontent(id=id, class="collapse' + (collapsed ? '' : ' show') + '")
+
+// better write
+.cardcontent.collapse(id=id, class=collapsed ? '' : 'show')
+// Now your js logic is extracted from the plain logic
+```
+
 ## Integration with editors
 
 If you are using a text editor that supports Prettier integration (e.g. [Atom](https://atom.io/packages/prettier-atom)), you can have all Prettier perks for your Pug code too!
