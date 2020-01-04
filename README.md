@@ -162,11 +162,8 @@ input(onClick="methodname(\"" + variable + "\", this)")
 // transforms to
 input(onClick="methodname(\"\" + variable + \"\", this)")
 
-// better write
-input(onClick="methodname('" + variable + "', this)")
-// or
+// In most cases ES6 template strings are a good solution
 input(onClick=`methodname("${variable}", this)`)
-// or you could also add the " inside the methodname-method
 ```
 
 [Issue 54](https://github.com/prettier/plugin-pug/issues/54)
