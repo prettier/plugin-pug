@@ -235,6 +235,12 @@ export const plugin: Plugin = {
 										let val = token.val;
 										val = val.substring(1, val.length - 1);
 										val = val.trim();
+										const validIdNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
+										if (!validIdNameRegex.test(val)) {
+											val = makeString(val, singleQuote ? "'" : '"', false);
+											result += `id=${val}`;
+											break;
+										}
 										// Write css-id in front of css-classes
 										const position: number = startTagPosition;
 										result = [result.slice(0, position), `#${val}`, result.slice(position)].join(
