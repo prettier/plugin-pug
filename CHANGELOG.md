@@ -1,6 +1,19 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.1...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.2...master)
+
+# 1.1.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.1...1.1.2)
+
+- Transform only valid `id` attributes ([#51])
+- Indent interpolated-code after outdent ([#52])
+- Suggest workarounds in README.md ([8d69f1e], [58157f6])
+
+[#51]: https://github.com/prettier/plugin-pug/issues/51
+[#52]: https://github.com/prettier/plugin-pug/issues/52
+[8d69f1e]: https://github.com/prettier/plugin-pug/commit/8d69f1ec795d918d69a1e65b8e70d060ab1c6eb5
+[58157f6]: https://github.com/prettier/plugin-pug/commit/58157f6363fc354b97fd048e616735433c9e124a
 
 # 1.1.1
 
