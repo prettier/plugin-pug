@@ -508,6 +508,7 @@ export const plugin: Plugin = {
 									break;
 								case 'indent':
 								case 'newline':
+								case 'outdent':
 									result = printIndent(previousToken, result, indent, indentLevel);
 									result += '| ';
 									break;
