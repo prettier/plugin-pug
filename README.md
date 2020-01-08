@@ -166,6 +166,9 @@ input(onClick="methodname(\"\" + variable + \"\", this)")
 input(onClick=`methodname("${variable}", this)`)
 ```
 
+As mentioned in [pugjs.org Attribute Interpolation](https://pugjs.org/language/attributes.html#attribute-interpolation) (2.),
+you should prefere ES2015 template strings to simplify your attributes.
+
 [Issue 54](https://github.com/prettier/plugin-pug/issues/54)
 
 ```pug
