@@ -477,9 +477,9 @@ export const plugin: Plugin = {
 
 								val = val.trim();
 								val = formatText(val, singleQuote);
-							}
 
-							val = val.replace(/^#(\{|\[)/g, '\\#$1');
+								val = val.replace(/#(\{|\[)/g, '\\#$1');
+							}
 
 							if (
 								['tag', 'id', 'interpolation', 'call', '&attributes', 'filter'].includes(
