@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.2...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.3...master)
+
+# 1.1.3
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.2...1.1.3)
+
+- Fix valid backslash escaping ([#59])
+
+[#59]: https://github.com/prettier/plugin-pug/issues/59
 
 # 1.1.2
 
