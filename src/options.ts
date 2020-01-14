@@ -88,7 +88,7 @@ export const options = {
 		array: true,
 		default: [{ value: ['src', 'alt'] }],
 		description: 'Order of attributes'
-  },
+	},
 	commentPreserveSpaces: {
 		since: '1.1.0',
 		category: CATEGORY_PUG,
