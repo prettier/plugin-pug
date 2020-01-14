@@ -7,7 +7,12 @@ describe('Comments', () => {
 	test('should handle comments', () => {
 		const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-		const actual: string = format(code, { parser: 'pug' as any, plugins: [plugin] });
+		const actual: string = format(code, {
+			parser: 'pug' as any,
+			plugins: [plugin],
+			// @ts-ignore
+			commentPreserveSpaces: 'trim-all'
+		});
 
 		expect(actual).toBe(expected);
 	});

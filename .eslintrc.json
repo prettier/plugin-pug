@@ -26,7 +26,7 @@
 		"quotes": ["error", "single", { "avoidEscape": true }],
 		"semi": ["error", "always"],
 
-		"@typescript-eslint/ban-ts-ignore": "warn",
+		"@typescript-eslint/ban-ts-ignore": "off",
 		"@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
 		"@typescript-eslint/indent": ["error", "tab"],
 		"@typescript-eslint/interface-name-prefix": "off",
@@ -34,6 +34,8 @@
 		"@typescript-eslint/no-inferrable-types": "off",
 		"@typescript-eslint/no-parameter-properties": "off",
 		"@typescript-eslint/no-unused-vars": "off",
+		"@typescript-eslint/prefer-nullish-coalescing": "warn",
+		"@typescript-eslint/prefer-optional-chain": "warn",
 		"@typescript-eslint/prefer-string-starts-ends-with": "error"
 	}
 }

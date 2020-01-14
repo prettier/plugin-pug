@@ -81,6 +81,22 @@ yarn prettier --write "**/*.pug"
 
 - `printWidth`  
   _Currently not very accurate, but works_
+- `semi`  
+  If you want to configure different semi for pug than for js code, you can use prettier's override.
+  ```json
+  {
+    "semi": true,
+    "overrides": [
+      {
+        "files": "*.pug",
+        "options": {
+          "parser": "pug",
+          "singleQuote": false
+        }
+      }
+    ]
+  }
+  ```
 - `singleQuote`  
   If you want to configure different quotes for pug than for js code, you can use prettier's override.
   ```json
@@ -102,6 +118,71 @@ yarn prettier --write "**/*.pug"
 - `useTabs`  
   Use tab for indentation
   Overrides `tabWidth`
+
+#### prettier-pug specific options
+
+These are specific options only for prettier-pug  
+They should be set via `Prettier`'s `overrides` option
+
+- `attributeSeparator`  
+  Change when attributes are separated by commas in tags.
+
+  Choices:
+
+  - `'always'` -> Always separate attributes with commas.  
+    Example: `button(type="submit", (click)="play()", disabled)`
+  - `'as-needed'` -> Only add commas between attributes where required.  
+    Example: `button(type="submit", (click)="play()" disabled)`
+
+- `commentPreserveSpaces`  
+  Change behavior of spaces within comments.
+
+  Choices:
+
+  - `'keep-all'` -> Keep all spaces within comments.  
+    Example: `// ___this _is __a __comment_`
+  - `'keep-leading'` -> Keep leading spaces within comments.  
+    Example: `// ___this is a comment`
+  - `'trim-all'` -> Trim all spaces within comments.  
+    Example: `// this is a comment`
+
+The definitions for these options can be found in [src/options.ts](https://github.com/prettier/plugin-pug/blob/master/src/options.ts)
+
+## Some workarounds
+
+There are some code examples that are not formatted well with this plugin and can damage your code.  
+But there are workarounds for it. These generate even better pug code!
+
+### Examples
+
+[Issue 53](https://github.com/prettier/plugin-pug/issues/53)
+
+```pug
+input(onClick="methodname(\"" + variable + "\", this)")
+// transforms to
+input(onClick="methodname(\"\" + variable + \"\", this)")
+
+// In most cases ES6 template strings are a good solution
+input(onClick=`methodname("${variable}", this)`)
+```
+
+As mentioned in [pugjs.org Attribute Interpolation](https://pugjs.org/language/attributes.html#attribute-interpolation) (2.),
+you should prefere ES2015 template strings to simplify your attributes.
+
+[Issue 54](https://github.com/prettier/plugin-pug/issues/54)
+
+```pug
+- const id = 42
+- const collapsed = true
+
+div(id=id, class='collapse' + (collapsed ? '' : ' show') + ' cardcontent')
+// transforms to
+.cardcontent(id=id, class="collapse' + (collapsed ? '' : ' show') + '")
+
+// better write
+.cardcontent.collapse(id=id, class=collapsed ? '' : 'show')
+// Now your js logic is extracted from the plain logic
+```
 
 ## Integration with editors
 
