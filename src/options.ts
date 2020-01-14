@@ -4,9 +4,9 @@ export type CommentPreserveSpaces = 'keep-all' | 'keep-leading' | 'trim-all';
 
 export interface PugParserOptions {
 	attributeSeparator: 'always' | 'as-needed';
+	commentPreserveSpaces: CommentPreserveSpaces;
 	enableSortAttributes: boolean;
 	sortAttributes: string[];
-	commentPreserveSpaces: CommentPreserveSpaces;
 }
 
 export function resolveAttributeSeparatorOption(attributeSeparator: 'always' | 'as-needed'): boolean {
@@ -74,21 +74,6 @@ export const options = {
 			}
 		]
 	},
-	enableSortAttributes: {
-		since: '1.1.0',
-		category: CATEGORY_PUG,
-		type: 'boolean',
-		default: false,
-		description: 'Enable the sorting of attributes'
-	},
-	sortAttributes: {
-		since: '1.1.0',
-		category: CATEGORY_PUG,
-		type: 'path',
-		array: true,
-		default: [{ value: ['src', 'alt'] }],
-		description: 'Order of attributes'
-	},
 	commentPreserveSpaces: {
 		since: '1.1.0',
 		category: CATEGORY_PUG,
@@ -109,5 +94,20 @@ export const options = {
 				description: 'Trim all spaces within comments. Example: `// this is a comment`'
 			}
 		]
+	},
+	enableSortAttributes: {
+		since: '1.2.0',
+		category: CATEGORY_PUG,
+		type: 'boolean',
+		default: false,
+		description: 'Enable the sorting of attributes'
+	},
+	sortAttributes: {
+		since: '1.2.0',
+		category: CATEGORY_PUG,
+		type: 'path',
+		array: true,
+		default: [{ value: ['src', 'alt'] }],
+		description: 'Order of attributes'
 	}
 };

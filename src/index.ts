@@ -158,9 +158,9 @@ export const plugin: Plugin = {
 					tabWidth,
 					useTabs,
 					attributeSeparator,
+					commentPreserveSpaces,
 					enableSortAttributes,
 					sortAttributes,
-					commentPreserveSpaces,
 					semi
 				}: ParserOptions & PugParserOptions,
 				print: (path: FastPath) => Doc
