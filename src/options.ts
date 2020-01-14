@@ -107,7 +107,52 @@ export const options = {
 		category: CATEGORY_PUG,
 		type: 'path',
 		array: true,
-		default: [{ value: ['src', 'alt'] }],
+		default: [
+			{
+				value: [
+					'v-for',
+					'key',
+					'v-if',
+					'v-else-if',
+					'v-else',
+					'v-on',
+					'slot',
+					'v-model',
+					'v-bind',
+					'ref',
+					'name',
+					'type',
+					'tag',
+					'src',
+					'alt',
+					'row',
+					'column',
+					'value',
+					'class',
+					'color',
+					'text-color',
+					'tile',
+					'icon',
+					'flat',
+					'ripple',
+					'label',
+					'headers',
+					'items',
+					'item-text',
+					'item-value',
+					'item-disabled',
+					'to',
+					'exact',
+					'small',
+					'@click',
+					'@click.native',
+					'@change',
+					'@change.stop.prevent',
+					'accept',
+					'disabled'
+				]
+			}
+		],
 		description: 'Order of attributes'
 	}
 };
