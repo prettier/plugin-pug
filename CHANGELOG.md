@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.3...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.4...master)
+
+# 1.1.4
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.3...1.1.4)
+
+- Fix wrapping of framework bindings ([#61])
+
+[#61]: https://github.com/prettier/plugin-pug/issues/61
 
 # 1.1.3
 
