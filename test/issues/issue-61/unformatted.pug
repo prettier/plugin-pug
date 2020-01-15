@@ -1,9 +1,9 @@
-- const getRepository = () => ({ slug: 'slug' })
-- const Nav = { currentProject: () => ({ repo: () => ({ buildNoContext: () => 'no-context' }) }) }
-
 div
   table
     tbody
       tr
         td
+          //- Vue
           a(:href=`Nav.currentProject().repo(getRepository(pipeline).slug).buildNoContext()`)
+          //- Angular
+          a([href]=`Nav.currentProject().repo(getRepository(pipeline).slug).buildNoContext()`)
