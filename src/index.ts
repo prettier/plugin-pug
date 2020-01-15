@@ -75,6 +75,15 @@ function formatText(text: string, singleQuote: boolean): string {
 	return result;
 }
 
+function unwrapLineFeeds(value: string): string {
+	return value.includes('\n')
+		? value
+				.split('\n')
+				.map((part) => part.trim())
+				.join('')
+		: value;
+}
+
 export const plugin: Plugin = {
 	languages: [
 		{
@@ -150,7 +159,11 @@ export const plugin: Plugin = {
 				let previousAttributeRemapped: boolean = false;
 				let wrapAttributes: boolean = false;
 
-				const codeInterpolationOptions = { singleQuote: !singleQuote, printWidth: 9000 };
+				const codeInterpolationOptions: Options = {
+					singleQuote: !singleQuote,
+					printWidth: 9000,
+					endOfLine: 'lf'
+				};
 
 				if (tokens[0]?.type === 'text') {
 					result += '| ';
@@ -293,6 +306,7 @@ export const plugin: Plugin = {
 										parser: '__vue_expression' as any,
 										...codeInterpolationOptions
 									});
+									val = unwrapLineFeeds(val);
 									const quotes: "'" | '"' = singleQuote ? "'" : '"';
 									val = `${quotes}${val}${quotes}`;
 								} else if (/^(\(.*\)|\[.*\])$/.test(token.name)) {
@@ -303,6 +317,7 @@ export const plugin: Plugin = {
 										parser: '__ng_interpolation' as any,
 										...codeInterpolationOptions
 									});
+									val = unwrapLineFeeds(val);
 									const quotes: "'" | '"' = singleQuote ? "'" : '"';
 									val = `${quotes}${val}${quotes}`;
 								} else if (/^\*.*$/.test(token.name)) {
