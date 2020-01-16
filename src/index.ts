@@ -32,17 +32,15 @@ function previousNormalAttributeToken(tokens: Token[], index: number): Attribute
 	return;
 }
 
-function printIndent(previousToken: Token, result: string, indent: string, indentLevel: number): string {
+function printIndent(previousToken: Token, indent: string, indentLevel: number): string {
 	switch (previousToken?.type) {
 		case 'newline':
 		case 'outdent':
-			result += indent.repeat(indentLevel);
-			break;
+			return indent.repeat(indentLevel);
 		case 'indent':
-			result += indent;
-			break;
+			return indent;
 	}
-	return result;
+	return '';
 }
 
 function formatText(text: string, singleQuote: boolean): string {
@@ -176,7 +174,7 @@ export const plugin: Plugin = {
 					logger.debug('[printers:pug-ast:print]:', JSON.stringify(token));
 					switch (token.type) {
 						case 'tag':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							if (!(token.val === 'div' && (nextToken.type === 'class' || nextToken.type === 'id'))) {
 								result += token.val;
 							}
@@ -397,7 +395,7 @@ export const plugin: Plugin = {
 							indentLevel--;
 							break;
 						case 'class':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += `.${token.val}`;
 							if (nextToken?.type === 'text') {
 								result += ' ';
@@ -412,7 +410,7 @@ export const plugin: Plugin = {
 							result += '\n';
 							break;
 						case 'comment': {
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							if (previousToken && !['newline', 'indent', 'outdent'].includes(previousToken.type)) {
 								result += ' ';
 							}
@@ -524,7 +522,7 @@ export const plugin: Plugin = {
 								case 'indent':
 								case 'newline':
 								case 'outdent':
-									result = printIndent(previousToken, result, indent, indentLevel);
+									result += printIndent(previousToken, indent, indentLevel);
 									result += '| ';
 									break;
 							}
@@ -532,7 +530,7 @@ export const plugin: Plugin = {
 							result += `{${token.val}}`;
 							break;
 						case 'code': {
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							if (!token.mustEscape && token.buffer) {
 								result += '!';
 							}
@@ -606,7 +604,7 @@ export const plugin: Plugin = {
 							result += '.';
 							break;
 						case 'block':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += 'block ';
 							if (token.mode !== 'replace') {
 								result += token.mode;
@@ -630,19 +628,19 @@ export const plugin: Plugin = {
 							result += ']';
 							break;
 						case 'interpolation':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += `#{${token.val}}`;
 							break;
 						case 'include':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += 'include';
 							break;
 						case 'filter':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += `:${token.val}`;
 							break;
 						case 'call': {
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += `+${token.val}`;
 							let args: string | null = token.args;
 							if (args) {
@@ -653,7 +651,7 @@ export const plugin: Plugin = {
 							break;
 						}
 						case 'mixin': {
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += `mixin ${token.val}`;
 							let args: string | null = token.args;
 							if (args) {
@@ -664,25 +662,25 @@ export const plugin: Plugin = {
 							break;
 						}
 						case 'if': {
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							const match = /^!\((.*)\)$/.exec(token.val);
 							logger.debug(match);
 							result += !match ? `if ${token.val}` : `unless ${match[1]}`;
 							break;
 						}
 						case 'mixin-block':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += 'block';
 							break;
 						case 'else':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += 'else';
 							break;
 						case '&attributes':
 							result += `&attributes(${token.val})`;
 							break;
 						case 'text-html': {
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							const match: RegExpExecArray | null = /^<(.*?)>(.*)<\/(.*?)>$/.exec(token.val);
 							logger.debug(match);
 							if (match) {
@@ -700,7 +698,7 @@ export const plugin: Plugin = {
 							break;
 						}
 						case 'each':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += `each ${token.val}`;
 							if (token.key !== null) {
 								result += `, ${token.key}`;
@@ -708,34 +706,34 @@ export const plugin: Plugin = {
 							result += ` in ${token.code}`;
 							break;
 						case 'while':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += `while ${token.val}`;
 							break;
 						case 'case':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += `case ${token.val}`;
 							break;
 						case 'when':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += `when ${token.val}`;
 							break;
 						case ':':
 							result += ': ';
 							break;
 						case 'default':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += 'default';
 							break;
 						case 'else-if':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += `else if ${token.val}`;
 							break;
 						case 'blockcode':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += '-';
 							break;
 						case 'yield':
-							result = printIndent(previousToken, result, indent, indentLevel);
+							result += printIndent(previousToken, indent, indentLevel);
 							result += 'yield';
 							break;
 						case 'slash':
