@@ -143,10 +143,7 @@ export const plugin: Plugin = {
 
 				let result: string = '';
 				let indentLevel: number = 0;
-				let indent: string = ' '.repeat(tabWidth);
-				if (useTabs) {
-					indent = '\t';
-				}
+				const indent: string = useTabs ? '\t' : ' '.repeat(tabWidth);
 				let pipelessText: boolean = false;
 				let pipelessComment: boolean = false;
 
@@ -438,8 +435,7 @@ export const plugin: Plugin = {
 							if (pipelessText) {
 								switch (previousToken?.type) {
 									case 'newline':
-										result += indent.repeat(indentLevel);
-										result += indent;
+										result += indent.repeat(indentLevel + 1);
 										break;
 									case 'start-pipeless-text':
 										result += indent;
@@ -570,19 +566,12 @@ export const plugin: Plugin = {
 							if (position === -1) {
 								position = result.length;
 							}
-							let _indent = '';
-							switch (previousToken?.type) {
-								case 'newline':
-								case 'outdent':
-									_indent = indent.repeat(indentLevel);
-									break;
-								case 'indent':
-									_indent = indent;
-									break;
-							}
-							result = [result.slice(0, position), _indent, `#${token.val}`, result.slice(position)].join(
-								''
-							);
+							result = [
+								result.slice(0, position),
+								printIndent(previousToken, indent, indentLevel),
+								`#${token.val}`,
+								result.slice(position)
+							].join('');
 							break;
 						}
 						case 'start-pipeless-text':
