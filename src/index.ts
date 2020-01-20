@@ -712,6 +712,7 @@ export const plugin: Plugin = {
 							break;
 						case ':':
 							result += ': ';
+							startTagPosition = result.length;
 							break;
 						case 'default':
 							result += printIndent(previousToken, indent, indentLevel);
