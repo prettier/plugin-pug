@@ -101,8 +101,6 @@ test/pug-tests/layout.multi.append.prepend.block.formatted.pug
 test/pug-tests/layout.multi.append.prepend.block.pug
 test/pug-tests/layout.prepend.without-block.formatted.pug
 test/pug-tests/layout.prepend.without-block.pug
-test/pug-tests/mixin.attrs.formatted.pug
-test/pug-tests/mixin.attrs.pug
 test/pug-tests/mixin.merge.formatted.pug
 test/pug-tests/mixin.merge.pug
 test/pug-tests/pipeless-filters.formatted.pug

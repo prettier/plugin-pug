@@ -149,8 +149,8 @@ export const plugin: Plugin = {
 
 				const alwaysUseAttributeSeparator: boolean = resolveAttributeSeparatorOption(attributeSeparator);
 
-				let startTagPosition: number = 0;
-				let startAttributePosition: number = 0;
+				let possibleIdPosition: number = 0;
+				let possibleClassPosition: number = 0;
 				let previousAttributeRemapped: boolean = false;
 				let wrapAttributes: boolean = false;
 
@@ -175,12 +175,13 @@ export const plugin: Plugin = {
 							if (!(token.val === 'div' && (nextToken.type === 'class' || nextToken.type === 'id'))) {
 								result += token.val;
 							}
-							startTagPosition = result.length;
+							possibleIdPosition = result.length;
+							possibleClassPosition = result.length;
 							break;
 						case 'start-attributes':
 							if (nextToken?.type === 'attribute') {
 								previousAttributeRemapped = false;
-								startAttributePosition = result.length;
+								possibleClassPosition = result.length;
 								result += '(';
 								const start: number = result.lastIndexOf('\n') + 1;
 								let lineLength: number = result.substring(start).length;
@@ -218,13 +219,13 @@ export const plugin: Plugin = {
 												continue;
 											}
 											// Write css-class in front of attributes
-											const position: number = startAttributePosition;
+											const position: number = possibleClassPosition;
 											result = [
 												result.slice(0, position),
 												`.${className}`,
 												result.slice(position)
 											].join('');
-											startAttributePosition += 1 + className.length;
+											possibleClassPosition += 1 + className.length;
 											result = result.replace(/div\./, '.');
 										}
 										if (specialClasses.length > 0) {
@@ -250,11 +251,11 @@ export const plugin: Plugin = {
 											break;
 										}
 										// Write css-id in front of css-classes
-										const position: number = startTagPosition;
+										const position: number = possibleIdPosition;
 										result = [result.slice(0, position), `#${val}`, result.slice(position)].join(
 											''
 										);
-										startAttributePosition += 1 + val.length;
+										possibleClassPosition += 1 + val.length;
 										result = result.replace(/div#/, '#');
 										if (previousToken.type === 'attribute' && previousToken.name !== 'class') {
 											previousAttributeRemapped = true;
@@ -392,8 +393,25 @@ export const plugin: Plugin = {
 							indentLevel--;
 							break;
 						case 'class':
-							result += printIndent(previousToken, indent, indentLevel);
-							result += `.${token.val}`;
+							switch (previousToken?.type) {
+								case 'newline':
+								case 'outdent':
+								case 'indent': {
+									const prefix = result.slice(0, result.length);
+									const _indent = printIndent(previousToken, indent, indentLevel);
+									const val = `.${token.val}`;
+									result = [prefix, _indent, val, result.slice(result.length)].join('');
+									possibleClassPosition = prefix.length + _indent.length + val.length;
+									break;
+								}
+								default: {
+									const prefix = result.slice(0, possibleClassPosition);
+									const val = `.${token.val}`;
+									result = [prefix, val, result.slice(possibleClassPosition)].join('');
+									possibleClassPosition = prefix.length + val.length;
+									break;
+								}
+							}
 							if (nextToken?.type === 'text') {
 								result += ' ';
 							}
@@ -555,25 +573,24 @@ export const plugin: Plugin = {
 							break;
 						}
 						case 'id': {
-							// Handle id attribute
 							switch (previousToken?.type) {
 								case 'newline':
 								case 'outdent':
-								case 'indent':
-									result = [
-										result.slice(0, result.length),
-										printIndent(previousToken, indent, indentLevel),
-										`#${token.val}`,
-										result.slice(result.length)
-									].join('');
+								case 'indent': {
+									const prefix = result.slice(0, result.length);
+									const _indent = printIndent(previousToken, indent, indentLevel);
+									const val = `#${token.val}`;
+									result = [prefix, _indent, val, result.slice(result.length)].join('');
+									possibleClassPosition = prefix.length + _indent.length + val.length;
 									break;
-								default:
-									result = [
-										result.slice(0, startTagPosition),
-										`#${token.val}`,
-										result.slice(startTagPosition)
-									].join('');
+								}
+								default: {
+									const prefix = result.slice(0, possibleIdPosition);
+									const val = `#${token.val}`;
+									result = [prefix, val, result.slice(possibleIdPosition)].join('');
+									possibleClassPosition = prefix.length + val.length;
 									break;
+								}
 							}
 							break;
 						}
@@ -622,6 +639,8 @@ export const plugin: Plugin = {
 						case 'interpolation':
 							result += printIndent(previousToken, indent, indentLevel);
 							result += `#{${token.val}}`;
+							possibleIdPosition = result.length;
+							possibleClassPosition = result.length;
 							break;
 						case 'include':
 							result += printIndent(previousToken, indent, indentLevel);
@@ -640,7 +659,8 @@ export const plugin: Plugin = {
 								args = args.replace(/\s\s+/g, ' ');
 								result += `(${args})`;
 							}
-							startTagPosition = result.length;
+							possibleIdPosition = result.length;
+							possibleClassPosition = result.length;
 							break;
 						}
 						case 'mixin': {
@@ -712,7 +732,8 @@ export const plugin: Plugin = {
 							break;
 						case ':':
 							result += ': ';
-							startTagPosition = result.length;
+							possibleIdPosition = result.length;
+							possibleClassPosition = result.length;
 							break;
 						case 'default':
 							result += printIndent(previousToken, indent, indentLevel);
