@@ -556,22 +556,25 @@ export const plugin: Plugin = {
 						}
 						case 'id': {
 							// Handle id attribute
-							// Write css-id in front of css-classes
-							let lastPositionOfNewline = result.lastIndexOf('\n');
-							if (lastPositionOfNewline === -1) {
-								// If no newline was found, set position to zero
-								lastPositionOfNewline = 0;
+							switch (previousToken?.type) {
+								case 'newline':
+								case 'outdent':
+								case 'indent':
+									result = [
+										result.slice(0, result.length),
+										printIndent(previousToken, indent, indentLevel),
+										`#${token.val}`,
+										result.slice(result.length)
+									].join('');
+									break;
+								default:
+									result = [
+										result.slice(0, startTagPosition),
+										`#${token.val}`,
+										result.slice(startTagPosition)
+									].join('');
+									break;
 							}
-							let position: number = result.indexOf('.', lastPositionOfNewline);
-							if (position === -1) {
-								position = result.length;
-							}
-							result = [
-								result.slice(0, position),
-								printIndent(previousToken, indent, indentLevel),
-								`#${token.val}`,
-								result.slice(position)
-							].join('');
 							break;
 						}
 						case 'start-pipeless-text':
@@ -637,6 +640,7 @@ export const plugin: Plugin = {
 								args = args.replace(/\s\s+/g, ' ');
 								result += `(${args})`;
 							}
+							startTagPosition = result.length;
 							break;
 						}
 						case 'mixin': {
