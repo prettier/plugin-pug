@@ -1,6 +1,23 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.4...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.5...master)
+
+# 1.1.5
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.4...1.1.5)
+
+- Improve handling of `id` and `class` attributes ([#63])
+
+- Some minor internal changes like
+  - Optimize indent handling ([b734666], [15bec8e])
+  - Target ES2018 with module CommonJS ([054b56f])
+  - Move options to subdirectory ([f8ead13])
+
+[#63]: https://github.com/prettier/plugin-pug/issues/63
+[b734666]: https://github.com/prettier/plugin-pug/commit/b7346666f38f8323d72fdee84cd8aa6cd07760b4
+[15bec8e]: https://github.com/prettier/plugin-pug/commit/15bec8e204482b08bcefc5c6620f783e00a43b58
+[054b56f]: https://github.com/prettier/plugin-pug/commit/054b56fe33fa113c178b9a9f655e6ab35cf98c86
+[f8ead13]: https://github.com/prettier/plugin-pug/commit/f8ead13d65c7f236091e8497ace25fcc71cd5bef
 
 # 1.1.4
 
