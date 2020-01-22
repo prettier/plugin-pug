@@ -66,6 +66,41 @@ export function unwrapLineFeeds(value: string): string {
 		: value;
 }
 
+/**
+ * Indicates whether the value is surrounded by quotes
+ *
+ * ---
+ *
+ * Example with double quotes:
+ * ```
+ * a(href="#")
+ * ```
+ *
+ * In this case `val` is `"#"`
+ *
+ * ---
+ *
+ * Example with single quotes:
+ * ```
+ * a(href='#')
+ * ```
+ *
+ * In this case `val` is `'#'`
+ *
+ * ---
+ *
+ * Example with no quotes:
+ * ```
+ * - const route = '#';
+ * a(href=route)
+ * ```
+ *
+ * In this case `val` is `route`
+ *
+ * ---
+ *
+ * @param val Value of tag attribute
+ */
 export function isQuoted(val: string): boolean {
 	return /^["'](.*)["']$/.test(val);
 }
