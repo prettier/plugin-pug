@@ -1,7 +1,7 @@
 import { format } from 'prettier';
 import { AttributeToken, Token } from 'pug-lexer';
 
-export function previousNormalAttributeToken(tokens: Token[], index: number): AttributeToken | undefined {
+export function previousNormalAttributeToken(tokens: ReadonlyArray<Token>, index: number): AttributeToken | undefined {
 	for (let i: number = index - 1; i > 0; i--) {
 		const token: Token = tokens[i];
 		if (token.type === 'start-attributes') {
@@ -16,7 +16,7 @@ export function previousNormalAttributeToken(tokens: Token[], index: number): At
 	return;
 }
 
-export function printIndent(previousToken: Token, indent: string, indentLevel: number): string {
+export function printIndent(previousToken: Token | undefined, indent: string, indentLevel: number): string {
 	switch (previousToken?.type) {
 		case 'newline':
 		case 'outdent':
