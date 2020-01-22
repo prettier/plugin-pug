@@ -65,3 +65,7 @@ export function unwrapLineFeeds(value: string): string {
 				.join('')
 		: value;
 }
+
+export function isQuoted(val: string): boolean {
+	return /^["'](.*)["']$/.test(val);
+}

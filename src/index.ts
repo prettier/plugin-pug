@@ -9,7 +9,9 @@ import {
 	PugParserOptions,
 	resolveAttributeSeparatorOption
 } from './options';
-import { formatText, previousNormalAttributeToken, printIndent, unwrapLineFeeds } from './utils/common';
+import { isAngularDirective, isAngularExpression, isAngularInterpolation } from './utils/angular';
+import { formatText, isQuoted, previousNormalAttributeToken, printIndent, unwrapLineFeeds } from './utils/common';
+import { isVueExpression } from './utils/vue';
 
 const { makeString } = util;
 
@@ -230,7 +232,7 @@ export const plugin: Plugin = {
 								}
 							} else {
 								let val = token.val;
-								if (/^((v-bind|v-on|v-slot)?:|v-model|v-on|@).*/.test(token.name)) {
+								if (isVueExpression(token.name)) {
 									// Format Vue expression
 									val = val.trim();
 									val = val.slice(1, -1);
@@ -241,7 +243,7 @@ export const plugin: Plugin = {
 									val = unwrapLineFeeds(val);
 									const quotes: "'" | '"' = singleQuote ? "'" : '"';
 									val = `${quotes}${val}${quotes}`;
-								} else if (/^(\(.*\)|\[.*\])$/.test(token.name)) {
+								} else if (isAngularExpression(token.name)) {
 									// Format Angular action or binding
 									val = val.trim();
 									val = val.slice(1, -1);
@@ -252,14 +254,14 @@ export const plugin: Plugin = {
 									val = unwrapLineFeeds(val);
 									const quotes: "'" | '"' = singleQuote ? "'" : '"';
 									val = `${quotes}${val}${quotes}`;
-								} else if (/^\*.*$/.test(token.name)) {
+								} else if (isAngularDirective(token.name)) {
 									// Format Angular directive
 									val = val.trim();
 									val = val.slice(1, -1);
 									val = format(val, { parser: '__ng_directive' as any, ...codeInterpolationOptions });
 									const quotes: "'" | '"' = singleQuote ? "'" : '"';
 									val = `${quotes}${val}${quotes}`;
-								} else if (/^(["']{{)(.*)(}}["'])$/.test(val)) {
+								} else if (isAngularInterpolation(val)) {
 									// Format Angular interpolation
 									val = val.slice(3, -3);
 									val = val.trim();
@@ -270,7 +272,7 @@ export const plugin: Plugin = {
 									// });
 									const quotes: "'" | '"' = singleQuote ? "'" : '"';
 									val = `${quotes}{{ ${val} }}${quotes}`;
-								} else if (/^["'](.*)["']$/.test(val)) {
+								} else if (isQuoted(val)) {
 									val = makeString(val.slice(1, -1), singleQuote ? "'" : '"', false);
 								} else if (val === 'true') {
 									// The value is exactly true and is not quoted
