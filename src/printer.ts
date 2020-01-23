@@ -139,7 +139,7 @@ export class PugPrinter {
 	// ##     ## ##       ##       ##        ##       ##    ##  ##    ##
 	// ##     ## ######## ######## ##        ######## ##     ##  ######
 
-	private computeIndent(): string {
+	private get computedIndent(): string {
 		switch (this.previousToken?.type) {
 			case 'newline':
 			case 'outdent':
@@ -206,7 +206,7 @@ export class PugPrinter {
 	//    ##     #######  ##    ## ######## ##    ##    ##        ##     ##  #######   ######  ########  ######   ######   #######  ##     ##  ######
 
 	private tag(token: TagToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		if (
 			!(
 				token.val === 'div' &&
@@ -404,7 +404,7 @@ export class PugPrinter {
 			case 'outdent':
 			case 'indent': {
 				const prefix = this.result.slice(0, this.result.length);
-				const _indent = this.computeIndent();
+				const _indent = this.computedIndent;
 				const val = `.${token.val}`;
 				this.result = [prefix, _indent, val, this.result.slice(this.result.length)].join('');
 				this.possibleClassPosition = prefix.length + _indent.length + val.length;
@@ -433,7 +433,7 @@ export class PugPrinter {
 	}
 
 	private comment(token: CommentToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		if (this.previousToken && !['newline', 'indent', 'outdent'].includes(this.previousToken.type)) {
 			this.result += ' ';
 		}
@@ -544,7 +544,7 @@ export class PugPrinter {
 			case 'indent':
 			case 'newline':
 			case 'outdent':
-				this.result += this.computeIndent();
+				this.result += this.computedIndent;
 				this.result += '| ';
 				break;
 		}
@@ -553,7 +553,7 @@ export class PugPrinter {
 	}
 
 	private code(token: CodeToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		if (!token.mustEscape && token.buffer) {
 			this.result += '!';
 		}
@@ -587,7 +587,7 @@ export class PugPrinter {
 			case 'outdent':
 			case 'indent': {
 				const prefix = this.result.slice(0, this.result.length);
-				const _indent = this.computeIndent();
+				const _indent = this.computedIndent;
 				const val = `#${token.val}`;
 				this.result = [prefix, _indent, val, this.result.slice(this.result.length)].join('');
 				this.possibleClassPosition = prefix.length + _indent.length + val.length;
@@ -626,7 +626,7 @@ export class PugPrinter {
 	}
 
 	private block(token: BlockToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += 'block ';
 		if (token.mode !== 'replace') {
 			this.result += token.mode;
@@ -655,24 +655,24 @@ export class PugPrinter {
 	}
 
 	private interpolation(token: InterpolationToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += `#{${token.val}}`;
 		this.possibleIdPosition = this.result.length;
 		this.possibleClassPosition = this.result.length;
 	}
 
 	private include(token: IncludeToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += 'include';
 	}
 
 	private filter(token: FilterToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += `:${token.val}`;
 	}
 
 	private call(token: CallToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += `+${token.val}`;
 		let args: string | null = token.args;
 		if (args) {
@@ -685,7 +685,7 @@ export class PugPrinter {
 	}
 
 	private mixin(token: MixinToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += `mixin ${token.val}`;
 		let args: string | null = token.args;
 		if (args) {
@@ -696,19 +696,19 @@ export class PugPrinter {
 	}
 
 	private if(token: IfToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		const match = /^!\((.*)\)$/.exec(token.val);
 		logger.debug('[PugPrinter]:', match);
 		this.result += !match ? `if ${token.val}` : `unless ${match[1]}`;
 	}
 
 	private ['mixin-block'](token: MixinBlockToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += 'block';
 	}
 
 	private else(token: ElseToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += 'else';
 	}
 
@@ -717,7 +717,7 @@ export class PugPrinter {
 	}
 
 	private ['text-html'](token: TextHtmlToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		const match: RegExpExecArray | null = /^<(.*?)>(.*)<\/(.*?)>$/.exec(token.val);
 		logger.debug('[PugPrinter]:', match);
 		if (match) {
@@ -733,7 +733,7 @@ export class PugPrinter {
 	}
 
 	private each(token: EachToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += `each ${token.val}`;
 		if (token.key !== null) {
 			this.result += `, ${token.key}`;
@@ -742,17 +742,17 @@ export class PugPrinter {
 	}
 
 	private while(token: WhileToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += `while ${token.val}`;
 	}
 
 	private case(token: CaseToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += `case ${token.val}`;
 	}
 
 	private when(token: WhenToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += `when ${token.val}`;
 	}
 
@@ -763,22 +763,22 @@ export class PugPrinter {
 	}
 
 	private default(token: DefaultToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += 'default';
 	}
 
 	private ['else-if'](token: ElseIfToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += `else if ${token.val}`;
 	}
 
 	private blockcode(token: BlockcodeToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += '-';
 	}
 
 	private yield(token: YieldToken): void {
-		this.result += this.computeIndent();
+		this.result += this.computedIndent;
 		this.result += 'yield';
 	}
 
