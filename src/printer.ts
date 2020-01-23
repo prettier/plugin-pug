@@ -128,6 +128,64 @@ export class PugPrinter {
 		return this.result;
 	}
 
+	// ##     ## ######## ##       ########  ######## ########   ######
+	// ##     ## ##       ##       ##     ## ##       ##     ## ##    ##
+	// ##     ## ##       ##       ##     ## ##       ##     ## ##
+	// ######### ######   ##       ########  ######   ########   ######
+	// ##     ## ##       ##       ##        ##       ##   ##         ##
+	// ##     ## ##       ##       ##        ##       ##    ##  ##    ##
+	// ##     ## ######## ######## ##        ######## ##     ##  ######
+
+	private formatVueExpression(val: string): string {
+		// Format Vue expression
+		val = val.trim();
+		val = val.slice(1, -1);
+		val = format(val, {
+			parser: '__vue_expression' as any,
+			...this.codeInterpolationOptions
+		});
+		val = unwrapLineFeeds(val);
+		const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
+		return `${quotes}${val}${quotes}`;
+	}
+
+	private formatAngularExpression(val: string): string {
+		val = val.trim();
+		val = val.slice(1, -1);
+		val = format(val, {
+			parser: '__ng_interpolation' as any,
+			...this.codeInterpolationOptions
+		});
+		val = unwrapLineFeeds(val);
+		const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
+		return `${quotes}${val}${quotes}`;
+	}
+
+	private formatAngularDirective(val: string): string {
+		// Format Angular directive
+		val = val.trim();
+		val = val.slice(1, -1);
+		val = format(val, {
+			parser: '__ng_directive' as any,
+			...this.codeInterpolationOptions
+		});
+		const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
+		return `${quotes}${val}${quotes}`;
+	}
+
+	private formatAngularInterpolation(val: string): string {
+		// Format Angular interpolation
+		val = val.slice(3, -3);
+		val = val.trim();
+		val = val.replace(/\s\s+/g, ' ');
+		// val = format(val, {
+		// 	parser: '__ng_interpolation' as any,
+		// 	...codeInterpolationOptions
+		// });
+		const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
+		return `${quotes}{{ ${val} }}${quotes}`;
+	}
+
 	// ########  #######  ##    ## ######## ##    ##    ########  ########   #######   ######  ########  ######   ######   #######  ########   ######
 	//    ##    ##     ## ##   ##  ##       ###   ##    ##     ## ##     ## ##     ## ##    ## ##       ##    ## ##    ## ##     ## ##     ## ##    ##
 	//    ##    ##     ## ##  ##   ##       ####  ##    ##     ## ##     ## ##     ## ##       ##       ##       ##       ##     ## ##     ## ##
@@ -174,10 +232,7 @@ export class PugPrinter {
 
 	private attribute(token: AttributeToken): void {
 		if (typeof token.val === 'string') {
-			const surroundedByQuotes: boolean =
-				(token.val.startsWith('"') && token.val.endsWith('"')) ||
-				(token.val.startsWith("'") && token.val.endsWith("'"));
-			if (surroundedByQuotes) {
+			if (isQuoted(token.val)) {
 				if (token.name === 'class') {
 					// Handle class attribute
 					let val = token.val;
@@ -264,45 +319,13 @@ export class PugPrinter {
 		} else {
 			let val = token.val;
 			if (isVueExpression(token.name)) {
-				// Format Vue expression
-				val = val.trim();
-				val = val.slice(1, -1);
-				val = format(val, {
-					parser: '__vue_expression' as any,
-					...this.codeInterpolationOptions
-				});
-				val = unwrapLineFeeds(val);
-				const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
-				val = `${quotes}${val}${quotes}`;
+				val = this.formatVueExpression(val);
 			} else if (isAngularExpression(token.name)) {
-				// Format Angular action or binding
-				val = val.trim();
-				val = val.slice(1, -1);
-				val = format(val, {
-					parser: '__ng_interpolation' as any,
-					...this.codeInterpolationOptions
-				});
-				val = unwrapLineFeeds(val);
-				const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
-				val = `${quotes}${val}${quotes}`;
+				val = this.formatAngularExpression(val);
 			} else if (isAngularDirective(token.name)) {
-				// Format Angular directive
-				val = val.trim();
-				val = val.slice(1, -1);
-				val = format(val, { parser: '__ng_directive' as any, ...this.codeInterpolationOptions });
-				const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
-				val = `${quotes}${val}${quotes}`;
+				val = this.formatAngularDirective(val);
 			} else if (isAngularInterpolation(val)) {
-				// Format Angular interpolation
-				val = val.slice(3, -3);
-				val = val.trim();
-				val = val.replace(/\s\s+/g, ' ');
-				// val = format(val, {
-				// 	parser: '__ng_interpolation' as any,
-				// 	...codeInterpolationOptions
-				// });
-				const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
-				val = `${quotes}{{ ${val} }}${quotes}`;
+				val = this.formatAngularInterpolation(val);
 			} else if (isQuoted(val)) {
 				val = makeString(val.slice(1, -1), this.options.singleQuote ? "'" : '"', false);
 			} else if (val === 'true') {
