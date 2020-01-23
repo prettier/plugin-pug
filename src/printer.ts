@@ -67,6 +67,8 @@ export class PugPrinter {
 	private readonly indentString: string;
 	private indentLevel: number = 0;
 
+	private readonly quotes: "'" | '"';
+
 	private readonly alwaysUseAttributeSeparator: boolean;
 	private readonly codeInterpolationOptions: Pick<RequiredOptions, 'singleQuote' | 'printWidth' | 'endOfLine'>;
 
@@ -94,6 +96,7 @@ export class PugPrinter {
 		> /* eslint-enable @typescript-eslint/indent */
 	) {
 		this.indentString = options.useTabs ? '\t' : ' '.repeat(options.tabWidth);
+		this.quotes = this.options.singleQuote ? "'" : '"';
 		this.alwaysUseAttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
 		this.codeInterpolationOptions = {
 			singleQuote: !options.singleQuote,
@@ -147,8 +150,11 @@ export class PugPrinter {
 		return '';
 	}
 
+	private quoteString(val: string): string {
+		return `${this.quotes}${val}${this.quotes}`;
+	}
+
 	private formatVueExpression(val: string): string {
-		// Format Vue expression
 		val = val.trim();
 		val = val.slice(1, -1);
 		val = format(val, {
@@ -156,8 +162,7 @@ export class PugPrinter {
 			...this.codeInterpolationOptions
 		});
 		val = unwrapLineFeeds(val);
-		const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
-		return `${quotes}${val}${quotes}`;
+		return this.quoteString(val);
 	}
 
 	private formatAngularExpression(val: string): string {
@@ -168,24 +173,20 @@ export class PugPrinter {
 			...this.codeInterpolationOptions
 		});
 		val = unwrapLineFeeds(val);
-		const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
-		return `${quotes}${val}${quotes}`;
+		return this.quoteString(val);
 	}
 
 	private formatAngularDirective(val: string): string {
-		// Format Angular directive
 		val = val.trim();
 		val = val.slice(1, -1);
 		val = format(val, {
 			parser: '__ng_directive' as any,
 			...this.codeInterpolationOptions
 		});
-		const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
-		return `${quotes}${val}${quotes}`;
+		return this.quoteString(val);
 	}
 
 	private formatAngularInterpolation(val: string): string {
-		// Format Angular interpolation
 		val = val.slice(3, -3);
 		val = val.trim();
 		val = val.replace(/\s\s+/g, ' ');
@@ -193,8 +194,7 @@ export class PugPrinter {
 		// 	parser: '__ng_interpolation' as any,
 		// 	...codeInterpolationOptions
 		// });
-		const quotes: "'" | '"' = this.options.singleQuote ? "'" : '"';
-		return `${quotes}{{ ${val} }}${quotes}`;
+		return this.quoteString(`{{ ${val} }}`);
 	}
 
 	// ########  #######  ##    ## ######## ##    ##    ########  ########   #######   ######  ########  ######   ######   #######  ########   ######
@@ -269,7 +269,7 @@ export class PugPrinter {
 						this.result = this.result.replace(/div\./, '.');
 					}
 					if (specialClasses.length > 0) {
-						token.val = makeString(specialClasses.join(' '), this.options.singleQuote ? "'" : '"', false);
+						token.val = makeString(specialClasses.join(' '), this.quotes, false);
 						this.previousAttributeRemapped = false;
 					} else {
 						this.previousAttributeRemapped = true;
@@ -282,7 +282,7 @@ export class PugPrinter {
 					val = val.trim();
 					const validIdNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 					if (!validIdNameRegex.test(val)) {
-						val = makeString(val, this.options.singleQuote ? "'" : '"', false);
+						val = makeString(val, this.quotes, false);
 						this.result += `id=${val}`;
 						return;
 					}
@@ -338,7 +338,7 @@ export class PugPrinter {
 			} else if (isAngularInterpolation(val)) {
 				val = this.formatAngularInterpolation(val);
 			} else if (isQuoted(val)) {
-				val = makeString(val.slice(1, -1), this.options.singleQuote ? "'" : '"', false);
+				val = makeString(val.slice(1, -1), this.quotes, false);
 			} else if (val === 'true') {
 				// The value is exactly true and is not quoted
 				return;
