@@ -410,18 +410,15 @@ export class PugPrinter {
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
-				const prefix = this.result.slice(0, this.result.length);
-				const indent = this.computedIndent;
-				const val = `.${token.val}`;
-				this.result = [prefix, indent, val, this.result.slice(this.result.length)].join('');
-				this.possibleClassPosition = prefix.length + indent.length + val.length;
+				this.result += `${this.computedIndent}.${token.val}`;
+				this.possibleClassPosition = this.result.length;
 				break;
 			}
 			default: {
 				const prefix = this.result.slice(0, this.possibleClassPosition);
 				const val = `.${token.val}`;
 				this.result = [prefix, val, this.result.slice(this.possibleClassPosition)].join('');
-				this.possibleClassPosition = prefix.length + val.length;
+				this.possibleClassPosition += val.length;
 				break;
 			}
 		}
@@ -432,7 +429,8 @@ export class PugPrinter {
 
 	private eos(token: EosToken): void {
 		// Remove all newlines at the end
-		while (this.result.endsWith('\n')) {
+		// eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
+		while (this.result[this.result.length - 1] === '\n') {
 			this.result = this.result.substring(0, this.result.length - 1);
 		}
 		// Insert one newline
@@ -598,18 +596,15 @@ export class PugPrinter {
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
-				const prefix = this.result.slice(0, this.result.length);
-				const indent = this.computedIndent;
-				const val = `#${token.val}`;
-				this.result = [prefix, indent, val, this.result.slice(this.result.length)].join('');
-				this.possibleClassPosition = prefix.length + indent.length + val.length;
+				this.result += `${this.computedIndent}#${token.val}`;
+				this.possibleClassPosition = this.result.length;
 				break;
 			}
 			default: {
 				const prefix = this.result.slice(0, this.possibleIdPosition);
 				const val = `#${token.val}`;
 				this.result = [prefix, val, this.result.slice(this.possibleIdPosition)].join('');
-				this.possibleClassPosition = prefix.length + val.length;
+				this.possibleClassPosition += val.length;
 				break;
 			}
 		}
