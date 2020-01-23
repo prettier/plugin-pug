@@ -49,7 +49,7 @@ import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
 import { formatCommentPreserveSpaces, PugParserOptions, resolveAttributeSeparatorOption } from './options';
 import { isAngularDirective, isAngularExpression, isAngularInterpolation } from './utils/angular';
-import { formatText, isQuoted, previousNormalAttributeToken, printIndent, unwrapLineFeeds } from './utils/common';
+import { formatText, isQuoted, previousNormalAttributeToken, unwrapLineFeeds } from './utils/common';
 import { isVueExpression } from './utils/vue';
 
 const logger: Logger = createLogger(console);
@@ -64,7 +64,7 @@ export class PugPrinter {
 
 	private currentIndex: number = 0;
 
-	private readonly _indent: string;
+	private readonly indentString: string;
 	private indentLevel: number = 0;
 
 	private readonly alwaysUseAttributeSeparator: boolean;
@@ -93,7 +93,7 @@ export class PugPrinter {
 			| 'semi'
 		> /* eslint-enable @typescript-eslint/indent */
 	) {
-		this._indent = options.useTabs ? '\t' : ' '.repeat(options.tabWidth);
+		this.indentString = options.useTabs ? '\t' : ' '.repeat(options.tabWidth);
 		this.alwaysUseAttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
 		this.codeInterpolationOptions = {
 			singleQuote: !options.singleQuote,
@@ -135,6 +135,17 @@ export class PugPrinter {
 	// ##     ## ##       ##       ##        ##       ##   ##         ##
 	// ##     ## ##       ##       ##        ##       ##    ##  ##    ##
 	// ##     ## ######## ######## ##        ######## ##     ##  ######
+
+	private computeIndent(): string {
+		switch (this.previousToken?.type) {
+			case 'newline':
+			case 'outdent':
+				return this.indentString.repeat(this.indentLevel);
+			case 'indent':
+				return this.indentString;
+		}
+		return '';
+	}
 
 	private formatVueExpression(val: string): string {
 		// Format Vue expression
@@ -195,7 +206,7 @@ export class PugPrinter {
 	//    ##     #######  ##    ## ######## ##    ##    ##        ##     ##  #######   ######  ########  ######   ######   #######  ##     ##  ######
 
 	private tag(token: TagToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		if (
 			!(
 				token.val === 'div' &&
@@ -308,7 +319,7 @@ export class PugPrinter {
 
 		if (this.wrapAttributes) {
 			this.result += '\n';
-			this.result += this._indent.repeat(this.indentLevel + 1);
+			this.result += this.indentString.repeat(this.indentLevel + 1);
 		}
 
 		this.result += `${token.name}`;
@@ -356,7 +367,7 @@ export class PugPrinter {
 	private ['end-attributes'](token: EndAttributesToken): void {
 		if (this.wrapAttributes) {
 			this.result += '\n';
-			this.result += this._indent.repeat(this.indentLevel);
+			this.result += this.indentString.repeat(this.indentLevel);
 		}
 		this.wrapAttributes = false;
 		if (this.result.endsWith('(')) {
@@ -372,7 +383,7 @@ export class PugPrinter {
 
 	private indent(token: IndentToken): void {
 		this.result += '\n';
-		this.result += this._indent.repeat(this.indentLevel);
+		this.result += this.indentString.repeat(this.indentLevel);
 		this.indentLevel++;
 	}
 
@@ -393,7 +404,7 @@ export class PugPrinter {
 			case 'outdent':
 			case 'indent': {
 				const prefix = this.result.slice(0, this.result.length);
-				const _indent = printIndent(this.previousToken, this._indent, this.indentLevel);
+				const _indent = this.computeIndent();
 				const val = `.${token.val}`;
 				this.result = [prefix, _indent, val, this.result.slice(this.result.length)].join('');
 				this.possibleClassPosition = prefix.length + _indent.length + val.length;
@@ -422,7 +433,7 @@ export class PugPrinter {
 	}
 
 	private comment(token: CommentToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		if (this.previousToken && !['newline', 'indent', 'outdent'].includes(this.previousToken.type)) {
 			this.result += ' ';
 		}
@@ -451,10 +462,10 @@ export class PugPrinter {
 		if (this.pipelessText) {
 			switch (this.previousToken?.type) {
 				case 'newline':
-					this.result += this._indent.repeat(this.indentLevel + 1);
+					this.result += this.indentString.repeat(this.indentLevel + 1);
 					break;
 				case 'start-pipeless-text':
-					this.result += this._indent;
+					this.result += this.indentString;
 					break;
 			}
 
@@ -475,10 +486,10 @@ export class PugPrinter {
 
 			switch (this.previousToken?.type) {
 				case 'newline':
-					this.result += this._indent.repeat(this.indentLevel);
+					this.result += this.indentString.repeat(this.indentLevel);
 					if (/^ .+$/.test(val)) {
 						this.result += '|\n';
-						this.result += this._indent.repeat(this.indentLevel);
+						this.result += this.indentString.repeat(this.indentLevel);
 					}
 					this.result += '|';
 					if (/.*\S.*/.test(token.val) || this.nextToken?.type === 'start-pug-interpolation') {
@@ -486,7 +497,7 @@ export class PugPrinter {
 					}
 					break;
 				case 'indent':
-					this.result += this._indent;
+					this.result += this.indentString;
 					this.result += '|';
 					if (/.*\S.*/.test(token.val)) {
 						this.result += ' ';
@@ -533,7 +544,7 @@ export class PugPrinter {
 			case 'indent':
 			case 'newline':
 			case 'outdent':
-				this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+				this.result += this.computeIndent();
 				this.result += '| ';
 				break;
 		}
@@ -542,7 +553,7 @@ export class PugPrinter {
 	}
 
 	private code(token: CodeToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		if (!token.mustEscape && token.buffer) {
 			this.result += '!';
 		}
@@ -576,7 +587,7 @@ export class PugPrinter {
 			case 'outdent':
 			case 'indent': {
 				const prefix = this.result.slice(0, this.result.length);
-				const _indent = printIndent(this.previousToken, this._indent, this.indentLevel);
+				const _indent = this.computeIndent();
 				const val = `#${token.val}`;
 				this.result = [prefix, _indent, val, this.result.slice(this.result.length)].join('');
 				this.possibleClassPosition = prefix.length + _indent.length + val.length;
@@ -595,7 +606,7 @@ export class PugPrinter {
 	private ['start-pipeless-text'](token: StartPipelessTextToken): void {
 		this.pipelessText = true;
 		this.result += '\n';
-		this.result += this._indent.repeat(this.indentLevel);
+		this.result += this.indentString.repeat(this.indentLevel);
 	}
 
 	private ['end-pipeless-text'](token: EndPipelessTextToken): void {
@@ -615,7 +626,7 @@ export class PugPrinter {
 	}
 
 	private block(token: BlockToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += 'block ';
 		if (token.mode !== 'replace') {
 			this.result += token.mode;
@@ -644,24 +655,24 @@ export class PugPrinter {
 	}
 
 	private interpolation(token: InterpolationToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += `#{${token.val}}`;
 		this.possibleIdPosition = this.result.length;
 		this.possibleClassPosition = this.result.length;
 	}
 
 	private include(token: IncludeToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += 'include';
 	}
 
 	private filter(token: FilterToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += `:${token.val}`;
 	}
 
 	private call(token: CallToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += `+${token.val}`;
 		let args: string | null = token.args;
 		if (args) {
@@ -674,7 +685,7 @@ export class PugPrinter {
 	}
 
 	private mixin(token: MixinToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += `mixin ${token.val}`;
 		let args: string | null = token.args;
 		if (args) {
@@ -685,19 +696,19 @@ export class PugPrinter {
 	}
 
 	private if(token: IfToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		const match = /^!\((.*)\)$/.exec(token.val);
 		logger.debug('[PugPrinter]:', match);
 		this.result += !match ? `if ${token.val}` : `unless ${match[1]}`;
 	}
 
 	private ['mixin-block'](token: MixinBlockToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += 'block';
 	}
 
 	private else(token: ElseToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += 'else';
 	}
 
@@ -706,7 +717,7 @@ export class PugPrinter {
 	}
 
 	private ['text-html'](token: TextHtmlToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		const match: RegExpExecArray | null = /^<(.*?)>(.*)<\/(.*?)>$/.exec(token.val);
 		logger.debug('[PugPrinter]:', match);
 		if (match) {
@@ -722,7 +733,7 @@ export class PugPrinter {
 	}
 
 	private each(token: EachToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += `each ${token.val}`;
 		if (token.key !== null) {
 			this.result += `, ${token.key}`;
@@ -731,17 +742,17 @@ export class PugPrinter {
 	}
 
 	private while(token: WhileToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += `while ${token.val}`;
 	}
 
 	private case(token: CaseToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += `case ${token.val}`;
 	}
 
 	private when(token: WhenToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += `when ${token.val}`;
 	}
 
@@ -752,22 +763,22 @@ export class PugPrinter {
 	}
 
 	private default(token: DefaultToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += 'default';
 	}
 
 	private ['else-if'](token: ElseIfToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += `else if ${token.val}`;
 	}
 
 	private blockcode(token: BlockcodeToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += '-';
 	}
 
 	private yield(token: YieldToken): void {
-		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
+		this.result += this.computeIndent();
 		this.result += 'yield';
 	}
 

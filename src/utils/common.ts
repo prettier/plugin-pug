@@ -16,17 +16,6 @@ export function previousNormalAttributeToken(tokens: ReadonlyArray<Token>, index
 	return;
 }
 
-export function printIndent(previousToken: Token | undefined, indent: string, indentLevel: number): string {
-	switch (previousToken?.type) {
-		case 'newline':
-		case 'outdent':
-			return indent.repeat(indentLevel);
-		case 'indent':
-			return indent;
-	}
-	return '';
-}
-
 export function formatText(text: string, singleQuote: boolean): string {
 	let result: string = '';
 	while (text) {
