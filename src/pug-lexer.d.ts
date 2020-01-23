@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 declare module 'pug-lexer' {
 	namespace lex {
 		export interface Loc {

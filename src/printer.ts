@@ -110,6 +110,32 @@ export class PugPrinter {
 		return this.tokens[this.currentIndex + 1];
 	}
 
+	public build(): string {
+		if (this.tokens[0]?.type === 'text') {
+			this.result += '| ';
+		}
+		for (let index: number = 0; index < this.tokens.length; index++) {
+			this.currentIndex = index;
+			const token: Token = this.tokens[index];
+			logger.debug('[PugPrinter]:', JSON.stringify(token));
+			try {
+				// @ts-ignore
+				this[token.type](token);
+			} catch (error) {
+				throw new Error('Unhandled token: ' + JSON.stringify(token));
+			}
+		}
+		return this.result;
+	}
+
+	// ########  #######  ##    ## ######## ##    ##    ########  ########   #######   ######  ########  ######   ######   #######  ########   ######
+	//    ##    ##     ## ##   ##  ##       ###   ##    ##     ## ##     ## ##     ## ##    ## ##       ##    ## ##    ## ##     ## ##     ## ##    ##
+	//    ##    ##     ## ##  ##   ##       ####  ##    ##     ## ##     ## ##     ## ##       ##       ##       ##       ##     ## ##     ## ##
+	//    ##    ##     ## #####    ######   ## ## ##    ########  ########  ##     ## ##       ######    ######   ######  ##     ## ########   ######
+	//    ##    ##     ## ##  ##   ##       ##  ####    ##        ##   ##   ##     ## ##       ##             ##       ## ##     ## ##   ##         ##
+	//    ##    ##     ## ##   ##  ##       ##   ###    ##        ##    ##  ##     ## ##    ## ##       ##    ## ##    ## ##     ## ##    ##  ##    ##
+	//    ##     #######  ##    ## ######## ##    ##    ##        ##     ##  #######   ######  ########  ######   ######   #######  ##     ##  ######
+
 	private tag(token: TagToken): void {
 		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
 		if (!(token.val === 'div' && (this.nextToken!.type === 'class' || this.nextToken!.type === 'id'))) {
@@ -714,23 +740,5 @@ export class PugPrinter {
 
 	private slash(token: SlashToken): void {
 		this.result += '/';
-	}
-
-	public build(): string {
-		if (this.tokens[0]?.type === 'text') {
-			this.result += '| ';
-		}
-		for (let index: number = 0; index < this.tokens.length; index++) {
-			this.currentIndex = index;
-			const token: Token = this.tokens[index];
-			logger.debug('[PugPrinter]:', JSON.stringify(token));
-			try {
-				// @ts-ignore
-				this[token.type](token);
-			} catch (error) {
-				throw new Error('Unhandled token: ' + JSON.stringify(token));
-			}
-		}
-		return this.result;
 	}
 }
