@@ -117,3 +117,6 @@ test/pug-tests/template.formatted.pug
 test/pug-tests/template.pug
 test/pug-tests/text.formatted.pug
 test/pug-tests/text.pug
+
+benchmark/
+processed-*.txt

@@ -9,3 +9,6 @@ azure-pipelines.yml
 .history/
 junit.xml
 release.sh
+*.log
+benchmark/
+processed-*.txt
