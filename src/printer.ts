@@ -206,7 +206,7 @@ export class PugPrinter {
 	//    ##     #######  ##    ## ######## ##    ##    ##        ##     ##  #######   ######  ########  ######   ######   #######  ##     ##  ######
 
 	private tag(token: TagToken): void {
-		this.result += this.computedIndent;
+		let result = this.computedIndent;
 		if (
 			!(
 				token.val === 'div' &&
@@ -214,8 +214,9 @@ export class PugPrinter {
 				(this.nextToken.type === 'class' || this.nextToken.type === 'id')
 			)
 		) {
-			this.result += token.val;
+			result += token.val;
 		}
+		this.result += result;
 		this.possibleIdPosition = this.result.length;
 		this.possibleClassPosition = this.result.length;
 	}
@@ -382,19 +383,20 @@ export class PugPrinter {
 	}
 
 	private indent(token: IndentToken): void {
-		this.result += '\n';
-		this.result += this.indentString.repeat(this.indentLevel);
+		this.result += `\n${this.indentString.repeat(this.indentLevel)}`;
 		this.indentLevel++;
 	}
 
 	private outdent(token: OutdentToken): void {
+		let result = '';
 		if (this.previousToken && this.previousToken.type !== 'outdent') {
 			if (token.loc.start.line - this.previousToken.loc.end.line > 1) {
 				// Insert one extra blank line
-				this.result += '\n';
+				result += '\n';
 			}
-			this.result += '\n';
+			result += '\n';
 		}
+		this.result += result;
 		this.indentLevel--;
 	}
 
@@ -433,39 +435,43 @@ export class PugPrinter {
 	}
 
 	private comment(token: CommentToken): void {
-		this.result += this.computedIndent;
+		let result = this.computedIndent;
 		if (this.previousToken && !['newline', 'indent', 'outdent'].includes(this.previousToken.type)) {
-			this.result += ' ';
+			result += ' ';
 		}
-		this.result += '//';
+		result += '//';
 		if (!token.buffer) {
-			this.result += '-';
+			result += '-';
 		}
-		this.result += formatCommentPreserveSpaces(token.val, this.options.commentPreserveSpaces);
+		result += formatCommentPreserveSpaces(token.val, this.options.commentPreserveSpaces);
 		if (this.nextToken?.type === 'start-pipeless-text') {
 			this.pipelessComment = true;
 		}
+		this.result += result;
 	}
 
 	private newline(token: NewlineToken): void {
+		let result = '';
 		if (this.previousToken && token.loc.start.line - this.previousToken.loc.end.line > 1) {
 			// Insert one extra blank line
-			this.result += '\n';
+			result += '\n';
 		}
-		this.result += '\n';
+		result += '\n';
+		this.result += result;
 	}
 
 	private text(token: TextToken): void {
+		let result = '';
 		let val = token.val;
 		let needsTrailingWhitespace: boolean = false;
 
 		if (this.pipelessText) {
 			switch (this.previousToken?.type) {
 				case 'newline':
-					this.result += this.indentString.repeat(this.indentLevel + 1);
+					result += this.indentString.repeat(this.indentLevel + 1);
 					break;
 				case 'start-pipeless-text':
-					this.result += this.indentString;
+					result += this.indentString;
 					break;
 			}
 
@@ -486,27 +492,27 @@ export class PugPrinter {
 
 			switch (this.previousToken?.type) {
 				case 'newline':
-					this.result += this.indentString.repeat(this.indentLevel);
+					result += this.indentString.repeat(this.indentLevel);
 					if (/^ .+$/.test(val)) {
-						this.result += '|\n';
-						this.result += this.indentString.repeat(this.indentLevel);
+						result += '|\n';
+						result += this.indentString.repeat(this.indentLevel);
 					}
-					this.result += '|';
+					result += '|';
 					if (/.*\S.*/.test(token.val) || this.nextToken?.type === 'start-pug-interpolation') {
-						this.result += ' ';
+						result += ' ';
 					}
 					break;
 				case 'indent':
-					this.result += this.indentString;
-					this.result += '|';
+					result += this.indentString;
+					result += '|';
 					if (/.*\S.*/.test(token.val)) {
-						this.result += ' ';
+						result += ' ';
 					}
 					break;
 				case 'interpolated-code':
 				case 'end-pug-interpolation':
 					if (/^ .+$/.test(val)) {
-						this.result += ' ';
+						result += ' ';
 					}
 					break;
 			}
@@ -524,40 +530,43 @@ export class PugPrinter {
 			val = ` ${val}`;
 		}
 
-		this.result += val;
+		result += val;
 		if (needsTrailingWhitespace) {
-			this.result += ' ';
+			result += ' ';
 		}
+
+		this.result += result;
 	}
 
 	private ['interpolated-code'](token: InterpolatedCodeToken): void {
+		let result = '';
 		switch (this.previousToken?.type) {
 			case 'tag':
 			case 'class':
 			case 'id':
 			case 'end-attributes':
-				this.result += ' ';
+				result = ' ';
 				break;
 			case 'start-pug-interpolation':
-				this.result += '| ';
+				result = '| ';
 				break;
 			case 'indent':
 			case 'newline':
 			case 'outdent':
-				this.result += this.computedIndent;
-				this.result += '| ';
+				result = `${this.computedIndent}| `;
 				break;
 		}
-		this.result += token.mustEscape ? '#' : '!';
-		this.result += `{${token.val}}`;
+		result += token.mustEscape ? '#' : '!';
+		result += `{${token.val}}`;
+		this.result += result;
 	}
 
 	private code(token: CodeToken): void {
-		this.result += this.computedIndent;
+		let result = this.computedIndent;
 		if (!token.mustEscape && token.buffer) {
-			this.result += '!';
+			result += '!';
 		}
-		this.result += token.buffer ? '=' : '-';
+		result += token.buffer ? '=' : '-';
 		let useSemi = this.options.semi;
 		if (useSemi && (token.mustEscape || token.buffer)) {
 			useSemi = false;
@@ -578,7 +587,8 @@ export class PugPrinter {
 		} catch (error) {
 			logger.warn('[PugPrinter]:', error);
 		}
-		this.result += ` ${val}`;
+		result += ` ${val}`;
+		this.result += result;
 	}
 
 	private id(token: IdToken): void {
@@ -605,8 +615,7 @@ export class PugPrinter {
 
 	private ['start-pipeless-text'](token: StartPipelessTextToken): void {
 		this.pipelessText = true;
-		this.result += '\n';
-		this.result += this.indentString.repeat(this.indentLevel);
+		this.result += `\n${this.indentString.repeat(this.indentLevel)}`;
 	}
 
 	private ['end-pipeless-text'](token: EndPipelessTextToken): void {
@@ -615,10 +624,11 @@ export class PugPrinter {
 	}
 
 	private doctype(token: DoctypeToken): void {
-		this.result += 'doctype';
+		let result = 'doctype';
 		if (token.val) {
-			this.result += ` ${token.val}`;
+			result += ` ${token.val}`;
 		}
+		this.result += result;
 	}
 
 	private dot(token: DotToken): void {
@@ -626,13 +636,12 @@ export class PugPrinter {
 	}
 
 	private block(token: BlockToken): void {
-		this.result += this.computedIndent;
-		this.result += 'block ';
+		let result = `${this.computedIndent}block `;
 		if (token.mode !== 'replace') {
-			this.result += token.mode;
-			this.result += ' ';
+			result += `${token.mode} `;
 		}
-		this.result += token.val;
+		result += token.val;
+		this.result += result;
 	}
 
 	private extends(token: ExtendsToken): void {
@@ -655,61 +664,57 @@ export class PugPrinter {
 	}
 
 	private interpolation(token: InterpolationToken): void {
-		this.result += this.computedIndent;
-		this.result += `#{${token.val}}`;
+		this.result += `${this.computedIndent}#{${token.val}}`;
 		this.possibleIdPosition = this.result.length;
 		this.possibleClassPosition = this.result.length;
 	}
 
 	private include(token: IncludeToken): void {
-		this.result += this.computedIndent;
-		this.result += 'include';
+		this.result += `${this.computedIndent}include`;
 	}
 
 	private filter(token: FilterToken): void {
-		this.result += this.computedIndent;
-		this.result += `:${token.val}`;
+		this.result += `${this.computedIndent}:${token.val}`;
 	}
 
 	private call(token: CallToken): void {
-		this.result += this.computedIndent;
-		this.result += `+${token.val}`;
+		let result = `${this.computedIndent}+${token.val}`;
 		let args: string | null = token.args;
 		if (args) {
 			args = args.trim();
 			args = args.replace(/\s\s+/g, ' ');
-			this.result += `(${args})`;
+			result += `(${args})`;
 		}
+		this.result += result;
 		this.possibleIdPosition = this.result.length;
 		this.possibleClassPosition = this.result.length;
 	}
 
 	private mixin(token: MixinToken): void {
-		this.result += this.computedIndent;
-		this.result += `mixin ${token.val}`;
+		let result = `${this.computedIndent}mixin ${token.val}`;
 		let args: string | null = token.args;
 		if (args) {
 			args = args.trim();
 			args = args.replace(/\s\s+/g, ' ');
-			this.result += `(${args})`;
+			result += `(${args})`;
 		}
+		this.result += result;
 	}
 
 	private if(token: IfToken): void {
-		this.result += this.computedIndent;
+		let result = this.computedIndent;
 		const match = /^!\((.*)\)$/.exec(token.val);
 		logger.debug('[PugPrinter]:', match);
-		this.result += !match ? `if ${token.val}` : `unless ${match[1]}`;
+		result += !match ? `if ${token.val}` : `unless ${match[1]}`;
+		this.result += result;
 	}
 
 	private ['mixin-block'](token: MixinBlockToken): void {
-		this.result += this.computedIndent;
-		this.result += 'block';
+		this.result += `${this.computedIndent}block`;
 	}
 
 	private else(token: ElseToken): void {
-		this.result += this.computedIndent;
-		this.result += 'else';
+		this.result += `${this.computedIndent}else`;
 	}
 
 	private ['&attributes'](token: AndAttributesToken): void {
@@ -717,43 +722,39 @@ export class PugPrinter {
 	}
 
 	private ['text-html'](token: TextHtmlToken): void {
-		this.result += this.computedIndent;
 		const match: RegExpExecArray | null = /^<(.*?)>(.*)<\/(.*?)>$/.exec(token.val);
 		logger.debug('[PugPrinter]:', match);
 		if (match) {
-			this.result += `${match[1]} ${match[2]}`;
+			this.result += `${this.computedIndent}${match[1]} ${match[2]}`;
 			return;
 		}
 		const entry = Object.entries(DOCTYPE_SHORTCUT_REGISTRY).find(([key]) => key === token.val.toLowerCase());
 		if (entry) {
-			this.result += entry[1];
+			this.result += `${this.computedIndent}${entry[1]}`;
 			return;
 		}
-		this.result += token.val;
+		this.result += `${this.computedIndent}${token.val}`;
 	}
 
 	private each(token: EachToken): void {
-		this.result += this.computedIndent;
-		this.result += `each ${token.val}`;
+		let result = `${this.computedIndent}each ${token.val}`;
 		if (token.key !== null) {
-			this.result += `, ${token.key}`;
+			result += `, ${token.key}`;
 		}
-		this.result += ` in ${token.code}`;
+		result += ` in ${token.code}`;
+		this.result += result;
 	}
 
 	private while(token: WhileToken): void {
-		this.result += this.computedIndent;
-		this.result += `while ${token.val}`;
+		this.result += `${this.computedIndent}while ${token.val}`;
 	}
 
 	private case(token: CaseToken): void {
-		this.result += this.computedIndent;
-		this.result += `case ${token.val}`;
+		this.result += `${this.computedIndent}case ${token.val}`;
 	}
 
 	private when(token: WhenToken): void {
-		this.result += this.computedIndent;
-		this.result += `when ${token.val}`;
+		this.result += `${this.computedIndent}when ${token.val}`;
 	}
 
 	private [':'](token: ColonToken): void {
@@ -763,23 +764,19 @@ export class PugPrinter {
 	}
 
 	private default(token: DefaultToken): void {
-		this.result += this.computedIndent;
-		this.result += 'default';
+		this.result += `${this.computedIndent}default`;
 	}
 
 	private ['else-if'](token: ElseIfToken): void {
-		this.result += this.computedIndent;
-		this.result += `else if ${token.val}`;
+		this.result += `${this.computedIndent}else if ${token.val}`;
 	}
 
 	private blockcode(token: BlockcodeToken): void {
-		this.result += this.computedIndent;
-		this.result += '-';
+		this.result += `${this.computedIndent}-`;
 	}
 
 	private yield(token: YieldToken): void {
-		this.result += this.computedIndent;
-		this.result += 'yield';
+		this.result += `${this.computedIndent}yield`;
 	}
 
 	private slash(token: SlashToken): void {
