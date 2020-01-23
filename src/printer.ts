@@ -404,10 +404,10 @@ export class PugPrinter {
 			case 'outdent':
 			case 'indent': {
 				const prefix = this.result.slice(0, this.result.length);
-				const _indent = this.computedIndent;
+				const indent = this.computedIndent;
 				const val = `.${token.val}`;
-				this.result = [prefix, _indent, val, this.result.slice(this.result.length)].join('');
-				this.possibleClassPosition = prefix.length + _indent.length + val.length;
+				this.result = [prefix, indent, val, this.result.slice(this.result.length)].join('');
+				this.possibleClassPosition = prefix.length + indent.length + val.length;
 				break;
 			}
 			default: {
@@ -587,10 +587,10 @@ export class PugPrinter {
 			case 'outdent':
 			case 'indent': {
 				const prefix = this.result.slice(0, this.result.length);
-				const _indent = this.computedIndent;
+				const indent = this.computedIndent;
 				const val = `#${token.val}`;
-				this.result = [prefix, _indent, val, this.result.slice(this.result.length)].join('');
-				this.possibleClassPosition = prefix.length + _indent.length + val.length;
+				this.result = [prefix, indent, val, this.result.slice(this.result.length)].join('');
+				this.possibleClassPosition = prefix.length + indent.length + val.length;
 				break;
 			}
 			default: {
