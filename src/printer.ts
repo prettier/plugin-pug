@@ -28,6 +28,7 @@ import {
 	IndentToken,
 	InterpolatedCodeToken,
 	InterpolationToken,
+	LexTokenType,
 	MixinBlockToken,
 	MixinToken,
 	NewlineToken,
@@ -152,6 +153,10 @@ export class PugPrinter {
 
 	private quoteString(val: string): string {
 		return `${this.quotes}${val}${this.quotes}`;
+	}
+
+	private checkTokenType(token: Token | undefined, possibilities: LexTokenType[], invert: boolean = false): boolean {
+		return !!token && possibilities.includes(token.type) !== invert;
 	}
 
 	private formatVueExpression(val: string): string {
@@ -436,7 +441,7 @@ export class PugPrinter {
 
 	private comment(token: CommentToken): void {
 		let result = this.computedIndent;
-		if (this.previousToken && !['newline', 'indent', 'outdent'].includes(this.previousToken.type)) {
+		if (this.checkTokenType(this.previousToken, ['newline', 'indent', 'outdent'], true)) {
 			result += ' ';
 		}
 		result += '//';
@@ -523,10 +528,7 @@ export class PugPrinter {
 			val = val.replace(/#(\{|\[)/g, '\\#$1');
 		}
 
-		if (
-			this.previousToken &&
-			['tag', 'id', 'interpolation', 'call', '&attributes', 'filter'].includes(this.previousToken.type)
-		) {
+		if (this.checkTokenType(this.previousToken, ['tag', 'id', 'interpolation', 'call', '&attributes', 'filter'])) {
 			val = ` ${val}`;
 		}
 
@@ -649,7 +651,7 @@ export class PugPrinter {
 	}
 
 	private path(token: PathToken): void {
-		if (this.previousToken && ['include', 'filter'].includes(this.previousToken.type)) {
+		if (this.checkTokenType(this.previousToken, ['include', 'filter'])) {
 			this.result += ' ';
 		}
 		this.result += token.val;
