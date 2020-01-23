@@ -138,7 +138,13 @@ export class PugPrinter {
 
 	private tag(token: TagToken): void {
 		this.result += printIndent(this.previousToken, this._indent, this.indentLevel);
-		if (!(token.val === 'div' && (this.nextToken!.type === 'class' || this.nextToken!.type === 'id'))) {
+		if (
+			!(
+				token.val === 'div' &&
+				this.nextToken &&
+				(this.nextToken.type === 'class' || this.nextToken.type === 'id')
+			)
+		) {
 			this.result += token.val;
 		}
 		this.possibleIdPosition = this.result.length;
@@ -220,8 +226,9 @@ export class PugPrinter {
 					this.possibleClassPosition += 1 + val.length;
 					this.result = this.result.replace(/div#/, '#');
 					if (
-						this.previousToken!.type === 'attribute' &&
-						(this.previousToken as AttributeToken).name !== 'class'
+						this.previousToken &&
+						this.previousToken.type === 'attribute' &&
+						this.previousToken.name !== 'class'
 					) {
 						this.previousAttributeRemapped = true;
 					}
@@ -347,8 +354,8 @@ export class PugPrinter {
 	}
 
 	private outdent(token: OutdentToken): void {
-		if (this.previousToken?.type !== 'outdent') {
-			if (token.loc.start.line - this.previousToken!.loc.end.line > 1) {
+		if (this.previousToken && this.previousToken.type !== 'outdent') {
+			if (token.loc.start.line - this.previousToken.loc.end.line > 1) {
 				// Insert one extra blank line
 				this.result += '\n';
 			}
@@ -401,7 +408,7 @@ export class PugPrinter {
 			this.result += '-';
 		}
 		this.result += formatCommentPreserveSpaces(token.val, this.options.commentPreserveSpaces);
-		if (this.nextToken!.type === 'start-pipeless-text') {
+		if (this.nextToken?.type === 'start-pipeless-text') {
 			this.pipelessComment = true;
 		}
 	}
@@ -476,7 +483,10 @@ export class PugPrinter {
 			val = val.replace(/#(\{|\[)/g, '\\#$1');
 		}
 
-		if (['tag', 'id', 'interpolation', 'call', '&attributes', 'filter'].includes(this.previousToken!?.type)) {
+		if (
+			this.previousToken &&
+			['tag', 'id', 'interpolation', 'call', '&attributes', 'filter'].includes(this.previousToken.type)
+		) {
 			val = ` ${val}`;
 		}
 
@@ -596,7 +606,7 @@ export class PugPrinter {
 	}
 
 	private path(token: PathToken): void {
-		if (['include', 'filter'].includes(this.previousToken!.type)) {
+		if (this.previousToken && ['include', 'filter'].includes(this.previousToken.type)) {
 			this.result += ' ';
 		}
 		this.result += token.val;
