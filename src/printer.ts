@@ -263,7 +263,7 @@ export class PugPrinter {
 			this.currentLineLength += 1;
 			let tempToken: AttributeToken | EndAttributesToken = this.nextToken;
 			let tempIndex: number = this.currentIndex + 1;
-			while (tempToken.type === 'attribute') {
+			while (tempToken.type === 'attribute' && this.currentLineLength <= this.options.printWidth) {
 				this.currentLineLength += tempToken.name.length + 1 + tempToken.val.toString().length;
 				tempToken = this.tokens[++tempIndex] as AttributeToken | EndAttributesToken;
 			}
