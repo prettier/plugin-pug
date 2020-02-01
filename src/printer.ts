@@ -117,21 +117,46 @@ export class PugPrinter {
 	}
 
 	public build(): string {
+		const results: string[] = [];
 		if (this.tokens[0]?.type === 'text') {
-			this.result += '| ';
+			results.push('| ');
 		}
 		for (let index: number = 0; index < this.tokens.length; index++) {
 			this.currentIndex = index;
 			const token: Token = this.tokens[index];
 			logger.debug('[PugPrinter]:', JSON.stringify(token));
 			try {
-				// @ts-ignore
-				this[token.type](token);
+				switch (token.type) {
+					case 'attribute':
+					case 'class':
+					case 'tag':
+					case 'end-attributes':
+					case 'id':
+					case 'eos':
+						// TODO: These tokens write directly into the result
+						this.result = results.join('');
+						// @ts-ignore
+						this[token.type](token);
+						results.length = 0;
+						results.push(this.result);
+						break;
+					case 'start-attributes':
+					case 'interpolation':
+					case 'call':
+					case ':':
+						// TODO: These tokens read the length of the result
+						this.result = results.join('');
+					// eslint-disable-next-line no-fallthrough
+					default:
+						// @ts-ignore
+						results.push(this[token.type](token));
+						break;
+				}
 			} catch (error) {
 				throw new Error('Unhandled token: ' + JSON.stringify(token));
 			}
 		}
-		return this.result;
+		return results.join('');
 	}
 
 	// ##     ## ######## ##       ########  ######## ########   ######
@@ -229,7 +254,7 @@ export class PugPrinter {
 		this.possibleClassPosition = this.result.length;
 	}
 
-	private ['start-attributes'](token: StartAttributesToken): void {
+	private ['start-attributes'](token: StartAttributesToken): string {
 		let result = '';
 		if (this.nextToken?.type === 'attribute') {
 			this.previousAttributeRemapped = false;
@@ -246,7 +271,7 @@ export class PugPrinter {
 				this.wrapAttributes = true;
 			}
 		}
-		this.result += result;
+		return result;
 	}
 
 	private attribute(token: AttributeToken): void {
@@ -389,14 +414,14 @@ export class PugPrinter {
 		}
 	}
 
-	private indent(token: IndentToken): void {
+	private indent(token: IndentToken): string {
 		const result = `\n${this.indentString.repeat(this.indentLevel)}`;
 		this.currentLineLength = result.length - 1;
-		this.result += result;
 		this.indentLevel++;
+		return result;
 	}
 
-	private outdent(token: OutdentToken): void {
+	private outdent(token: OutdentToken): string {
 		let result = '';
 		if (this.previousToken && this.previousToken.type !== 'outdent') {
 			if (token.loc.start.line - this.previousToken.loc.end.line > 1) {
@@ -406,8 +431,8 @@ export class PugPrinter {
 			result += '\n';
 		}
 		this.currentLineLength = 0;
-		this.result += result;
 		this.indentLevel--;
+		return result;
 	}
 
 	private class(token: ClassToken): void {
@@ -445,7 +470,7 @@ export class PugPrinter {
 		this.result += '\n';
 	}
 
-	private comment(token: CommentToken): void {
+	private comment(token: CommentToken): string {
 		let result = this.computedIndent;
 		if (this.checkTokenType(this.previousToken, ['newline', 'indent', 'outdent'], true)) {
 			result += ' ';
@@ -458,10 +483,10 @@ export class PugPrinter {
 		if (this.nextToken?.type === 'start-pipeless-text') {
 			this.pipelessComment = true;
 		}
-		this.result += result;
+		return result;
 	}
 
-	private newline(token: NewlineToken): void {
+	private newline(token: NewlineToken): string {
 		let result = '';
 		if (this.previousToken && token.loc.start.line - this.previousToken.loc.end.line > 1) {
 			// Insert one extra blank line
@@ -469,10 +494,10 @@ export class PugPrinter {
 		}
 		result += '\n';
 		this.currentLineLength = 0;
-		this.result += result;
+		return result;
 	}
 
-	private text(token: TextToken): void {
+	private text(token: TextToken): string {
 		let result = '';
 		let val = token.val;
 		let needsTrailingWhitespace: boolean = false;
@@ -544,10 +569,10 @@ export class PugPrinter {
 			result += ' ';
 		}
 
-		this.result += result;
+		return result;
 	}
 
-	private ['interpolated-code'](token: InterpolatedCodeToken): void {
+	private ['interpolated-code'](token: InterpolatedCodeToken): string {
 		let result = '';
 		switch (this.previousToken?.type) {
 			case 'tag':
@@ -567,10 +592,10 @@ export class PugPrinter {
 		}
 		result += token.mustEscape ? '#' : '!';
 		result += `{${token.val}}`;
-		this.result += result;
+		return result;
 	}
 
-	private code(token: CodeToken): void {
+	private code(token: CodeToken): string {
 		let result = this.computedIndent;
 		if (!token.mustEscape && token.buffer) {
 			result += '!';
@@ -597,7 +622,7 @@ export class PugPrinter {
 			logger.warn('[PugPrinter]:', error);
 		}
 		result += ` ${val}`;
-		this.result += result;
+		return result;
 	}
 
 	private id(token: IdToken): void {
@@ -622,73 +647,76 @@ export class PugPrinter {
 		}
 	}
 
-	private ['start-pipeless-text'](token: StartPipelessTextToken): void {
+	private ['start-pipeless-text'](token: StartPipelessTextToken): string {
 		this.pipelessText = true;
-		this.result += `\n${this.indentString.repeat(this.indentLevel)}`;
+		return `\n${this.indentString.repeat(this.indentLevel)}`;
 	}
 
-	private ['end-pipeless-text'](token: EndPipelessTextToken): void {
+	private ['end-pipeless-text'](token: EndPipelessTextToken): string {
 		this.pipelessText = false;
 		this.pipelessComment = false;
+		return '';
 	}
 
-	private doctype(token: DoctypeToken): void {
+	private doctype(token: DoctypeToken): string {
 		let result = 'doctype';
 		if (token.val) {
 			result += ` ${token.val}`;
 		}
-		this.result += result;
+		return result;
 	}
 
-	private dot(token: DotToken): void {
-		this.result += '.';
+	private dot(token: DotToken): string {
+		return '.';
 	}
 
-	private block(token: BlockToken): void {
+	private block(token: BlockToken): string {
 		let result = `${this.computedIndent}block `;
 		if (token.mode !== 'replace') {
 			result += `${token.mode} `;
 		}
 		result += token.val;
-		this.result += result;
+		return result;
 	}
 
-	private extends(token: ExtendsToken): void {
-		this.result += 'extends ';
+	private extends(token: ExtendsToken): string {
+		return 'extends ';
 	}
 
-	private path(token: PathToken): void {
+	private path(token: PathToken): string {
+		let result = '';
 		if (this.checkTokenType(this.previousToken, ['include', 'filter'])) {
-			this.result += ' ';
+			result += ' ';
 		}
-		this.result += token.val;
+		result += token.val;
+		return result;
 	}
 
-	private ['start-pug-interpolation'](token: StartPugInterpolationToken): void {
-		this.result += '#[';
+	private ['start-pug-interpolation'](token: StartPugInterpolationToken): string {
+		return '#[';
 	}
 
-	private ['end-pug-interpolation'](token: EndPugInterpolationToken): void {
-		this.result += ']';
+	private ['end-pug-interpolation'](token: EndPugInterpolationToken): string {
+		return ']';
 	}
 
-	private interpolation(token: InterpolationToken): void {
+	private interpolation(token: InterpolationToken): string {
 		const result = `${this.computedIndent}#{${token.val}}`;
 		this.currentLineLength += result.length;
-		this.result += result;
-		this.possibleIdPosition = this.result.length;
-		this.possibleClassPosition = this.result.length;
+		this.possibleIdPosition = this.result.length + result.length;
+		this.possibleClassPosition = this.result.length + result.length;
+		return result;
 	}
 
-	private include(token: IncludeToken): void {
-		this.result += `${this.computedIndent}include`;
+	private include(token: IncludeToken): string {
+		return `${this.computedIndent}include`;
 	}
 
-	private filter(token: FilterToken): void {
-		this.result += `${this.computedIndent}:${token.val}`;
+	private filter(token: FilterToken): string {
+		return `${this.computedIndent}:${token.val}`;
 	}
 
-	private call(token: CallToken): void {
+	private call(token: CallToken): string {
 		let result = `${this.computedIndent}+${token.val}`;
 		let args: string | null = token.args;
 		if (args) {
@@ -697,12 +725,12 @@ export class PugPrinter {
 			result += `(${args})`;
 		}
 		this.currentLineLength += result.length;
-		this.result += result;
-		this.possibleIdPosition = this.result.length;
-		this.possibleClassPosition = this.result.length;
+		this.possibleIdPosition = this.result.length + result.length;
+		this.possibleClassPosition = this.result.length + result.length;
+		return result;
 	}
 
-	private mixin(token: MixinToken): void {
+	private mixin(token: MixinToken): string {
 		let result = `${this.computedIndent}mixin ${token.val}`;
 		let args: string | null = token.args;
 		if (args) {
@@ -710,90 +738,88 @@ export class PugPrinter {
 			args = args.replace(/\s\s+/g, ' ');
 			result += `(${args})`;
 		}
-		this.result += result;
+		return result;
 	}
 
-	private if(token: IfToken): void {
+	private if(token: IfToken): string {
 		let result = this.computedIndent;
 		const match = /^!\((.*)\)$/.exec(token.val);
 		logger.debug('[PugPrinter]:', match);
 		result += !match ? `if ${token.val}` : `unless ${match[1]}`;
-		this.result += result;
+		return result;
 	}
 
-	private ['mixin-block'](token: MixinBlockToken): void {
-		this.result += `${this.computedIndent}block`;
+	private ['mixin-block'](token: MixinBlockToken): string {
+		return `${this.computedIndent}block`;
 	}
 
-	private else(token: ElseToken): void {
-		this.result += `${this.computedIndent}else`;
+	private else(token: ElseToken): string {
+		return `${this.computedIndent}else`;
 	}
 
-	private ['&attributes'](token: AndAttributesToken): void {
+	private ['&attributes'](token: AndAttributesToken): string {
 		const result = `&attributes(${token.val})`;
 		this.currentLineLength += result.length;
-		this.result += result;
+		return result;
 	}
 
-	private ['text-html'](token: TextHtmlToken): void {
+	private ['text-html'](token: TextHtmlToken): string {
 		const match: RegExpExecArray | null = /^<(.*?)>(.*)<\/(.*?)>$/.exec(token.val);
 		logger.debug('[PugPrinter]:', match);
 		if (match) {
-			this.result += `${this.computedIndent}${match[1]} ${match[2]}`;
-			return;
+			return `${this.computedIndent}${match[1]} ${match[2]}`;
 		}
 		const entry = Object.entries(DOCTYPE_SHORTCUT_REGISTRY).find(([key]) => key === token.val.toLowerCase());
 		if (entry) {
-			this.result += `${this.computedIndent}${entry[1]}`;
-			return;
+			return `${this.computedIndent}${entry[1]}`;
 		}
-		this.result += `${this.computedIndent}${token.val}`;
+		return `${this.computedIndent}${token.val}`;
 	}
 
-	private each(token: EachToken): void {
+	private each(token: EachToken): string {
 		let result = `${this.computedIndent}each ${token.val}`;
 		if (token.key !== null) {
 			result += `, ${token.key}`;
 		}
 		result += ` in ${token.code}`;
-		this.result += result;
+		return result;
 	}
 
-	private while(token: WhileToken): void {
-		this.result += `${this.computedIndent}while ${token.val}`;
+	private while(token: WhileToken): string {
+		return `${this.computedIndent}while ${token.val}`;
 	}
 
-	private case(token: CaseToken): void {
-		this.result += `${this.computedIndent}case ${token.val}`;
+	private case(token: CaseToken): string {
+		return `${this.computedIndent}case ${token.val}`;
 	}
 
-	private when(token: WhenToken): void {
-		this.result += `${this.computedIndent}when ${token.val}`;
+	private when(token: WhenToken): string {
+		return `${this.computedIndent}when ${token.val}`;
 	}
 
-	private [':'](token: ColonToken): void {
-		this.result += ': ';
-		this.possibleIdPosition = this.result.length;
-		this.possibleClassPosition = this.result.length;
+	private [':'](token: ColonToken): string {
+		this.possibleIdPosition = this.result.length + 2;
+		this.possibleClassPosition = this.result.length + 2;
+		return ': ';
 	}
 
-	private default(token: DefaultToken): void {
-		this.result += `${this.computedIndent}default`;
+	private default(token: DefaultToken): string {
+		return `${this.computedIndent}default`;
 	}
 
-	private ['else-if'](token: ElseIfToken): void {
-		this.result += `${this.computedIndent}else if ${token.val}`;
+	private ['else-if'](token: ElseIfToken): string {
+		return `${this.computedIndent}else if ${token.val}`;
 	}
 
-	private blockcode(token: BlockcodeToken): void {
-		this.result += `${this.computedIndent}-`;
+	private blockcode(token: BlockcodeToken): string {
+		return `${this.computedIndent}-`;
 	}
 
-	private yield(token: YieldToken): void {
-		this.result += `${this.computedIndent}yield`;
+	private yield(token: YieldToken): string {
+		return `${this.computedIndent}yield`;
 	}
 
-	private slash(token: SlashToken): void {
-		this.result += '/';
+	private slash(token: SlashToken): string {
+		return '/';
 	}
 }
