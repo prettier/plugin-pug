@@ -32,7 +32,7 @@ export function formatCommentPreserveSpaces(
 				result += ' ';
 			}
 			result += input
-				.substring(firstNonSpace)
+				.slice(firstNonSpace)
 				.trim()
 				.replace(/\s\s+/g, ' ');
 			return result;
@@ -40,7 +40,7 @@ export function formatCommentPreserveSpaces(
 		case 'trim-all': {
 			let result: string = input.trim();
 			result = result.replace(/\s\s+/g, ' ');
-			if (!pipeless && input.startsWith(' ')) {
+			if (!pipeless && input[0] === ' ') {
 				result = ` ${result}`;
 			}
 			return result;

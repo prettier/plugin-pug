@@ -230,9 +230,9 @@ export class PugPrinter {
 		if (this.nextToken?.type === 'attribute') {
 			this.previousAttributeRemapped = false;
 			this.possibleClassPosition = this.result.length;
-			this.result += '(';
 			const start: number = this.result.lastIndexOf('\n') + 1;
-			let lineLength: number = this.result.substring(start).length;
+			this.result += '(';
+			let lineLength: number = this.result.slice(start).length;
 			logger.debug('[PugPrinter]:', lineLength, this.options.printWidth);
 			let tempToken: AttributeToken | EndAttributesToken = this.nextToken;
 			let tempIndex: number = this.currentIndex + 1;
@@ -253,7 +253,7 @@ export class PugPrinter {
 				if (token.name === 'class') {
 					// Handle class attribute
 					let val = token.val;
-					val = val.substring(1, val.length - 1);
+					val = val.slice(1, val.length - 1);
 					val = val.trim();
 					val = val.replace(/\s\s+/g, ' ');
 					const classes: string[] = val.split(' ');
@@ -284,7 +284,7 @@ export class PugPrinter {
 				} else if (token.name === 'id') {
 					// Handle id attribute
 					let val = token.val;
-					val = val.substring(1, val.length - 1);
+					val = val.slice(1, val.length - 1);
 					val = val.trim();
 					const validIdNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 					if (!validIdNameRegex.test(val)) {
@@ -357,8 +357,8 @@ export class PugPrinter {
 				// The value is not quoted and may be js-code
 				val = val.trim();
 				val = val.replace(/\s\s+/g, ' ');
-				if (val.startsWith('{ ')) {
-					val = `{${val.substring(2, val.length)}`;
+				if (val[0] === '{' && val[1] === ' ') {
+					val = `{${val.slice(2, val.length)}`;
 				}
 			}
 
@@ -376,9 +376,9 @@ export class PugPrinter {
 			this.result += this.indentString.repeat(this.indentLevel);
 		}
 		this.wrapAttributes = false;
-		if (this.result.endsWith('(')) {
+		if (this.result[this.result.length - 1] === '(') {
 			// There were no attributes
-			this.result = this.result.substring(0, this.result.length - 1);
+			this.result = this.result.slice(0, this.result.length - 1);
 		} else if (this.previousToken?.type === 'attribute') {
 			this.result += ')';
 		}
@@ -429,9 +429,8 @@ export class PugPrinter {
 
 	private eos(token: EosToken): void {
 		// Remove all newlines at the end
-		// eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
 		while (this.result[this.result.length - 1] === '\n') {
-			this.result = this.result.substring(0, this.result.length - 1);
+			this.result = this.result.slice(0, this.result.length - 1);
 		}
 		// Insert one newline
 		this.result += '\n';
@@ -482,7 +481,7 @@ export class PugPrinter {
 				val = formatCommentPreserveSpaces(val, this.options.commentPreserveSpaces, true);
 			}
 		} else {
-			if (this.nextToken && val.endsWith(' ')) {
+			if (this.nextToken && val[val.length - 1] === ' ') {
 				switch (this.nextToken.type) {
 					case 'interpolated-code':
 					case 'start-pug-interpolation':

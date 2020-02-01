@@ -36,7 +36,6 @@
 		"@typescript-eslint/no-parameter-properties": "off",
 		"@typescript-eslint/no-unused-vars": "off",
 		"@typescript-eslint/prefer-nullish-coalescing": "warn",
-		"@typescript-eslint/prefer-optional-chain": "warn",
-		"@typescript-eslint/prefer-string-starts-ends-with": "error"
+		"@typescript-eslint/prefer-optional-chain": "warn"
 	}
 }
