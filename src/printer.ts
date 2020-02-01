@@ -68,6 +68,8 @@ export class PugPrinter {
 	private readonly indentString: string;
 	private indentLevel: number = 0;
 
+	private currentLineLength = 0;
+
 	private readonly quotes: "'" | '"';
 
 	private readonly alwaysUseAttributeSeparator: boolean;
@@ -221,30 +223,30 @@ export class PugPrinter {
 		) {
 			result += token.val;
 		}
+		this.currentLineLength += result.length;
 		this.result += result;
 		this.possibleIdPosition = this.result.length;
 		this.possibleClassPosition = this.result.length;
 	}
 
 	private ['start-attributes'](token: StartAttributesToken): void {
+		let result = '';
 		if (this.nextToken?.type === 'attribute') {
 			this.previousAttributeRemapped = false;
 			this.possibleClassPosition = this.result.length;
-			const start: number = this.result.lastIndexOf('\n') + 1;
-			this.result += '(';
-			let lineLength: number = this.result.slice(start).length;
-			logger.debug('[PugPrinter]:', lineLength, this.options.printWidth);
+			result = '(';
+			this.currentLineLength += 1;
 			let tempToken: AttributeToken | EndAttributesToken = this.nextToken;
 			let tempIndex: number = this.currentIndex + 1;
 			while (tempToken.type === 'attribute') {
-				lineLength += tempToken.name.length + 1 + tempToken.val.toString().length;
-				logger.debug('[PugPrinter]:', lineLength, this.options.printWidth);
+				this.currentLineLength += tempToken.name.length + 1 + tempToken.val.toString().length;
 				tempToken = this.tokens[++tempIndex] as AttributeToken | EndAttributesToken;
 			}
-			if (lineLength > this.options.printWidth) {
+			if (this.currentLineLength > this.options.printWidth) {
 				this.wrapAttributes = true;
 			}
 		}
+		this.result += result;
 	}
 
 	private attribute(token: AttributeToken): void {
@@ -388,7 +390,9 @@ export class PugPrinter {
 	}
 
 	private indent(token: IndentToken): void {
-		this.result += `\n${this.indentString.repeat(this.indentLevel)}`;
+		const result = `\n${this.indentString.repeat(this.indentLevel)}`;
+		this.currentLineLength = result.length - 1;
+		this.result += result;
 		this.indentLevel++;
 	}
 
@@ -401,6 +405,7 @@ export class PugPrinter {
 			}
 			result += '\n';
 		}
+		this.currentLineLength = 0;
 		this.result += result;
 		this.indentLevel--;
 	}
@@ -410,19 +415,23 @@ export class PugPrinter {
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
-				this.result += `${this.computedIndent}.${token.val}`;
+				const result = `${this.computedIndent}.${token.val}`;
+				this.currentLineLength = result.length;
+				this.result += result;
 				this.possibleClassPosition = this.result.length;
 				break;
 			}
 			default: {
 				const prefix = this.result.slice(0, this.possibleClassPosition);
 				const val = `.${token.val}`;
+				this.currentLineLength += val.length;
 				this.result = [prefix, val, this.result.slice(this.possibleClassPosition)].join('');
 				this.possibleClassPosition += val.length;
 				break;
 			}
 		}
 		if (this.nextToken?.type === 'text') {
+			this.currentLineLength += 1;
 			this.result += ' ';
 		}
 	}
@@ -459,6 +468,7 @@ export class PugPrinter {
 			result += '\n';
 		}
 		result += '\n';
+		this.currentLineLength = 0;
 		this.result += result;
 	}
 
@@ -595,15 +605,18 @@ export class PugPrinter {
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
-				this.result += `${this.computedIndent}#${token.val}`;
+				const result = `${this.computedIndent}#${token.val}`;
+				this.currentLineLength = result.length;
+				this.result += result;
 				this.possibleClassPosition = this.result.length;
 				break;
 			}
 			default: {
 				const prefix = this.result.slice(0, this.possibleIdPosition);
 				const val = `#${token.val}`;
-				this.result = [prefix, val, this.result.slice(this.possibleIdPosition)].join('');
 				this.possibleClassPosition += val.length;
+				this.currentLineLength += val.length;
+				this.result = [prefix, val, this.result.slice(this.possibleIdPosition)].join('');
 				break;
 			}
 		}
@@ -660,7 +673,9 @@ export class PugPrinter {
 	}
 
 	private interpolation(token: InterpolationToken): void {
-		this.result += `${this.computedIndent}#{${token.val}}`;
+		const result = `${this.computedIndent}#{${token.val}}`;
+		this.currentLineLength += result.length;
+		this.result += result;
 		this.possibleIdPosition = this.result.length;
 		this.possibleClassPosition = this.result.length;
 	}
@@ -681,6 +696,7 @@ export class PugPrinter {
 			args = args.replace(/\s\s+/g, ' ');
 			result += `(${args})`;
 		}
+		this.currentLineLength += result.length;
 		this.result += result;
 		this.possibleIdPosition = this.result.length;
 		this.possibleClassPosition = this.result.length;
@@ -714,7 +730,9 @@ export class PugPrinter {
 	}
 
 	private ['&attributes'](token: AndAttributesToken): void {
-		this.result += `&attributes(${token.val})`;
+		const result = `&attributes(${token.val})`;
+		this.currentLineLength += result.length;
+		this.result += result;
 	}
 
 	private ['text-html'](token: TextHtmlToken): void {
