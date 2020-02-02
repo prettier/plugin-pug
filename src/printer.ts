@@ -127,7 +127,6 @@ export class PugPrinter {
 				switch (token.type) {
 					case 'attribute':
 					case 'class':
-					case 'tag':
 					case 'end-attributes':
 					case 'id':
 					case 'eos':
@@ -138,6 +137,7 @@ export class PugPrinter {
 						results.length = 0;
 						results.push(this.result);
 						break;
+					case 'tag':
 					case 'start-attributes':
 					case 'interpolation':
 					case 'call':
@@ -235,7 +235,7 @@ export class PugPrinter {
 	//    ##    ##     ## ##   ##  ##       ##   ###    ##        ##    ##  ##     ## ##    ## ##       ##    ## ##    ## ##     ## ##    ##  ##    ##
 	//    ##     #######  ##    ## ######## ##    ##    ##        ##     ##  #######   ######  ########  ######   ######   #######  ##     ##  ######
 
-	private tag(token: TagToken): void {
+	private tag(token: TagToken): string {
 		let result = this.computedIndent;
 		if (
 			!(
@@ -247,9 +247,9 @@ export class PugPrinter {
 			result += token.val;
 		}
 		this.currentLineLength += result.length;
-		this.result += result;
-		this.possibleIdPosition = this.result.length;
-		this.possibleClassPosition = this.result.length;
+		this.possibleIdPosition = this.result.length + result.length;
+		this.possibleClassPosition = this.result.length + result.length;
+		return result;
 	}
 
 	private ['start-attributes'](token: StartAttributesToken): string {
