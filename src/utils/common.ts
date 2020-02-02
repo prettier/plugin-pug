@@ -93,3 +93,27 @@ export function unwrapLineFeeds(value: string): string {
 export function isQuoted(val: string): boolean {
 	return /^["'](.*)["']$/.test(val);
 }
+
+// Copy of https://github.com/prettier/prettier/blob/master/src/common/util.js#L647
+export function makeString(
+	rawContent: string,
+	enclosingQuote: "'" | '"',
+	unescapeUnnecessaryEscapes: boolean = false
+): string {
+	const otherQuote = enclosingQuote === '"' ? "'" : '"';
+	const newContent = rawContent.replace(/\\([\s\S])|(['"])/g, (match, escaped, quote) => {
+		if (escaped === otherQuote) {
+			return escaped;
+		}
+		if (quote === enclosingQuote) {
+			return '\\' + quote;
+		}
+		if (quote) {
+			return quote;
+		}
+		return unescapeUnnecessaryEscapes && /^[^\\nrvtbfux\r\n\u2028\u2029"'0-7]$/.test(escaped)
+			? escaped
+			: '\\' + escaped;
+	});
+	return enclosingQuote + newContent + enclosingQuote;
+}

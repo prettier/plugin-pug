@@ -1,4 +1,4 @@
-import { format, ParserOptions, RequiredOptions, util } from 'prettier';
+import { format, ParserOptions, RequiredOptions } from 'prettier';
 import {
 	AndAttributesToken,
 	AttributeToken,
@@ -50,15 +50,13 @@ import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
 import { formatCommentPreserveSpaces, PugParserOptions, resolveAttributeSeparatorOption } from './options';
 import { isAngularDirective, isAngularExpression, isAngularInterpolation } from './utils/angular';
-import { formatText, isQuoted, previousNormalAttributeToken, unwrapLineFeeds } from './utils/common';
+import { formatText, isQuoted, makeString, previousNormalAttributeToken, unwrapLineFeeds } from './utils/common';
 import { isVueExpression } from './utils/vue';
 
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {
 	logger.setLogLevel(LogLevel.DEBUG);
 }
-
-const { makeString } = util;
 
 export class PugPrinter {
 	private result: string = '';
@@ -302,7 +300,7 @@ export class PugPrinter {
 						this.result = this.result.replace(/div\./, '.');
 					}
 					if (specialClasses.length > 0) {
-						token.val = makeString(specialClasses.join(' '), this.quotes, false);
+						token.val = makeString(specialClasses.join(' '), this.quotes);
 						this.previousAttributeRemapped = false;
 					} else {
 						this.previousAttributeRemapped = true;
@@ -315,7 +313,7 @@ export class PugPrinter {
 					val = val.trim();
 					const validIdNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 					if (!validIdNameRegex.test(val)) {
-						val = makeString(val, this.quotes, false);
+						val = makeString(val, this.quotes);
 						this.result += `id=${val}`;
 						return;
 					}
@@ -371,7 +369,7 @@ export class PugPrinter {
 			} else if (isAngularInterpolation(val)) {
 				val = this.formatAngularInterpolation(val);
 			} else if (isQuoted(val)) {
-				val = makeString(val.slice(1, -1), this.quotes, false);
+				val = makeString(val.slice(1, -1), this.quotes);
 			} else if (val === 'true') {
 				// The value is exactly true and is not quoted
 				return;
