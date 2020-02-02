@@ -278,7 +278,7 @@ export class PugPrinter {
 				if (token.name === 'class') {
 					// Handle class attribute
 					let val = token.val;
-					val = val.slice(1, val.length - 1);
+					val = val.slice(1, -1);
 					val = val.trim();
 					val = val.replace(/\s\s+/g, ' ');
 					const classes: string[] = val.split(' ');
@@ -309,7 +309,7 @@ export class PugPrinter {
 				} else if (token.name === 'id') {
 					// Handle id attribute
 					let val = token.val;
-					val = val.slice(1, val.length - 1);
+					val = val.slice(1, -1);
 					val = val.trim();
 					const validIdNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 					if (!validIdNameRegex.test(val)) {
@@ -403,7 +403,7 @@ export class PugPrinter {
 		this.wrapAttributes = false;
 		if (this.result[this.result.length - 1] === '(') {
 			// There were no attributes
-			this.result = this.result.slice(0, this.result.length - 1);
+			this.result = this.result.slice(0, -1);
 		} else if (this.previousToken?.type === 'attribute') {
 			this.result += ')';
 		}
@@ -462,7 +462,7 @@ export class PugPrinter {
 	private eos(token: EosToken): void {
 		// Remove all newlines at the end
 		while (this.result[this.result.length - 1] === '\n') {
-			this.result = this.result.slice(0, this.result.length - 1);
+			this.result = this.result.slice(0, -1);
 		}
 		// Insert one newline
 		this.result += '\n';
