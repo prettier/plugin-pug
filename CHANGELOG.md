@@ -1,6 +1,17 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.5...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.6...master)
+
+# 1.1.6
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.5...1.1.6)
+
+- Improve handling of Angular attribute values ([#67], [#68])
+- Restructure internal code
+- Add issue templates
+
+[#67]: https://github.com/prettier/plugin-pug/issues/67
+[#68]: https://github.com/prettier/plugin-pug/issues/68
 
 # 1.1.5
 
