@@ -49,7 +49,7 @@ import {
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
 import { formatCommentPreserveSpaces, PugParserOptions, resolveAttributeSeparatorOption } from './options';
-import { isAngularDirective, isAngularExpression, isAngularInterpolation } from './utils/angular';
+import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import { formatText, isQuoted, makeString, previousNormalAttributeToken, unwrapLineFeeds } from './utils/common';
 import { isVueExpression } from './utils/vue';
 
@@ -184,36 +184,31 @@ export class PugPrinter {
 		return !!token && possibilities.includes(token.type) !== invert;
 	}
 
-	private formatVueExpression(val: string): string {
+	private formatDelegatePrettier(
+		val: string,
+		parser: '__vue_expression' | '__ng_binding' | '__ng_action' | '__ng_directive'
+	): string {
 		val = val.trim();
 		val = val.slice(1, -1);
-		val = format(val, {
-			parser: '__vue_expression' as any,
-			...this.codeInterpolationOptions
-		});
+		val = format(val, { parser: parser as any, ...this.codeInterpolationOptions });
 		val = unwrapLineFeeds(val);
 		return this.quoteString(val);
 	}
 
-	private formatAngularExpression(val: string): string {
-		val = val.trim();
-		val = val.slice(1, -1);
-		val = format(val, {
-			parser: '__ng_interpolation' as any,
-			...this.codeInterpolationOptions
-		});
-		val = unwrapLineFeeds(val);
-		return this.quoteString(val);
+	private formatVueExpression(val: string): string {
+		return this.formatDelegatePrettier(val, '__vue_expression');
+	}
+
+	private formatAngularBinding(val: string): string {
+		return this.formatDelegatePrettier(val, '__ng_binding');
+	}
+
+	private formatAngularAction(val: string): string {
+		return this.formatDelegatePrettier(val, '__ng_action');
 	}
 
 	private formatAngularDirective(val: string): string {
-		val = val.trim();
-		val = val.slice(1, -1);
-		val = format(val, {
-			parser: '__ng_directive' as any,
-			...this.codeInterpolationOptions
-		});
-		return this.quoteString(val);
+		return this.formatDelegatePrettier(val, '__ng_directive');
 	}
 
 	private formatAngularInterpolation(val: string): string {
@@ -362,8 +357,10 @@ export class PugPrinter {
 			let val = token.val;
 			if (isVueExpression(token.name)) {
 				val = this.formatVueExpression(val);
-			} else if (isAngularExpression(token.name)) {
-				val = this.formatAngularExpression(val);
+			} else if (isAngularBinding(token.name)) {
+				val = this.formatAngularBinding(val);
+			} else if (isAngularAction(token.name)) {
+				val = this.formatAngularAction(val);
 			} else if (isAngularDirective(token.name)) {
 				val = this.formatAngularDirective(val);
 			} else if (isAngularInterpolation(val)) {

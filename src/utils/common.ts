@@ -51,7 +51,9 @@ export function unwrapLineFeeds(value: string): string {
 		? value
 				.split('\n')
 				.map((part) => part.trim())
+				.map((part) => (part[0] === '.' ? '' : ' ') + part)
 				.join('')
+				.trim()
 		: value;
 }
 
