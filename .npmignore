@@ -12,3 +12,4 @@ release.sh
 *.log
 benchmark/
 processed-*.txt
+.github/
