@@ -1,5 +1,5 @@
 /**
- * Indicates whether the attribute name is an Angular binding or event
+ * Indicates whether the attribute name is an Angular binding
  *
  * ---
  *
@@ -9,6 +9,17 @@
  * ```
  *
  * In this case `name` is `[disabled]`
+ *
+ * ---
+ *
+ * @param name Name of tag attribute
+ */
+export function isAngularBinding(name: string): boolean {
+	return name.length >= 3 && name[0] === '[' && name[name.length - 1] === ']';
+}
+
+/**
+ * Indicates whether the attribute name is an Angular event
  *
  * ---
  *
@@ -23,11 +34,8 @@
  *
  * @param name Name of tag attribute
  */
-export function isAngularExpression(name: string): boolean {
-	return (
-		name.length >= 3 &&
-		((name[0] === '(' && name[name.length - 1] === ')') || (name[0] === '[' && name[name.length - 1] === ']'))
-	);
+export function isAngularAction(name: string): boolean {
+	return name.length >= 3 && name[0] === '(' && name[name.length - 1] === ')';
 }
 
 /**
