@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.6...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.7...master)
+
+# 1.1.7
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.6...1.1.7)
+
+- Fix handling of classes ([#70])
+
+[#70]: https://github.com/prettier/plugin-pug/issues/70
 
 # 1.1.6
 
