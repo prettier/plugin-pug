@@ -1,6 +1,6 @@
 {
 	"name": "@prettier/plugin-pug",
-	"version": "1.1.7",
+	"version": "1.1.8",
 	"description": "Prettier Pug Plugin",
 	"main": "dist/index.js",
 	"scripts": {
@@ -34,8 +34,8 @@
 		"@types/jest": "~25.1.2",
 		"@types/node": "~13.7.0",
 		"@types/prettier": "~1.19.0",
-		"@typescript-eslint/eslint-plugin": "~2.19.0",
-		"@typescript-eslint/parser": "~2.19.0",
+		"@typescript-eslint/eslint-plugin": "~2.19.2",
+		"@typescript-eslint/parser": "~2.19.2",
 		"benchmark": "~2.1.4",
 		"eslint": "~6.8.0",
 		"eslint-config-prettier": "~6.10.0",

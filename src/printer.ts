@@ -278,20 +278,25 @@ export class PugPrinter {
 					val = val.replace(/\s\s+/g, ' ');
 					const classes: string[] = val.split(' ');
 					const specialClasses: string[] = [];
+					const normalClasses: string[] = [];
 					const validClassNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 					for (const className of classes) {
 						if (!validClassNameRegex.test(className)) {
 							specialClasses.push(className);
-							continue;
+						} else {
+							normalClasses.push(className);
 						}
+					}
+					if (normalClasses.length > 0) {
 						// Write css-class in front of attributes
 						const position: number = this.possibleClassPosition;
 						this.result = [
 							this.result.slice(0, position),
-							`.${className}`,
+							'.',
+							normalClasses.join('.'),
 							this.result.slice(position)
 						].join('');
-						this.possibleClassPosition += 1 + className.length;
+						this.possibleClassPosition += 1 + normalClasses.join('.').length;
 						this.result = this.result.replace(/div\./, '.');
 					}
 					if (specialClasses.length > 0) {
