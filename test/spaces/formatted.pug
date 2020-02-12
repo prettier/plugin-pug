@@ -1,7 +1,13 @@
 //- template.pug
 p #{name}'s Pug source code!
 
-v-btn(color="primary", name="save", @click="save", :disabled="saving", :loading="saving")
+v-btn(
+  name="save",
+  color="primary",
+  @click="save",
+  :disabled="saving",
+  :loading="saving"
+)
   v-icon save
   |
   | {{ $t('mylangkeys.crud.save') }}
