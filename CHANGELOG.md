@@ -8,7 +8,9 @@
 
 - Calculate correct line width ([26fefff])
 - Fix indentation for `doctype` ([51d3860])
+- Handle angular pipe with parameter ([#70])
 
+[#70]: https://github.com/prettier/plugin-pug/issues/70
 [26fefff]: https://github.com/prettier/plugin-pug/commit/26fefffbe85f3f698545dbdd68c16140f4afd38c
 [51d3860]: https://github.com/prettier/plugin-pug/commit/51d386083eb1a24f57127267d6b486416b94b1c4
 
@@ -16,9 +18,9 @@
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.1.6...1.1.7)
 
-- Fix handling of classes ([#70])
+- Fix handling of classes ([#72])
 
-[#70]: https://github.com/prettier/plugin-pug/issues/70
+[#72]: https://github.com/prettier/plugin-pug/issues/72
 
 # 1.1.6
 
