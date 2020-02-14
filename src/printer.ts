@@ -50,7 +50,7 @@ import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
 import { formatCommentPreserveSpaces, PugParserOptions, resolveAttributeSeparatorOption } from './options';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
-import { formatText, isQuoted, makeString, previousNormalAttributeToken, unwrapLineFeeds } from './utils/common';
+import { isQuoted, makeString, previousNormalAttributeToken, unwrapLineFeeds } from './utils/common';
 import { isVueExpression } from './utils/vue';
 
 const logger: Logger = createLogger(console);
@@ -69,6 +69,7 @@ export class PugPrinter {
 	private currentLineLength = 0;
 
 	private readonly quotes: "'" | '"';
+	private readonly otherQuotes: "'" | '"';
 
 	private readonly alwaysUseAttributeSeparator: boolean;
 	private readonly codeInterpolationOptions: Pick<RequiredOptions, 'singleQuote' | 'printWidth' | 'endOfLine'>;
@@ -98,6 +99,7 @@ export class PugPrinter {
 	) {
 		this.indentString = options.useTabs ? '\t' : ' '.repeat(options.tabWidth);
 		this.quotes = this.options.singleQuote ? "'" : '"';
+		this.otherQuotes = this.options.singleQuote ? '"' : "'";
 		this.alwaysUseAttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
 		this.codeInterpolationOptions = {
 			singleQuote: !options.singleQuote,
@@ -195,6 +197,85 @@ export class PugPrinter {
 		return this.quoteString(val);
 	}
 
+	private formatText(text: string): string {
+		let result: string = '';
+		while (text) {
+			const start = text.indexOf('{{');
+			if (start !== -1) {
+				result += text.slice(0, start);
+				text = text.slice(start + 2);
+				const end = text.indexOf('}}');
+				if (end !== -1) {
+					let code = text.slice(0, end);
+					try {
+						// Index of primary quote
+						const q1 = code.indexOf(this.quotes);
+						// Index of secondary (other) quote
+						const q2 = code.indexOf(this.otherQuotes);
+						// Index of backtick
+						const qb = code.indexOf('`');
+						if (q1 >= 0 && q2 >= 0 && q2 > q1 && (qb < 0 || q1 < qb)) {
+							logger.log({ code, quotes: this.quotes, otherQuotes: this.otherQuotes, q1, q2, qb });
+							logger.warn(
+								'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
+								code
+							);
+							result += `{{ ${code} }}`;
+							text = text.slice(end + 2);
+							continue;
+						} else {
+							code = format(code, {
+								parser: '__ng_interpolation' as any,
+								...this.codeInterpolationOptions
+							});
+						}
+					} catch (error) {
+						if (typeof error === 'string') {
+							if (error.includes('Unexpected token Lexer Error')) {
+								if (!error.includes('Unexpected character [`]')) {
+									logger.debug('[PugPrinter:formatText]: Using fallback strategy');
+								}
+							} else if (error.includes('Bindings cannot contain assignments')) {
+								logger.warn(
+									'[PugPrinter:formatText]: Bindings should not contain assignments:',
+									code.trim()
+								);
+							} else {
+								logger.warn('[PugPrinter:formatText]: ', error);
+							}
+							// else ignore message
+						} else {
+							logger.warn('[PugPrinter:formatText]: ', error);
+						}
+						try {
+							code = format(code, {
+								parser: 'babel',
+								...this.codeInterpolationOptions,
+								semi: false
+							});
+							if (code[0] === ';') {
+								code = code.slice(1);
+							}
+						} catch (error) {
+							logger.warn(error);
+						}
+					}
+					code = unwrapLineFeeds(code);
+					result += `{{ ${code} }}`;
+					text = text.slice(end + 2);
+				} else {
+					result += '{{';
+					result += text;
+					text = '';
+				}
+			} else {
+				result += text;
+				text = '';
+			}
+		}
+		return result;
+	}
+
 	private formatVueExpression(val: string): string {
 		return this.formatDelegatePrettier(val, '__vue_expression');
 	}
@@ -212,13 +293,21 @@ export class PugPrinter {
 	}
 
 	private formatAngularInterpolation(val: string): string {
-		val = val.slice(3, -3);
+		val = val.slice(1, -1); // Remove quotes
+		val = val.slice(2, -2); // Remove braces
 		val = val.trim();
-		val = val.replace(/\s\s+/g, ' ');
-		// val = format(val, {
-		// 	parser: '__ng_interpolation' as any,
-		// 	...codeInterpolationOptions
-		// });
+		if (val.includes(`\\${this.otherQuotes}`)) {
+			logger.warn(
+				'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
+				val
+			);
+		} else {
+			val = format(val, {
+				parser: '__ng_interpolation' as any,
+				...this.codeInterpolationOptions
+			});
+			val = unwrapLineFeeds(val);
+		}
 		return this.quoteString(`{{ ${val} }}`);
 	}
 
@@ -586,8 +675,7 @@ export class PugPrinter {
 			}
 
 			val = val.trim();
-			val = formatText(val, this.options.singleQuote);
-
+			val = this.formatText(val);
 			val = val.replace(/#(\{|\[)/g, '\\#$1');
 		}
 
