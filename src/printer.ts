@@ -690,7 +690,7 @@ export class PugPrinter {
 	}
 
 	private doctype(token: DoctypeToken): string {
-		let result = 'doctype';
+		let result = `${this.computedIndent}doctype`;
 		if (token.val) {
 			result += ` ${token.val}`;
 		}
