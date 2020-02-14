@@ -230,9 +230,18 @@ export class PugPrinter {
 							});
 						}
 					} catch (error) {
-						if (typeof error === 'string' && error.includes('Unexpected token Lexer Error')) {
-							if (!error.includes('Unexpected character [`]')) {
-								logger.debug('[PugPrinter:formatText]: Using fallback strategy');
+						if (typeof error === 'string') {
+							if (error.includes('Unexpected token Lexer Error')) {
+								if (!error.includes('Unexpected character [`]')) {
+									logger.debug('[PugPrinter:formatText]: Using fallback strategy');
+								}
+							} else if (error.includes('Bindings cannot contain assignments')) {
+								logger.warn(
+									'[PugPrinter:formatText]: Bindings should not contain assignments:',
+									code.trim()
+								);
+							} else {
+								logger.warn('[PugPrinter:formatText]: ', error);
 							}
 							// else ignore message
 						} else {
