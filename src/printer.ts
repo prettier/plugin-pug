@@ -256,9 +256,40 @@ export class PugPrinter {
 			this.currentLineLength += 1;
 			let tempToken: AttributeToken | EndAttributesToken = this.nextToken;
 			let tempIndex: number = this.currentIndex + 1;
-			while (tempToken.type === 'attribute' && this.currentLineLength <= this.options.printWidth) {
-				this.currentLineLength += tempToken.name.length + 1 + tempToken.val.toString().length;
+			let nonPrefixAttributes = 0;
+			let hasPrefixAttribute = false;
+			while (tempToken.type === 'attribute') {
+				switch (tempToken.name) {
+					case 'class':
+					case 'id':
+						hasPrefixAttribute = true;
+						this.currentLineLength += 1 + tempToken.val.toString().length;
+						break;
+					default: {
+						nonPrefixAttributes += 1;
+						this.currentLineLength += tempToken.name.length;
+						const val = tempToken.val.toString();
+						if (val.length > 0 && val !== 'true') {
+							this.currentLineLength += 1 + val.length;
+						}
+						break;
+					}
+				}
 				tempToken = this.tokens[++tempIndex] as AttributeToken | EndAttributesToken;
+			}
+			if (hasPrefixAttribute) {
+				// Remove div
+				if (this.previousToken?.type === 'tag' && this.previousToken.val === 'div') {
+					this.currentLineLength -= 3;
+				}
+			}
+			const hasPrefixAttributes = nonPrefixAttributes > 0;
+			if (!hasPrefixAttributes) {
+				// Remove braces
+				this.currentLineLength -= 2;
+			} else if (nonPrefixAttributes > 1) {
+				// Attributes are separated by commas: ', '.length === 2
+				this.currentLineLength += 2 * (nonPrefixAttributes - 1);
 			}
 			if (this.currentLineLength > this.options.printWidth) {
 				this.wrapAttributes = true;
@@ -398,7 +429,7 @@ export class PugPrinter {
 	}
 
 	private ['end-attributes'](token: EndAttributesToken): void {
-		if (this.wrapAttributes) {
+		if (this.wrapAttributes && this.result[this.result.length - 1] !== '(') {
 			this.result += '\n';
 			this.result += this.indentString.repeat(this.indentLevel);
 		}
@@ -659,7 +690,7 @@ export class PugPrinter {
 	}
 
 	private doctype(token: DoctypeToken): string {
-		let result = 'doctype';
+		let result = `${this.computedIndent}doctype`;
 		if (token.val) {
 			result += ` ${token.val}`;
 		}

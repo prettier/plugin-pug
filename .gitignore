@@ -75,8 +75,6 @@ test/pug-tests/attrs.unescaped.formatted.pug
 test/pug-tests/attrs.unescaped.pug
 test/pug-tests/block-code.formatted.pug
 test/pug-tests/block-code.pug
-test/pug-tests/blocks-in-if.formatted.pug
-test/pug-tests/blocks-in-if.pug
 test/pug-tests/comments.formatted.pug
 test/pug-tests/comments.pug
 test/pug-tests/comments.source.formatted.pug
