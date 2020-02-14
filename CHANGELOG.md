@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.7...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.8...master)
+
+# 1.1.8
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.7...1.1.8)
+
+- Calculate correct line width ([26fefff])
+
+[26fefff]: https://github.com/prettier/plugin-pug/commit/26fefffbe85f3f698545dbdd68c16140f4afd38c
 
 # 1.1.7
 
