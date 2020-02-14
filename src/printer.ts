@@ -661,6 +661,10 @@ export class PugPrinter {
 					break;
 				case 'indent':
 					result += this.indentString;
+					if (/^ .+$/.test(val)) {
+						result += '|\n';
+						result += this.indentString.repeat(this.indentLevel);
+					}
 					result += '|';
 					if (/.*\S.*/.test(token.val)) {
 						result += ' ';

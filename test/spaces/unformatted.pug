@@ -4,3 +4,7 @@ p #{name}'s   Pug     source   code!
 v-btn(name="save", color="primary", @click="save", :disabled="saving", :loading="saving")
   v-icon save
   |  {{ $t('mylangkeys.crud.save') }}
+
+div
+  span(v-if="condition")
+    |  ({{ content }})
