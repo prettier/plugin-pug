@@ -231,7 +231,10 @@ export class PugPrinter {
 						}
 					} catch (error) {
 						if (typeof error === 'string' && error.includes('Unexpected token Lexer Error')) {
-							logger.debug('[PugPrinter:formatText]: Using fallback strategy, cause:', error);
+							if (!error.includes('Unexpected character [`]')) {
+								logger.debug('[PugPrinter:formatText]: Using fallback strategy');
+							}
+							// else ignore message
 						} else {
 							logger.warn('[PugPrinter:formatText]: ', error);
 						}
@@ -239,7 +242,6 @@ export class PugPrinter {
 							code = format(code, {
 								parser: 'babel',
 								...this.codeInterpolationOptions,
-								singleQuote: this.options.singleQuote,
 								semi: false
 							});
 							if (code[0] === ';') {
