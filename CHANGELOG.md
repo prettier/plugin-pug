@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.8...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.9...master)
+
+# 1.1.9
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.8...1.1.9)
+
+- Improve accuracy of `printWidth` ([0ffe395])
+
+[0ffe395]: https://github.com/prettier/plugin-pug/commit/0ffe395feaa673cb1ae90bce958d9ff47cc27713
 
 # 1.1.8
 
