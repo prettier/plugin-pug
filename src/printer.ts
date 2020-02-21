@@ -66,7 +66,10 @@ export class PugPrinter {
 	private readonly indentString: string;
 	private indentLevel: number = 0;
 
-	private currentLineLength = 0;
+	/**
+	 * The line length starts by 1, it's not an zero based index
+	 */
+	private currentLineLength = 1;
 
 	private readonly quotes: "'" | '"';
 	private readonly otherQuotes: "'" | '"';
@@ -320,17 +323,13 @@ export class PugPrinter {
 	//    ##     #######  ##    ## ######## ##    ##    ##        ##     ##  #######   ######  ########  ######   ######   #######  ##     ##  ######
 
 	private tag(token: TagToken): string {
-		let result = this.computedIndent;
-		if (
-			!(
-				token.val === 'div' &&
-				this.nextToken &&
-				(this.nextToken.type === 'class' || this.nextToken.type === 'id')
-			)
-		) {
-			result += token.val;
+		let val = token.val;
+		if (val === 'div' && this.nextToken && (this.nextToken.type === 'class' || this.nextToken.type === 'id')) {
+			val = '';
 		}
-		this.currentLineLength += result.length;
+		this.currentLineLength += val.length;
+		const result = `${this.computedIndent}${val}`;
+		logger.debug('tag', { result, val: token.val, length: token.val.length }, this.currentLineLength);
 		this.possibleIdPosition = this.result.length + result.length;
 		this.possibleClassPosition = this.result.length + result.length;
 		return result;
@@ -342,6 +341,7 @@ export class PugPrinter {
 			this.previousAttributeRemapped = false;
 			this.possibleClassPosition = this.result.length;
 			result = '(';
+			logger.debug(this.currentLineLength);
 			this.currentLineLength += 1;
 			let tempToken: AttributeToken | EndAttributesToken = this.nextToken;
 			let tempIndex: number = this.currentIndex + 1;
@@ -350,22 +350,37 @@ export class PugPrinter {
 			while (tempToken.type === 'attribute') {
 				switch (tempToken.name) {
 					case 'class':
-					case 'id':
+					case 'id': {
 						hasPrefixAttribute = true;
-						this.currentLineLength += 1 + tempToken.val.toString().length;
+						const val = tempToken.val.toString();
+						if (isQuoted(val)) {
+							this.currentLineLength -= 2;
+						}
+						this.currentLineLength += 1 + val.length;
+						logger.debug(
+							{ tokenName: tempToken.name, length: tempToken.name.length },
+							this.currentLineLength
+						);
 						break;
+					}
 					default: {
 						nonPrefixAttributes += 1;
 						this.currentLineLength += tempToken.name.length;
+						logger.debug(
+							{ tokenName: tempToken.name, length: tempToken.name.length },
+							this.currentLineLength
+						);
 						const val = tempToken.val.toString();
 						if (val.length > 0 && val !== 'true') {
 							this.currentLineLength += 1 + val.length;
+							logger.debug({ tokenVal: val, length: val.length }, this.currentLineLength);
 						}
 						break;
 					}
 				}
 				tempToken = this.tokens[++tempIndex] as AttributeToken | EndAttributesToken;
 			}
+			logger.debug('after token', this.currentLineLength);
 			if (hasPrefixAttribute) {
 				// Remove div
 				if (this.previousToken?.type === 'tag' && this.previousToken.val === 'div') {
@@ -374,12 +389,16 @@ export class PugPrinter {
 			}
 			const hasPrefixAttributes = nonPrefixAttributes > 0;
 			if (!hasPrefixAttributes) {
-				// Remove braces
-				this.currentLineLength -= 2;
-			} else if (nonPrefixAttributes > 1) {
+				// Remove leading brace
+				this.currentLineLength -= 1;
+			} else {
 				// Attributes are separated by commas: ', '.length === 2
 				this.currentLineLength += 2 * (nonPrefixAttributes - 1);
+
+				// Add trailing brace
+				this.currentLineLength += 1;
 			}
+			logger.debug(this.currentLineLength);
 			if (this.currentLineLength > this.options.printWidth) {
 				this.wrapAttributes = true;
 			}
@@ -536,7 +555,8 @@ export class PugPrinter {
 
 	private indent(token: IndentToken): string {
 		const result = `\n${this.indentString.repeat(this.indentLevel)}`;
-		this.currentLineLength = result.length - 1;
+		this.currentLineLength = result.length - 1 + 1 + this.indentString.length; // -1 for \n, +1 for non zero based
+		logger.debug('indent', { result, indentLevel: this.indentLevel }, this.currentLineLength);
 		this.indentLevel++;
 		return result;
 	}
@@ -550,26 +570,27 @@ export class PugPrinter {
 			}
 			result += '\n';
 		}
-		this.currentLineLength = 0;
 		this.indentLevel--;
+		this.currentLineLength = 1 + this.indentString.repeat(this.indentLevel).length; // -1 for \n, +1 for non zero based
+		logger.debug('outdent', { result, indentLevel: this.indentLevel }, this.currentLineLength);
 		return result;
 	}
 
 	private class(token: ClassToken): void {
+		const val = `.${token.val}`;
+		this.currentLineLength += val.length;
+		logger.debug('class', { val, length: val.length }, this.currentLineLength);
 		switch (this.previousToken?.type) {
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
-				const result = `${this.computedIndent}.${token.val}`;
-				this.currentLineLength = result.length;
+				const result = `${this.computedIndent}${val}`;
 				this.result += result;
 				this.possibleClassPosition = this.result.length;
 				break;
 			}
 			default: {
 				const prefix = this.result.slice(0, this.possibleClassPosition);
-				const val = `.${token.val}`;
-				this.currentLineLength += val.length;
 				this.result = [prefix, val, this.result.slice(this.possibleClassPosition)].join('');
 				this.possibleClassPosition += val.length;
 				break;
@@ -613,7 +634,8 @@ export class PugPrinter {
 			result += '\n';
 		}
 		result += '\n';
-		this.currentLineLength = 0;
+		this.currentLineLength = 1 + this.indentString.repeat(this.indentLevel).length; // -1 for \n, +1 for non zero based
+		logger.debug('newline', { result, indentLevel: this.indentLevel }, this.currentLineLength);
 		return result;
 	}
 
@@ -749,21 +771,20 @@ export class PugPrinter {
 	}
 
 	private id(token: IdToken): void {
+		const val = `#${token.val}`;
+		this.currentLineLength += val.length;
 		switch (this.previousToken?.type) {
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
-				const result = `${this.computedIndent}#${token.val}`;
-				this.currentLineLength = result.length;
+				const result = `${this.computedIndent}${val}`;
 				this.result += result;
 				this.possibleClassPosition = this.result.length;
 				break;
 			}
 			default: {
 				const prefix = this.result.slice(0, this.possibleIdPosition);
-				const val = `#${token.val}`;
 				this.possibleClassPosition += val.length;
-				this.currentLineLength += val.length;
 				this.result = [prefix, val, this.result.slice(this.possibleIdPosition)].join('');
 				break;
 			}
