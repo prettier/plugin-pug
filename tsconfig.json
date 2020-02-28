@@ -1,7 +1,9 @@
 {
 	"compilerOptions": {
+		"target": "ES2018",
+		"module": "CommonJS",
 		"inlineSourceMap": true,
-		"lib": ["es2016", "dom"],
+		"lib": ["ES2018", "DOM"],
 		"outDir": "dist",
 		"moduleResolution": "node",
 		"rootDir": "src",

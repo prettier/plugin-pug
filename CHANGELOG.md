@@ -1,6 +1,72 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.3...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.9...master)
+
+# 1.1.9
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.8...1.1.9)
+
+- Improve accuracy of `printWidth` ([0ffe395])
+
+[0ffe395]: https://github.com/prettier/plugin-pug/commit/0ffe395feaa673cb1ae90bce958d9ff47cc27713
+
+# 1.1.8
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.7...1.1.8)
+
+- Calculate correct line width ([26fefff])
+- Fix indentation for `doctype` ([51d3860])
+- Handle angular pipe with parameter ([#70])
+- Handle space for indented `text` ([#74])
+
+[#70]: https://github.com/prettier/plugin-pug/issues/70
+[#74]: https://github.com/prettier/plugin-pug/issues/74
+[26fefff]: https://github.com/prettier/plugin-pug/commit/26fefffbe85f3f698545dbdd68c16140f4afd38c
+[51d3860]: https://github.com/prettier/plugin-pug/commit/51d386083eb1a24f57127267d6b486416b94b1c4
+
+# 1.1.7
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.6...1.1.7)
+
+- Fix handling of classes ([#72])
+
+[#72]: https://github.com/prettier/plugin-pug/issues/72
+
+# 1.1.6
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.5...1.1.6)
+
+- Improve handling of Angular attribute values ([#67], [#68])
+- Restructure internal code
+- Add issue templates
+
+[#67]: https://github.com/prettier/plugin-pug/issues/67
+[#68]: https://github.com/prettier/plugin-pug/issues/68
+
+# 1.1.5
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.4...1.1.5)
+
+- Improve handling of `id` and `class` attributes ([#63])
+
+- Some minor internal changes like
+  - Optimize indent handling ([b734666], [15bec8e])
+  - Target ES2018 with module CommonJS ([054b56f])
+  - Move options to subdirectory ([f8ead13])
+
+[#63]: https://github.com/prettier/plugin-pug/issues/63
+[b734666]: https://github.com/prettier/plugin-pug/commit/b7346666f38f8323d72fdee84cd8aa6cd07760b4
+[15bec8e]: https://github.com/prettier/plugin-pug/commit/15bec8e204482b08bcefc5c6620f783e00a43b58
+[054b56f]: https://github.com/prettier/plugin-pug/commit/054b56fe33fa113c178b9a9f655e6ab35cf98c86
+[f8ead13]: https://github.com/prettier/plugin-pug/commit/f8ead13d65c7f236091e8497ace25fcc71cd5bef
+
+# 1.1.4
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.3...1.1.4)
+
+- Fix wrapping of framework bindings ([#61])
+
+[#61]: https://github.com/prettier/plugin-pug/issues/61
 
 # 1.1.3
 

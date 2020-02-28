@@ -28,14 +28,14 @@
 
 		"@typescript-eslint/ban-ts-ignore": "off",
 		"@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
-		"@typescript-eslint/indent": ["error", "tab"],
+		"@typescript-eslint/indent": ["error", "tab", { "SwitchCase": 1, "ignoredNodes": ["MemberExpression"] }],
 		"@typescript-eslint/interface-name-prefix": "off",
+		"@typescript-eslint/member-ordering": "warn",
 		"@typescript-eslint/no-explicit-any": "off",
 		"@typescript-eslint/no-inferrable-types": "off",
 		"@typescript-eslint/no-parameter-properties": "off",
 		"@typescript-eslint/no-unused-vars": "off",
 		"@typescript-eslint/prefer-nullish-coalescing": "warn",
-		"@typescript-eslint/prefer-optional-chain": "warn",
-		"@typescript-eslint/prefer-string-starts-ends-with": "error"
+		"@typescript-eslint/prefer-optional-chain": "warn"
 	}
 }
