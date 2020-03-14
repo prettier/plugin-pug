@@ -12,7 +12,8 @@
  *
  * ---
  *
- * Checks for: `v-bind`, `v-slot`, `v-model` and `v-on`.
+ * Checks for: `v-bind`, `v-slot`, `v-model`, `v-on`, `v-if`, `v-else-if`,
+ * `v-for`, `v-text` and `v-html`.
  *
  * Also shorthands like `:*` and `@*` are checked.
  *
@@ -21,5 +22,5 @@
  * @param name Name of tag attribute
  */
 export function isVueExpression(name: string): boolean {
-	return /^((v-bind|v-slot)?:|v-model|v-on|@).*/.test(name);
+	return /^((v-(bind|slot))?:|v-(model|on|if|for|else-if|text|html)|@).*/.test(name);
 }
