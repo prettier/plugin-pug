@@ -13,6 +13,8 @@ p {{ title }}
 div
   img(src="{{ itemImageUrl }}")
 
+foo(title="{{ 'something' | translate }} - {{ 'something else' | translate }}")
+
 // "The sum of 1 + 1 is not 4"
 p The sum of 1 + 1 is not {{ 1 + 1 + getVal() }}.
 

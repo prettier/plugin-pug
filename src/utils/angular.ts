@@ -81,6 +81,7 @@ export function isAngularInterpolation(val: string): boolean {
 		val[1] === '{' &&
 		val[2] === '{' &&
 		val[val.length - 2] === '}' &&
-		val[val.length - 3] === '}'
+		val[val.length - 3] === '}' &&
+		!val.includes('{{', 3)
 	);
 }
