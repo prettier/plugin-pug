@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.9...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.10...master)
+
+# 1.1.10
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.9...1.1.10)
+
+- Suppress formatting for Angular if there is more than one binding within an attribute value ([#78])
+- Support more Vue expressions (`v-if`, `v-else-if`, `v-for`, `v-text`, `v-html`) ([b671027])
+
+[#78]: https://github.com/prettier/plugin-pug/issues/78
+[b671027]: https://github.com/prettier/plugin-pug/commit/b6710277003d7fec3ff139b0a6e69b52d17ebf47
 
 # 1.1.9
 
@@ -16,7 +26,7 @@
 
 - Calculate correct line width ([26fefff])
 - Fix indentation for `doctype` ([51d3860])
-- Handle angular pipe with parameter ([#70])
+- Handle Angular pipe with parameter ([#70])
 - Handle space for indented `text` ([#74])
 
 [#70]: https://github.com/prettier/plugin-pug/issues/70
