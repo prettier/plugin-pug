@@ -1,6 +1,12 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.10...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.11...master)
+
+# 1.1.11
+
+- Just a dependency update
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.10...1.1.11)
 
 # 1.1.10
 
