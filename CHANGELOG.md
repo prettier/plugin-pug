@@ -1,12 +1,33 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.11...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.2.0...master)
+
+# 1.2.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.11...1.2.0)
+
+- Support Prettier v2 (Prettier v1 is no longer supported, use [v1.1.11])
+
+Minor change:
+
+```pug
+//- Input
+v-btn(@click="toggle = !toggle")
+
+//- Output (1.1.11)
+v-btn(@click="(toggle = !toggle)")
+
+//- Output (1.2.0)
+v-btn(@click="toggle = !toggle")
+```
+
+[v1.1.11]: https://www.npmjs.com/package/@prettier/plugin-pug/v/1.1.11
 
 # 1.1.11
 
-- Just a dependency update
-
 [diff](https://github.com/prettier/plugin-pug/compare/1.1.10...1.1.11)
+
+- Just a dependency update
 
 # 1.1.10
 

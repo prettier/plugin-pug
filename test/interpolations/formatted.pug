@@ -26,4 +26,4 @@ button(*ngfor="let hero of heroes", (click)="deleteHero(hero)") {{ hero.name }}
 form(#heroform="", (ngsubmit)="onSubmit(heroForm)") ...
 
 //- Vue
-button(@click.native="(x = true)")
+button(@click.native="x = true")

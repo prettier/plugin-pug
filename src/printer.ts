@@ -51,7 +51,7 @@ import { createLogger, Logger, LogLevel } from './logger';
 import { formatCommentPreserveSpaces, PugParserOptions, resolveAttributeSeparatorOption } from './options';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import { isQuoted, makeString, previousNormalAttributeToken, unwrapLineFeeds } from './utils/common';
-import { isVueExpression } from './utils/vue';
+import { isVueEventBinding, isVueExpression } from './utils/vue';
 
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {
@@ -218,7 +218,14 @@ export class PugPrinter {
 						// Index of backtick
 						const qb = code.indexOf('`');
 						if (q1 >= 0 && q2 >= 0 && q2 > q1 && (qb < 0 || q1 < qb)) {
-							logger.log({ code, quotes: this.quotes, otherQuotes: this.otherQuotes, q1, q2, qb });
+							logger.log({
+								code,
+								quotes: this.quotes,
+								otherQuotes: this.otherQuotes,
+								q1,
+								q2,
+								qb
+							});
 							logger.warn(
 								'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
 								code
@@ -277,6 +284,17 @@ export class PugPrinter {
 			}
 		}
 		return result;
+	}
+
+	private formatVueEventBinding(val: string): string {
+		val = val.trim();
+		val = val.slice(1, -1); // Remove quotes
+		val = format(val, { parser: '__vue_event_binding' as any, ...this.codeInterpolationOptions });
+		val = unwrapLineFeeds(val);
+		if (val[val.length - 1] === ';') {
+			val = val.slice(0, -1);
+		}
+		return this.quoteString(val);
 	}
 
 	private formatVueExpression(val: string): string {
@@ -501,6 +519,8 @@ export class PugPrinter {
 			let val = token.val;
 			if (isVueExpression(token.name)) {
 				val = this.formatVueExpression(val);
+			} else if (isVueEventBinding(token.name)) {
+				val = this.formatVueEventBinding(val);
 			} else if (isAngularBinding(token.name)) {
 				val = this.formatAngularBinding(val);
 			} else if (isAngularAction(token.name)) {
