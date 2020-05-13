@@ -26,7 +26,7 @@
 		"quotes": ["error", "single", { "avoidEscape": true }],
 		"semi": ["error", "always"],
 
-		"@typescript-eslint/ban-ts-ignore": "off",
+		"@typescript-eslint/ban-ts-ignore": "error",
 		"@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
 		"@typescript-eslint/indent": ["error", "tab", { "SwitchCase": 1, "ignoredNodes": ["MemberExpression"] }],
 		"@typescript-eslint/interface-name-prefix": "off",

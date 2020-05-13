@@ -137,7 +137,7 @@ export class PugPrinter {
 					case 'eos':
 						// TODO: These tokens write directly into the result
 						this.result = results.join('');
-						// @ts-ignore
+						// @ts-expect-error
 						this[token.type](token);
 						results.length = 0;
 						results.push(this.result);
@@ -151,7 +151,7 @@ export class PugPrinter {
 						this.result = results.join('');
 					// eslint-disable-next-line no-fallthrough
 					default:
-						// @ts-ignore
+						// @ts-expect-error
 						results.push(this[token.type](token));
 						break;
 				}

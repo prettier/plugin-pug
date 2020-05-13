@@ -11,7 +11,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'pug' as any,
 				plugins: [plugin],
-				// @ts-ignore
+				// @ts-expect-error
 				attributeSeparator: 'always'
 			});
 

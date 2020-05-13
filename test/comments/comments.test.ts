@@ -10,7 +10,7 @@ describe('Comments', () => {
 		const actual: string = format(code, {
 			parser: 'pug' as any,
 			plugins: [plugin],
-			// @ts-ignore
+			// @ts-expect-error
 			commentPreserveSpaces: 'trim-all'
 		});
 
