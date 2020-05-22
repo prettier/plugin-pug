@@ -38,11 +38,11 @@ export const plugin: Plugin = {
 			hasPragma(text: string): boolean {
 				return text.startsWith('//- @prettier\n') || text.startsWith('//- @format\n');
 			},
-			locStart(node: any): number {
+			locStart(node: unknown): number {
 				logger.debug('[parsers:pug:locStart]:', { node });
 				return 0;
 			},
-			locEnd(node: any): number {
+			locEnd(node: unknown): number {
 				logger.debug('[parsers:pug:locEnd]:', { node });
 				return 0;
 			},
