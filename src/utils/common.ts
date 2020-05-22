@@ -72,19 +72,19 @@ export function makeString(
 	unescapeUnnecessaryEscapes: boolean = false
 ): string {
 	const otherQuote = enclosingQuote === '"' ? "'" : '"';
-	const newContent = rawContent.replace(/\\([\s\S])|(['"])/g, (match, escaped, quote) => {
+	const newContent = rawContent.replace(/\\([\s\S])|(['"])/g, (match, escaped: "'" | '"', quote: "'" | '"') => {
 		if (escaped === otherQuote) {
 			return escaped;
 		}
 		if (quote === enclosingQuote) {
-			return '\\' + quote;
+			return `\\${quote}`;
 		}
 		if (quote) {
 			return quote;
 		}
 		return unescapeUnnecessaryEscapes && /^[^\\nrvtbfux\r\n\u2028\u2029"'0-7]$/.test(escaped)
 			? escaped
-			: '\\' + escaped;
+			: `\\${escaped}`;
 	});
 	return enclosingQuote + newContent + enclosingQuote;
 }
