@@ -5,14 +5,24 @@ import { plugin } from '../../../../src/index';
 
 describe('Options', () => {
 	describe('closingBracketPosition', () => {
-		test('Should closing bracket of attributes stick with last attribute\'s line', () => {
+		test('should closing bracket of attributes ends with a new line. (Default)', () => {
+			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
+			const actual: string = format(code, {
+				parser: 'pug' as any,
+				plugins: [plugin]
+			});
+
+			expect(actual).toBe(expected);
+		});
+		test('should closing bracket of attributes ends with a new line.', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 			const actual: string = format(code, {
 				parser: 'pug' as any,
 				plugins: [plugin],
 				// @ts-expect-error
-				closingBracketPosition: 'last-line'
+				closingBracketPosition: 'new-line'
 			});
 
 			expect(actual).toBe(expected);

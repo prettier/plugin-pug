@@ -27,6 +27,9 @@ export function resolveClosingBracketPositionOption(closingBracketPosition: 'new
 		case 'last-line':
 			return false;
 	}
+	throw new Error(
+		`Invalid option for pug attributeSeparator. Found '${closingBracketPosition}'. Possible options: 'new-line' or 'last-line'`
+	);
 }
 
 export function formatCommentPreserveSpaces(
@@ -84,12 +87,12 @@ export const options = {
 		category: CATEGORY_PUG,
 		type: 'choice',
 		default: 'new-line',
-		description: 'Determines position of closing bracket which wraps attributes',
+		description: 'Determines position of closing bracket which wraps attributes.',
 		choices: [
 			{
 				value: 'new-line',
-				description:
-					`
+				description: `
+					Closing bracket ends with a new line.
 					Example:
 					input(
 						type='text',
@@ -102,8 +105,8 @@ export const options = {
 			},
 			{
 				value: 'last-line',
-				description:
-				`
+				description: `
+				Closing bracket remains with last attribute's line.
 				Example:
 				input(
 					type='text',

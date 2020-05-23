@@ -134,14 +134,13 @@ They should be set via `Prettier`'s `overrides` option
   - `'as-needed'` -> Only add commas between attributes where required.  
     Example: `button(type="submit", (click)="play()" disabled)`
 
-
-- `closingBracketPosition`  
+* `closingBracketPosition`  
   Position of closing bracket of attributes.
 
   Choices:
 
   - `'new-line'` (Default) -> Closing bracket ends with a new line.  
-    Example: 
+    Example:
 
     ```pug
     input(
@@ -154,7 +153,7 @@ They should be set via `Prettier`'s `overrides` option
     ```
 
   - `'last-line'` -> Closing bracket remains with last attribute's line.
-    Example: 
+    Example:
 
     ```pug
     input(
@@ -164,7 +163,6 @@ They should be set via `Prettier`'s `overrides` option
       alt='my_alt',
       autocomplete='on') // <- Bracket is there!
     ```
-
 
 - `commentPreserveSpaces`  
   Change behavior of spaces within comments.
