@@ -4,6 +4,7 @@ export type CommentPreserveSpaces = 'keep-all' | 'keep-leading' | 'trim-all';
 
 export interface PugParserOptions {
 	attributeSeparator: 'always' | 'as-needed';
+	closingBracketPosition: 'new-line' | 'last-line';
 	commentPreserveSpaces: CommentPreserveSpaces;
 }
 
@@ -17,6 +18,15 @@ export function resolveAttributeSeparatorOption(attributeSeparator: 'always' | '
 	throw new Error(
 		`Invalid option for pug attributeSeparator. Found '${attributeSeparator}'. Possible options: 'always' or 'as-needed'`
 	);
+}
+
+export function resolveClosingBracketPositionOption(closingBracketPosition: 'new-line' | 'last-line'): boolean {
+	switch (closingBracketPosition) {
+		case 'new-line':
+			return true;
+		case 'last-line':
+			return false;
+	}
 }
 
 export function formatCommentPreserveSpaces(
@@ -66,6 +76,42 @@ export const options = {
 				value: 'as-needed',
 				description:
 					'Only add commas between attributes where required. Example: `button(type="submit", (click)="play()" disabled)`'
+			}
+		]
+	},
+	closingBracketPosition: {
+		since: '1.2.1',
+		category: CATEGORY_PUG,
+		type: 'choice',
+		default: 'new-line',
+		description: 'Determines position of closing bracket which wraps attributes',
+		choices: [
+			{
+				value: 'new-line',
+				description:
+					`
+					Example:
+					input(
+						type='text',
+						value='my_value',
+						name='my_name',
+						alt='my_alt',
+						autocomplete='on'
+					)
+					`
+			},
+			{
+				value: 'last-line',
+				description:
+				`
+				Example:
+				input(
+					type='text',
+					value='my_value',
+					name='my_name',
+					alt='my_alt',
+					autocomplete='on')
+				`
 			}
 		]
 	},
