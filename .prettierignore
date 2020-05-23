@@ -2,3 +2,5 @@
 benchmark/
 coverage/
 dist/
+test/**/*.vue
+test/**/*.pug
