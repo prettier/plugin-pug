@@ -18,10 +18,17 @@ nav-component(locale-relative-redirect="true", highlight="home", pin="false")
 )
 
 div
-  input(
+  .nested-div-1(
     type="text",
-    value="my_value",
-    name="my_name",
-    alt="my_alt",
+    value="my_value1",
+    name="my_name1",
+    alt="my_alt1",
     autocomplete="on"
   )
+    .nested-div-2(
+      type="text",
+      value="my_value2",
+      name="my_name2",
+      alt="my_alt2",
+      autocomplete="on"
+    )
