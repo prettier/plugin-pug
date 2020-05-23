@@ -134,7 +134,7 @@ They should be set via `Prettier`'s `overrides` option
   - `'as-needed'` -> Only add commas between attributes where required.  
     Example: `button(type="submit", (click)="play()" disabled)`
 
-* `closingBracketPosition`  
+- `closingBracketPosition`  
   Position of closing bracket of attributes.
 
   Choices:

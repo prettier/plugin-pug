@@ -28,7 +28,7 @@ export function resolveClosingBracketPositionOption(closingBracketPosition: 'new
 			return false;
 	}
 	throw new Error(
-		`Invalid option for pug attributeSeparator. Found '${closingBracketPosition}'. Possible options: 'new-line' or 'last-line'`
+		`Invalid option for pug closingBracketPosition. Found '${closingBracketPosition}'. Possible options: 'new-line' or 'last-line'`
 	);
 }
 
