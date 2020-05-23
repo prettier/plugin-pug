@@ -129,7 +129,7 @@ They should be set via `Prettier`'s `overrides` option
 
   Choices:
 
-  - `'always'` -> Always separate attributes with commas.  
+  - `'always'` _default_ -> Always separate attributes with commas.  
     Example: `button(type="submit", (click)="play()", disabled)`
   - `'as-needed'` -> Only add commas between attributes where required.  
     Example: `button(type="submit", (click)="play()" disabled)`
@@ -139,29 +139,29 @@ They should be set via `Prettier`'s `overrides` option
 
   Choices:
 
-  - `'new-line'` (Default) -> Closing bracket ends with a new line.  
+  - `'new-line'` _default_ -> Closing bracket ends with a new line.  
     Example:
 
     ```pug
     input(
-      type='text',
-      value='my_value',
-      name='my_name',
-      alt='my_alt',
-      autocomplete='on'
+      type="text",
+      value="my_value",
+      name="my_name",
+      alt="my_alt",
+      autocomplete="on"
     )
     ```
 
-  - `'last-line'` -> Closing bracket remains with last attribute's line.
+  - `'last-line'` -> Closing bracket remains with last attribute's line.  
     Example:
 
     ```pug
     input(
-      type='text',
-      value='my_value',
-      name='my_name',
-      alt='my_alt',
-      autocomplete='on') // <- Bracket is there!
+      type="text",
+      value="my_value",
+      name="my_name",
+      alt="my_alt",
+      autocomplete="on")
     ```
 
 - `commentPreserveSpaces`  
@@ -169,7 +169,7 @@ They should be set via `Prettier`'s `overrides` option
 
   Choices:
 
-  - `'keep-all'` -> Keep all spaces within comments.  
+  - `'keep-all'` _default_ -> Keep all spaces within comments.  
     Example: `// ___this _is __a __comment_`
   - `'keep-leading'` -> Keep leading spaces within comments.  
     Example: `// ___this is a comment`
