@@ -62,6 +62,7 @@ export const plugin: Plugin = {
 					tabWidth,
 					useTabs,
 					attributeSeparator,
+					closingBracketPosition,
 					commentPreserveSpaces,
 					semi
 				}: ParserOptions & PugParserOptions,
@@ -74,6 +75,7 @@ export const plugin: Plugin = {
 					tabWidth,
 					useTabs,
 					attributeSeparator,
+					closingBracketPosition,
 					commentPreserveSpaces,
 					semi
 				});

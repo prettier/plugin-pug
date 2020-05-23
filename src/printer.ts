@@ -48,7 +48,12 @@ import {
 } from 'pug-lexer';
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
-import { formatCommentPreserveSpaces, PugParserOptions, resolveAttributeSeparatorOption } from './options';
+import {
+	formatCommentPreserveSpaces,
+	PugParserOptions,
+	resolveAttributeSeparatorOption,
+	resolveClosingBracketPositionOption
+} from './options';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import { isQuoted, makeString, previousNormalAttributeToken, unwrapLineFeeds } from './utils/common';
 import { isVueEventBinding, isVueExpression } from './utils/vue';
@@ -75,6 +80,7 @@ export class PugPrinter {
 	private readonly otherQuotes: "'" | '"';
 
 	private readonly alwaysUseAttributeSeparator: boolean;
+	private readonly closingBracketRemainsAtNewLine: boolean;
 	private readonly codeInterpolationOptions: Pick<RequiredOptions, 'singleQuote' | 'printWidth' | 'endOfLine'>;
 
 	private possibleIdPosition: number = 0;
@@ -96,6 +102,7 @@ export class PugPrinter {
 			| 'tabWidth'
 			| 'useTabs'
 			| 'attributeSeparator'
+			| 'closingBracketPosition'
 			| 'commentPreserveSpaces'
 			| 'semi'
 		> /* eslint-enable @typescript-eslint/indent */
@@ -104,6 +111,7 @@ export class PugPrinter {
 		this.quotes = this.options.singleQuote ? "'" : '"';
 		this.otherQuotes = this.options.singleQuote ? '"' : "'";
 		this.alwaysUseAttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
+		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.closingBracketPosition);
 		this.codeInterpolationOptions = {
 			singleQuote: !options.singleQuote,
 			printWidth: 9000,
@@ -558,7 +566,9 @@ export class PugPrinter {
 
 	private ['end-attributes'](token: EndAttributesToken): void {
 		if (this.wrapAttributes && this.result[this.result.length - 1] !== '(') {
-			this.result += '\n';
+			if (this.closingBracketRemainsAtNewLine) {
+				this.result += '\n';
+			}
 			this.result += this.indentString.repeat(this.indentLevel);
 		}
 		this.wrapAttributes = false;
