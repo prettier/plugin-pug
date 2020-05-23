@@ -83,7 +83,7 @@ export const options = {
 		]
 	},
 	closingBracketPosition: {
-		since: '1.2.1',
+		since: '1.3.0',
 		category: CATEGORY_PUG,
 		type: 'choice',
 		default: 'new-line',

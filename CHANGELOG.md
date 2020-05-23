@@ -1,6 +1,15 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.2.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.3.0...master)
+
+# 1.3.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.2.0...1.3.0)
+
+- Introduce new option `closingBracketPosition` ([#82])  
+  Possible values: `new-line` and `last-line`
+
+[#82]: https://github.com/prettier/plugin-pug/issues/82
 
 # 1.2.0
 
