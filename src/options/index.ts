@@ -1,14 +1,16 @@
 export const CATEGORY_PUG: string = 'Pug';
 
+export type AttributeSeparator = 'always' | 'as-needed';
+export type ClosingBracketPosition = 'new-line' | 'last-line';
 export type CommentPreserveSpaces = 'keep-all' | 'keep-leading' | 'trim-all';
 
 export interface PugParserOptions {
-	attributeSeparator: 'always' | 'as-needed';
-	closingBracketPosition: 'new-line' | 'last-line';
+	attributeSeparator: AttributeSeparator;
+	closingBracketPosition: ClosingBracketPosition;
 	commentPreserveSpaces: CommentPreserveSpaces;
 }
 
-export function resolveAttributeSeparatorOption(attributeSeparator: 'always' | 'as-needed'): boolean {
+export function resolveAttributeSeparatorOption(attributeSeparator: AttributeSeparator): boolean {
 	switch (attributeSeparator) {
 		case 'always':
 			return true;
@@ -20,7 +22,7 @@ export function resolveAttributeSeparatorOption(attributeSeparator: 'always' | '
 	);
 }
 
-export function resolveClosingBracketPositionOption(closingBracketPosition: 'new-line' | 'last-line'): boolean {
+export function resolveClosingBracketPositionOption(closingBracketPosition: ClosingBracketPosition): boolean {
 	switch (closingBracketPosition) {
 		case 'new-line':
 			return true;
