@@ -576,6 +576,9 @@ export class PugPrinter {
 			// There were no attributes
 			this.result = this.result.slice(0, -1);
 		} else if (this.previousToken?.type === 'attribute') {
+			if (!this.closingBracketRemainsAtNewLine) {
+				this.result = this.result.trimRight();
+			}
 			this.result += ')';
 		}
 		if (this.nextToken?.type === 'text' || this.nextToken?.type === 'path') {
