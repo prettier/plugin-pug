@@ -85,13 +85,13 @@ yarn prettier --write "**/*.pug"
   If you want to configure different semi for pug than for js code, you can use prettier's override.
   ```json
   {
-    "semi": true,
+    "semi": false,
     "overrides": [
       {
         "files": "*.pug",
         "options": {
           "parser": "pug",
-          "singleQuote": false
+          "semi": true
         }
       }
     ]
@@ -107,7 +107,7 @@ yarn prettier --write "**/*.pug"
         "files": "*.pug",
         "options": {
           "parser": "pug",
-          "singleQuote": true
+          "singleQuote": false
         }
       }
     ]
@@ -176,7 +176,7 @@ They should be set via `Prettier`'s `overrides` option
   - `'trim-all'` -> Trim all spaces within comments.  
     Example: `// this is a comment`
 
-The definitions for these options can be found in [src/options.ts](https://github.com/prettier/plugin-pug/blob/master/src/options.ts)
+The definitions for these options can be found in [src/options/index.ts](https://github.com/prettier/plugin-pug/blob/master/src/options/index.ts)
 
 ## Some workarounds
 
