@@ -21,6 +21,7 @@ declare module 'pug-lexer' {
 			| 'doctype'
 			| 'dot'
 			| 'each'
+			| 'eachOf'
 			| 'else-if'
 			| 'else'
 			| 'end-attributes'
@@ -178,6 +179,12 @@ declare module 'pug-lexer' {
 			code: string;
 		}
 
+		export interface EachOfToken extends LexToken<'eachOf'> {
+			val: string;
+			value: string;
+			code: string;
+		}
+
 		export interface WhileToken extends LexToken<'while'> {
 			val: string;
 		}
@@ -219,6 +226,7 @@ declare module 'pug-lexer' {
 			| DoctypeToken
 			| DotToken
 			| EachToken
+			| EachOfToken
 			| ElseIfToken
 			| ElseToken
 			| EndAttributesToken

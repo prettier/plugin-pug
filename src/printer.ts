@@ -13,6 +13,7 @@ import {
 	DefaultToken,
 	DoctypeToken,
 	DotToken,
+	EachOfToken,
 	EachToken,
 	ElseIfToken,
 	ElseToken,
@@ -963,6 +964,21 @@ export class PugPrinter {
 		}
 		result += ` in ${token.code}`;
 		return result;
+	}
+
+	private eachOf(token: EachOfToken): string {
+		let value = token.value.trim();
+		value = format(value, {
+			parser: 'babel',
+			...this.codeInterpolationOptions,
+			semi: false
+		});
+		if (value[0] === ';') {
+			value = value.slice(1);
+		}
+		value = unwrapLineFeeds(value);
+		const code = token.code.trim();
+		return `${this.computedIndent}each ${value} of ${code}`;
 	}
 
 	private while(token: WhileToken): string {
