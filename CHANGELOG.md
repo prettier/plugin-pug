@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.3.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.0...master)
+
+# 1.4.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.3.0...1.4.0)
+
+- Fix semi in code interpolation ([#85])
+- Upgrade `pug-lexer` to `5.0.0`  
+  Support new token `eachOf`
+
+[#85]: https://github.com/prettier/plugin-pug/issues/85
 
 # 1.3.0
 
