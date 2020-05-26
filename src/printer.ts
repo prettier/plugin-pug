@@ -793,6 +793,9 @@ export class PugPrinter {
 				endOfLine: 'lf'
 			});
 			val = val.slice(0, -1);
+			if (val[0] === ';') {
+				val = val.slice(1);
+			}
 			if (val.includes('\n')) {
 				val = valBackup;
 			}
