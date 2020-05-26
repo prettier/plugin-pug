@@ -85,13 +85,13 @@ yarn prettier --write "**/*.pug"
   If you want to configure different semi for pug than for js code, you can use prettier's override.
   ```json
   {
-    "semi": true,
+    "semi": false,
     "overrides": [
       {
         "files": "*.pug",
         "options": {
           "parser": "pug",
-          "singleQuote": false
+          "semi": true
         }
       }
     ]
@@ -107,7 +107,7 @@ yarn prettier --write "**/*.pug"
         "files": "*.pug",
         "options": {
           "parser": "pug",
-          "singleQuote": true
+          "singleQuote": false
         }
       }
     ]
