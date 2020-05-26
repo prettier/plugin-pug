@@ -33,7 +33,7 @@
 		"tsconfig.json"
 	],
 	"dependencies": {
-		"pug-lexer": "~4.1.0"
+		"pug-lexer": "~5.0.0"
 	},
 	"devDependencies": {
 		"@types/jest": "~25.2.3",
