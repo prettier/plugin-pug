@@ -176,7 +176,7 @@ They should be set via `Prettier`'s `overrides` option
   - `'trim-all'` -> Trim all spaces within comments.  
     Example: `// this is a comment`
 
-The definitions for these options can be found in [src/options.ts](https://github.com/prettier/plugin-pug/blob/master/src/options.ts)
+The definitions for these options can be found in [src/options/index.ts](https://github.com/prettier/plugin-pug/blob/master/src/options/index.ts)
 
 ## Some workarounds
 
