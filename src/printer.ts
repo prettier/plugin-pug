@@ -681,7 +681,9 @@ export class PugPrinter {
 		if (this.pipelessText) {
 			switch (this.previousToken?.type) {
 				case 'newline':
-					result += this.indentString.repeat(this.indentLevel + 1);
+					if (val.trim().length > 0) {
+						result += this.indentString.repeat(this.indentLevel + 1);
+					}
 					break;
 				case 'start-pipeless-text':
 					result += this.indentString;
@@ -766,7 +768,8 @@ export class PugPrinter {
 			case 'indent':
 			case 'newline':
 			case 'outdent':
-				result = `${this.computedIndent}| `;
+				result = this.computedIndent;
+				result += this.pipelessText ? this.indentString : '| ';
 				break;
 		}
 		result += token.mustEscape ? '#' : '!';
@@ -874,7 +877,16 @@ export class PugPrinter {
 	}
 
 	private ['start-pug-interpolation'](token: StartPugInterpolationToken): string {
-		return '#[';
+		let result = '';
+		if (
+			this.tokens[this.currentIndex - 2]?.type === 'newline' &&
+			this.previousToken?.type === 'text' &&
+			this.previousToken.val.trim().length === 0
+		) {
+			result += this.indentString.repeat(this.indentLevel + 1);
+		}
+		result += '#[';
+		return result;
 	}
 
 	private ['end-pug-interpolation'](token: EndPugInterpolationToken): string {
