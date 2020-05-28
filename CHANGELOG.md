@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.4.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.1...master)
+
+# 1.4.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.0...1.4.1)
+
+- Fix indentation in multi-line blank lines ([#89])
+
+[#89]: https://github.com/prettier/plugin-pug/issues/89
 
 # 1.4.0
 
