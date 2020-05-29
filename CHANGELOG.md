@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.4.1...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.2...master)
+
+# 1.4.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.1...1.4.2)
+
+- Ignore formatting of interpolation attribute values ([#94])
+
+[#94]: https://github.com/prettier/plugin-pug/pull/94
 
 # 1.4.1
 

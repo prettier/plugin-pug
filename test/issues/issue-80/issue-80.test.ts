@@ -10,7 +10,6 @@ describe('Issues', () => {
 		const actual: string = format(code, {
 			parser: 'pug' as any,
 			plugins: [plugin],
-
 			semi: false,
 			singleQuote: true
 		});
