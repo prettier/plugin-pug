@@ -65,6 +65,10 @@ export function isQuoted(val: string): boolean {
 	return /^["'](.*)["']$/.test(val);
 }
 
+export function isMultilineInterpolation(val: string): boolean {
+	return /^`[\s\S]*`$/m.test(val) && val.includes('\n');
+}
+
 // Copy of https://github.com/prettier/prettier/blob/master/src/common/util.js#L647
 export function makeString(
 	rawContent: string,

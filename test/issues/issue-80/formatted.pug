@@ -1,0 +1,19 @@
+div
+  span.aui-lozenge(
+    :class=`{
+      "aui-lozenge-inprogress": pipeline.status == PipelineStatus.Running,
+      "aui-lozenge-error":      pipeline.status == PipelineStatus.Failed
+    }`
+  )
+
+  span.aui-lozenge(
+    :class='[isActive ? "some-class-name" : "some-other-class-name"]'
+  )
+
+  span.aui-lozenge(
+    :class='[isActive ? "some-class-name" : "some-other-class-name"]'
+  )
+
+  span.aui-lozenge(
+    :class='[isActive ? "some-class-name" : "some-other-class-name"]'
+  )

@@ -56,7 +56,13 @@ import {
 	resolveClosingBracketPositionOption
 } from './options';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
-import { isQuoted, makeString, previousNormalAttributeToken, unwrapLineFeeds } from './utils/common';
+import {
+	isQuoted,
+	isMultilineInterpolation,
+	makeString,
+	previousNormalAttributeToken,
+	unwrapLineFeeds
+} from './utils/common';
 import { isVueEventBinding, isVueExpression } from './utils/vue';
 
 const logger: Logger = createLogger(console);
@@ -526,7 +532,9 @@ export class PugPrinter {
 			}
 		} else {
 			let val = token.val;
-			if (isVueExpression(token.name)) {
+			if (isMultilineInterpolation(val)) {
+				// do not reformat multiline strings surrounded by `
+			} else if (isVueExpression(token.name)) {
 				val = this.formatVueExpression(val);
 			} else if (isVueEventBinding(token.name)) {
 				val = this.formatVueEventBinding(val);
