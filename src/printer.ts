@@ -626,9 +626,8 @@ export class PugPrinter {
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
-				const computedIndent = this.computedIndent;
-				this.possibleIdPosition = this.result.length + computedIndent.length;
-				const result = `${computedIndent}${val}`;
+				this.possibleIdPosition = this.result.length + this.computedIndent.length;
+				const result = `${this.computedIndent}${val}`;
 				this.result += result;
 				this.possibleClassPosition = this.result.length;
 				break;
