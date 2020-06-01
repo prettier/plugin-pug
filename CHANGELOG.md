@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.4.2...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.3...master)
+
+# 1.4.3
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.2...1.4.3)
+
+- Fix sorting of occurring id behind classes ([#95])
+
+[#95]: https://github.com/prettier/plugin-pug/issues/95
 
 # 1.4.2
 
