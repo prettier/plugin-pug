@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.4.3...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.4...master)
+
+# 1.4.4
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.3...1.4.4)
+
+- Trim input on left side ([#97])
+
+[#97]: https://github.com/prettier/plugin-pug/issues/97
 
 # 1.4.3
 
