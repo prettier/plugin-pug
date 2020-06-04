@@ -28,7 +28,7 @@ export const plugin: Plugin = {
 		pug: {
 			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): Token[] {
 				logger.debug('[parsers:pug:parse]:', { text });
-				const tokens = lex(text);
+				const tokens = lex(text.trimLeft());
 				// logger.debug('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
 				// const ast: AST = parse(tokens, {});
 				// logger.debug('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));

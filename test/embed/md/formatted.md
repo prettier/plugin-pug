@@ -8,3 +8,7 @@
 ```pug
 div.text( color =   "primary",  disabled    )
 ```
+
+```pug
+div
+```
