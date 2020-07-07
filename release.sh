@@ -12,8 +12,8 @@ rm yarn.lock
 yarn install
 yarn lint
 yarn test --silent
-yarn audit dependencies
-yarn audit peerDependencies
+yarn audit --groups dependencies
+yarn audit --groups peerDependencies
 yarn build
 
 # Publish
