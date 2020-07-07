@@ -109,6 +109,7 @@ export class PugPrinter {
 			| 'tabWidth'
 			| 'useTabs'
 			| 'attributeSeparator'
+			| 'bracketSpacing'
 			| 'closingBracketPosition'
 			| 'commentPreserveSpaces'
 			| 'semi'
@@ -245,7 +246,7 @@ export class PugPrinter {
 								'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
 								code
 							);
-							result += `{{ ${code} }}`;
+							result += this.options.bracketSpacing ? `{{ ${code} }}` : `{{${code}}}`;
 							text = text.slice(end + 2);
 							continue;
 						} else {
@@ -286,7 +287,7 @@ export class PugPrinter {
 						}
 					}
 					code = unwrapLineFeeds(code);
-					result += `{{ ${code} }}`;
+					result += this.options.bracketSpacing ? `{{ ${code} }}` : `{{${code}}}`;
 					text = text.slice(end + 2);
 				} else {
 					result += '{{';
