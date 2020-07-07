@@ -45,8 +45,11 @@ jobs:
                   name: JUnit_${{ matrix.os }}_${{ matrix.node }}_${{ github.sha }}
                   path: junit.xml
 
-            - name: Audit
-              run: yarn audit
+            - name: Audit dependencies
+              run: yarn audit dependencies
+
+            - name: Audit peerDependencies
+              run: yarn audit peerDependencies
 
             - name: Build
               run: yarn build
