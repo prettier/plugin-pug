@@ -46,10 +46,10 @@ jobs:
                   path: junit.xml
 
             - name: Audit dependencies
-              run: yarn audit dependencies
+              run: yarn audit --groups dependencies
 
             - name: Audit peerDependencies
-              run: yarn audit peerDependencies
+              run: yarn audit --groups peerDependencies
 
             - name: Build
               run: yarn build
