@@ -281,7 +281,7 @@ declare module 'pug-lexer' {
 			ended: boolean;
 			constructor(str: string, options?: LexerOptions);
 			error(code: string, message: string): never;
-			assert(value: any, message: string): void;
+			assert(value: unknown, message: string): void;
 			isExpression(exp: string): boolean;
 			assertExpression(exp: string, noThrow?: boolean): boolean;
 			assertNestingCorrect(exp: string): void;
