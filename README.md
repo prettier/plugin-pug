@@ -79,6 +79,23 @@ yarn prettier --write "**/*.pug"
 
 ### Prettier Options
 
+- `bracketSpacing`  
+  If you want to configure different bracketSpacing for pug than for js code, you can use prettier's override.  
+  _(Only text tokens are currently supported. If you want to expand the bracketSpacing option, please open a new issue.)_
+  ```json
+  {
+    "bracketSpacing": true,
+    "overrides": [
+      {
+        "files": "*.pug",
+        "options": {
+          "parser": "pug",
+          "bracketSpacing": false
+        }
+      }
+    ]
+  }
+  ```
 - `printWidth`  
   _Currently not very accurate, but works_
 - `semi`  
