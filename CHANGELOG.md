@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.4.4...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.5.0...master)
+
+# 1.5.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.4...1.5.0)
+
+- Support `bracketSpacing` option (only text-token) ([#98])
+
+[#98]: https://github.com/prettier/plugin-pug/issues/98
 
 # 1.4.4
 
