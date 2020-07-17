@@ -62,6 +62,7 @@ export const plugin: Plugin = {
 					tabWidth,
 					useTabs,
 					attributeSeparator,
+					bracketSpacing,
 					closingBracketPosition,
 					commentPreserveSpaces,
 					semi
@@ -75,6 +76,7 @@ export const plugin: Plugin = {
 					tabWidth,
 					useTabs,
 					attributeSeparator,
+					bracketSpacing,
 					closingBracketPosition,
 					commentPreserveSpaces,
 					semi
