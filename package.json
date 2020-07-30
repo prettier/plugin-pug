@@ -8,7 +8,7 @@
 		"format": "prettier --write .",
 		"lint": "yarn lint:src && yarn lint:test",
 		"lint:src": "eslint --ext .ts src",
-		"lint:test": "eslint --ext .test.ts test",
+		"lint:test": "eslint --ext .test.ts tests",
 		"test": "jest"
 	},
 	"keywords": [
