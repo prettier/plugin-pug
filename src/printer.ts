@@ -57,8 +57,9 @@ import {
 } from './options';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
-	isQuoted,
+	handleBracketSpacing,
 	isMultilineInterpolation,
+	isQuoted,
 	makeString,
 	previousNormalAttributeToken,
 	unwrapLineFeeds
@@ -246,7 +247,7 @@ export class PugPrinter {
 								'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
 								code
 							);
-							result += this.options.bracketSpacing ? `{{ ${code} }}` : `{{${code}}}`;
+							result += handleBracketSpacing(this.options.bracketSpacing, code);
 							text = text.slice(end + 2);
 							continue;
 						} else {
@@ -287,7 +288,7 @@ export class PugPrinter {
 						}
 					}
 					code = unwrapLineFeeds(code);
-					result += this.options.bracketSpacing ? `{{ ${code} }}` : `{{${code}}}`;
+					result += handleBracketSpacing(this.options.bracketSpacing, code);
 					text = text.slice(end + 2);
 				} else {
 					result += '{{';
@@ -345,7 +346,8 @@ export class PugPrinter {
 			});
 			val = unwrapLineFeeds(val);
 		}
-		return this.quoteString(`{{ ${val} }}`);
+		val = handleBracketSpacing(this.options.bracketSpacing, val);
+		return this.quoteString(val);
 	}
 
 	// ########  #######  ##    ## ######## ##    ##    ########  ########   #######   ######  ########  ######   ######   #######  ########   ######

@@ -69,6 +69,16 @@ export function isMultilineInterpolation(val: string): boolean {
 	return /^`[\s\S]*`$/m.test(val) && val.includes('\n');
 }
 
+/**
+ * Encloses code in brackets and possibly spaces
+ *
+ * @param bracketSpacing Specifies whether or not to insert spaces before and after the code
+ * @param code Code that is enclosed in brackets
+ */
+export function handleBracketSpacing(bracketSpacing: boolean, code: string): string {
+	return bracketSpacing ? `{{ ${code} }}` : `{{${code}}}`;
+}
+
 // Copy of https://github.com/prettier/prettier/blob/master/src/common/util.js#L647
 export function makeString(
 	rawContent: string,
