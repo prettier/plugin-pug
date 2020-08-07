@@ -80,8 +80,7 @@ yarn prettier --write "**/*.pug"
 ### Prettier Options
 
 - `bracketSpacing`  
-  If you want to configure different bracketSpacing for pug than for js code, you can use prettier's override.  
-  _(Only text tokens are currently supported. If you want to expand the bracketSpacing option, please open a new issue.)_
+  If you want to configure different bracketSpacing for pug than for js code, you can use prettier's override.
   ```json
   {
     "bracketSpacing": true,
