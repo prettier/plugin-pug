@@ -4,16 +4,15 @@ about: Create a report to help us improve
 title: 'Bug: '
 labels: ''
 assignees: ''
-
 ---
 
 ## Info
 
 | Tool     | Version       |
 | -------- | ------------- |
-| Plugin   | v1.1.6        |
-| Prettier | v1.19.1       |
-| Node     | v13.6.0       |
+| Plugin   | v1.x.x        |
+| Prettier | v2.x.x        |
+| Node     | vx.x.x        |
 | OS       | win,linux,mac |
 
 ## Input
