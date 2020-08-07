@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.5.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.5.1...master)
+
+# 1.5.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.5.0...1.5.1)
+
+- Support `bracketSpacing` option for attributes ([#102])
+
+[#102]: https://github.com/prettier/plugin-pug/issues/102
 
 # 1.5.0
 
