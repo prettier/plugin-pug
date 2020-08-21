@@ -172,7 +172,7 @@ export class PugPrinter {
 						results.push(this[token.type](token));
 						break;
 				}
-			} catch (error) {
+			} catch {
 				throw new Error('Unhandled token: ' + JSON.stringify(token));
 			}
 		}
@@ -256,7 +256,7 @@ export class PugPrinter {
 								...this.codeInterpolationOptions
 							});
 						}
-					} catch (error) {
+					} catch (error: unknown) {
 						if (typeof error === 'string') {
 							if (error.includes('Unexpected token Lexer Error')) {
 								if (!error.includes('Unexpected character [`]')) {
@@ -283,7 +283,7 @@ export class PugPrinter {
 							if (code[0] === ';') {
 								code = code.slice(1);
 							}
-						} catch (error) {
+						} catch (error: unknown) {
 							logger.warn(error);
 						}
 					}
@@ -815,7 +815,7 @@ export class PugPrinter {
 			if (val.includes('\n')) {
 				val = valBackup;
 			}
-		} catch (error) {
+		} catch (error: unknown) {
 			logger.warn('[PugPrinter]:', error);
 		}
 		result += ` ${val}`;
