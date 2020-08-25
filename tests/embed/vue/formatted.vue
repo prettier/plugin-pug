@@ -1,5 +1,5 @@
 <template lang="pug">
-  .text(color="primary", disabled)
+.text(color="primary", disabled)
 </template>
 
 <script>

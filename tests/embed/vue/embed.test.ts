@@ -4,8 +4,7 @@ import { format } from 'prettier';
 import { plugin } from './../../../src/index';
 
 describe('Embedded', () => {
-	// TODO: Remove `.skip` when https://github.com/prettier/prettier/issues/6298 is resolved
-	test.skip('should format when embedded in vue', () => {
+	test('should format when embedded in vue', () => {
 		const expected: string = readFileSync(resolve(__dirname, 'formatted.vue'), 'utf8');
 		const code: string = readFileSync(resolve(__dirname, 'unformatted.vue'), 'utf8');
 		const actual: string = format(code, { parser: 'vue', plugins: [plugin] });
