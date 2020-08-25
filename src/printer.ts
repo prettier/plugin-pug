@@ -140,6 +140,8 @@ export class PugPrinter {
 		const results: string[] = [];
 		if (this.tokens[0]?.type === 'text') {
 			results.push('| ');
+		} else if (this.tokens[0]?.type === 'eos') {
+			return '';
 		}
 		for (let index: number = 0; index < this.tokens.length; index++) {
 			this.currentIndex = index;
