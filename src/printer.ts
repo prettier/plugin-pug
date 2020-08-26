@@ -491,7 +491,11 @@ export class PugPrinter {
 					const validIdNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 					if (!validIdNameRegex.test(val)) {
 						val = makeString(val, this.quotes);
-						this.result += `id=${val}`;
+						this.result += 'id';
+						if (token.mustEscape === false) {
+							this.result += '!';
+						}
+						this.result += `=${val}`;
 						return;
 					}
 					// Write css-id in front of css-classes

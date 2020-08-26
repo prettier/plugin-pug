@@ -71,8 +71,6 @@ tests/pug-tests/attrs.formatted.pug
 tests/pug-tests/attrs.js.formatted.pug
 tests/pug-tests/attrs.js.pug
 tests/pug-tests/attrs.pug
-tests/pug-tests/attrs.unescaped.formatted.pug
-tests/pug-tests/attrs.unescaped.pug
 tests/pug-tests/block-code.formatted.pug
 tests/pug-tests/block-code.pug
 tests/pug-tests/comments.formatted.pug
