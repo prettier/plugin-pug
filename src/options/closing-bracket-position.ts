@@ -44,7 +44,7 @@ export const PUG_CLOSING_BRACKET_POSITION_OPTION = {
 	choices: [
 		{
 			value: null,
-			description: 'Use `closingBracketPosition` value'
+			description: 'Use `closingBracketPosition` value.'
 		},
 		{
 			value: 'new-line',

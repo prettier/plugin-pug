@@ -27,7 +27,7 @@ export const PUG_ATTRIBUTE_SEPARATOR_OPTION = {
 	choices: [
 		{
 			value: null,
-			description: 'Use `attributeSeparator` value'
+			description: 'Use `attributeSeparator` value.'
 		},
 		{
 			value: 'always',

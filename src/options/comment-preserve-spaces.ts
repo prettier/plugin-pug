@@ -29,7 +29,7 @@ export const PUG_COMMENT_PRESERVE_SPACES_OPTION = {
 	choices: [
 		{
 			value: null,
-			description: 'Use `commentPreserveSpaces` value'
+			description: 'Use `commentPreserveSpaces` value.'
 		},
 		{
 			value: 'keep-all',
