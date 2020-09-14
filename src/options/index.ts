@@ -1,9 +1,5 @@
 import { ParserOptions } from 'prettier';
-import {
-	AttributeSeparator,
-	ATTRIBUTE_SEPARATOR_OPTION_DEFINITION,
-	PUG_ATTRIBUTE_SEPARATOR_OPTION_DEFINITION
-} from './attribute-separator';
+import { AttributeSeparator, ATTRIBUTE_SEPARATOR_OPTION, PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
 import {
 	ClosingBracketPosition,
 	CLOSING_BRACKET_POSITION_OPTION,
@@ -51,8 +47,8 @@ export const options = {
 	pugUseTabs: PUG_USE_TABS_OPTION,
 	pugBracketSpacing: PUG_BRACKET_SPACING_OPTION,
 	pugSemi: PUG_SEMI_OPTION,
-	attributeSeparator: ATTRIBUTE_SEPARATOR_OPTION_DEFINITION,
-	pugAttributeSeparator: PUG_ATTRIBUTE_SEPARATOR_OPTION_DEFINITION,
+	attributeSeparator: ATTRIBUTE_SEPARATOR_OPTION,
+	pugAttributeSeparator: PUG_ATTRIBUTE_SEPARATOR_OPTION,
 	closingBracketPosition: CLOSING_BRACKET_POSITION_OPTION,
 	pugClosingBracketPosition: PUG_CLOSING_BRACKET_POSITION_OPTION,
 	commentPreserveSpaces: COMMENT_PRESERVE_SPACES_OPTION,

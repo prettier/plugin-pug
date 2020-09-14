@@ -24,7 +24,26 @@ export const COMMENT_PRESERVE_SPACES_OPTION = {
 
 export const PUG_COMMENT_PRESERVE_SPACES_OPTION = {
 	...COMMENT_PRESERVE_SPACES_OPTION,
-	since: '1.6.0'
+	since: '1.6.0',
+	default: null,
+	choices: [
+		{
+			value: null,
+			description: 'Use `commentPreserveSpaces` value'
+		},
+		{
+			value: 'keep-all',
+			description: 'Keep all spaces within comments. Example: `//    this  is   a   comment`'
+		},
+		{
+			value: 'keep-leading',
+			description: 'Keep leading spaces within comments. Example: `//    this is a comment`'
+		},
+		{
+			value: 'trim-all',
+			description: 'Trim all spaces within comments. Example: `// this is a comment`'
+		}
+	]
 };
 
 export type CommentPreserveSpaces = 'keep-all' | 'keep-leading' | 'trim-all';

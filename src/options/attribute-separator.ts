@@ -1,6 +1,6 @@
 import { CATEGORY_PUG } from '.';
 
-export const ATTRIBUTE_SEPARATOR_OPTION_DEFINITION = {
+export const ATTRIBUTE_SEPARATOR_OPTION = {
 	since: '1.0.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
@@ -20,9 +20,26 @@ export const ATTRIBUTE_SEPARATOR_OPTION_DEFINITION = {
 	]
 };
 
-export const PUG_ATTRIBUTE_SEPARATOR_OPTION_DEFINITION = {
-	...ATTRIBUTE_SEPARATOR_OPTION_DEFINITION,
-	since: '1.6.0'
+export const PUG_ATTRIBUTE_SEPARATOR_OPTION = {
+	...ATTRIBUTE_SEPARATOR_OPTION,
+	since: '1.6.0',
+	default: null,
+	choices: [
+		{
+			value: null,
+			description: 'Use `attributeSeparator` value'
+		},
+		{
+			value: 'always',
+			description:
+				'Always separate attributes with commas. Example: `button(type="submit", (click)="play()", disabled)`'
+		},
+		{
+			value: 'as-needed',
+			description:
+				'Only add commas between attributes where required. Example: `button(type="submit", (click)="play()" disabled)`'
+		}
+	]
 };
 
 export type AttributeSeparator = 'always' | 'as-needed';
