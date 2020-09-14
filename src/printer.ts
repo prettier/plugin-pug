@@ -116,7 +116,7 @@ export class PugPrinter {
 	private pipelessComment: boolean = false;
 
 	public constructor(private readonly tokens: ReadonlyArray<Token>, private readonly options: PugPrinterOptions) {
-		this.indentString = options.useTabs ? '\t' : ' '.repeat(options.tabWidth);
+		this.indentString = options.pugUseTabs ? '\t' : ' '.repeat(options.pugTabWidth);
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
 		this.alwaysUseAttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
@@ -249,7 +249,7 @@ export class PugPrinter {
 								'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
 								code
 							);
-							result += handleBracketSpacing(this.options.bracketSpacing, code);
+							result += handleBracketSpacing(this.options.pugBracketSpacing, code);
 							text = text.slice(end + 2);
 							continue;
 						} else {
@@ -290,7 +290,7 @@ export class PugPrinter {
 						}
 					}
 					code = unwrapLineFeeds(code);
-					result += handleBracketSpacing(this.options.bracketSpacing, code);
+					result += handleBracketSpacing(this.options.pugBracketSpacing, code);
 					text = text.slice(end + 2);
 				} else {
 					result += '{{';
@@ -348,7 +348,7 @@ export class PugPrinter {
 			});
 			val = unwrapLineFeeds(val);
 		}
-		val = handleBracketSpacing(this.options.bracketSpacing, val);
+		val = handleBracketSpacing(this.options.pugBracketSpacing, val);
 		return this.quoteString(val);
 	}
 
@@ -437,7 +437,7 @@ export class PugPrinter {
 				this.currentLineLength += 1;
 			}
 			logger.debug(this.currentLineLength);
-			if (this.currentLineLength > this.options.printWidth) {
+			if (this.currentLineLength > this.options.pugPrintWidth) {
 				this.wrapAttributes = true;
 			}
 		}
@@ -801,7 +801,7 @@ export class PugPrinter {
 			result += '!';
 		}
 		result += token.buffer ? '=' : '-';
-		let useSemi = this.options.semi;
+		let useSemi = this.options.pugSemi;
 		if (useSemi && (token.mustEscape || token.buffer)) {
 			useSemi = false;
 		}

@@ -5,11 +5,11 @@ import { PugPrinterOptions } from '../printer';
 export function convergeOptions(options: ParserOptions & PugParserOptions): PugPrinterOptions {
 	return {
 		printWidth: options.printWidth,
-		pugPrintWidth: options.pugPrintWidth ?? options.printWidth,
+		pugPrintWidth: options.pugPrintWidth !== 80 ? options.pugPrintWidth : options.printWidth,
 		singleQuote: options.singleQuote,
 		pugSingleQuote: options.pugSingleQuote ?? options.singleQuote,
 		tabWidth: options.tabWidth,
-		pugTabWidth: options.pugTabWidth ?? options.tabWidth,
+		pugTabWidth: options.pugTabWidth !== 2 ? options.pugTabWidth : options.tabWidth,
 		useTabs: options.useTabs,
 		pugUseTabs: options.pugUseTabs ?? options.useTabs,
 		bracketSpacing: options.bracketSpacing,

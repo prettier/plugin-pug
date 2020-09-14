@@ -23,21 +23,21 @@ export const CATEGORY_PUG: string = 'Pug';
 
 export interface PugParserOptions
 	extends Pick<ParserOptions, 'printWidth' | 'singleQuote' | 'tabWidth' | 'useTabs' | 'bracketSpacing' | 'semi'> {
-	pugPrintWidth?: number;
-	pugSingleQuote?: boolean;
-	pugTabWidth?: number;
-	pugUseTabs?: boolean;
-	pugBracketSpacing?: boolean;
-	pugSemi?: boolean;
+	pugPrintWidth: number;
+	pugSingleQuote: boolean | null;
+	pugTabWidth: number;
+	pugUseTabs: boolean | null;
+	pugBracketSpacing: boolean | null;
+	pugSemi: boolean | null;
 
 	attributeSeparator: AttributeSeparator;
-	pugAttributeSeparator?: AttributeSeparator;
+	pugAttributeSeparator: AttributeSeparator | null;
 
 	closingBracketPosition: ClosingBracketPosition;
-	pugClosingBracketPosition?: ClosingBracketPosition;
+	pugClosingBracketPosition: ClosingBracketPosition | null;
 
 	commentPreserveSpaces: CommentPreserveSpaces;
-	pugCommentPreserveSpaces?: CommentPreserveSpaces;
+	pugCommentPreserveSpaces: CommentPreserveSpaces | null;
 }
 
 export const options = {
