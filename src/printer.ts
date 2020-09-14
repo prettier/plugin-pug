@@ -49,14 +49,9 @@ import {
 } from 'pug-lexer';
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
-import {
-	AttributeSeparator,
-	ClosingBracketPosition,
-	CommentPreserveSpaces,
-	formatCommentPreserveSpaces,
-	resolveAttributeSeparatorOption,
-	resolveClosingBracketPositionOption
-} from './options';
+import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
+import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
+import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
 	handleBracketSpacing,
@@ -75,11 +70,17 @@ if (process.env.NODE_ENV === 'test') {
 
 export interface PugPrinterOptions {
 	readonly printWidth: number;
+	readonly pugPrintWidth: number;
 	readonly singleQuote: boolean;
+	readonly pugSingleQuote: boolean;
 	readonly tabWidth: number;
+	readonly pugTabWidth: number;
 	readonly useTabs: boolean;
+	readonly pugUseTabs: boolean;
 	readonly bracketSpacing: boolean;
+	readonly pugBracketSpacing: boolean;
 	readonly semi: boolean;
+	readonly pugSemi: boolean;
 	readonly attributeSeparator: AttributeSeparator;
 	readonly closingBracketPosition: ClosingBracketPosition;
 	readonly commentPreserveSpaces: CommentPreserveSpaces;
@@ -116,8 +117,8 @@ export class PugPrinter {
 
 	public constructor(private readonly tokens: ReadonlyArray<Token>, private readonly options: PugPrinterOptions) {
 		this.indentString = options.useTabs ? '\t' : ' '.repeat(options.tabWidth);
-		this.quotes = this.options.singleQuote ? "'" : '"';
-		this.otherQuotes = this.options.singleQuote ? '"' : "'";
+		this.quotes = this.options.pugSingleQuote ? "'" : '"';
+		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
 		this.alwaysUseAttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
 		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.closingBracketPosition);
 		this.codeInterpolationOptions = {
