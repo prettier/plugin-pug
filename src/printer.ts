@@ -1,4 +1,4 @@
-import { format, ParserOptions, RequiredOptions } from 'prettier';
+import { format, RequiredOptions } from 'prettier';
 import {
 	AndAttributesToken,
 	AttributeToken,
@@ -50,8 +50,10 @@ import {
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
 import {
+	AttributeSeparator,
+	ClosingBracketPosition,
+	CommentPreserveSpaces,
 	formatCommentPreserveSpaces,
-	PugParserOptions,
 	resolveAttributeSeparatorOption,
 	resolveClosingBracketPositionOption
 } from './options';
@@ -69,6 +71,18 @@ import { isVueEventBinding, isVueExpression } from './utils/vue';
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {
 	logger.setLogLevel(LogLevel.DEBUG);
+}
+
+export interface PugPrinterOptions {
+	readonly printWidth: number;
+	readonly singleQuote: boolean;
+	readonly tabWidth: number;
+	readonly useTabs: boolean;
+	readonly bracketSpacing: boolean;
+	readonly semi: boolean;
+	readonly attributeSeparator: AttributeSeparator;
+	readonly closingBracketPosition: ClosingBracketPosition;
+	readonly commentPreserveSpaces: CommentPreserveSpaces;
 }
 
 export class PugPrinter {
@@ -100,22 +114,7 @@ export class PugPrinter {
 	private pipelessText: boolean = false;
 	private pipelessComment: boolean = false;
 
-	public constructor(
-		private readonly tokens: ReadonlyArray<Token>,
-		/* eslint-disable @typescript-eslint/indent */
-		private readonly options: Pick<
-			ParserOptions & PugParserOptions,
-			| 'printWidth'
-			| 'singleQuote'
-			| 'tabWidth'
-			| 'useTabs'
-			| 'attributeSeparator'
-			| 'bracketSpacing'
-			| 'closingBracketPosition'
-			| 'commentPreserveSpaces'
-			| 'semi'
-		> /* eslint-enable @typescript-eslint/indent */
-	) {
+	public constructor(private readonly tokens: ReadonlyArray<Token>, private readonly options: PugPrinterOptions) {
 		this.indentString = options.useTabs ? '\t' : ' '.repeat(options.tabWidth);
 		this.quotes = this.options.singleQuote ? "'" : '"';
 		this.otherQuotes = this.options.singleQuote ? '"' : "'";

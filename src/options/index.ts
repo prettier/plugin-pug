@@ -1,13 +1,28 @@
+import { ParserOptions } from 'prettier';
+
 export const CATEGORY_PUG: string = 'Pug';
 
 export type AttributeSeparator = 'always' | 'as-needed';
 export type ClosingBracketPosition = 'new-line' | 'last-line';
 export type CommentPreserveSpaces = 'keep-all' | 'keep-leading' | 'trim-all';
 
-export interface PugParserOptions {
+export interface PugParserOptions
+	extends Pick<ParserOptions, 'printWidth' | 'singleQuote' | 'tabWidth' | 'useTabs' | 'bracketSpacing' | 'semi'> {
+	pugPrintWidth?: number;
+	pugSingleQuote?: boolean;
+	pugTabWidth?: number;
+	pugUseTabs?: boolean;
+	pugBracketSpacing?: boolean;
+	pugSemi?: boolean;
+
 	attributeSeparator: AttributeSeparator;
+	pugAttributeSeparator?: AttributeSeparator;
+
 	closingBracketPosition: ClosingBracketPosition;
+	pugClosingBracketPosition?: ClosingBracketPosition;
+
 	commentPreserveSpaces: CommentPreserveSpaces;
+	pugCommentPreserveSpaces?: CommentPreserveSpaces;
 }
 
 export function resolveAttributeSeparatorOption(attributeSeparator: AttributeSeparator): boolean {
