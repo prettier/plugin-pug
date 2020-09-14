@@ -20,6 +20,11 @@ export const ATTRIBUTE_SEPARATOR_OPTION_DEFINITION = {
 	]
 };
 
+export const PUG_ATTRIBUTE_SEPARATOR_OPTION_DEFINITION = {
+	...ATTRIBUTE_SEPARATOR_OPTION_DEFINITION,
+	since: '1.6.0'
+};
+
 export type AttributeSeparator = 'always' | 'as-needed';
 
 export function resolveAttributeSeparatorOption(attributeSeparator: AttributeSeparator): boolean {

@@ -1,0 +1,53 @@
+import { CATEGORY_PUG } from '.';
+
+export const PUG_PRINT_WIDTH_OPTION = {
+	since: '1.6.0',
+	category: CATEGORY_PUG,
+	type: 'int',
+	default: 80,
+	description: 'The line length where Prettier will try wrap.',
+	range: { start: 0, end: Infinity, step: 1 }
+};
+
+export const PUG_SINGLE_QUOTE_OPTION = {
+	since: '1.6.0',
+	category: CATEGORY_PUG,
+	type: 'boolean',
+	default: false,
+	description: 'Use single quotes instead of double quotes.'
+};
+
+export const PUG_TAB_WIDTH_OPTION = {
+	since: '1.6.0',
+	category: CATEGORY_PUG,
+	type: 'int',
+	default: 2,
+	description: 'Number of spaces per indentation level.',
+	range: { start: 0, end: Infinity, step: 1 }
+};
+
+export const PUG_USE_TABS_OPTION = {
+	since: '1.6.0',
+	category: CATEGORY_PUG,
+	type: 'boolean',
+	default: false,
+	description: 'Indent with tabs instead of spaces.'
+};
+
+export const PUG_BRACKET_SPACING_OPTION = {
+	since: '1.6.0',
+	category: CATEGORY_PUG,
+	type: 'boolean',
+	default: true,
+	description: 'Print spaces between brackets.',
+	oppositeDescription: 'Do not print spaces between brackets.'
+};
+
+export const PUG_SEMI_OPTION = {
+	since: '1.6.0',
+	category: CATEGORY_PUG,
+	type: 'boolean',
+	default: true,
+	description: 'Print semicolons.',
+	oppositeDescription: 'Do not print semicolons, except at the beginning of lines which may need them.'
+};

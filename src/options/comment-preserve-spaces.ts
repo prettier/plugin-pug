@@ -22,6 +22,11 @@ export const COMMENT_PRESERVE_SPACES_OPTION = {
 	]
 };
 
+export const PUG_COMMENT_PRESERVE_SPACES_OPTION = {
+	...COMMENT_PRESERVE_SPACES_OPTION,
+	since: '1.6.0'
+};
+
 export type CommentPreserveSpaces = 'keep-all' | 'keep-leading' | 'trim-all';
 
 export function formatCommentPreserveSpaces(

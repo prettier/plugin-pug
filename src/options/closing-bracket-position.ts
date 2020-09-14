@@ -37,6 +37,11 @@ export const CLOSING_BRACKET_POSITION_OPTION = {
 	]
 };
 
+export const PUG_CLOSING_BRACKET_POSITION_OPTION = {
+	...CLOSING_BRACKET_POSITION_OPTION,
+	since: '1.6.0'
+};
+
 export type ClosingBracketPosition = 'new-line' | 'last-line';
 
 export function resolveClosingBracketPositionOption(closingBracketPosition: ClosingBracketPosition): boolean {
