@@ -121,8 +121,9 @@ export class PugPrinter {
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
 		this.alwaysUseAttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
 		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.closingBracketPosition);
+		const codeSingleQuote = !options.pugSingleQuote;
 		this.codeInterpolationOptions = {
-			singleQuote: !options.singleQuote,
+			singleQuote: codeSingleQuote,
 			printWidth: 9000,
 			endOfLine: 'lf'
 		};
