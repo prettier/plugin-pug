@@ -4,9 +4,9 @@ export const PUG_PRINT_WIDTH_OPTION = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
 	type: 'int',
-	default: 80,
+	default: -1,
 	description: 'The line length where Prettier will try wrap.',
-	range: { start: 0, end: Infinity, step: 1 }
+	range: { start: -1, end: Infinity, step: 1 }
 };
 
 export const PUG_SINGLE_QUOTE_OPTION = {
@@ -34,9 +34,9 @@ export const PUG_TAB_WIDTH_OPTION = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
 	type: 'int',
-	default: 2,
+	default: -1,
 	description: 'Number of spaces per indentation level.',
-	range: { start: 0, end: Infinity, step: 1 }
+	range: { start: -1, end: Infinity, step: 1 }
 };
 
 export const PUG_USE_TABS_OPTION = {
