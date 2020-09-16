@@ -1,0 +1,6 @@
+.github/ISSUE_TEMPLATE/
+benchmark/
+coverage/
+dist/
+tests/**/*.vue
+tests/**/*.pug

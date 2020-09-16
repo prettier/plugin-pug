@@ -1,0 +1,20 @@
+div(
+  data-stein-url="https://api.steinhq.com/v1/storages/[spreadsheet]/[sheet-name]",
+  data-stein-limit="100"
+)
+  div {{date}}
+
+a(href="{{link}}") Link
+
+div(
+  data-stein-url="https://api.steinhq.com/v1/storages/5cc158079ec99a2f484dcb40/Sheet1",
+  data-stein-limit="2"
+)
+  div
+    h1 {{title}}
+    h6 By {{author}}
+    p
+      | {{content}}
+    p
+      | Read on
+      a(href="{{link}}") Medium

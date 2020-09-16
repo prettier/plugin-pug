@@ -30,23 +30,23 @@ export class Logger implements ILogger {
 		this.level = level;
 	}
 
-	public debug(message?: any, ...optionalParams: any[]): void {
+	public debug(message?: unknown, ...optionalParams: any[]): void {
 		this.message(LogLevel.DEBUG, message, ...optionalParams);
 	}
 
-	public log(message?: any, ...optionalParams: any[]): void {
+	public log(message?: unknown, ...optionalParams: any[]): void {
 		this.message(LogLevel.LOG, message, ...optionalParams);
 	}
 
-	public info(message?: any, ...optionalParams: any[]): void {
+	public info(message?: unknown, ...optionalParams: any[]): void {
 		this.message(LogLevel.INFO, message, ...optionalParams);
 	}
 
-	public warn(message?: any, ...optionalParams: any[]): void {
+	public warn(message?: unknown, ...optionalParams: any[]): void {
 		this.message(LogLevel.WARN, message, ...optionalParams);
 	}
 
-	public error(message?: any, ...optionalParams: any[]): void {
+	public error(message?: unknown, ...optionalParams: any[]): void {
 		this.message(LogLevel.ERROR, message, ...optionalParams);
 	}
 

@@ -1,15 +1,18 @@
 export const CATEGORY_PUG: string = 'Pug';
 
+export type AttributeSeparator = 'always' | 'as-needed';
+export type ClosingBracketPosition = 'new-line' | 'last-line';
 export type CommentPreserveSpaces = 'keep-all' | 'keep-leading' | 'trim-all';
 
 export interface PugParserOptions {
-	attributeSeparator: 'always' | 'as-needed';
+	attributeSeparator: AttributeSeparator;
+	closingBracketPosition: ClosingBracketPosition;
 	commentPreserveSpaces: CommentPreserveSpaces;
 	enableSortAttributes: boolean;
 	sortAttributes: string[];
 }
 
-export function resolveAttributeSeparatorOption(attributeSeparator: 'always' | 'as-needed'): boolean {
+export function resolveAttributeSeparatorOption(attributeSeparator: AttributeSeparator): boolean {
 	switch (attributeSeparator) {
 		case 'always':
 			return true;
@@ -18,6 +21,18 @@ export function resolveAttributeSeparatorOption(attributeSeparator: 'always' | '
 	}
 	throw new Error(
 		`Invalid option for pug attributeSeparator. Found '${attributeSeparator}'. Possible options: 'always' or 'as-needed'`
+	);
+}
+
+export function resolveClosingBracketPositionOption(closingBracketPosition: ClosingBracketPosition): boolean {
+	switch (closingBracketPosition) {
+		case 'new-line':
+			return true;
+		case 'last-line':
+			return false;
+	}
+	throw new Error(
+		`Invalid option for pug closingBracketPosition. Found '${closingBracketPosition}'. Possible options: 'new-line' or 'last-line'`
 	);
 }
 
@@ -33,10 +48,7 @@ export function formatCommentPreserveSpaces(
 			for (firstNonSpace; firstNonSpace < input.length && input[firstNonSpace] === ' '; firstNonSpace++) {
 				result += ' ';
 			}
-			result += input
-				.slice(firstNonSpace)
-				.trim()
-				.replace(/\s\s+/g, ' ');
+			result += input.slice(firstNonSpace).trim().replace(/\s\s+/g, ' ');
 			return result;
 		}
 		case 'trim-all': {
@@ -71,6 +83,42 @@ export const options = {
 				value: 'as-needed',
 				description:
 					'Only add commas between attributes where required. Example: `button(type="submit", (click)="play()" disabled)`'
+			}
+		]
+	},
+	closingBracketPosition: {
+		since: '1.3.0',
+		category: CATEGORY_PUG,
+		type: 'choice',
+		default: 'new-line',
+		description: 'Determines position of closing bracket which wraps attributes.',
+		choices: [
+			{
+				value: 'new-line',
+				description: `
+					Closing bracket ends with a new line.
+					Example:
+					input(
+						type='text',
+						value='my_value',
+						name='my_name',
+						alt='my_alt',
+						autocomplete='on'
+					)
+					`
+			},
+			{
+				value: 'last-line',
+				description: `
+				Closing bracket remains with last attribute's line.
+				Example:
+				input(
+					type='text',
+					value='my_value',
+					name='my_name',
+					alt='my_alt',
+					autocomplete='on')
+				`
 			}
 		]
 	},

@@ -1,6 +1,110 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.1.9...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.5.1...master)
+
+# 1.5.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.5.0...1.5.1)
+
+- Support `bracketSpacing` option for attributes ([#103])
+
+[#103]: https://github.com/prettier/plugin-pug/issues/103
+
+# 1.5.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.4...1.5.0)
+
+- Support `bracketSpacing` option (only text-token) ([#98])
+
+[#98]: https://github.com/prettier/plugin-pug/issues/98
+
+# 1.4.4
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.3...1.4.4)
+
+- Trim input on left side ([#97])
+
+[#97]: https://github.com/prettier/plugin-pug/issues/97
+
+# 1.4.3
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.2...1.4.3)
+
+- Fix sorting of occurring id behind classes ([#95])
+
+[#95]: https://github.com/prettier/plugin-pug/issues/95
+
+# 1.4.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.1...1.4.2)
+
+- Ignore formatting of interpolation attribute values ([#94])
+
+[#94]: https://github.com/prettier/plugin-pug/pull/94
+
+# 1.4.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.4.0...1.4.1)
+
+- Fix indentation in multi-line blank lines ([#89])
+
+[#89]: https://github.com/prettier/plugin-pug/issues/89
+
+# 1.4.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.3.0...1.4.0)
+
+- Fix semi in code interpolation ([#85])
+- Upgrade `pug-lexer` to `5.0.0`  
+  Support new token `eachOf`
+
+[#85]: https://github.com/prettier/plugin-pug/issues/85
+
+# 1.3.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.2.0...1.3.0)
+
+- Introduce new option `closingBracketPosition` ([#82])  
+  Possible values: `new-line` and `last-line`
+
+[#82]: https://github.com/prettier/plugin-pug/issues/82
+
+# 1.2.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.11...1.2.0)
+
+- Support Prettier v2 (Prettier v1 is no longer supported, use [v1.1.11])
+
+Minor change:
+
+```pug
+//- Input
+v-btn(@click="toggle = !toggle")
+
+//- Output (1.1.11)
+v-btn(@click="(toggle = !toggle)")
+
+//- Output (1.2.0)
+v-btn(@click="toggle = !toggle")
+```
+
+[v1.1.11]: https://www.npmjs.com/package/@prettier/plugin-pug/v/1.1.11
+
+# 1.1.11
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.10...1.1.11)
+
+- Just a dependency update
+
+# 1.1.10
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.1.9...1.1.10)
+
+- Suppress formatting for Angular if there is more than one binding within an attribute value ([#78])
+- Support more Vue expressions (`v-if`, `v-else-if`, `v-for`, `v-text`, `v-html`) ([b671027])
+
+[#78]: https://github.com/prettier/plugin-pug/issues/78
+[b671027]: https://github.com/prettier/plugin-pug/commit/b6710277003d7fec3ff139b0a6e69b52d17ebf47
 
 # 1.1.9
 
@@ -16,7 +120,7 @@
 
 - Calculate correct line width ([26fefff])
 - Fix indentation for `doctype` ([51d3860])
-- Handle angular pipe with parameter ([#70])
+- Handle Angular pipe with parameter ([#70])
 - Handle space for indented `text` ([#74])
 
 [#70]: https://github.com/prettier/plugin-pug/issues/70

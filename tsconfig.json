@@ -5,7 +5,7 @@
 		"inlineSourceMap": true,
 		"lib": ["ES2018", "DOM"],
 		"outDir": "dist",
-		"moduleResolution": "node",
+		"moduleResolution": "Node",
 		"rootDir": "src",
 		"strict": true,
 		"removeComments": true

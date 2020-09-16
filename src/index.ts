@@ -28,7 +28,7 @@ export const plugin: Plugin = {
 		pug: {
 			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): Token[] {
 				logger.debug('[parsers:pug:parse]:', { text });
-				const tokens = lex(text);
+				const tokens = lex(text.trimLeft());
 				// logger.debug('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
 				// const ast: AST = parse(tokens, {});
 				// logger.debug('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
@@ -38,11 +38,11 @@ export const plugin: Plugin = {
 			hasPragma(text: string): boolean {
 				return text.startsWith('//- @prettier\n') || text.startsWith('//- @format\n');
 			},
-			locStart(node: any): number {
+			locStart(node: unknown): number {
 				logger.debug('[parsers:pug:locStart]:', { node });
 				return 0;
 			},
-			locEnd(node: any): number {
+			locEnd(node: unknown): number {
 				logger.debug('[parsers:pug:locEnd]:', { node });
 				return 0;
 			},
@@ -62,6 +62,8 @@ export const plugin: Plugin = {
 					tabWidth,
 					useTabs,
 					attributeSeparator,
+					bracketSpacing,
+					closingBracketPosition,
 					commentPreserveSpaces,
 					enableSortAttributes,
 					sortAttributes,
@@ -76,6 +78,8 @@ export const plugin: Plugin = {
 					tabWidth,
 					useTabs,
 					attributeSeparator,
+					bracketSpacing,
+					closingBracketPosition,
 					commentPreserveSpaces,
 					enableSortAttributes,
 					sortAttributes,

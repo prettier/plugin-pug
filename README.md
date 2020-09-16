@@ -22,8 +22,8 @@
   <a href="#badge">
     <img alt="code style: Prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"><!--
   --></a>
-  <a href="https://dev.azure.com/shinigami92/Prettier%20Pug%20plugin/_build/latest?definitionId=3&branchName=master">
-    <img alt="Build Status" src="https://dev.azure.com/shinigami92/Prettier%20Pug%20plugin/_apis/build/status/prettier.plugin-pug?branchName=master"><!--
+  <a href="https://github.com/prettier/plugin-pug/actions?query=branch%3Amaster+workflow%3ACI">
+    <img alt="Build Status" src="https://github.com/prettier/plugin-pug/workflows/CI/badge.svg?branch=master"><!--
   --></a>
 </p>
 
@@ -79,19 +79,35 @@ yarn prettier --write "**/*.pug"
 
 ### Prettier Options
 
+- `bracketSpacing`  
+  If you want to configure different bracketSpacing for pug than for js code, you can use prettier's override.
+  ```json
+  {
+    "bracketSpacing": true,
+    "overrides": [
+      {
+        "files": "*.pug",
+        "options": {
+          "parser": "pug",
+          "bracketSpacing": false
+        }
+      }
+    ]
+  }
+  ```
 - `printWidth`  
   _Currently not very accurate, but works_
 - `semi`  
   If you want to configure different semi for pug than for js code, you can use prettier's override.
   ```json
   {
-    "semi": true,
+    "semi": false,
     "overrides": [
       {
         "files": "*.pug",
         "options": {
           "parser": "pug",
-          "singleQuote": false
+          "semi": true
         }
       }
     ]
@@ -107,7 +123,7 @@ yarn prettier --write "**/*.pug"
         "files": "*.pug",
         "options": {
           "parser": "pug",
-          "singleQuote": true
+          "singleQuote": false
         }
       }
     ]
@@ -129,24 +145,54 @@ They should be set via `Prettier`'s `overrides` option
 
   Choices:
 
-  - `'always'` -> Always separate attributes with commas.  
+  - `'always'` _default_ -> Always separate attributes with commas.  
     Example: `button(type="submit", (click)="play()", disabled)`
   - `'as-needed'` -> Only add commas between attributes where required.  
     Example: `button(type="submit", (click)="play()" disabled)`
+
+- `closingBracketPosition`  
+  Position of closing bracket of attributes.
+
+  Choices:
+
+  - `'new-line'` _default_ -> Closing bracket ends with a new line.  
+    Example:
+
+    ```pug
+    input(
+      type="text",
+      value="my_value",
+      name="my_name",
+      alt="my_alt",
+      autocomplete="on"
+    )
+    ```
+
+  - `'last-line'` -> Closing bracket remains with last attribute's line.  
+    Example:
+
+    ```pug
+    input(
+      type="text",
+      value="my_value",
+      name="my_name",
+      alt="my_alt",
+      autocomplete="on")
+    ```
 
 - `commentPreserveSpaces`  
   Change behavior of spaces within comments.
 
   Choices:
 
-  - `'keep-all'` -> Keep all spaces within comments.  
+  - `'keep-all'` _default_ -> Keep all spaces within comments.  
     Example: `// ___this _is __a __comment_`
   - `'keep-leading'` -> Keep leading spaces within comments.  
     Example: `// ___this is a comment`
   - `'trim-all'` -> Trim all spaces within comments.  
     Example: `// this is a comment`
 
-The definitions for these options can be found in [src/options.ts](https://github.com/prettier/plugin-pug/blob/master/src/options.ts)
+The definitions for these options can be found in [src/options/index.ts](https://github.com/prettier/plugin-pug/blob/master/src/options/index.ts)
 
 ## Some workarounds
 
