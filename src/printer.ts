@@ -565,6 +565,16 @@ export class PugPrinter {
 					parser: '__js_expression' as any,
 					...this.codeInterpolationOptions
 				});
+
+				const lines = val.split('\n');
+				if (lines.length > 1) {
+					val = lines[0];
+					for (let index = 1; index < lines.length; index++) {
+						val += '\n';
+						val += this.indentString.repeat(this.indentLevel);
+						val += lines[index];
+					}
+				}
 			} else {
 				// The value is not quoted and may be js-code
 				val = val.trim();
