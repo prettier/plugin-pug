@@ -135,6 +135,11 @@ yarn prettier --write "**/*.pug"
   Use tab for indentation
   Overrides `tabWidth`
 
+> All these six Prettier options have an alias e.g. `pugSingleQuote`  
+> You can force override pug formatting with them e.g. when using `pug` embedded in `vue` files
+
+See [changelog 1.6.0](https://github.com/prettier/plugin-pug/blob/master/CHANGELOG.md#160) for more
+
 #### prettier-pug specific options
 
 These are specific options only for prettier-pug  
