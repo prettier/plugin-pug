@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.5.1...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.6.0...master)
+
+# 1.6.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.5.1...1.6.0)
+
+- Fix escape id for complex id values ([559ee6d])
+- Fix indentation of objects in multiline class attributes ([#110])
+
+[559ee6d]: https://github.com/prettier/plugin-pug/commit/559ee6d7f028e4eaba7768af70a9280d2190a2c2#diff-46bec2a2249807aa1515b246cc13ee93
+[#110]: https://github.com/prettier/plugin-pug/issues/110
 
 # 1.5.1
 
