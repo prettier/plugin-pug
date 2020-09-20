@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.6.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.6.1...master)
+
+# 1.6.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.6.0...1.6.1)
+
+- Fix wrapped attribute multiline code indentation
+
+[5a6082c]: https://github.com/prettier/plugin-pug/commit/5a6082ca126c292673779bc02817390b526b9a97
 
 # 1.6.0
 
