@@ -3,7 +3,8 @@ import * as lex from 'pug-lexer';
 import { Token } from 'pug-lexer';
 import { createLogger, Logger, LogLevel } from './logger';
 import { options as pugOptions, PugParserOptions } from './options';
-import { PugPrinter } from './printer';
+import { convergeOptions } from './options/converge';
+import { PugPrinter, PugPrinterOptions } from './printer';
 
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {
@@ -54,33 +55,10 @@ export const plugin: Plugin = {
 	},
 	printers: {
 		'pug-ast': {
-			print(
-				path: FastPath,
-				{
-					printWidth,
-					singleQuote,
-					tabWidth,
-					useTabs,
-					attributeSeparator,
-					bracketSpacing,
-					closingBracketPosition,
-					commentPreserveSpaces,
-					semi
-				}: ParserOptions & PugParserOptions,
-				print: (path: FastPath) => Doc
-			): Doc {
+			print(path: FastPath, options: ParserOptions & PugParserOptions, print: (path: FastPath) => Doc): Doc {
 				const tokens: Token[] = path.stack[0];
-				const printer = new PugPrinter(tokens, {
-					printWidth,
-					singleQuote,
-					tabWidth,
-					useTabs,
-					attributeSeparator,
-					bracketSpacing,
-					closingBracketPosition,
-					commentPreserveSpaces,
-					semi
-				});
+				const pugOptions: PugPrinterOptions = convergeOptions(options);
+				const printer = new PugPrinter(tokens, pugOptions);
 				const result = printer.build();
 				logger.debug('[printers:pug-ast:print]:', result);
 				return result;

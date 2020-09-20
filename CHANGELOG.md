@@ -6,11 +6,60 @@
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.5.1...1.6.0)
 
+## Big Change
+
+This plugin now supports alias options!  
+You can configure pug embedded in vue with them :tada:
+
+So instead of
+
+```js
+{
+  "singleQuote": true,
+  "overrides": [
+    {
+      "files": ["*.pug"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
+}
+```
+
+you can now write
+
+```js
+{
+  "singleQuote": true,
+  "pugSingleQuote": false
+}
+```
+
+Aliases added for:
+
+- `pugPrintWidth`
+- `pugSingleQuote`
+- `pugTabWidth`
+- `pugUseTabs`
+- `pugBracketSpacing`
+- `pugSemi`
+
+Because prettier currently have something like a bug, you need to set e.g. `"pugSingleQuote": "true"` instead of `"pugSingleQuote": true`, if you want to set it to true  
+This needs to be done only for boolean `true` values
+
+If an alias is not set, the plugin will fallback to the non alias version  
+And in the special case of `singleQuote` option will take the inverse as before  
+So no breaking changes are introduced
+
+## Other Changes
+
 - Fix escape id for complex id values ([559ee6d])
 - Fix indentation of objects in multiline class attributes ([#110])
 
 [559ee6d]: https://github.com/prettier/plugin-pug/commit/559ee6d7f028e4eaba7768af70a9280d2190a2c2#diff-46bec2a2249807aa1515b246cc13ee93
 [#110]: https://github.com/prettier/plugin-pug/issues/110
+[#105]: https://github.com/prettier/plugin-pug/issues/105
 
 # 1.5.1
 
