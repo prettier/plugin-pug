@@ -568,11 +568,12 @@ export class PugPrinter {
 				});
 
 				const lines = val.split('\n');
+				const codeIndentLevel = this.wrapAttributes ? this.indentLevel + 1 : this.indentLevel;
 				if (lines.length > 1) {
 					val = lines[0];
 					for (let index = 1; index < lines.length; index++) {
 						val += '\n';
-						val += this.indentString.repeat(this.indentLevel);
+						val += this.indentString.repeat(codeIndentLevel);
 						val += lines[index];
 					}
 				}
