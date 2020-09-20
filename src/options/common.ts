@@ -24,6 +24,11 @@ export const PUG_SINGLE_QUOTE_OPTION = {
 			description: 'Use single quotes instead of double quotes.'
 		},
 		{
+			// Workaround, because prettier doesn't accept just `true` as choice value in CLI
+			value: 'true',
+			description: 'Use single quotes instead of double quotes.'
+		},
+		{
 			value: false,
 			description: 'Use double quotes instead of double quotes.'
 		}
@@ -54,6 +59,11 @@ export const PUG_USE_TABS_OPTION = {
 			description: 'Indent with tabs instead of spaces.'
 		},
 		{
+			// Workaround, because prettier doesn't accept just `true` as choice value in CLI
+			value: 'true',
+			description: 'Indent with tabs instead of spaces.'
+		},
+		{
 			value: false,
 			description: 'Indent with spaces instead of tabs.'
 		}
@@ -75,6 +85,11 @@ export const PUG_BRACKET_SPACING_OPTION = {
 			description: 'Print spaces between brackets.'
 		},
 		{
+			// Workaround, because prettier doesn't accept just `true` as choice value in CLI
+			value: 'true',
+			description: 'Print spaces between brackets.'
+		},
+		{
 			value: false,
 			description: 'Do not print spaces between brackets.'
 		}
@@ -93,6 +108,11 @@ export const PUG_SEMI_OPTION = {
 		},
 		{
 			value: true,
+			description: 'Print semicolons.'
+		},
+		{
+			// Workaround, because prettier doesn't accept just `true` as choice value in CLI
+			value: 'true',
 			description: 'Print semicolons.'
 		},
 		{
