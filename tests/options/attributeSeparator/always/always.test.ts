@@ -5,7 +5,7 @@ import { plugin } from './../../../../src/index';
 
 describe('Options', () => {
 	describe('attributeSeparator', () => {
-		test('should always insert commas between attriutes', () => {
+		test('should always insert commas between attributes', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 			const actual: string = format(code, {
@@ -17,7 +17,7 @@ describe('Options', () => {
 
 			expect(actual).toBe(expected);
 		});
-		test('should always insert commas between attriutes by default', () => {
+		test('should always insert commas between attributes by default', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 			const actual: string = format(code, { parser: 'pug' as any, plugins: [plugin] });

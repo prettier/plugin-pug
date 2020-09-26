@@ -5,7 +5,7 @@ import { plugin } from './../../../../src/index';
 
 describe('Options', () => {
 	describe('attributeSeparator', () => {
-		test('should insert commas between attriutes as-needed', () => {
+		test('should insert commas between attributes as-needed', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 			const actual: string = format(code, {

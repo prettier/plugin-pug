@@ -1,4 +1,4 @@
-import { format, ParserOptions, RequiredOptions } from 'prettier';
+import { format, RequiredOptions } from 'prettier';
 import {
 	AndAttributesToken,
 	AttributeToken,
@@ -49,13 +49,9 @@ import {
 } from 'pug-lexer';
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
-import {
-	formatCommentPreserveSpaces,
-	PugParserOptions,
-	resolveAttributeSeparatorOption,
-	resolveClosingBracketPositionOption
-} from './options';
-import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
+import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
+import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
+import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
 	handleBracketSpacing,
@@ -70,6 +66,24 @@ import { isVueEventBinding, isVueExpression } from './utils/vue';
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {
 	logger.setLogLevel(LogLevel.DEBUG);
+}
+
+export interface PugPrinterOptions {
+	readonly printWidth: number;
+	readonly pugPrintWidth: number;
+	readonly singleQuote: boolean;
+	readonly pugSingleQuote: boolean;
+	readonly tabWidth: number;
+	readonly pugTabWidth: number;
+	readonly useTabs: boolean;
+	readonly pugUseTabs: boolean;
+	readonly bracketSpacing: boolean;
+	readonly pugBracketSpacing: boolean;
+	readonly semi: boolean;
+	readonly pugSemi: boolean;
+	readonly attributeSeparator: AttributeSeparator;
+	readonly closingBracketPosition: ClosingBracketPosition;
+	readonly commentPreserveSpaces: CommentPreserveSpaces;
 }
 
 export class PugPrinter {
@@ -101,31 +115,15 @@ export class PugPrinter {
 	private pipelessText: boolean = false;
 	private pipelessComment: boolean = false;
 
-	public constructor(
-		private tokens: Token[],
-		/* eslint-disable @typescript-eslint/indent */
-		private readonly options: Pick<
-			ParserOptions & PugParserOptions,
-			| 'printWidth'
-			| 'singleQuote'
-			| 'tabWidth'
-			| 'useTabs'
-			| 'attributeSeparator'
-			| 'bracketSpacing'
-			| 'closingBracketPosition'
-			| 'commentPreserveSpaces'
-			| 'enableSortAttributes'
-			| 'sortAttributes'
-			| 'semi'
-		> /* eslint-enable @typescript-eslint/indent */
-	) {
-		this.indentString = options.useTabs ? '\t' : ' '.repeat(options.tabWidth);
-		this.quotes = this.options.singleQuote ? "'" : '"';
-		this.otherQuotes = this.options.singleQuote ? '"' : "'";
+	public constructor(private readonly tokens: ReadonlyArray<Token>, private readonly options: PugPrinterOptions) {
+		this.indentString = options.pugUseTabs ? '\t' : ' '.repeat(options.pugTabWidth);
+		this.quotes = this.options.pugSingleQuote ? "'" : '"';
+		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
 		this.alwaysUseAttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
 		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.closingBracketPosition);
+		const codeSingleQuote = !options.pugSingleQuote;
 		this.codeInterpolationOptions = {
-			singleQuote: !options.singleQuote,
+			singleQuote: codeSingleQuote,
 			printWidth: 9000,
 			endOfLine: 'lf'
 		};
@@ -252,7 +250,7 @@ export class PugPrinter {
 								'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
 								code
 							);
-							result += handleBracketSpacing(this.options.bracketSpacing, code);
+							result += handleBracketSpacing(this.options.pugBracketSpacing, code);
 							text = text.slice(end + 2);
 							continue;
 						} else {
@@ -271,6 +269,10 @@ export class PugPrinter {
 								logger.warn(
 									'[PugPrinter:formatText]: Bindings should not contain assignments:',
 									code.trim()
+								);
+							} else if (error.includes("Unexpected token '('")) {
+								logger.warn(
+									"[PugPrinter:formatText]: Found unexpected token '('. If you are using Vue, you can ignore this message."
 								);
 							} else {
 								logger.warn('[PugPrinter:formatText]: ', error);
@@ -293,7 +295,7 @@ export class PugPrinter {
 						}
 					}
 					code = unwrapLineFeeds(code);
-					result += handleBracketSpacing(this.options.bracketSpacing, code);
+					result += handleBracketSpacing(this.options.pugBracketSpacing, code);
 					text = text.slice(end + 2);
 				} else {
 					result += '{{';
@@ -351,7 +353,7 @@ export class PugPrinter {
 			});
 			val = unwrapLineFeeds(val);
 		}
-		val = handleBracketSpacing(this.options.bracketSpacing, val);
+		val = handleBracketSpacing(this.options.pugBracketSpacing, val);
 		return this.quoteString(val);
 	}
 
@@ -440,7 +442,7 @@ export class PugPrinter {
 				this.currentLineLength += 1;
 			}
 			logger.debug(this.currentLineLength);
-			if (this.currentLineLength > this.options.printWidth) {
+			if (this.currentLineLength > this.options.pugPrintWidth) {
 				this.wrapAttributes = true;
 			}
 
@@ -578,6 +580,17 @@ export class PugPrinter {
 					parser: '__js_expression' as any,
 					...this.codeInterpolationOptions
 				});
+
+				const lines = val.split('\n');
+				const codeIndentLevel = this.wrapAttributes ? this.indentLevel + 1 : this.indentLevel;
+				if (lines.length > 1) {
+					val = lines[0];
+					for (let index = 1; index < lines.length; index++) {
+						val += '\n';
+						val += this.indentString.repeat(codeIndentLevel);
+						val += lines[index];
+					}
+				}
 			} else {
 				// The value is not quoted and may be js-code
 				val = val.trim();
@@ -814,7 +827,7 @@ export class PugPrinter {
 			result += '!';
 		}
 		result += token.buffer ? '=' : '-';
-		let useSemi = this.options.semi;
+		let useSemi = this.options.pugSemi;
 		if (useSemi && (token.mustEscape || token.buffer)) {
 			useSemi = false;
 		}
