@@ -5,7 +5,7 @@ const pugSortAttributesOption = {
 	category: CATEGORY_PUG,
 	type: 'path',
 	array: true,
-	default: [],
+	default: [{ value: [] }],
 	description: ''
 };
 
