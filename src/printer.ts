@@ -462,6 +462,20 @@ export class PugPrinter {
 					);
 				}
 			}
+
+			if (this.options.pugSortAttributesEnd.length > 0) {
+				const startAttributesIndex: number = this.tokens.indexOf(token);
+				const endAttributesIndex: number = tempIndex;
+				if (endAttributesIndex - startAttributesIndex > 2) {
+					this.tokens = partialSort(this.tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
+						compareAttributeToken(
+							b as AttributeToken,
+							a as AttributeToken,
+							this.options.pugSortAttributesEnd
+						)
+					);
+				}
+			}
 		}
 		return result;
 	}
