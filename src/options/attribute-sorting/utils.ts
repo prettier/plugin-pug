@@ -2,39 +2,6 @@ import { AttributeToken } from 'pug-lexer';
 
 type CompareResult = -1 | 0 | 1;
 
-const VUE_BINDING_MATCHER = /^(?:v-bind)?:(.*)/;
-const ANGULAR_BINDING_MATCHER = /^(?:\()(.*)(?:\))$/;
-
-function compareByBindingPrecedence(left: string, right: string, bindingMatcher: RegExp): CompareResult {
-	if (bindingMatcher.exec(left)?.[1] === right) {
-		return 1;
-	}
-	if (bindingMatcher.exec(right)?.[1] === left) {
-		return -1;
-	}
-	return 0;
-}
-
-function compareByVueBindingPrecedence(left: string, right: string): CompareResult {
-	return compareByBindingPrecedence(left, right, VUE_BINDING_MATCHER);
-}
-
-function compareByAngularBindingPrecedence(left: string, right: string): CompareResult {
-	return compareByBindingPrecedence(left, right, ANGULAR_BINDING_MATCHER);
-}
-
-function trimBinding(value: string, bindingMatcher: RegExp): string {
-	return bindingMatcher.exec(value)?.[1] ?? value;
-}
-
-function trimVueBinding(value: string): string {
-	return trimBinding(value, VUE_BINDING_MATCHER);
-}
-
-function trimAngularBinding(value: string): string {
-	return trimBinding(value, ANGULAR_BINDING_MATCHER);
-}
-
 function compareByIndex(leftIndex: number, rightIndex: number): CompareResult {
 	if (leftIndex !== -1 && rightIndex === -1) {
 		return -1;
@@ -52,16 +19,6 @@ function compareByIndex(leftIndex: number, rightIndex: number): CompareResult {
 	return 0;
 }
 
-function compareByLiteral(left: string, right: string): CompareResult {
-	if (left < right) {
-		return -1;
-	}
-	if (left > right) {
-		return 1;
-	}
-	return 0;
-}
-
 export function compareAttributeToken(
 	a: AttributeToken,
 	b: AttributeToken,
@@ -74,24 +31,6 @@ export function compareAttributeToken(
 	const bName = b.name;
 
 	let result: CompareResult = 0;
-
-	// let result: CompareResult = compareByVueBindingPrecedence(aName, bName);
-
-	// if (result === 0) {
-	// 	aName = trimVueBinding(aName);
-	// 	bName = trimVueBinding(bName);
-
-	// 	result = compareByAngularBindingPrecedence(aName, bName);
-	// }
-
-	// if (result === 0) {
-	// 	aName = trimAngularBinding(aName);
-	// 	bName = trimAngularBinding(bName);
-
-	// 	const aIndex: number = sortAttributes.indexOf(aName);
-	// 	const bIndex: number = sortAttributes.indexOf(bName);
-	// 	result = compareByIndex(aIndex, bIndex);
-	// }
 
 	if (result === 0) {
 		let aIndex: number = moveToEnd ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY;
@@ -115,18 +54,6 @@ export function compareAttributeToken(
 
 		result = compareByIndex(aIndex, bIndex);
 	}
-
-	// if (result === 0) {
-	// 	result = compareByLiteral(aName, bName);
-	// }
-
-	// if (result !== 0 && reverseCompare) {
-	// 	if (result === 1) {
-	// 		result = -1;
-	// 	} else {
-	// 		result = 1;
-	// 	}
-	// }
 
 	return result;
 }
