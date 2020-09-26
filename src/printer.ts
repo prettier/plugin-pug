@@ -270,6 +270,10 @@ export class PugPrinter {
 									'[PugPrinter:formatText]: Bindings should not contain assignments:',
 									code.trim()
 								);
+							} else if (error.includes("Unexpected token '('")) {
+								logger.warn(
+									"[PugPrinter:formatText]: Found unexpected token '('. If you are using Vue, you can ignore this message."
+								);
 							} else {
 								logger.warn('[PugPrinter:formatText]: ', error);
 							}
