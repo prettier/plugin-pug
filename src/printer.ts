@@ -50,6 +50,7 @@ import {
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
 import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
+import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
 import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
 import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
@@ -84,6 +85,8 @@ export interface PugPrinterOptions {
 	readonly attributeSeparator: AttributeSeparator;
 	readonly closingBracketPosition: ClosingBracketPosition;
 	readonly commentPreserveSpaces: CommentPreserveSpaces;
+	readonly pugSortAttributesBeginning: string[];
+	readonly pugSortAttributesEnd: string[];
 }
 
 export class PugPrinter {
@@ -115,7 +118,7 @@ export class PugPrinter {
 	private pipelessText: boolean = false;
 	private pipelessComment: boolean = false;
 
-	public constructor(private readonly tokens: ReadonlyArray<Token>, private readonly options: PugPrinterOptions) {
+	public constructor(private tokens: Token[], private readonly options: PugPrinterOptions) {
 		this.indentString = options.pugUseTabs ? '\t' : ' '.repeat(options.pugTabWidth);
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
@@ -446,12 +449,16 @@ export class PugPrinter {
 				this.wrapAttributes = true;
 			}
 
-			if (this.options.enableSortAttributes) {
+			if (this.options.pugSortAttributesBeginning.length > 0) {
 				const startAttributesIndex: number = this.tokens.indexOf(token);
 				const endAttributesIndex: number = tempIndex;
 				if (endAttributesIndex - startAttributesIndex > 2) {
 					this.tokens = partialSort(this.tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
-						compareAttributeToken(a as AttributeToken, b as AttributeToken, this.options.sortAttributes)
+						compareAttributeToken(
+							a as AttributeToken,
+							b as AttributeToken,
+							this.options.pugSortAttributesBeginning
+						)
 					);
 				}
 			}

@@ -18,6 +18,8 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugSemi: options.pugSemi ?? options.semi,
 		attributeSeparator: options.pugAttributeSeparator ?? options.attributeSeparator,
 		closingBracketPosition: options.pugClosingBracketPosition ?? options.closingBracketPosition,
-		commentPreserveSpaces: options.pugCommentPreserveSpaces ?? options.commentPreserveSpaces
+		commentPreserveSpaces: options.pugCommentPreserveSpaces ?? options.commentPreserveSpaces,
+		pugSortAttributesBeginning: options.pugSortAttributesBeginning,
+		pugSortAttributesEnd: options.pugSortAttributesEnd
 	};
 }
