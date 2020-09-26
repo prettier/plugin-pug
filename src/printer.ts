@@ -449,20 +449,6 @@ export class PugPrinter {
 				this.wrapAttributes = true;
 			}
 
-			if (this.options.pugSortAttributesBeginning.length > 0) {
-				const startAttributesIndex: number = this.tokens.indexOf(token);
-				const endAttributesIndex: number = tempIndex;
-				if (endAttributesIndex - startAttributesIndex > 2) {
-					this.tokens = partialSort(this.tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
-						compareAttributeToken(
-							a as AttributeToken,
-							b as AttributeToken,
-							this.options.pugSortAttributesBeginning
-						)
-					);
-				}
-			}
-
 			if (this.options.pugSortAttributesEnd.length > 0) {
 				const startAttributesIndex: number = this.tokens.indexOf(token);
 				const endAttributesIndex: number = tempIndex;
@@ -473,6 +459,20 @@ export class PugPrinter {
 							b as AttributeToken,
 							this.options.pugSortAttributesEnd,
 							true
+						)
+					);
+				}
+			}
+
+			if (this.options.pugSortAttributesBeginning.length > 0) {
+				const startAttributesIndex: number = this.tokens.indexOf(token);
+				const endAttributesIndex: number = tempIndex;
+				if (endAttributesIndex - startAttributesIndex > 2) {
+					this.tokens = partialSort(this.tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
+						compareAttributeToken(
+							a as AttributeToken,
+							b as AttributeToken,
+							this.options.pugSortAttributesBeginning
 						)
 					);
 				}
