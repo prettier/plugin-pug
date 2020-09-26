@@ -62,30 +62,71 @@ function compareByLiteral(left: string, right: string): CompareResult {
 	return 0;
 }
 
-export function compareAttributeToken(a: AttributeToken, b: AttributeToken, sortAttributes: string[]): CompareResult {
-	let leftName = a.name;
-	let rightName = b.name;
-	let result: CompareResult = compareByVueBindingPrecedence(leftName, rightName);
+export function compareAttributeToken(
+	a: AttributeToken,
+	b: AttributeToken,
+	sortAttributes: string[],
+	moveToEnd: boolean = false
+): CompareResult {
+	const sortPatterns: RegExp[] = sortAttributes.map((sort) => new RegExp(sort));
+
+	const aName = a.name;
+	const bName = b.name;
+
+	let result: CompareResult = 0;
+
+	// let result: CompareResult = compareByVueBindingPrecedence(aName, bName);
+
+	// if (result === 0) {
+	// 	aName = trimVueBinding(aName);
+	// 	bName = trimVueBinding(bName);
+
+	// 	result = compareByAngularBindingPrecedence(aName, bName);
+	// }
+
+	// if (result === 0) {
+	// 	aName = trimAngularBinding(aName);
+	// 	bName = trimAngularBinding(bName);
+
+	// 	const aIndex: number = sortAttributes.indexOf(aName);
+	// 	const bIndex: number = sortAttributes.indexOf(bName);
+	// 	result = compareByIndex(aIndex, bIndex);
+	// }
 
 	if (result === 0) {
-		leftName = trimVueBinding(leftName);
-		rightName = trimVueBinding(rightName);
+		let aIndex: number = moveToEnd ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY;
+		let bIndex: number = moveToEnd ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY;
+		let aFound = false;
+		let bFound = false;
+		for (let index = 0; index < sortPatterns.length; index++) {
+			const pattern = sortPatterns[index];
+			if (!aFound && pattern.test(aName)) {
+				aIndex = index;
+				aFound = true;
+			}
+			if (!bFound && pattern.test(bName)) {
+				bIndex = index;
+				bFound = true;
+			}
+			if (aFound && bFound) {
+				break;
+			}
+		}
 
-		result = compareByAngularBindingPrecedence(leftName, rightName);
-	}
-
-	if (result === 0) {
-		leftName = trimAngularBinding(leftName);
-		rightName = trimAngularBinding(rightName);
-
-		const aIndex: number = sortAttributes.indexOf(leftName);
-		const bIndex: number = sortAttributes.indexOf(rightName);
 		result = compareByIndex(aIndex, bIndex);
 	}
 
-	if (result === 0) {
-		result = compareByLiteral(leftName, rightName);
-	}
+	// if (result === 0) {
+	// 	result = compareByLiteral(aName, bName);
+	// }
+
+	// if (result !== 0 && reverseCompare) {
+	// 	if (result === 1) {
+	// 		result = -1;
+	// 	} else {
+	// 		result = 1;
+	// 	}
+	// }
 
 	return result;
 }

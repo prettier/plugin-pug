@@ -469,9 +469,10 @@ export class PugPrinter {
 				if (endAttributesIndex - startAttributesIndex > 2) {
 					this.tokens = partialSort(this.tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
 						compareAttributeToken(
-							b as AttributeToken,
 							a as AttributeToken,
-							this.options.pugSortAttributesEnd
+							b as AttributeToken,
+							this.options.pugSortAttributesEnd,
+							true
 						)
 					);
 				}
