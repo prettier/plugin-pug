@@ -22,12 +22,13 @@ import {
 export const CATEGORY_PUG: string = 'Pug';
 
 export interface PugParserOptions
-	extends Pick<ParserOptions, 'printWidth' | 'singleQuote' | 'tabWidth' | 'useTabs' | 'bracketSpacing' | 'semi'> {
+	extends Pick<ParserOptions, 'printWidth' | 'singleQuote' | 'tabWidth' | 'useTabs' | 'bracketSpacing' | 'arrowParens' | 'semi'> {
 	pugPrintWidth: number;
 	pugSingleQuote: boolean | null;
 	pugTabWidth: number;
 	pugUseTabs: boolean | null;
 	pugBracketSpacing: boolean | null;
+	pugArrowParens: 'avoid' | 'always' | null;
 	pugSemi: boolean | null;
 
 	attributeSeparator: AttributeSeparator;

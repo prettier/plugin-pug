@@ -79,6 +79,8 @@ export interface PugPrinterOptions {
 	readonly pugUseTabs: boolean;
 	readonly bracketSpacing: boolean;
 	readonly pugBracketSpacing: boolean;
+	readonly arrowParens: 'avoid' | 'always';
+	readonly pugArrowParens: 'avoid' | 'always';
 	readonly semi: boolean;
 	readonly pugSemi: boolean;
 	readonly attributeSeparator: AttributeSeparator;
@@ -104,7 +106,7 @@ export class PugPrinter {
 
 	private readonly alwaysUseAttributeSeparator: boolean;
 	private readonly closingBracketRemainsAtNewLine: boolean;
-	private readonly codeInterpolationOptions: Pick<RequiredOptions, 'singleQuote' | 'printWidth' | 'endOfLine'>;
+	private readonly codeInterpolationOptions: Pick<RequiredOptions, 'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine'>;
 
 	private possibleIdPosition: number = 0;
 	private possibleClassPosition: number = 0;
@@ -124,6 +126,8 @@ export class PugPrinter {
 		const codeSingleQuote = !options.pugSingleQuote;
 		this.codeInterpolationOptions = {
 			singleQuote: codeSingleQuote,
+			bracketSpacing: options.pugBracketSpacing ?? options.bracketSpacing,
+			arrowParens: options.pugArrowParens ?? options.arrowParens,
 			printWidth: 9000,
 			endOfLine: 'lf'
 		};
@@ -827,8 +831,7 @@ export class PugPrinter {
 			val = format(val, {
 				parser: 'babel',
 				...this.codeInterpolationOptions,
-				semi: useSemi,
-				endOfLine: 'lf'
+				semi: useSemi
 			});
 			val = val.slice(0, -1);
 			if (val[0] === ';') {
