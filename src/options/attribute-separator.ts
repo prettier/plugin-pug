@@ -16,6 +16,11 @@ export const ATTRIBUTE_SEPARATOR_OPTION = {
 			value: 'as-needed',
 			description:
 				'Only add commas between attributes where required. Example: `button(type="submit", (click)="play()" disabled)`'
+		},
+		{
+			value: 'none',
+			description:
+				'Never add commas between attributes. Example: `button(type="submit" @click="play()" :style="style" disabled)`'
 		}
 	]
 };
@@ -38,20 +43,25 @@ export const PUG_ATTRIBUTE_SEPARATOR_OPTION = {
 			value: 'as-needed',
 			description:
 				'Only add commas between attributes where required. Example: `button(type="submit", (click)="play()" disabled)`'
+		},
+		{
+			value: 'none',
+			description:
+				'Never add commas between attributes. Example: `button(type="submit" @click="play()" :style="style" disabled)`'
 		}
 	]
 };
 
-export type AttributeSeparator = 'always' | 'as-needed';
+export type AttributeSeparator = 'always' | 'as-needed' | 'none';
 
-export function resolveAttributeSeparatorOption(attributeSeparator: AttributeSeparator): boolean {
+export function resolveAttributeSeparatorOption(attributeSeparator: AttributeSeparator): AttributeSeparator {
 	switch (attributeSeparator) {
 		case 'always':
-			return true;
 		case 'as-needed':
-			return false;
+    case 'none':
+      return attributeSeparator
 	}
 	throw new Error(
-		`Invalid option for pug attributeSeparator. Found '${attributeSeparator}'. Possible options: 'always' or 'as-needed'`
+		`Invalid option for pug attributeSeparator. Found '${attributeSeparator}'. Possible options: 'always', 'as-needed' or 'none'`
 	);
 }
