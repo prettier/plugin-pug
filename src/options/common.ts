@@ -96,6 +96,23 @@ export const PUG_BRACKET_SPACING_OPTION = {
 	]
 };
 
+export const PUG_ARROW_PARENS_OPTION = {
+	since: '1.6.2',
+	category: CATEGORY_PUG,
+	type: 'choice',
+	default: null,
+	choices: [
+		{
+			value: 'avoid',
+			description: 'Omit parens when possible.'
+		},
+		{
+			value: 'always',
+			description: 'Always add parens.'
+		}
+    ]
+}
+
 export const PUG_SEMI_OPTION = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
