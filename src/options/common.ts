@@ -110,8 +110,8 @@ export const PUG_ARROW_PARENS_OPTION = {
 			value: 'always',
 			description: 'Always add parens.'
 		}
-    ]
-}
+	]
+};
 
 export const PUG_SEMI_OPTION = {
 	since: '1.6.0',
