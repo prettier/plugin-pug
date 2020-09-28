@@ -17,7 +17,7 @@ describe('Options', () => {
 
 			expect(actual).toBe(expected);
 		});
-		test(`should work with 'none' option and angular syntax, but produce invalid output`, () => {
+		test('should work with \'none\' option and angular syntax, but produce invalid output', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'angular-formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'angular-unformatted.pug'), 'utf8');
 			const actual: string = format(code, {
@@ -28,6 +28,7 @@ describe('Options', () => {
 			});
 			expect(actual).toBe(expected);
 			expect(() => {
+				/* eslint @typescript-eslint/no-non-null-assertion: off */
 				parsers!.pug.parse(actual, parsers!, null!);
 			}).toThrow('Assigning to rvalue');
 		});

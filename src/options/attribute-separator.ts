@@ -58,8 +58,8 @@ export function resolveAttributeSeparatorOption(attributeSeparator: AttributeSep
 	switch (attributeSeparator) {
 		case 'always':
 		case 'as-needed':
-    case 'none':
-      return attributeSeparator
+		case 'none':
+			return attributeSeparator;
 	}
 	throw new Error(
 		`Invalid option for pug attributeSeparator. Found '${attributeSeparator}'. Possible options: 'always', 'as-needed' or 'none'`
