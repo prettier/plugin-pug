@@ -2,9 +2,6 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
 import { plugin, parsers } from './../../../../src/index';
-import { Parser } from 'prettier';
-
-/* eslint @typescript-eslint/no-non-null-assertion: off */
 
 describe('Options', () => {
 	describe('attributeSeparator', () => {
