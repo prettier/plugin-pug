@@ -156,6 +156,7 @@ They should be set via `Prettier`'s `overrides` option
     Example: `button(type="submit", (click)="play()" disabled)`
   - `'none'` -> Never add commas between attributes.  
     Example: `button(type="submit" @click="play()" :style="style" disabled)`
+    Please note that while this option will process Angular syntax (e.g. `(click)="play()"`), the resulting pug file will throw a syntax error when parsed: `Syntax Error: Assigning to rvalue`
 
 - `closingBracketPosition`  
   Position of closing bracket of attributes.
