@@ -52,6 +52,7 @@ import { createLogger, Logger, LogLevel } from './logger';
 import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
 import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
 import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
+import { ArrowParens } from './options/common';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
 	handleBracketSpacing,
@@ -79,8 +80,8 @@ export interface PugPrinterOptions {
 	readonly pugUseTabs: boolean;
 	readonly bracketSpacing: boolean;
 	readonly pugBracketSpacing: boolean;
-	readonly arrowParens: 'avoid' | 'always';
-	readonly pugArrowParens: 'avoid' | 'always';
+	readonly arrowParens: ArrowParens;
+	readonly pugArrowParens: ArrowParens;
 	readonly semi: boolean;
 	readonly pugSemi: boolean;
 	readonly attributeSeparator: AttributeSeparator;

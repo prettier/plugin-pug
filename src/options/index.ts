@@ -13,11 +13,12 @@ import {
 import {
 	PUG_BRACKET_SPACING_OPTION,
 	PUG_PRINT_WIDTH_OPTION,
-	PUG_ARROW_PARENS_OPTION,
 	PUG_SEMI_OPTION,
 	PUG_SINGLE_QUOTE_OPTION,
 	PUG_TAB_WIDTH_OPTION,
-	PUG_USE_TABS_OPTION
+	PUG_USE_TABS_OPTION,
+	PUG_ARROW_PARENS_OPTION,
+	ArrowParens
 } from './common';
 
 export const CATEGORY_PUG: string = 'Pug';
@@ -29,7 +30,7 @@ export interface PugParserOptions
 	pugTabWidth: number;
 	pugUseTabs: boolean | null;
 	pugBracketSpacing: boolean | null;
-	pugArrowParens: 'avoid' | 'always' | null;
+	pugArrowParens: ArrowParens | null;
 	pugSemi: boolean | null;
 
 	attributeSeparator: AttributeSeparator;
