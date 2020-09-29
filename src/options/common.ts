@@ -123,7 +123,7 @@ export const PUG_SEMI_OPTION = {
 };
 
 export const PUG_ARROW_PARENS_OPTION = {
-	since: '1.6.2',
+	since: '1.7.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
 	default: null,
