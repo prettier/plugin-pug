@@ -106,6 +106,7 @@ export class PugPrinter {
 	private readonly otherQuotes: "'" | '"';
 
 	private readonly alwaysUseAttributeSeparator: boolean;
+	private readonly neverUseAttributeSeparator: boolean;
 	private readonly closingBracketRemainsAtNewLine: boolean;
 	/* eslint-disable @typescript-eslint/indent */
 	private readonly codeInterpolationOptions: Pick<
@@ -127,7 +128,9 @@ export class PugPrinter {
 		this.indentString = options.pugUseTabs ? '\t' : ' '.repeat(options.pugTabWidth);
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
-		this.alwaysUseAttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
+		const attributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
+		this.alwaysUseAttributeSeparator = attributeSeparator === 'always';
+		this.neverUseAttributeSeparator = attributeSeparator === 'none';
 		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.closingBracketPosition);
 		const codeSingleQuote = !options.pugSingleQuote;
 		this.codeInterpolationOptions = {
@@ -535,7 +538,7 @@ export class PugPrinter {
 			this.currentIndex
 		);
 		if (this.previousToken?.type === 'attribute' && (!this.previousAttributeRemapped || hasNormalPreviousToken)) {
-			if (this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name)) {
+			if (!this.neverUseAttributeSeparator && (this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name))) {
 				this.result += ',';
 			}
 			if (!this.wrapAttributes) {
