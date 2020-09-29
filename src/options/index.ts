@@ -1,5 +1,6 @@
 import { ParserOptions } from 'prettier';
 import { AttributeSeparator, ATTRIBUTE_SEPARATOR_OPTION, PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
+import { PUG_SORT_ATTRIBUTES_BEGINNING_OPTION, PUG_SORT_ATTRIBUTES_END_OPTION } from './attribute-sorting';
 import {
 	ClosingBracketPosition,
 	CLOSING_BRACKET_POSITION_OPTION,
@@ -46,6 +47,9 @@ export interface PugParserOptions
 
 	commentPreserveSpaces: CommentPreserveSpaces;
 	pugCommentPreserveSpaces: CommentPreserveSpaces | null;
+
+	pugSortAttributesBeginning: string[];
+	pugSortAttributesEnd: string[];
 }
 
 export const options = {
@@ -61,5 +65,7 @@ export const options = {
 	closingBracketPosition: CLOSING_BRACKET_POSITION_OPTION,
 	pugClosingBracketPosition: PUG_CLOSING_BRACKET_POSITION_OPTION,
 	commentPreserveSpaces: COMMENT_PRESERVE_SPACES_OPTION,
-	pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION
+	pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION,
+	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
+	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION
 };
