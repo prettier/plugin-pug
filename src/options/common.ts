@@ -127,7 +127,7 @@ export const PUG_ARROW_PARENS_OPTION = {
 	category: CATEGORY_PUG,
 	type: 'choice',
 	default: null,
-    description: 'Include parentheses around a sole arrow function parameter.',
+	description: 'Include parentheses around a sole arrow function parameter.',
 	choices: [
 		{
 			value: null,
