@@ -1,12 +1,24 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.6.1...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.7.0...master)
+
+# 1.7.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.6.1...1.7.0)
+
+- Pass more prettier code-interpolation options ([#117])
+- Allow "none" as an option for attributeSeparator ([#102])
+- Improve warning message ([03777f5])
+
+[#117]: https://github.com/prettier/plugin-pug/pull/117
+[#116]: https://github.com/prettier/plugin-pug/issues/102
+[03777f5]: https://github.com/prettier/plugin-pug/commit/03777f5a120f00ff93444f70dd26c8bb396f6f33
 
 # 1.6.1
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.6.0...1.6.1)
 
-- Fix wrapped attribute multiline code indentation
+- Fix wrapped attribute multiline code indentation ([5a6082c])
 
 [5a6082c]: https://github.com/prettier/plugin-pug/commit/5a6082ca126c292673779bc02817390b526b9a97
 

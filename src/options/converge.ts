@@ -14,6 +14,8 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugUseTabs: options.pugUseTabs ?? options.useTabs,
 		bracketSpacing: options.bracketSpacing,
 		pugBracketSpacing: options.pugBracketSpacing ?? options.bracketSpacing,
+		arrowParens: options.arrowParens,
+		pugArrowParens: options.pugArrowParens ?? options.arrowParens,
 		semi: options.semi,
 		pugSemi: options.pugSemi ?? options.semi,
 		attributeSeparator: options.pugAttributeSeparator ?? options.attributeSeparator,

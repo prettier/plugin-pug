@@ -12,6 +12,8 @@ import {
 	PUG_COMMENT_PRESERVE_SPACES_OPTION
 } from './comment-preserve-spaces';
 import {
+	ArrowParens,
+	PUG_ARROW_PARENS_OPTION,
 	PUG_BRACKET_SPACING_OPTION,
 	PUG_PRINT_WIDTH_OPTION,
 	PUG_SEMI_OPTION,
@@ -23,12 +25,18 @@ import {
 export const CATEGORY_PUG: string = 'Pug';
 
 export interface PugParserOptions
-	extends Pick<ParserOptions, 'printWidth' | 'singleQuote' | 'tabWidth' | 'useTabs' | 'bracketSpacing' | 'semi'> {
+	/* eslint-disable @typescript-eslint/indent */
+	extends Pick<
+		ParserOptions,
+		'printWidth' | 'singleQuote' | 'tabWidth' | 'useTabs' | 'bracketSpacing' | 'arrowParens' | 'semi'
+	> {
+	/* eslint-enable @typescript-eslint/indent */
 	pugPrintWidth: number;
 	pugSingleQuote: boolean | null;
 	pugTabWidth: number;
 	pugUseTabs: boolean | null;
 	pugBracketSpacing: boolean | null;
+	pugArrowParens: ArrowParens | null;
 	pugSemi: boolean | null;
 
 	attributeSeparator: AttributeSeparator;
@@ -50,6 +58,7 @@ export const options = {
 	pugTabWidth: PUG_TAB_WIDTH_OPTION,
 	pugUseTabs: PUG_USE_TABS_OPTION,
 	pugBracketSpacing: PUG_BRACKET_SPACING_OPTION,
+	pugArrowParens: PUG_ARROW_PARENS_OPTION,
 	pugSemi: PUG_SEMI_OPTION,
 	attributeSeparator: ATTRIBUTE_SEPARATOR_OPTION,
 	pugAttributeSeparator: PUG_ATTRIBUTE_SEPARATOR_OPTION,

@@ -53,6 +53,7 @@ import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/a
 import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
 import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
 import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
+import { ArrowParens } from './options/common';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
 	handleBracketSpacing,
@@ -80,6 +81,8 @@ export interface PugPrinterOptions {
 	readonly pugUseTabs: boolean;
 	readonly bracketSpacing: boolean;
 	readonly pugBracketSpacing: boolean;
+	readonly arrowParens: ArrowParens;
+	readonly pugArrowParens: ArrowParens;
 	readonly semi: boolean;
 	readonly pugSemi: boolean;
 	readonly attributeSeparator: AttributeSeparator;
@@ -106,8 +109,14 @@ export class PugPrinter {
 	private readonly otherQuotes: "'" | '"';
 
 	private readonly alwaysUseAttributeSeparator: boolean;
+	private readonly neverUseAttributeSeparator: boolean;
 	private readonly closingBracketRemainsAtNewLine: boolean;
-	private readonly codeInterpolationOptions: Pick<RequiredOptions, 'singleQuote' | 'printWidth' | 'endOfLine'>;
+	/* eslint-disable @typescript-eslint/indent */
+	private readonly codeInterpolationOptions: Pick<
+		RequiredOptions,
+		'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine'
+	>;
+	/* eslint-enable @typescript-eslint/indent */
 
 	private possibleIdPosition: number = 0;
 	private possibleClassPosition: number = 0;
@@ -122,11 +131,15 @@ export class PugPrinter {
 		this.indentString = options.pugUseTabs ? '\t' : ' '.repeat(options.pugTabWidth);
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
-		this.alwaysUseAttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
+		const attributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
+		this.alwaysUseAttributeSeparator = attributeSeparator === 'always';
+		this.neverUseAttributeSeparator = attributeSeparator === 'none';
 		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.closingBracketPosition);
 		const codeSingleQuote = !options.pugSingleQuote;
 		this.codeInterpolationOptions = {
 			singleQuote: codeSingleQuote,
+			bracketSpacing: options.pugBracketSpacing ?? options.bracketSpacing,
+			arrowParens: options.pugArrowParens ?? options.arrowParens,
 			printWidth: 9000,
 			endOfLine: 'lf'
 		};
@@ -557,7 +570,10 @@ export class PugPrinter {
 			this.currentIndex
 		);
 		if (this.previousToken?.type === 'attribute' && (!this.previousAttributeRemapped || hasNormalPreviousToken)) {
-			if (this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name)) {
+			if (
+				!this.neverUseAttributeSeparator &&
+				(this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name))
+			) {
 				this.result += ',';
 			}
 			if (!this.wrapAttributes) {
