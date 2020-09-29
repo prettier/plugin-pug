@@ -538,7 +538,10 @@ export class PugPrinter {
 			this.currentIndex
 		);
 		if (this.previousToken?.type === 'attribute' && (!this.previousAttributeRemapped || hasNormalPreviousToken)) {
-			if (!this.neverUseAttributeSeparator && (this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name))) {
+			if (
+				!this.neverUseAttributeSeparator &&
+				(this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name))
+			) {
 				this.result += ',';
 			}
 			if (!this.wrapAttributes) {

@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { plugin, parsers } from './../../../../src/index';
+import { parsers, plugin } from './../../../../src/index';
 
 describe('Options', () => {
 	describe('attributeSeparator', () => {
@@ -17,7 +17,7 @@ describe('Options', () => {
 
 			expect(actual).toBe(expected);
 		});
-		test('should work with \'none\' option and angular syntax, but produce invalid output', () => {
+		test("should work with 'none' option and angular syntax, but produce invalid output", () => {
 			const expected: string = readFileSync(resolve(__dirname, 'angular-formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'angular-unformatted.pug'), 'utf8');
 			const actual: string = format(code, {
