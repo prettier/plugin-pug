@@ -832,7 +832,8 @@ export class PugPrinter {
 			val = format(val, {
 				parser: 'babel',
 				...this.codeInterpolationOptions,
-				semi: useSemi
+				semi: useSemi,
+				endOfLine: 'lf'
 			});
 			val = val.slice(0, -1);
 			if (val[0] === ';') {
