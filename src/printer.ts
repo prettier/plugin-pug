@@ -52,6 +52,7 @@ import { createLogger, Logger, LogLevel } from './logger';
 import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
 import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
 import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
+import { ArrowParens } from './options/common';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
 	handleBracketSpacing,
@@ -79,6 +80,8 @@ export interface PugPrinterOptions {
 	readonly pugUseTabs: boolean;
 	readonly bracketSpacing: boolean;
 	readonly pugBracketSpacing: boolean;
+	readonly arrowParens: ArrowParens;
+	readonly pugArrowParens: ArrowParens;
 	readonly semi: boolean;
 	readonly pugSemi: boolean;
 	readonly attributeSeparator: AttributeSeparator;
@@ -105,7 +108,12 @@ export class PugPrinter {
 	private readonly alwaysUseAttributeSeparator: boolean;
 	private readonly neverUseAttributeSeparator: boolean;
 	private readonly closingBracketRemainsAtNewLine: boolean;
-	private readonly codeInterpolationOptions: Pick<RequiredOptions, 'singleQuote' | 'printWidth' | 'endOfLine'>;
+	/* eslint-disable @typescript-eslint/indent */
+	private readonly codeInterpolationOptions: Pick<
+		RequiredOptions,
+		'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine'
+	>;
+	/* eslint-enable @typescript-eslint/indent */
 
 	private possibleIdPosition: number = 0;
 	private possibleClassPosition: number = 0;
@@ -127,6 +135,8 @@ export class PugPrinter {
 		const codeSingleQuote = !options.pugSingleQuote;
 		this.codeInterpolationOptions = {
 			singleQuote: codeSingleQuote,
+			bracketSpacing: options.pugBracketSpacing ?? options.bracketSpacing,
+			arrowParens: options.pugArrowParens ?? options.arrowParens,
 			printWidth: 9000,
 			endOfLine: 'lf'
 		};
