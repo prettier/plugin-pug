@@ -235,6 +235,11 @@ div(id=id, class='collapse' + (collapsed ? '' : ' show') + ' cardcontent')
 // Now your js logic is extracted from the plain logic
 ```
 
+[Issue 114](https://github.com/prettier/plugin-pug/issues/114)
+
+If you have tags at the top/root that are indented, they will lose indentation due to a technical limitation of pug.  
+Please check these before committing after running this plugin for the first time and fix them manually.
+
 ## Integration with editors
 
 If you are using a text editor that supports Prettier integration (e.g. [Atom](https://atom.io/packages/prettier-atom)), you can have all Prettier perks for your Pug code too!
