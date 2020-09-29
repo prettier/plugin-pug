@@ -121,3 +121,27 @@ export const PUG_SEMI_OPTION = {
 		}
 	]
 };
+
+export const PUG_ARROW_PARENS_OPTION = {
+	since: '1.6.2',
+	category: CATEGORY_PUG,
+	type: 'choice',
+	default: null,
+	description: 'Include parentheses around a sole arrow function parameter.',
+	choices: [
+		{
+			value: null,
+			description: 'Use `arrowParens` value.'
+		},
+		{
+			value: 'always',
+			description: 'Always add parens. Example: `(x) => x`'
+		},
+		{
+			value: 'avoid',
+			description: 'Omit parens when possible. Example: `x => x`'
+		}
+	]
+};
+
+export type ArrowParens = 'avoid' | 'always';

@@ -16,18 +16,21 @@ import {
 	PUG_SEMI_OPTION,
 	PUG_SINGLE_QUOTE_OPTION,
 	PUG_TAB_WIDTH_OPTION,
-	PUG_USE_TABS_OPTION
+	PUG_USE_TABS_OPTION,
+	PUG_ARROW_PARENS_OPTION,
+	ArrowParens
 } from './common';
 
 export const CATEGORY_PUG: string = 'Pug';
 
 export interface PugParserOptions
-	extends Pick<ParserOptions, 'printWidth' | 'singleQuote' | 'tabWidth' | 'useTabs' | 'bracketSpacing' | 'semi'> {
+	extends Pick<ParserOptions, 'printWidth' | 'singleQuote' | 'tabWidth' | 'useTabs' | 'bracketSpacing' | 'arrowParens' | 'semi'> {
 	pugPrintWidth: number;
 	pugSingleQuote: boolean | null;
 	pugTabWidth: number;
 	pugUseTabs: boolean | null;
 	pugBracketSpacing: boolean | null;
+	pugArrowParens: ArrowParens | null;
 	pugSemi: boolean | null;
 
 	attributeSeparator: AttributeSeparator;
@@ -46,6 +49,7 @@ export const options = {
 	pugTabWidth: PUG_TAB_WIDTH_OPTION,
 	pugUseTabs: PUG_USE_TABS_OPTION,
 	pugBracketSpacing: PUG_BRACKET_SPACING_OPTION,
+	pugArrowParens: PUG_ARROW_PARENS_OPTION,
 	pugSemi: PUG_SEMI_OPTION,
 	attributeSeparator: ATTRIBUTE_SEPARATOR_OPTION,
 	pugAttributeSeparator: PUG_ATTRIBUTE_SEPARATOR_OPTION,
