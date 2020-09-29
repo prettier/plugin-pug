@@ -11,20 +11,25 @@ import {
 	PUG_COMMENT_PRESERVE_SPACES_OPTION
 } from './comment-preserve-spaces';
 import {
+	ArrowParens,
+	PUG_ARROW_PARENS_OPTION,
 	PUG_BRACKET_SPACING_OPTION,
 	PUG_PRINT_WIDTH_OPTION,
 	PUG_SEMI_OPTION,
 	PUG_SINGLE_QUOTE_OPTION,
 	PUG_TAB_WIDTH_OPTION,
-	PUG_USE_TABS_OPTION,
-	PUG_ARROW_PARENS_OPTION,
-	ArrowParens
+	PUG_USE_TABS_OPTION
 } from './common';
 
 export const CATEGORY_PUG: string = 'Pug';
 
 export interface PugParserOptions
-	extends Pick<ParserOptions, 'printWidth' | 'singleQuote' | 'tabWidth' | 'useTabs' | 'bracketSpacing' | 'arrowParens' | 'semi'> {
+	/* eslint-disable @typescript-eslint/indent */
+	extends Pick<
+		ParserOptions,
+		'printWidth' | 'singleQuote' | 'tabWidth' | 'useTabs' | 'bracketSpacing' | 'arrowParens' | 'semi'
+	> {
+	/* eslint-enable @typescript-eslint/indent */
 	pugPrintWidth: number;
 	pugSingleQuote: boolean | null;
 	pugTabWidth: number;

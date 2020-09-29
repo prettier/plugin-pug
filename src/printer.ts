@@ -107,7 +107,12 @@ export class PugPrinter {
 
 	private readonly alwaysUseAttributeSeparator: boolean;
 	private readonly closingBracketRemainsAtNewLine: boolean;
-	private readonly codeInterpolationOptions: Pick<RequiredOptions, 'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine'>;
+	/* eslint-disable @typescript-eslint/indent */
+	private readonly codeInterpolationOptions: Pick<
+		RequiredOptions,
+		'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine'
+	>;
+	/* eslint-enable @typescript-eslint/indent */
 
 	private possibleIdPosition: number = 0;
 	private possibleClassPosition: number = 0;
