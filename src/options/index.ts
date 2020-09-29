@@ -11,6 +11,7 @@ import {
 	COMMENT_PRESERVE_SPACES_OPTION,
 	PUG_COMMENT_PRESERVE_SPACES_OPTION
 } from './comment-preserve-spaces';
+import { MAX_SINGLE_LINE_ATTRIBUTES_OPTION } from './max-single-line-attributes';
 import {
 	ArrowParens,
 	PUG_ARROW_PARENS_OPTION,
@@ -50,6 +51,8 @@ export interface PugParserOptions
 
 	pugSortAttributesBeginning: string[];
 	pugSortAttributesEnd: string[];
+
+	pugMaxSingleLineAttributes: number;
 }
 
 export const options = {
@@ -67,5 +70,6 @@ export const options = {
 	commentPreserveSpaces: COMMENT_PRESERVE_SPACES_OPTION,
 	pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION,
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
-	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION
+	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION,
+	pugMaxSingleLineAttributes: MAX_SINGLE_LINE_ATTRIBUTES_OPTION
 };

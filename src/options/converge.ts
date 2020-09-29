@@ -22,6 +22,7 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		closingBracketPosition: options.pugClosingBracketPosition ?? options.closingBracketPosition,
 		commentPreserveSpaces: options.pugCommentPreserveSpaces ?? options.commentPreserveSpaces,
 		pugSortAttributesBeginning: options.pugSortAttributesBeginning,
-		pugSortAttributesEnd: options.pugSortAttributesEnd
+		pugSortAttributesEnd: options.pugSortAttributesEnd,
+		pugMaxSingleLineAttributes: options.pugMaxSingleLineAttributes
 	};
 }
