@@ -202,7 +202,9 @@ They should be set via `Prettier`'s `overrides` option
 
 - `pugSortAttributesBeginning` (and `pugSortAttributesEnd`)
   Sort attributes by regex patterns to the beginning or the end.  
-  [Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)
+  [Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)  
+  _This feature was planned since `1.2.0`, but it was always a bit unstable and opinionated._  
+  _If there are any bugs, please report them._
 
 The definitions for these options can be found in [src/options/index.ts](https://github.com/prettier/plugin-pug/blob/master/src/options/index.ts)
 
