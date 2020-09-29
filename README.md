@@ -200,6 +200,10 @@ They should be set via `Prettier`'s `overrides` option
   - `'trim-all'` -> Trim all spaces within comments.  
     Example: `// this is a comment`
 
+- `pugSortAttributesBeginning` (and `pugSortAttributesEnd`)
+  Sort attributes by regex patterns to the beginning or the end.  
+  [Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)
+
 The definitions for these options can be found in [src/options/index.ts](https://github.com/prettier/plugin-pug/blob/master/src/options/index.ts)
 
 ## Some workarounds
