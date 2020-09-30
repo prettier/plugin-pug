@@ -1,9 +1,9 @@
-import {readFileSync} from 'fs';
-import {resolve} from 'path';
-import {format} from 'prettier';
-import {AttributeToken} from 'pug-lexer';
-import {compareAttributeToken} from '../../../src/options/attribute-sorting/utils';
-import {plugin} from './../../../src/index';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+import { format } from 'prettier';
+import { AttributeToken } from 'pug-lexer';
+import { compareAttributeToken } from '../../../src/options/attribute-sorting/utils';
+import { plugin } from './../../../src/index';
 
 function createAttributeToken(name: string): AttributeToken {
 	return {
@@ -12,8 +12,8 @@ function createAttributeToken(name: string): AttributeToken {
 		mustEscape: false,
 		type: 'attribute',
 		loc: {
-			start: {line: 0, column: 0},
-			end: {line: 0, column: 0}
+			start: { line: 0, column: 0 },
+			end: { line: 0, column: 0 }
 		}
 	};
 }
@@ -84,22 +84,9 @@ describe('Options', () => {
 				'src',
 				'alt',
 				'@click',
-				':disabled',
+				':disabled'
 			];
-			const code: string[] = [
-				'y',
-				'c',
-				'z',
-				'a',
-				':disabled',
-				'alt',
-				'b',
-				':key',
-				'v-for',
-				'@click',
-				'src',
-				'x',
-			];
+			const code: string[] = ['y', 'c', 'z', 'a', ':disabled', 'alt', 'b', ':key', 'v-for', '@click', 'src', 'x'];
 			const actual: string[] = code.sort((a, b) =>
 				compareAttributeToken(
 					createAttributeToken(a),
