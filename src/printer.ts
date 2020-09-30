@@ -1,4 +1,4 @@
-import { format, RequiredOptions } from 'prettier';
+import {format, RequiredOptions} from 'prettier';
 import {
 	AndAttributesToken,
 	AttributeToken,
@@ -47,14 +47,14 @@ import {
 	WhileToken,
 	YieldToken
 } from 'pug-lexer';
-import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
-import { createLogger, Logger, LogLevel } from './logger';
-import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
-import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
-import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
-import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
-import { ArrowParens } from './options/common';
-import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
+import {DOCTYPE_SHORTCUT_REGISTRY} from './doctype-shortcut-registry';
+import {createLogger, Logger, LogLevel} from './logger';
+import {AttributeSeparator, resolveAttributeSeparatorOption} from './options/attribute-separator';
+import {compareAttributeToken, partialSort} from './options/attribute-sorting/utils';
+import {ClosingBracketPosition, resolveClosingBracketPositionOption} from './options/closing-bracket-position';
+import {CommentPreserveSpaces, formatCommentPreserveSpaces} from './options/comment-preserve-spaces';
+import {ArrowParens} from './options/common';
+import {isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation} from './utils/angular';
 import {
 	handleBracketSpacing,
 	isMultilineInterpolation,
@@ -63,7 +63,7 @@ import {
 	previousNormalAttributeToken,
 	unwrapLineFeeds
 } from './utils/common';
-import { isVueEventBinding, isVueExpression } from './utils/vue';
+import {isVueEventBinding, isVueExpression} from './utils/vue';
 
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {
@@ -231,7 +231,7 @@ export class PugPrinter {
 	): string {
 		val = val.trim();
 		val = val.slice(1, -1);
-		val = format(val, { parser: parser as any, ...this.codeInterpolationOptions });
+		val = format(val, {parser: parser as any, ...this.codeInterpolationOptions});
 		val = unwrapLineFeeds(val);
 		return this.quoteString(val);
 	}
@@ -329,7 +329,7 @@ export class PugPrinter {
 	private formatVueEventBinding(val: string): string {
 		val = val.trim();
 		val = val.slice(1, -1); // Remove quotes
-		val = format(val, { parser: '__vue_event_binding' as any, ...this.codeInterpolationOptions });
+		val = format(val, {parser: '__vue_event_binding' as any, ...this.codeInterpolationOptions});
 		val = unwrapLineFeeds(val);
 		if (val[val.length - 1] === ';') {
 			val = val.slice(0, -1);
@@ -388,7 +388,7 @@ export class PugPrinter {
 		}
 		this.currentLineLength += val.length;
 		const result = `${this.computedIndent}${val}`;
-		logger.debug('tag', { result, val: token.val, length: token.val.length }, this.currentLineLength);
+		logger.debug('tag', {result, val: token.val, length: token.val.length}, this.currentLineLength);
 		this.possibleIdPosition = this.result.length + result.length;
 		this.possibleClassPosition = this.result.length + result.length;
 		return result;
@@ -417,7 +417,7 @@ export class PugPrinter {
 						}
 						this.currentLineLength += 1 + val.length;
 						logger.debug(
-							{ tokenName: tempToken.name, length: tempToken.name.length },
+							{tokenName: tempToken.name, length: tempToken.name.length},
 							this.currentLineLength
 						);
 						break;
@@ -426,13 +426,13 @@ export class PugPrinter {
 						nonPrefixAttributes += 1;
 						this.currentLineLength += tempToken.name.length;
 						logger.debug(
-							{ tokenName: tempToken.name, length: tempToken.name.length },
+							{tokenName: tempToken.name, length: tempToken.name.length},
 							this.currentLineLength
 						);
 						const val = tempToken.val.toString();
 						if (val.length > 0 && val !== 'true') {
 							this.currentLineLength += 1 + val.length;
-							logger.debug({ tokenVal: val, length: val.length }, this.currentLineLength);
+							logger.debug({tokenVal: val, length: val.length}, this.currentLineLength);
 						}
 						break;
 					}
@@ -462,7 +462,7 @@ export class PugPrinter {
 				this.wrapAttributes = true;
 			}
 
-			if (this.options.pugSortAttributesEnd.length > 0) {
+			if (this.options.pugSortAttributesEnd.length > 0 || this.options.pugSortAttributesBeginning.length > 0) {
 				const startAttributesIndex: number = this.tokens.indexOf(token);
 				const endAttributesIndex: number = tempIndex;
 				if (endAttributesIndex - startAttributesIndex > 2) {
@@ -471,21 +471,7 @@ export class PugPrinter {
 							a as AttributeToken,
 							b as AttributeToken,
 							this.options.pugSortAttributesEnd,
-							true
-						)
-					);
-				}
-			}
-
-			if (this.options.pugSortAttributesBeginning.length > 0) {
-				const startAttributesIndex: number = this.tokens.indexOf(token);
-				const endAttributesIndex: number = tempIndex;
-				if (endAttributesIndex - startAttributesIndex > 2) {
-					this.tokens = partialSort(this.tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
-						compareAttributeToken(
-							a as AttributeToken,
-							b as AttributeToken,
-							this.options.pugSortAttributesBeginning
+							this.options.pugSortAttributesBeginning,
 						)
 					);
 				}
@@ -671,7 +657,7 @@ export class PugPrinter {
 	private indent(token: IndentToken): string {
 		const result = `\n${this.indentString.repeat(this.indentLevel)}`;
 		this.currentLineLength = result.length - 1 + 1 + this.indentString.length; // -1 for \n, +1 for non zero based
-		logger.debug('indent', { result, indentLevel: this.indentLevel }, this.currentLineLength);
+		logger.debug('indent', {result, indentLevel: this.indentLevel}, this.currentLineLength);
 		this.indentLevel++;
 		return result;
 	}
@@ -687,14 +673,14 @@ export class PugPrinter {
 		}
 		this.indentLevel--;
 		this.currentLineLength = 1 + this.indentString.repeat(this.indentLevel).length; // -1 for \n, +1 for non zero based
-		logger.debug('outdent', { result, indentLevel: this.indentLevel }, this.currentLineLength);
+		logger.debug('outdent', {result, indentLevel: this.indentLevel}, this.currentLineLength);
 		return result;
 	}
 
 	private class(token: ClassToken): void {
 		const val = `.${token.val}`;
 		this.currentLineLength += val.length;
-		logger.debug('class', { val, length: val.length }, this.currentLineLength);
+		logger.debug('class', {val, length: val.length}, this.currentLineLength);
 		switch (this.previousToken?.type) {
 			case 'newline':
 			case 'outdent':
@@ -751,7 +737,7 @@ export class PugPrinter {
 		}
 		result += '\n';
 		this.currentLineLength = 1 + this.indentString.repeat(this.indentLevel).length; // -1 for \n, +1 for non zero based
-		logger.debug('newline', { result, indentLevel: this.indentLevel }, this.currentLineLength);
+		logger.debug('newline', {result, indentLevel: this.indentLevel}, this.currentLineLength);
 		return result;
 	}
 

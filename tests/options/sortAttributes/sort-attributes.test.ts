@@ -1,9 +1,9 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { format } from 'prettier';
-import { AttributeToken } from 'pug-lexer';
-import { compareAttributeToken } from '../../../src/options/attribute-sorting/utils';
-import { plugin } from './../../../src/index';
+import {readFileSync} from 'fs';
+import {resolve} from 'path';
+import {format} from 'prettier';
+import {AttributeToken} from 'pug-lexer';
+import {compareAttributeToken} from '../../../src/options/attribute-sorting/utils';
+import {plugin} from './../../../src/index';
 
 function createAttributeToken(name: string): AttributeToken {
 	return {
@@ -12,8 +12,8 @@ function createAttributeToken(name: string): AttributeToken {
 		mustEscape: false,
 		type: 'attribute',
 		loc: {
-			start: { line: 0, column: 0 },
-			end: { line: 0, column: 0 }
+			start: {line: 0, column: 0},
+			end: {line: 0, column: 0}
 		}
 	};
 }
@@ -38,19 +38,75 @@ describe('Options', () => {
 
 	describe('sort utilities', () => {
 		test('compare 1', () => {
+			const pugSortAttributesBeginning = ['v-for', ':key', 'src', 'alt'];
+			const pugSortAttributesEnd: string[] = [];
 			const expected: ReadonlyArray<string> = ['v-for', ':key', 'src', 'alt'];
 			const code: string[] = ['alt', ':key', 'v-for', 'src'];
 			const actual: string[] = code.sort((a, b) =>
-				compareAttributeToken(createAttributeToken(a), createAttributeToken(b), ['v-for', ':key', 'src', 'alt'])
+				compareAttributeToken(
+					createAttributeToken(a),
+					createAttributeToken(b),
+					pugSortAttributesEnd,
+					pugSortAttributesBeginning
+				)
 			);
 
 			expect(actual).toStrictEqual(expected);
 		});
 		test('compare 2', () => {
+			const pugSortAttributesBeginning: string[] = [];
+			const pugSortAttributesEnd = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
 			const expected: ReadonlyArray<string> = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
 			const code: string[] = ['v-for', ':disabled', ':key', '@click', 'src', 'alt'];
 			const actual: string[] = code.sort((a, b) =>
-				compareAttributeToken(createAttributeToken(a), createAttributeToken(b), ['@click', ':disabled'], true)
+				compareAttributeToken(
+					createAttributeToken(a),
+					createAttributeToken(b),
+					pugSortAttributesEnd,
+					pugSortAttributesBeginning
+				)
+			);
+
+			expect(actual).toStrictEqual(expected);
+		});
+		test('compare 3', () => {
+			const pugSortAttributesBeginning = ['^x$', '^y$', '^z$'];
+			const pugSortAttributesEnd = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
+			const expected: ReadonlyArray<string> = [
+				'x',
+				'y',
+				'z',
+				'a',
+				'b',
+				'c',
+				'v-for',
+				':key',
+				'src',
+				'alt',
+				'@click',
+				':disabled',
+			];
+			const code: string[] = [
+				'y',
+				'c',
+				'z',
+				'a',
+				':disabled',
+				'alt',
+				'b',
+				':key',
+				'v-for',
+				'@click',
+				'src',
+				'x',
+			];
+			const actual: string[] = code.sort((a, b) =>
+				compareAttributeToken(
+					createAttributeToken(a),
+					createAttributeToken(b),
+					pugSortAttributesEnd,
+					pugSortAttributesBeginning
+				)
 			);
 
 			expect(actual).toStrictEqual(expected);
