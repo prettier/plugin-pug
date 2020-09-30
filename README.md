@@ -164,8 +164,40 @@ These additional options are specific to pug templates and can be configured in 
   [Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)  
   _This feature was planned since `1.2.0`, but it was always a bit unstable and opinionated._  
   _If there are any bugs, please report them._
+- `pugWrapAttributesThreshold`  
+  Define the maximum amount of attributes that an element can appear with on one line before it gets wrapped.
 
-The definitions for these options can be found in [src/options/index.ts](https://github.com/prettier/plugin-pug/blob/master/src/options/index.ts)
+  Choices:
+
+  - `-1` _default_ -> Only wrap attributes as needed.  
+    Example:
+    ```pug
+    input(type="text")
+    input(type="text", value="my_value", name="my_name")
+    ```
+  - `0` -> Always wrap attributes.  
+    Example:
+    ```pug
+    input(
+      type="text"
+    )
+    input(
+      type="text",
+      value="my_value",
+      name="my_name"
+    )
+    ```
+  - `1` -> Allow one unwrapped attribute, wrap two and more.  
+    Example:
+    ```pug
+    input(type="text")
+    input(
+      type="text",
+      value="my_value",
+      name="my_name"
+    )
+    ```
+  - `2 .. Infinity` -> Same as above, just with different thresholds.  
 
 ## Some workarounds
 
