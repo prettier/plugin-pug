@@ -91,7 +91,7 @@ By using versions of these standard options prefixed with `pug`, you can overrid
   Print semicolons at the ends of code statements.
 - `pugSingleQuote`  
   Use single quotes instead of double quotes.  
-  Please note tha the opposite setting will be used automatically for inlined JavaScript.
+  Please note that the opposite setting will be used automatically for inlined JavaScript.
 - `pugTabWidth`  
   Use spaces for indentation and specify the number of spaces per indentation-level.
 - `pugUseTabs`  
