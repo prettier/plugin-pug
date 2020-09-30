@@ -199,8 +199,6 @@ These additional options are specific to pug templates and can be configured in 
     ```
   - `2 .. Infinity` -> Same as above, just with different thresholds.  
 
-The definitions for these options can be found in [src/options/index.ts](https://github.com/prettier/plugin-pug/blob/master/src/options/index.ts)
-
 ## Some workarounds
 
 There are some code examples that are not formatted well with this plugin and can damage your code.  
