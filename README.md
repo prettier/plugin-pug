@@ -79,7 +79,7 @@ yarn prettier --write "**/*.pug"
 
 ### Prettier Options
 
-- `bracketSpacing`  
+- `bracketSpacing` | `pugBracketSpacing`  
   If you want to configure different bracketSpacing for pug than for js code, you can use prettier's override.
   ```json
   {
@@ -95,9 +95,9 @@ yarn prettier --write "**/*.pug"
     ]
   }
   ```
-- `printWidth`  
+- `printWidth` | `pugPrintWidth`  
   _Currently not very accurate, but works_
-- `semi`  
+- `semi` | `pugSemi`  
   If you want to configure different semi for pug than for js code, you can use prettier's override.
   ```json
   {
@@ -113,7 +113,7 @@ yarn prettier --write "**/*.pug"
     ]
   }
   ```
-- `singleQuote`  
+- `singleQuote` | `pugSingleQuote`  
   If you want to configure different quotes for pug than for js code, you can use prettier's override.
   ```json
   {
@@ -129,14 +129,16 @@ yarn prettier --write "**/*.pug"
     ]
   }
   ```
-- `tabWidth`  
+- `tabWidth` | `pugTabWidth`  
   Use spaces for indentation
-- `useTabs`  
-  Use tab for indentation
-  Overrides `tabWidth`
-
-> All these six Prettier options have an alias e.g. `pugSingleQuote`  
-> You can force override pug formatting with them e.g. when using `pug` embedded in `vue` files
+- `useTabs` | `pugUseTabs`  
+  Use tab for indentation  
+  Overrides `tabWidth` | `pugTabWidth`
+- `arrowParens` | `pugArrowParens`  
+  Include parentheses around a sole arrow function parameter
+  
+> As listed above, all these standard Prettier options have `pug`-prefixed aliases, e.g. `pugSingleQuote`  
+> You can use these aliases to force-override pug formatting, e.g. when using `pug` embedded in `vue` files.
 
 See [changelog 1.6.0](https://github.com/prettier/plugin-pug/blob/master/CHANGELOG.md#160) for more
 
@@ -145,7 +147,7 @@ See [changelog 1.6.0](https://github.com/prettier/plugin-pug/blob/master/CHANGEL
 These are specific options only for prettier-pug  
 They should be set via `Prettier`'s `overrides` option
 
-- `attributeSeparator`  
+- `attributeSeparator` | `pugAttributeSeparator`  
   Change when attributes are separated by commas in tags.
 
   Choices:
@@ -158,7 +160,7 @@ They should be set via `Prettier`'s `overrides` option
     Example: `button(type="submit" @click="play()" :style="style" disabled)`
     Please note that while this option will process Angular syntax (e.g. `(click)="play()"`), the resulting pug file will throw a syntax error when parsed: `Syntax Error: Assigning to rvalue`
 
-- `closingBracketPosition`  
+- `closingBracketPosition` | `pugClosingBracketPosition`  
   Position of closing bracket of attributes.
 
   Choices:
@@ -188,7 +190,7 @@ They should be set via `Prettier`'s `overrides` option
       autocomplete="on")
     ```
 
-- `commentPreserveSpaces`  
+- `commentPreserveSpaces` | `pugCommentPreserveSpaces`  
   Change behavior of spaces within comments.
 
   Choices:
@@ -200,7 +202,8 @@ They should be set via `Prettier`'s `overrides` option
   - `'trim-all'` -> Trim all spaces within comments.  
     Example: `// this is a comment`
 
-- `pugSortAttributesBeginning` (and `pugSortAttributesEnd`)
+- `sortAttributesBeginning` | `pugSortAttributesBeginning` 
+  `sortAttributesEnd` | `pugSortAttributesEnd`  
   Sort attributes by regex patterns to the beginning or the end.  
   [Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)  
   _This feature was planned since `1.2.0`, but it was always a bit unstable and opinionated._  
