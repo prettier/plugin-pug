@@ -1,20 +1,11 @@
-button(
-  type="button"
-)
-button(
-  type="submit",
-  (click)="play()"
-)
+button(type="button")
+button(type="submit", (click)="play()")
 hello-framework(
   [name]="name",
   [version]="version",
   (release)="onVersionRelease()"
 )
-nav-component(
-  locale-relative-redirect="true",
-  highlight="home",
-  pin="false"
-)
+nav-component(locale-relative-redirect="true", highlight="home", pin="false")
 .wrapper(
   data-nav,
   data-next="Next",

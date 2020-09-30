@@ -463,7 +463,7 @@ export class PugPrinter {
 			logger.debug(this.currentLineLength);
 			if (
 				this.currentLineLength > this.options.pugPrintWidth ||
-				this.options.pugMaxSingleLineAttributes > 0 && numAttributes > this.options.pugMaxSingleLineAttributes
+				this.options.pugMaxSingleLineAttributes >= 0 && numAttributes > this.options.pugMaxSingleLineAttributes
 			) {
 				this.wrapAttributes = true;
 			}
