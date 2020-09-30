@@ -105,9 +105,9 @@ export class PugPrinter {
 	private indentLevel: number = 0;
 
 	/**
-	 * The line length starts by 1, it's not an zero based index
+	 * Counting the line length starts at 0
 	 */
-	private currentLineLength: number = 1;
+	private currentLineLength: number = 0;
 
 	private readonly quotes: "'" | '"';
 	private readonly otherQuotes: "'" | '"';
@@ -417,8 +417,8 @@ export class PugPrinter {
 			this.currentLineLength += 1;
 			let tempToken: AttributeToken | EndAttributesToken = this.nextToken;
 			let tempIndex: number = this.currentIndex + 1;
-			let nonPrefixAttributes: number = 0;
 			let hasPrefixAttribute: boolean = false;
+			let hasNonPrefixAttributes: boolean = false;
 			let numAttributes: number = 0;
 			while (tempToken.type === 'attribute') {
 				numAttributes++;
@@ -441,8 +441,17 @@ export class PugPrinter {
 						break;
 					}
 					default: {
-						nonPrefixAttributes += 1;
 						this.currentLineLength += tempToken.name.length;
+						if (hasNonPrefixAttributes) {
+							// If this isn't the first non-prefix attribute, add space and separator
+							this.currentLineLength += 1;
+							if (
+								!this.neverUseAttributeSeparator &&
+								(this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(tempToken.name))
+							) {
+								this.currentLineLength += 1;
+							}
+						}
 						logger.debug(
 							{ tokenName: tempToken.name, length: tempToken.name.length },
 							this.currentLineLength
@@ -452,6 +461,7 @@ export class PugPrinter {
 							this.currentLineLength += 1 + val.length;
 							logger.debug({ tokenVal: val, length: val.length }, this.currentLineLength);
 						}
+						hasNonPrefixAttributes = true;
 						break;
 					}
 				}
@@ -464,16 +474,12 @@ export class PugPrinter {
 					this.currentLineLength -= 3;
 				}
 			}
-			const hasPrefixAttributes: boolean = nonPrefixAttributes > 0;
-			if (!hasPrefixAttributes) {
-				// Remove leading brace
-				this.currentLineLength -= 1;
-			} else {
-				// Attributes are separated by commas: ', '.length === 2
-				this.currentLineLength += 2 * (nonPrefixAttributes - 1);
-
+			if (hasNonPrefixAttributes) {
 				// Add trailing brace
 				this.currentLineLength += 1;
+			} else {
+				// Remove leading brace
+				this.currentLineLength -= 1;
 			}
 			logger.debug(this.currentLineLength);
 			if (

@@ -11,6 +11,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'pug' as any,
 				plugins: [plugin],
+				printWidth: 80,
 				// @ts-expect-error
 				attributeSeparator: 'as-needed'
 			});
