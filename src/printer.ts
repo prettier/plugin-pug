@@ -234,6 +234,13 @@ export class PugPrinter {
 		return !!token && possibilities.includes(token.type) !== invert;
 	}
 
+	private tokenNeedsSeparator(token: AttributeToken): boolean {
+		return (
+			!this.neverUseAttributeSeparator &&
+			(this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name))
+		);
+	}
+
 	private formatDelegatePrettier(
 		val: string,
 		parser: '__vue_expression' | '__ng_binding' | '__ng_action' | '__ng_directive'
@@ -443,12 +450,10 @@ export class PugPrinter {
 					default: {
 						this.currentLineLength += tempToken.name.length;
 						if (hasNonPrefixAttributes) {
-							// If this isn't the first non-prefix attribute, add space and separator
-							this.currentLineLength += 1;
-							if (
-								!this.neverUseAttributeSeparator &&
-								(this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(tempToken.name))
-							) {
+							// This isn't the first non-prefix attribute, add a space and separator
+							if (this.tokenNeedsSeparator(tempToken)) {
+								this.currentLineLength += 2;
+							} else {
 								this.currentLineLength += 1;
 							}
 						}
@@ -590,10 +595,7 @@ export class PugPrinter {
 			this.currentIndex
 		);
 		if (this.previousToken?.type === 'attribute' && (!this.previousAttributeRemapped || hasNormalPreviousToken)) {
-			if (
-				!this.neverUseAttributeSeparator &&
-				(this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name))
-			) {
+			if (this.tokenNeedsSeparator(token)) {
 				this.result += ',';
 			}
 			if (!this.wrapAttributes) {
