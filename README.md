@@ -109,11 +109,11 @@ These additional options are specific to pug templates and can be configured in 
 
   Choices:
 
-  - `'always'` _default_ -> Always separate attributes with commas.  
+  - `'always'` _default_ → Always separate attributes with commas.  
     Example: `button(type="submit", (click)="play()", disabled)`
-  - `'as-needed'` -> Only add commas between attributes where required.  
+  - `'as-needed'` → Only add commas between attributes where required.  
     Example: `button(type="submit", (click)="play()" disabled)`
-  - `'none'` -> Never add commas between attributes.  
+  - `'none'` → Never add commas between attributes.  
     Example: `button(type="submit" @click="play()" :style="style" disabled)`
     Please note that while this option will process Angular syntax (e.g. `(click)="play()"`), the resulting pug file will throw a syntax error when parsed: `Syntax Error: Assigning to rvalue`
 
@@ -122,7 +122,7 @@ These additional options are specific to pug templates and can be configured in 
 
   Choices:
 
-  - `'new-line'` _default_ -> Closing bracket ends with a new line.  
+  - `'new-line'` _default_ → Closing bracket ends with a new line.  
     Example:
 
     ```pug
@@ -135,7 +135,7 @@ These additional options are specific to pug templates and can be configured in 
     )
     ```
 
-  - `'last-line'` -> Closing bracket remains with last attribute's line.  
+  - `'last-line'` → Closing bracket remains with last attribute's line.  
     Example:
 
     ```pug
@@ -152,11 +152,11 @@ These additional options are specific to pug templates and can be configured in 
 
   Choices:
 
-  - `'keep-all'` _default_ -> Keep all spaces within comments.  
+  - `'keep-all'` _default_ → Keep all spaces within comments.  
     Example: `// ___this _is __a __comment_`
-  - `'keep-leading'` -> Keep leading spaces within comments.  
+  - `'keep-leading'` → Keep leading spaces within comments.  
     Example: `// ___this is a comment`
-  - `'trim-all'` -> Trim all spaces within comments.  
+  - `'trim-all'` → Trim all spaces within comments.  
     Example: `// this is a comment`
 
 - `pugSortAttributesBeginning` & `pugSortAttributesEnd`  
@@ -164,6 +164,40 @@ These additional options are specific to pug templates and can be configured in 
   [Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)  
   _This feature was planned since `1.2.0`, but it was always a bit unstable and opinionated._  
   _If there are any bugs, please report them._
+- `pugWrapAttributesThreshold`  
+  Define the maximum amount of attributes that an element can appear with on one line before it gets wrapped.
+
+  Choices:
+
+  - `-1` _default_ → Only wrap attributes as needed.  
+    Example:
+    ```pug
+    input(type="text")
+    input(type="text", value="my_value", name="my_name")
+    ```
+  - `0` → Always wrap attributes.  
+    Example:
+    ```pug
+    input(
+      type="text"
+    )
+    input(
+      type="text",
+      value="my_value",
+      name="my_name"
+    )
+    ```
+  - `1` → Allow one unwrapped attribute, wrap two and more.  
+    Example:
+    ```pug
+    input(type="text")
+    input(
+      type="text",
+      value="my_value",
+      name="my_name"
+    )
+    ```
+  - `2 … Infinity` → Same as above, just with different thresholds.  
 
 The definitions for these options can be found in [src/options/index.ts](https://github.com/prettier/plugin-pug/blob/master/src/options/index.ts)
 
