@@ -4,7 +4,7 @@ import { format } from 'prettier';
 import { plugin } from './../../../../src/index';
 
 describe('Options', () => {
-	describe('pugMaxSingleLineAttributes', () => {
+	describe('pugMaxAttributesOnFirsLine', () => {
 		test('should not allow more than two attributes on the first line of an element', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
@@ -12,7 +12,7 @@ describe('Options', () => {
 				parser: 'pug' as any,
 				plugins: [plugin],
 				// @ts-expect-error
-				pugMaxSingleLineAttributes: 2
+				pugMaxAttributesOnFirsLine: 2
 			});
 
 			expect(actual).toBe(expected);

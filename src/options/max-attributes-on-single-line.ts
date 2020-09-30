@@ -1,6 +1,6 @@
 import { CATEGORY_PUG } from '.';
 
-export const MAX_SINGLE_LINE_ATTRIBUTES_OPTION = {
+export const MAX_ATTRIBUTES_ON_FIRST_LINE_OPTION = {
 	since: '1.8.0',
 	category: CATEGORY_PUG,
 	type: 'int',

@@ -1,6 +1,7 @@
 import { ParserOptions } from 'prettier';
 import { AttributeSeparator, ATTRIBUTE_SEPARATOR_OPTION, PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
 import { PUG_SORT_ATTRIBUTES_BEGINNING_OPTION, PUG_SORT_ATTRIBUTES_END_OPTION } from './attribute-sorting';
+import { MAX_ATTRIBUTES_ON_FIRST_LINE_OPTION } from './max-attributes-on-single-line';
 import {
 	ClosingBracketPosition,
 	CLOSING_BRACKET_POSITION_OPTION,
@@ -11,7 +12,6 @@ import {
 	COMMENT_PRESERVE_SPACES_OPTION,
 	PUG_COMMENT_PRESERVE_SPACES_OPTION
 } from './comment-preserve-spaces';
-import { MAX_SINGLE_LINE_ATTRIBUTES_OPTION } from './max-single-line-attributes';
 import {
 	ArrowParens,
 	PUG_ARROW_PARENS_OPTION,
@@ -52,7 +52,7 @@ export interface PugParserOptions
 	pugSortAttributesBeginning: string[];
 	pugSortAttributesEnd: string[];
 
-	pugMaxSingleLineAttributes: number;
+	pugMaxAttributesOnFirsLine: number;
 }
 
 export const options = {
@@ -71,5 +71,5 @@ export const options = {
 	pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION,
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION,
-	pugMaxSingleLineAttributes: MAX_SINGLE_LINE_ATTRIBUTES_OPTION
+	pugMaxAttributesOnFirsLine: MAX_ATTRIBUTES_ON_FIRST_LINE_OPTION
 };

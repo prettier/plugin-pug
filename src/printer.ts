@@ -90,7 +90,7 @@ export interface PugPrinterOptions {
 	readonly commentPreserveSpaces: CommentPreserveSpaces;
 	readonly pugSortAttributesBeginning: string[];
 	readonly pugSortAttributesEnd: string[];
-	readonly pugMaxSingleLineAttributes: number;
+	readonly pugMaxAttributesOnFirsLine: number;
 }
 
 export class PugPrinter {
@@ -463,7 +463,7 @@ export class PugPrinter {
 			logger.debug(this.currentLineLength);
 			if (
 				this.currentLineLength > this.options.pugPrintWidth ||
-				this.options.pugMaxSingleLineAttributes >= 0 && numAttributes > this.options.pugMaxSingleLineAttributes
+				this.options.pugMaxAttributesOnFirsLine >= 0 && numAttributes > this.options.pugMaxAttributesOnFirsLine
 			) {
 				this.wrapAttributes = true;
 			}
