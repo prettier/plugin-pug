@@ -5,7 +5,7 @@ import { plugin } from './../../../../src/index';
 
 describe('Options', () => {
 	describe('pugWrapAttributesThreshold', () => {
-		test('should never allow an attribute on the first line of an element', () => {
+		test('should never allow an attribute without being wrapped', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 			const actual: string = format(code, {
