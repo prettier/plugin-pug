@@ -52,7 +52,7 @@ export interface PugParserOptions
 	pugSortAttributesBeginning: string[];
 	pugSortAttributesEnd: string[];
 
-	pugMaxAttributesOnFirsLine: number;
+	pugMaxAttributesOnFirstLine: number;
 }
 
 export const options = {
@@ -71,5 +71,5 @@ export const options = {
 	pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION,
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION,
-	pugMaxAttributesOnFirsLine: MAX_ATTRIBUTES_ON_FIRST_LINE_OPTION
+	pugMaxAttributesOnFirstLine: MAX_ATTRIBUTES_ON_FIRST_LINE_OPTION
 };
