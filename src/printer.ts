@@ -50,6 +50,7 @@ import {
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
 import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
+import { SortAttributes } from './options/attribute-sorting';
 import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
 import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
 import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
@@ -88,6 +89,7 @@ export interface PugPrinterOptions {
 	readonly attributeSeparator: AttributeSeparator;
 	readonly closingBracketPosition: ClosingBracketPosition;
 	readonly commentPreserveSpaces: CommentPreserveSpaces;
+	readonly pugSortAttributes: SortAttributes;
 	readonly pugSortAttributesBeginning: string[];
 	readonly pugSortAttributesEnd: string[];
 }
@@ -462,19 +464,24 @@ export class PugPrinter {
 				this.wrapAttributes = true;
 			}
 
-			if (this.options.pugSortAttributesEnd.length > 0 || this.options.pugSortAttributesBeginning.length > 0) {
+			if (
+				this.options.pugSortAttributes !== 'as-is' ||
+				this.options.pugSortAttributesEnd.length > 0 ||
+				this.options.pugSortAttributesBeginning.length > 0
+			) {
 				const startAttributesIndex: number = this.tokens.indexOf(token);
 				const endAttributesIndex: number = tempIndex;
-				if (endAttributesIndex - startAttributesIndex > 2) {
-					this.tokens = partialSort(this.tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
-						compareAttributeToken(
-							a as AttributeToken,
-							b as AttributeToken,
-							this.options.pugSortAttributesEnd,
-							this.options.pugSortAttributesBeginning
-						)
-					);
-				}
+				//if (endAttributesIndex - startAttributesIndex > 2) {
+				this.tokens = partialSort(this.tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
+					compareAttributeToken(
+						a as AttributeToken,
+						b as AttributeToken,
+						this.options.pugSortAttributesEnd,
+						this.options.pugSortAttributesBeginning,
+						this.options.pugSortAttributes
+					)
+				);
+				//}
 			}
 		}
 		return result;

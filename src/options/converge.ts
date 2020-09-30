@@ -21,6 +21,7 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		attributeSeparator: options.pugAttributeSeparator ?? options.attributeSeparator,
 		closingBracketPosition: options.pugClosingBracketPosition ?? options.closingBracketPosition,
 		commentPreserveSpaces: options.pugCommentPreserveSpaces ?? options.commentPreserveSpaces,
+		pugSortAttributes: options.pugSortAttributes,
 		pugSortAttributesBeginning: options.pugSortAttributesBeginning,
 		pugSortAttributesEnd: options.pugSortAttributesEnd
 	};
