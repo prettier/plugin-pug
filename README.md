@@ -84,8 +84,8 @@ By using versions of these standard options prefixed with `pug`, you can overrid
 
 - `pugBracketSpacing`  
   Print spaces between brackets in object literals.
-- `pugPrintWidth`
-- Specify the line length that the printer will wrap on.  
+- `pugPrintWidth`  
+  Specify the line length that the printer will wrap on.  
   _Currently this is not very accurate, but works._
 - `pugSemi`  
   Print semicolons at the ends of code statements.
