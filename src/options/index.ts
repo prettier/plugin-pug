@@ -1,7 +1,7 @@
 import { ParserOptions } from 'prettier';
 import { AttributeSeparator, ATTRIBUTE_SEPARATOR_OPTION, PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
 import { PUG_SORT_ATTRIBUTES_BEGINNING_OPTION, PUG_SORT_ATTRIBUTES_END_OPTION } from './attribute-sorting';
-import { MAX_ATTRIBUTES_ON_FIRST_LINE_OPTION } from './max-attributes-on-single-line';
+import { WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes-threshold';
 import {
 	ClosingBracketPosition,
 	CLOSING_BRACKET_POSITION_OPTION,
@@ -52,7 +52,7 @@ export interface PugParserOptions
 	pugSortAttributesBeginning: string[];
 	pugSortAttributesEnd: string[];
 
-	pugMaxAttributesOnFirstLine: number;
+	pugWrapAttributesThreshold: number;
 }
 
 export const options = {
@@ -71,5 +71,5 @@ export const options = {
 	pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION,
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION,
-	pugMaxAttributesOnFirstLine: MAX_ATTRIBUTES_ON_FIRST_LINE_OPTION
+	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD
 };
