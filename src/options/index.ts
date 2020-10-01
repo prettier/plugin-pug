@@ -6,6 +6,7 @@ import {
 	PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	PUG_SORT_ATTRIBUTES_END_OPTION
 } from './attribute-sorting';
+import { WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes-threshold';
 import {
 	ClosingBracketPosition,
 	CLOSING_BRACKET_POSITION_OPTION,
@@ -56,6 +57,8 @@ export interface PugParserOptions
 	pugSortAttributes: SortAttributes;
 	pugSortAttributesBeginning: string[];
 	pugSortAttributesEnd: string[];
+
+	pugWrapAttributesThreshold: number;
 }
 
 export const options = {
@@ -74,5 +77,6 @@ export const options = {
 	pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION,
 	pugSortAttributes: PUG_SORT_ATTRIBUTES_OPTION,
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
-	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION
+	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION,
+	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD
 };

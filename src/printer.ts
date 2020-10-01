@@ -92,6 +92,7 @@ export interface PugPrinterOptions {
 	readonly pugSortAttributes: SortAttributes;
 	readonly pugSortAttributesBeginning: string[];
 	readonly pugSortAttributesEnd: string[];
+	readonly pugWrapAttributesThreshold: number;
 }
 
 export class PugPrinter {
@@ -408,7 +409,9 @@ export class PugPrinter {
 			let tempIndex: number = this.currentIndex + 1;
 			let nonPrefixAttributes = 0;
 			let hasPrefixAttribute = false;
+			let numAttributes = 0;
 			while (tempToken.type === 'attribute') {
+				numAttributes++;
 				switch (tempToken.name) {
 					case 'class':
 					case 'id': {
@@ -460,7 +463,11 @@ export class PugPrinter {
 				this.currentLineLength += 1;
 			}
 			logger.debug(this.currentLineLength);
-			if (this.currentLineLength > this.options.pugPrintWidth) {
+			if (
+				this.currentLineLength > this.options.pugPrintWidth ||
+				(this.options.pugWrapAttributesThreshold >= 0 &&
+					numAttributes > this.options.pugWrapAttributesThreshold)
+			) {
 				this.wrapAttributes = true;
 			}
 

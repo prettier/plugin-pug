@@ -77,75 +77,34 @@ yarn add --dev prettier @prettier/plugin-pug
 yarn prettier --write "**/*.pug"
 ```
 
-### Prettier Options
+### Pug versions of standard prettier options
 
-- `bracketSpacing`  
-  If you want to configure different bracketSpacing for pug than for js code, you can use prettier's override.
-  ```json
-  {
-    "bracketSpacing": true,
-    "overrides": [
-      {
-        "files": "*.pug",
-        "options": {
-          "parser": "pug",
-          "bracketSpacing": false
-        }
-      }
-    ]
-  }
-  ```
-- `printWidth`  
-  _Currently not very accurate, but works_
-- `semi`  
-  If you want to configure different semi for pug than for js code, you can use prettier's override.
-  ```json
-  {
-    "semi": false,
-    "overrides": [
-      {
-        "files": "*.pug",
-        "options": {
-          "parser": "pug",
-          "semi": true
-        }
-      }
-    ]
-  }
-  ```
-- `singleQuote`  
-  If you want to configure different quotes for pug than for js code, you can use prettier's override.
-  ```json
-  {
-    "singleQuote": true,
-    "overrides": [
-      {
-        "files": "*.pug",
-        "options": {
-          "parser": "pug",
-          "singleQuote": false
-        }
-      }
-    ]
-  }
-  ```
-- `tabWidth`  
-  Use spaces for indentation
-- `useTabs`  
-  Use tab for indentation
-  Overrides `tabWidth`
+By default, the same formatting options are used as configured through the standard prettier options.
+By using versions of these standard options prefixed with `pug`, you can override pug formatting options even when using pug embedded in other files, e.g. vue single-file components:
 
-> All these six Prettier options have an alias e.g. `pugSingleQuote`  
-> You can force override pug formatting with them e.g. when using `pug` embedded in `vue` files
+- `pugBracketSpacing`  
+  Print spaces between brackets in object literals.
+- `pugPrintWidth`  
+  Specify the line length that the printer will wrap on.  
+  _Currently this is not very accurate, but works._
+- `pugSemi`  
+  Print semicolons at the ends of code statements.
+- `pugSingleQuote`  
+  Use single quotes instead of double quotes.  
+  Please note that the opposite setting will be used automatically for inlined JavaScript.
+- `pugTabWidth`  
+  Use spaces for indentation and specify the number of spaces per indentation-level.
+- `pugUseTabs`  
+  Indent lines with tabs instead of spaces.  
+  Overrides `pugTabWidth`
+- `pugArrowParens`  
+  Include parentheses around a sole arrow function parameter.
 
-See [changelog 1.6.0](https://github.com/prettier/plugin-pug/blob/master/CHANGELOG.md#160) for more
+### Additional pug-specific options
 
-#### prettier-pug specific options
+These additional options are specific to pug templates and can be configured in your global `.prettierrc` file:
 
-These are specific options only for prettier-pug  
-They should be set via `Prettier`'s `overrides` option
-
-- `attributeSeparator`  
+- `pugAttributeSeparator`  
   Change when attributes are separated by commas in tags.
 
   Choices:
@@ -158,7 +117,7 @@ They should be set via `Prettier`'s `overrides` option
     Example: `button(type="submit" @click="play()" :style="style" disabled)`
     Please note that while this option will process Angular syntax (e.g. `(click)="play()"`), the resulting pug file will throw a syntax error when parsed: `Syntax Error: Assigning to rvalue`
 
-- `closingBracketPosition`  
+- `pugClosingBracketPosition`  
   Position of closing bracket of attributes.
 
   Choices:
@@ -188,7 +147,7 @@ They should be set via `Prettier`'s `overrides` option
       autocomplete="on")
     ```
 
-- `commentPreserveSpaces`  
+- `pugCommentPreserveSpaces`  
   Change behavior of spaces within comments.
 
   Choices:
@@ -200,13 +159,45 @@ They should be set via `Prettier`'s `overrides` option
   - `'trim-all'` -> Trim all spaces within comments.  
     Example: `// this is a comment`
 
-- `pugSortAttributesBeginning` (and `pugSortAttributesEnd`)
+- `pugSortAttributesBeginning` & `pugSortAttributesEnd`  
   Sort attributes by regex patterns to the beginning or the end.  
   [Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)  
   _This feature was planned since `1.2.0`, but it was always a bit unstable and opinionated._  
   _If there are any bugs, please report them._
+- `pugWrapAttributesThreshold`  
+  Define the maximum amount of attributes that an element can appear with on one line before it gets wrapped.
 
-The definitions for these options can be found in [src/options/index.ts](https://github.com/prettier/plugin-pug/blob/master/src/options/index.ts)
+  Choices:
+
+  - `-1` _default_ -> Only wrap attributes as needed.  
+    Example:
+    ```pug
+    input(type="text")
+    input(type="text", value="my_value", name="my_name")
+    ```
+  - `0` -> Always wrap attributes.  
+    Example:
+    ```pug
+    input(
+      type="text"
+    )
+    input(
+      type="text",
+      value="my_value",
+      name="my_name"
+    )
+    ```
+  - `1` -> Allow one unwrapped attribute, wrap two and more.  
+    Example:
+    ```pug
+    input(type="text")
+    input(
+      type="text",
+      value="my_value",
+      name="my_name"
+    )
+    ```
+  - `2 .. Infinity` -> Same as above, just with different thresholds.  
 
 ## Some workarounds
 

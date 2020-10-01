@@ -23,6 +23,7 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		commentPreserveSpaces: options.pugCommentPreserveSpaces ?? options.commentPreserveSpaces,
 		pugSortAttributes: options.pugSortAttributes,
 		pugSortAttributesBeginning: options.pugSortAttributesBeginning,
-		pugSortAttributesEnd: options.pugSortAttributesEnd
+		pugSortAttributesEnd: options.pugSortAttributesEnd,
+		pugWrapAttributesThreshold: options.pugWrapAttributesThreshold
 	};
 }
