@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.7.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.8.0...master)
+
+# 1.8.0 (not released yet)
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.7.0...1.8.0)
+
+- Implement `pugWrapAttributesThreshold` option ([#118])
+
+[#118]: https://github.com/prettier/plugin-pug/issues/118
 
 # 1.7.0
 
