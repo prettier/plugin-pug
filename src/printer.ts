@@ -209,6 +209,8 @@ export class PugPrinter {
 	// ##     ## ##       ##       ##        ##       ##    ##  ##    ##
 	// ##     ## ######## ######## ##        ######## ##     ##  ######
 
+	//#region Helpers
+
 	private get computedIndent(): string {
 		switch (this.previousToken?.type) {
 			case 'newline':
@@ -376,6 +378,8 @@ export class PugPrinter {
 		return this.quoteString(val);
 	}
 
+	//#endregion
+
 	// ########  #######  ##    ## ######## ##    ##    ########  ########   #######   ######  ########  ######   ######   #######  ########   ######
 	//    ##    ##     ## ##   ##  ##       ###   ##    ##     ## ##     ## ##     ## ##    ## ##       ##    ## ##    ## ##     ## ##     ## ##    ##
 	//    ##    ##     ## ##  ##   ##       ####  ##    ##     ## ##     ## ##     ## ##       ##       ##       ##       ##     ## ##     ## ##
@@ -383,6 +387,8 @@ export class PugPrinter {
 	//    ##    ##     ## ##  ##   ##       ##  ####    ##        ##   ##   ##     ## ##       ##             ##       ## ##     ## ##   ##         ##
 	//    ##    ##     ## ##   ##  ##       ##   ###    ##        ##    ##  ##     ## ##    ## ##       ##    ## ##    ## ##     ## ##    ##  ##    ##
 	//    ##     #######  ##    ## ######## ##    ##    ##        ##     ##  #######   ######  ########  ######   ######   #######  ##     ##  ######
+
+	//#region Token Processors
 
 	private tag(token: TagToken): string {
 		let val = token.val;
@@ -1113,4 +1119,6 @@ export class PugPrinter {
 	private slash(token: SlashToken): string {
 		return '/';
 	}
+
+	//#endregion
 }
