@@ -38,7 +38,7 @@ describe('Options', () => {
 	});
 
 	describe('sort utilities', () => {
-		test('compare 1', () => {
+		test('should sort only the beginning attributes', () => {
 			const pugSortAttributes: SortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = ['v-for', ':key', 'src', 'alt'];
 			const pugSortAttributesEnd: string[] = [];
@@ -56,7 +56,7 @@ describe('Options', () => {
 
 			expect(actual).toStrictEqual(expected);
 		});
-		test('compare 2', () => {
+		test('should sort only the end attributes', () => {
 			const pugSortAttributes: SortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = [];
 			const pugSortAttributesEnd = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
@@ -74,7 +74,7 @@ describe('Options', () => {
 
 			expect(actual).toStrictEqual(expected);
 		});
-		test('compare 3', () => {
+		test('should sort both beginning and end, but keep middle attributes as is', () => {
 			const pugSortAttributes: SortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
 			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
@@ -105,7 +105,7 @@ describe('Options', () => {
 
 			expect(actual).toStrictEqual(expected);
 		});
-		test('compare 4', () => {
+		test('should sort beginning, end, and middle should be sorted ascending', () => {
 			const pugSortAttributes: SortAttributes = 'asc';
 			const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
 			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
@@ -151,7 +151,7 @@ describe('Options', () => {
 
 			expect(actual).toStrictEqual(expected);
 		});
-		test('compare 5', () => {
+		test('should sort beginning, end, and middle should be sorted descending', () => {
 			const pugSortAttributes: SortAttributes = 'desc';
 			const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
 			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
@@ -182,7 +182,7 @@ describe('Options', () => {
 
 			expect(actual).toStrictEqual(expected);
 		});
-		test('compare 6', () => {
+		test('should keep middle attributes untouched', () => {
 			const pugSortAttributes: SortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = ['a'];
 			const pugSortAttributesEnd: string[] = ['b'];
@@ -200,7 +200,7 @@ describe('Options', () => {
 
 			expect(actual).toStrictEqual(expected);
 		});
-		test('compare 7', () => {
+		test('should keep every attribute untouched', () => {
 			const pugSortAttributes: SortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = [];
 			const pugSortAttributesEnd: string[] = [];
