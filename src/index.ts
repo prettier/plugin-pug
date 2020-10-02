@@ -23,8 +23,8 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 type FastPathStackEntry = {
-	content: string,
-	tokens: Token[]
+	content: string;
+	tokens: Token[];
 };
 
 export const plugin: Plugin = {

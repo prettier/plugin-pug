@@ -129,7 +129,7 @@ export class PugPrinter {
 	private pipelessComment: boolean = false;
 
 	public constructor(
-		private content: string,
+		private readonly content: string,
 		private tokens: Token[],
 		private readonly options: PugPrinterOptions
 	) {
@@ -203,12 +203,12 @@ export class PugPrinter {
 					token.type === 'comment' &&
 					token.val.trim() === 'prettier-ignore'
 				) {
-					// Use a spearate token processing loop that finds the end of the tokens to be ignored by formatting,
-					// and uses their `loc` properties to retreive the original pug code to be used instead.
-					const firstToken = this.tokens[index];
-					const startsWithNewLine = firstToken.type === 'newline';
-					let skipNewline = startsWithNewLine;
-					let ignoreLevel = 0;
+					// Use a separate token processing loop that finds the end of the tokens to be ignored by formatting,
+					// and uses their `loc` properties to retrieve the original pug code to be used instead.
+					const firstToken: Token = this.tokens[index];
+					const startsWithNewLine: boolean = firstToken.type === 'newline';
+					let skipNewline: boolean = startsWithNewLine;
+					let ignoreLevel: number = 0;
 					while (index < this.tokens.length) {
 						token = this.tokens[index++];
 						const { type } = token;
@@ -228,14 +228,14 @@ export class PugPrinter {
 							}
 						}
 					}
-					const lastToken = this.tokens[index - 1];
-					const lines = this.getUnformattedContentLines(firstToken, lastToken);
+					const lastToken: Token = this.tokens[index - 1];
+					const lines: string[] = this.getUnformattedContentLines(firstToken, lastToken);
 					// Start with an empty string for the first newline after comment.
 					if (startsWithNewLine) {
 						lines.unshift('');
 					}
 					// Trim the last line, since indentation of formatted pug is handled separately.
-					const lastLine = lines.pop();
+					const lastLine: string | undefined = lines.pop();
 					if (lastLine !== undefined) {
 						lines.push(lastLine.trimRight());
 					}
@@ -286,12 +286,12 @@ export class PugPrinter {
 	private getUnformattedContentLines(firstToken: Token, lastToken: Token): string[] {
 		const { start } = firstToken.loc;
 		const { end } = lastToken.loc;
-		const lines = this.content.split(/\r\n|\n|\r/);
-		const startLine = start.line - 1;
-		const endLine = end.line - 1;
+		const lines: string[] = this.content.split(/\r\n|\n|\r/);
+		const startLine: number = start.line - 1;
+		const endLine: number = end.line - 1;
 		const parts: string[] = [];
 		parts.push(lines[startLine].substring(start.column - 1));
-		for (let line = startLine + 1; line < endLine; line++) {
+		for (let line: number = startLine + 1; line < endLine; line++) {
 			parts.push(lines[line]);
 		}
 		parts.push(lines[endLine].substring(0, end.column - 1));
