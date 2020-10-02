@@ -106,7 +106,7 @@ export class PugPrinter {
 	/**
 	 * The line length starts by 1, it's not an zero based index
 	 */
-	private currentLineLength = 1;
+	private currentLineLength: number = 1;
 
 	private readonly quotes: "'" | '"';
 	private readonly otherQuotes: "'" | '"';
