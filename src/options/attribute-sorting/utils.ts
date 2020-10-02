@@ -2,7 +2,7 @@ import { AttributeToken } from 'pug-lexer';
 import { SortAttributes } from './index';
 
 type CompareResult = -1 | 0 | 1;
-type CompareFunction = (a: any, b: any) => CompareResult;
+type CompareFunction<T> = (a: T, b: T) => CompareResult;
 
 export function compareAttributeToken(
 	a: AttributeToken,
@@ -63,17 +63,17 @@ export function compareAttributeToken(
 	return 0;
 }
 
-export function stableSort<T>(array: T[], compare: CompareFunction): T[] {
-	const entries = array.map((value, index): [T, number] => [value, index]);
+export function stableSort<T>(array: readonly T[], compare: CompareFunction<T>): T[] {
+	const entries: Array<[T, number]> = array.map((value, index) => [value, index]);
 	entries.sort((a, b) => {
-		const order = compare(a[0], b[0]);
-		// When order is 0, sort by index to make the sort stable:
+		const order: CompareResult = compare(a[0], b[0]);
+		// When order is 0, sort by index to make the sort stable
 		return order !== 0 ? order : a[1] - b[1];
 	});
 	return entries.map(([value]) => value);
 }
 
-export function partialSort<T>(arr: T[], start: number, end: number, compareFn: CompareFunction): T[] {
+export function partialSort<T>(arr: readonly T[], start: number, end: number, compareFn: CompareFunction<T>): T[] {
 	const preSort: T[] = arr.slice(0, start);
 	const postSort: T[] = arr.slice(end);
 	const attributes: T[] = arr.slice(start, end);
