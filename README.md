@@ -179,6 +179,8 @@ These additional options are specific to pug templates and can be configured in 
 
 - `pugWrapAttributesThreshold`  
   Define the maximum amount of attributes that an element can appear with on one line before it gets wrapped.
+- `pugWrapAttributesPattern`  
+  Define a regex pattern to match attributes against that should always trigger wrapping.
 
   Choices:
 

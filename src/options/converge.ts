@@ -29,6 +29,7 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugSortAttributes: options.pugSortAttributes,
 		pugSortAttributesBeginning: options.pugSortAttributesBeginning,
 		pugSortAttributesEnd: options.pugSortAttributesEnd,
-		pugWrapAttributesThreshold: options.pugWrapAttributesThreshold
+		pugWrapAttributesThreshold: options.pugWrapAttributesThreshold,
+		pugWrapAttributesPattern: options.pugWrapAttributesPattern
 	};
 }

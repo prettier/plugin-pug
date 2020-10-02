@@ -93,6 +93,7 @@ export interface PugPrinterOptions {
 	readonly pugSortAttributesBeginning: string[];
 	readonly pugSortAttributesEnd: string[];
 	readonly pugWrapAttributesThreshold: number;
+	readonly pugWrapAttributesPattern: string;
 }
 
 export class PugPrinter {
@@ -114,6 +115,7 @@ export class PugPrinter {
 	private readonly alwaysUseAttributeSeparator: boolean;
 	private readonly neverUseAttributeSeparator: boolean;
 	private readonly closingBracketRemainsAtNewLine: boolean;
+	private readonly wrapAttributesPattern: RegExp | null;
 	/* eslint-disable @typescript-eslint/indent */
 	private readonly codeInterpolationOptions: Pick<
 		RequiredOptions,
@@ -138,6 +140,8 @@ export class PugPrinter {
 		this.alwaysUseAttributeSeparator = attributeSeparator === 'always';
 		this.neverUseAttributeSeparator = attributeSeparator === 'none';
 		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.closingBracketPosition);
+		const wrapAttributesPattern: string = options.pugWrapAttributesPattern;
+		this.wrapAttributesPattern = wrapAttributesPattern ? new RegExp(wrapAttributesPattern) : null;
 		const codeSingleQuote: boolean = !options.pugSingleQuote;
 		this.codeInterpolationOptions = {
 			singleQuote: codeSingleQuote,
@@ -418,6 +422,9 @@ export class PugPrinter {
 			let numAttributes: number = 0;
 			while (tempToken.type === 'attribute') {
 				numAttributes++;
+				if (!this.wrapAttributes && this.wrapAttributesPattern?.test(tempToken.name)) {
+					this.wrapAttributes = true;
+				}
 				switch (tempToken.name) {
 					case 'class':
 					case 'id': {
@@ -469,11 +476,11 @@ export class PugPrinter {
 				this.currentLineLength += 1;
 			}
 			logger.debug(this.currentLineLength);
-			if (
+			if (!this.wrapAttributes && (
 				this.currentLineLength > this.options.pugPrintWidth ||
 				(this.options.pugWrapAttributesThreshold >= 0 &&
 					numAttributes > this.options.pugWrapAttributesThreshold)
-			) {
+			)) {
 				this.wrapAttributes = true;
 			}
 

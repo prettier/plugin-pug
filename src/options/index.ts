@@ -7,6 +7,10 @@ import {
 	SortAttributes
 } from './attribute-sorting';
 import {
+	WRAP_ATTRIBUTES_THRESHOLD,
+	WRAP_ATTRIBUTES_PATTERN
+} from './wrap-attributes';
+import {
 	ClosingBracketPosition,
 	CLOSING_BRACKET_POSITION_OPTION,
 	PUG_CLOSING_BRACKET_POSITION_OPTION
@@ -26,7 +30,6 @@ import {
 	PUG_TAB_WIDTH_OPTION,
 	PUG_USE_TABS_OPTION
 } from './common';
-import { WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes-threshold';
 
 /**
  * Category for Prettier's CLI
@@ -65,6 +68,7 @@ export interface PugParserOptions
 	pugSortAttributesEnd: string[];
 
 	pugWrapAttributesThreshold: number;
+	pugWrapAttributesPattern: string;
 }
 
 export const options: any = {
@@ -84,5 +88,6 @@ export const options: any = {
 	pugSortAttributes: PUG_SORT_ATTRIBUTES_OPTION,
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION,
-	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD
+	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD,
+	pugWrapAttributesPattern: WRAP_ATTRIBUTES_PATTERN
 };
