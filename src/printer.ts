@@ -128,7 +128,11 @@ export class PugPrinter {
 	private pipelessText: boolean = false;
 	private pipelessComment: boolean = false;
 
-	public constructor(private tokens: Token[], private readonly options: PugPrinterOptions) {
+	public constructor(
+		private content: string,
+		private tokens: Token[],
+		private readonly options: PugPrinterOptions
+	) {
 		this.indentString = options.pugUseTabs ? '\t' : ' '.repeat(options.pugTabWidth);
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
@@ -163,9 +167,10 @@ export class PugPrinter {
 		} else if (this.tokens[0]?.type === 'eos') {
 			return '';
 		}
-		for (let index: number = 0; index < this.tokens.length; index++) {
+		let index: number = 0;
+		while (index < this.tokens.length) {
 			this.currentIndex = index;
-			const token: Token = this.tokens[index];
+			let token: Token = this.tokens[index++];
 			logger.debug('[PugPrinter]:', JSON.stringify(token));
 			try {
 				switch (token.type) {
@@ -193,6 +198,48 @@ export class PugPrinter {
 						// @ts-expect-error
 						results.push(this[token.type](token));
 						break;
+				}
+				if (
+					token.type === 'comment' &&
+					token.val.trim() === 'prettier-ignore'
+				) {
+					// Use a spearate token processing loop that finds the end of the tokens to be ignored by formatting,
+					// and uses their `loc` properties to retreive the original pug code to be used instead.
+					const firstToken = this.tokens[index];
+					const startsWithNewLine = firstToken.type === 'newline';
+					let skipNewline = startsWithNewLine;
+					let ignoreLevel = 0;
+					while (index < this.tokens.length) {
+						token = this.tokens[index++];
+						const { type } = token;
+						if (type === 'newline' && ignoreLevel === 0) {
+							// Skip first newline after prettier-ignore comment:
+							if (skipNewline) {
+								skipNewline = false;
+							} else {
+								break;
+							}
+						} else if (type === 'indent') {
+							ignoreLevel++;
+						} else if (type === 'outdent') {
+							ignoreLevel--;
+							if (ignoreLevel === 0) {
+								break;
+							}
+						}
+					}
+					const lastToken = this.tokens[index - 1];
+					const lines = this.getUnformattedContentLines(firstToken, lastToken);
+					// Start with an empty string for the first newline after comment.
+					if (startsWithNewLine) {
+						lines.unshift('');
+					}
+					// Trim the last line, since indentation of formatted pug is handled separately.
+					const lastLine = lines.pop();
+					if (lastLine !== undefined) {
+						lines.push(lastLine.trimRight());
+					}
+					results.push(lines.join('\n'));
 				}
 			} catch {
 				throw new Error('Unhandled token: ' + JSON.stringify(token));
@@ -234,6 +281,21 @@ export class PugPrinter {
 		return this.neverUseAttributeSeparator
 			? false
 			: this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name);
+	}
+
+	private getUnformattedContentLines(firstToken: Token, lastToken: Token): string[] {
+		const { start } = firstToken.loc;
+		const { end } = lastToken.loc;
+		const lines = this.content.split(/\r\n|\n|\r/);
+		const startLine = start.line - 1;
+		const endLine = end.line - 1;
+		const parts: string[] = [];
+		parts.push(lines[startLine].substring(start.column - 1));
+		for (let line = startLine + 1; line < endLine; line++) {
+			parts.push(lines[line]);
+		}
+		parts.push(lines[endLine].substring(0, end.column - 1));
+		return parts;
 	}
 
 	private formatDelegatePrettier(

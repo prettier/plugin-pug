@@ -33,7 +33,8 @@ Please note that the [plugin ecosystem in Prettier](https://prettier.io/docs/en/
 
 Plugin for Prettier to format pug code
 
-You can disable code formatting for a particular code block by adding <nobr>`<!-- prettier-ignore -->`</nobr> before ` ```pug `.
+You can disable code formatting for a particular code block by adding <nobr>`<!-- prettier-ignore -->`</nobr> before ` ```pug `,
+as well as by using <nobr>`//- prettier-ignore`</nobr> comments inside your pug templates.
 
 ````markdown
 Pug code with custom formatting:
