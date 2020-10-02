@@ -190,53 +190,6 @@ export class PugPrinter {
 						results.push(this[token.type](token));
 						break;
 				}
-				if (
-					token.type === 'comment' &&
-					token.val.trim() === 'prettier-ignore'
-				) {
-					// Use a own token processing loop to find the end of the stream of tokens to be ignored by formatting,
-					// and uses their `loc` properties to retrieve the original pug code to be used instead.
-					token = this.getNextToken();
-					if (token) {
-						const firstToken: Token = token;
-						const startsWithNewLine: boolean = firstToken.type === 'newline';
-						let skipNewline: boolean = startsWithNewLine;
-						let ignoreLevel: number = 0;
-						while (token) {
-							const { type } = token;
-							if (type === 'newline' && ignoreLevel === 0) {
-								// Skip first newline after prettier-ignore comment:
-								if (skipNewline) {
-									skipNewline = false;
-								} else {
-									break;
-								}
-							} else if (type === 'indent') {
-								ignoreLevel++;
-							} else if (type === 'outdent') {
-								ignoreLevel--;
-								if (ignoreLevel === 0) {
-									break;
-								}
-							}
-							token = this.getNextToken();
-						}
-						if (token) {
-							const lastToken: Token = token;
-							const lines: string[] = this.getUnformattedContentLines(firstToken, lastToken);
-							// Start with an empty string for the first newline after comment.
-							if (startsWithNewLine) {
-								lines.unshift('');
-							}
-							// Trim the last line, since indentation of formatted pug is handled separately.
-							const lastLine: string | undefined = lines.pop();
-							if (lastLine !== undefined) {
-								lines.push(lastLine.trimRight());
-							}
-							results.push(lines.join('\n'));
-						}
-					}
-				}
 			} catch {
 				throw new Error('Unhandled token: ' + JSON.stringify(token));
 			}
@@ -816,18 +769,56 @@ export class PugPrinter {
 		this.result += '\n';
 	}
 
-	private comment(token: CommentToken): string {
+	private comment(commentToken: CommentToken): string {
 		let result: string = this.computedIndent;
-		if (this.checkTokenType(this.previousToken, ['newline', 'indent', 'outdent'], true)) {
-			result += ' ';
-		}
-		result += '//';
-		if (!token.buffer) {
-			result += '-';
-		}
-		result += formatCommentPreserveSpaces(token.val, this.options.commentPreserveSpaces);
-		if (this.nextToken?.type === 'start-pipeless-text') {
-			this.pipelessComment = true;
+		if (commentToken.val.trim() === 'prettier-ignore') {
+			// Use a own token processing loop to find the end of the stream of tokens to be ignored by formatting,
+			// and uses their `loc` properties to retrieve the original pug code to be used instead.
+			let token: Token | null = this.getNextToken();
+			if (token) {
+				let skipNewline: boolean = token.type === 'newline';
+				let ignoreLevel: number = 0;
+				while (token) {
+					const { type } = token;
+					if (type === 'newline' && ignoreLevel === 0) {
+						// Skip first newline after `prettier-ignore` comment
+						if (skipNewline) {
+							skipNewline = false;
+						} else {
+							break;
+						}
+					} else if (type === 'indent') {
+						ignoreLevel++;
+					} else if (type === 'outdent') {
+						ignoreLevel--;
+						if (ignoreLevel === 0) {
+							break;
+						}
+					}
+					token = this.getNextToken();
+				}
+				if (token) {
+					const lines: string[] = this.getUnformattedContentLines(commentToken, token);
+					// Trim the last line, since indentation of formatted pug is handled separately.
+					const lastLine: string | undefined = lines.pop();
+					if (lastLine !== undefined) {
+						lines.push(lastLine.trimRight());
+					}
+					result += lines.join('\n');
+				}
+			}
+		} else {
+			if (this.checkTokenType(this.previousToken, ['newline', 'indent', 'outdent'], true)) {
+				result += ' ';
+			}
+			result += '//';
+			if (!commentToken.buffer) {
+				result += '-';
+			}
+			result += formatCommentPreserveSpaces(commentToken.val, this.options.commentPreserveSpaces);
+			if (this.nextToken?.type === 'start-pipeless-text') {
+				this.pipelessComment = true;
+			}
 		}
 		return result;
 	}
