@@ -7,8 +7,11 @@
 [diff](https://github.com/prettier/plugin-pug/compare/1.7.0...1.8.0)
 
 - Implement `pugWrapAttributesThreshold` option ([#118])
+- Add middle attributes sorting ([#120])
+- Add [@lehni](https://github.com/lehni) and [@SkyaTura](https://github.com/SkyaTura) as contributors
 
 [#118]: https://github.com/prettier/plugin-pug/issues/118
+[#120]: https://github.com/prettier/plugin-pug/pull/120
 
 # 1.7.0
 
