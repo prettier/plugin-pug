@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/typedef */
 import { CATEGORY_PUG } from '.';
 
 export const PUG_PRINT_WIDTH_OPTION = {

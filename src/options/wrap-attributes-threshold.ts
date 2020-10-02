@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/typedef */
 import { CATEGORY_PUG } from '.';
 
 export const WRAP_ATTRIBUTES_THRESHOLD = {

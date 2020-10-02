@@ -40,6 +40,19 @@
 		"@typescript-eslint/no-unused-vars": "off",
 		"@typescript-eslint/prefer-nullish-coalescing": "warn",
 		"@typescript-eslint/prefer-optional-chain": "warn",
-		"@typescript-eslint/restrict-template-expressions": "off"
+		"@typescript-eslint/restrict-template-expressions": "off",
+		"@typescript-eslint/typedef": [
+			"warn",
+			{
+				"arrayDestructuring": false,
+				"arrowParameter": false,
+				"memberVariableDeclaration": false,
+				"objectDestructuring": false,
+				"parameter": false,
+				"propertyDeclaration": false,
+				"variableDeclaration": true,
+				"variableDeclarationIgnoreFunction": false
+			}
+		]
 	}
 }

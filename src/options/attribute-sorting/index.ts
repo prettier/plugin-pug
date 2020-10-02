@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/typedef */
 import { CATEGORY_PUG } from '..';
 
 const pugSortAttributesOption = {

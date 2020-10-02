@@ -59,7 +59,7 @@ describe('Options', () => {
 		test('should sort only the end attributes', () => {
 			const pugSortAttributes: SortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = [];
-			const pugSortAttributesEnd = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
+			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
 			const expected: ReadonlyArray<string> = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
 			const code: string[] = ['v-for', ':disabled', ':key', '@click', 'src', 'alt'];
 			const actual: string[] = stableSort(code, (a, b) =>

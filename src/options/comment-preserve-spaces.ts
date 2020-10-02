@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/typedef */
 import { CATEGORY_PUG } from '.';
 
 export const COMMENT_PRESERVE_SPACES_OPTION = {
@@ -56,7 +57,7 @@ export function formatCommentPreserveSpaces(
 	switch (commentPreserveSpaces) {
 		case 'keep-leading': {
 			let result: string = '';
-			let firstNonSpace = 0;
+			let firstNonSpace: number = 0;
 			for (firstNonSpace; firstNonSpace < input.length && input[firstNonSpace] === ' '; firstNonSpace++) {
 				result += ' ';
 			}

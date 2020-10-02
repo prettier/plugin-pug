@@ -4,7 +4,7 @@ import { format } from 'prettier';
 import { plugin } from './../../src/index';
 
 describe('Pug Tests', () => {
-	const filenames = readdirSync(resolve(__dirname), 'utf8');
+	const filenames: string[] = readdirSync(resolve(__dirname), 'utf8');
 
 	const ignores: string[] = [
 		'attrs.pug',
@@ -29,7 +29,7 @@ describe('Pug Tests', () => {
 
 	for (const filename of filenames) {
 		if (filename.endsWith('.formatted.pug')) {
-			const unformattedFilename = filename.replace('.formatted', '');
+			const unformattedFilename: string = filename.replace('.formatted', '');
 			if (!ignores.includes(unformattedFilename)) {
 				test(unformattedFilename, () => {
 					const expected: string = readFileSync(resolve(__dirname, filename), 'utf8');

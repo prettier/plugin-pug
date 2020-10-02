@@ -14,13 +14,13 @@ export function compareAttributeToken(
 	const sortPatternsBeginning: RegExp[] = sortAttributesBeginning.map((sort) => new RegExp(sort)).reverse();
 	const sortPatternsEnd: RegExp[] = sortAttributesEnd.map((sort) => new RegExp(sort));
 
-	const aName = a.name;
-	const bName = b.name;
+	const aName: string = a.name;
+	const bName: string = b.name;
 
 	const aBeginningIndex: number = sortPatternsBeginning.findIndex((pattern) => pattern.test(aName));
 	const bBeginningIndex: number = sortPatternsBeginning.findIndex((pattern) => pattern.test(bName));
 
-	const beginning = aBeginningIndex - bBeginningIndex;
+	const beginning: number = aBeginningIndex - bBeginningIndex;
 	if (beginning > 0) {
 		return -1;
 	}
@@ -31,7 +31,7 @@ export function compareAttributeToken(
 	const aEndIndex: number = sortPatternsEnd.findIndex((pattern) => pattern.test(aName));
 	const bEndIndex: number = sortPatternsEnd.findIndex((pattern) => pattern.test(bName));
 
-	const end = aEndIndex - bEndIndex;
+	const end: number = aEndIndex - bEndIndex;
 	if (end > 0) {
 		return 1;
 	}

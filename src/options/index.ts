@@ -67,7 +67,7 @@ export interface PugParserOptions
 	pugWrapAttributesThreshold: number;
 }
 
-export const options = {
+export const options: any = {
 	pugPrintWidth: PUG_PRINT_WIDTH_OPTION,
 	pugSingleQuote: PUG_SINGLE_QUOTE_OPTION,
 	pugTabWidth: PUG_TAB_WIDTH_OPTION,

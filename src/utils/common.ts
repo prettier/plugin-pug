@@ -85,20 +85,23 @@ export function makeString(
 	enclosingQuote: "'" | '"',
 	unescapeUnnecessaryEscapes: boolean = false
 ): string {
-	const otherQuote = enclosingQuote === '"' ? "'" : '"';
-	const newContent = rawContent.replace(/\\([\s\S])|(['"])/g, (match, escaped: "'" | '"', quote: "'" | '"') => {
-		if (escaped === otherQuote) {
-			return escaped;
+	const otherQuote: "'" | '"' = enclosingQuote === '"' ? "'" : '"';
+	const newContent: string = rawContent.replace(
+		/\\([\s\S])|(['"])/g,
+		(match, escaped: "'" | '"', quote: "'" | '"') => {
+			if (escaped === otherQuote) {
+				return escaped;
+			}
+			if (quote === enclosingQuote) {
+				return `\\${quote}`;
+			}
+			if (quote) {
+				return quote;
+			}
+			return unescapeUnnecessaryEscapes && /^[^\\nrvtbfux\r\n\u2028\u2029"'0-7]$/.test(escaped)
+				? escaped
+				: `\\${escaped}`;
 		}
-		if (quote === enclosingQuote) {
-			return `\\${quote}`;
-		}
-		if (quote) {
-			return quote;
-		}
-		return unescapeUnnecessaryEscapes && /^[^\\nrvtbfux\r\n\u2028\u2029"'0-7]$/.test(escaped)
-			? escaped
-			: `\\${escaped}`;
-	});
+	);
 	return enclosingQuote + newContent + enclosingQuote;
 }

@@ -1,3 +1,15 @@
+export type DoctypeShortcut =
+	| 'doctype html'
+	| 'doctype xml'
+	| 'doctype transitional'
+	| 'doctype strict'
+	| 'doctype frameset'
+	| 'doctype 1.1'
+	| 'doctype basic'
+	| 'doctype mobile'
+	| 'doctype plist';
+
+// eslint-disable-next-line @typescript-eslint/typedef
 export const DOCTYPE_SHORTCUT_REGISTRY = {
 	'<!doctype html>': 'doctype html',
 	'<?xml version="1.0" encoding="utf-8" ?>': 'doctype xml',
@@ -14,4 +26,4 @@ export const DOCTYPE_SHORTCUT_REGISTRY = {
 		'doctype mobile',
 	'<!doctype plist public "-//apple//dtd plist 1.0//en" "http://www.apple.com/dtds/propertylist-1.0.dtd">':
 		'doctype plist'
-};
+} as const;

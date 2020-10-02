@@ -1,4 +1,15 @@
-import { Doc, FastPath, Options, Parser, ParserOptions, Plugin } from 'prettier';
+import {
+	Doc,
+	FastPath,
+	Options,
+	Parser,
+	ParserOptions,
+	Plugin,
+	Printer,
+	RequiredOptions,
+	SupportLanguage,
+	SupportOption
+} from 'prettier';
 import * as lex from 'pug-lexer';
 import { Token } from 'pug-lexer';
 import { createLogger, Logger, LogLevel } from './logger';
@@ -29,7 +40,7 @@ export const plugin: Plugin = {
 		pug: {
 			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): Token[] {
 				logger.debug('[parsers:pug:parse]:', { text });
-				const tokens = lex(text.trimLeft());
+				const tokens: lex.Token[] = lex(text.trimLeft());
 				// logger.debug('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
 				// const ast: AST = parse(tokens, {});
 				// logger.debug('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
@@ -58,8 +69,8 @@ export const plugin: Plugin = {
 			print(path: FastPath, options: ParserOptions & PugParserOptions, print: (path: FastPath) => Doc): Doc {
 				const tokens: Token[] = path.stack[0];
 				const pugOptions: PugPrinterOptions = convergeOptions(options);
-				const printer = new PugPrinter(tokens, pugOptions);
-				const result = printer.build();
+				const printer: PugPrinter = new PugPrinter(tokens, pugOptions);
+				const result: string = printer.build();
 				logger.debug('[printers:pug-ast:print]:', result);
 				return result;
 			},
@@ -77,12 +88,12 @@ export const plugin: Plugin = {
 			}
 		}
 	},
-	options: pugOptions as any,
+	options: pugOptions,
 	defaultOptions: {}
 };
 
-export const languages = plugin.languages;
-export const parsers = plugin.parsers;
-export const printers = plugin.printers;
-export const options = plugin.options;
-export const defaultOptions = plugin.defaultOptions;
+export const languages: SupportLanguage[] | undefined = plugin.languages;
+export const parsers: { [parserName: string]: Parser } | undefined = plugin.parsers;
+export const printers: { [astFormat: string]: Printer } | undefined = plugin.printers;
+export const options: SupportOption[] | undefined = plugin.options;
+export const defaultOptions: Partial<RequiredOptions> | undefined = plugin.defaultOptions;
