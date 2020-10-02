@@ -463,7 +463,8 @@ export class PugPrinter {
 			logger.debug(this.currentLineLength);
 			if (
 				this.currentLineLength > this.options.pugPrintWidth ||
-				this.options.pugWrapAttributesThreshold >= 0 && numAttributes > this.options.pugWrapAttributesThreshold
+				(this.options.pugWrapAttributesThreshold >= 0 &&
+					numAttributes > this.options.pugWrapAttributesThreshold)
 			) {
 				this.wrapAttributes = true;
 			}
@@ -882,6 +883,7 @@ export class PugPrinter {
 				parser: 'babel',
 				...this.codeInterpolationOptions,
 				semi: useSemi,
+				// Always pass endOfLine 'lf' here to be sure that the next `val.slice(0, -1)` call is always working
 				endOfLine: 'lf'
 			});
 			val = val.slice(0, -1);

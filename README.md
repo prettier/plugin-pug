@@ -197,7 +197,7 @@ These additional options are specific to pug templates and can be configured in 
       name="my_name"
     )
     ```
-  - `2 .. Infinity` -> Same as above, just with different thresholds.  
+  - `2 .. Infinity` -> Same as above, just with different thresholds.
 
 ## Some workarounds
 
