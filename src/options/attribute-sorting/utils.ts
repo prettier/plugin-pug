@@ -21,22 +21,38 @@ export function compareAttributeToken(
 	const bBeginningIndex: number = sortPatternsBeginning.findIndex((pattern) => pattern.test(bName));
 
 	const beginning = aBeginningIndex - bBeginningIndex;
-	if (beginning > 0) return -1;
-	if (beginning < 0) return 1;
+	if (beginning > 0) {
+		return -1;
+	}
+	if (beginning < 0) {
+		return 1;
+	}
 
 	const aEndIndex: number = sortPatternsEnd.findIndex((pattern) => pattern.test(aName));
 	const bEndIndex: number = sortPatternsEnd.findIndex((pattern) => pattern.test(bName));
 
 	const end = aEndIndex - bEndIndex;
-	if (end > 0) return 1;
-	if (end < 0) return -1;
+	if (end > 0) {
+		return 1;
+	}
+	if (end < 0) {
+		return -1;
+	}
 
 	if (sortAttributes === 'asc') {
-		if (aName > bName) return 1;
-		if (aName < bName) return -1;
+		if (aName > bName) {
+			return 1;
+		}
+		if (aName < bName) {
+			return -1;
+		}
 	} else if (sortAttributes === 'desc') {
-		if (aName > bName) return -1;
-		if (aName < bName) return 1;
+		if (aName > bName) {
+			return -1;
+		}
+		if (aName < bName) {
+			return 1;
+		}
 	}
 
 	return 0;
