@@ -39,31 +39,36 @@ export function compareAttributeToken(
 		return -1;
 	}
 
-	if (sortAttributes === 'asc') {
-		if (aName > bName) {
-			return 1;
+	switch (sortAttributes) {
+		case 'asc': {
+			if (aName > bName) {
+				return 1;
+			}
+			if (aName < bName) {
+				return -1;
+			}
+			break;
 		}
-		if (aName < bName) {
-			return -1;
-		}
-	} else if (sortAttributes === 'desc') {
-		if (aName > bName) {
-			return -1;
-		}
-		if (aName < bName) {
-			return 1;
+		case 'desc': {
+			if (aName > bName) {
+				return -1;
+			}
+			if (aName < bName) {
+				return 1;
+			}
+			break;
 		}
 	}
 
 	return 0;
 }
 
-export function stableSort<T>(array: T[], compare: CompareFunction): any[] {
+export function stableSort<T>(array: T[], compare: CompareFunction): T[] {
 	const entries = array.map((value, index): [T, number] => [value, index]);
 	entries.sort((a, b) => {
 		const order = compare(a[0], b[0]);
 		// When order is 0, sort by index to make the sort stable:
-		return order != 0 ? order : a[1] - b[1];
+		return order !== 0 ? order : a[1] - b[1];
 	});
 	return entries.map(([value]) => value);
 }
