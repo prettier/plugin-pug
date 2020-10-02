@@ -99,9 +99,10 @@ export interface PugPrinterOptions {
 export class PugPrinter {
 	private result: string = '';
 
-	private currentIndex: number = 0;
+	// The current index in the `tokens` array, starts at -1, because `getNextToken()` increases before retrieving
+	private currentIndex: number = -1;
 	private currentLineLength: number = 0;
-
+	
 	private readonly indentString: string;
 	private indentLevel: number = 0;
 
@@ -152,14 +153,6 @@ export class PugPrinter {
 		};
 	}
 
-	private get previousToken(): Token | undefined {
-		return this.tokens[this.currentIndex - 1];
-	}
-
-	private get nextToken(): Token | undefined {
-		return this.tokens[this.currentIndex + 1];
-	}
-
 	public build(): string {
 		const results: string[] = [];
 		if (this.tokens[0]?.type === 'text') {
@@ -167,10 +160,8 @@ export class PugPrinter {
 		} else if (this.tokens[0]?.type === 'eos') {
 			return '';
 		}
-		let index: number = 0;
-		while (index < this.tokens.length) {
-			this.currentIndex = index;
-			let token: Token = this.tokens[index++];
+		let token: Token | null = this.getNextToken();
+		while (token) {
 			logger.debug('[PugPrinter]:', JSON.stringify(token));
 			try {
 				switch (token.type) {
@@ -203,47 +194,53 @@ export class PugPrinter {
 					token.type === 'comment' &&
 					token.val.trim() === 'prettier-ignore'
 				) {
-					// Use a separate token processing loop that finds the end of the tokens to be ignored by formatting,
+					// Use a own token processing loop to find the end of the stream of tokens to be ignored by formatting,
 					// and uses their `loc` properties to retrieve the original pug code to be used instead.
-					const firstToken: Token = this.tokens[index];
-					const startsWithNewLine: boolean = firstToken.type === 'newline';
-					let skipNewline: boolean = startsWithNewLine;
-					let ignoreLevel: number = 0;
-					while (index < this.tokens.length) {
-						token = this.tokens[index++];
-						const { type } = token;
-						if (type === 'newline' && ignoreLevel === 0) {
-							// Skip first newline after prettier-ignore comment:
-							if (skipNewline) {
-								skipNewline = false;
-							} else {
-								break;
+					token = this.getNextToken();
+					if (token) {
+						const firstToken: Token = token;
+						const startsWithNewLine: boolean = firstToken.type === 'newline';
+						let skipNewline: boolean = startsWithNewLine;
+						let ignoreLevel: number = 0;
+						while (token) {
+							const { type } = token;
+							if (type === 'newline' && ignoreLevel === 0) {
+								// Skip first newline after prettier-ignore comment:
+								if (skipNewline) {
+									skipNewline = false;
+								} else {
+									break;
+								}
+							} else if (type === 'indent') {
+								ignoreLevel++;
+							} else if (type === 'outdent') {
+								ignoreLevel--;
+								if (ignoreLevel === 0) {
+									break;
+								}
 							}
-						} else if (type === 'indent') {
-							ignoreLevel++;
-						} else if (type === 'outdent') {
-							ignoreLevel--;
-							if (ignoreLevel === 0) {
-								break;
+							token = this.getNextToken();
+						}
+						if (token) {
+							const lastToken: Token = token;
+							const lines: string[] = this.getUnformattedContentLines(firstToken, lastToken);
+							// Start with an empty string for the first newline after comment.
+							if (startsWithNewLine) {
+								lines.unshift('');
 							}
+							// Trim the last line, since indentation of formatted pug is handled separately.
+							const lastLine: string | undefined = lines.pop();
+							if (lastLine !== undefined) {
+								lines.push(lastLine.trimRight());
+							}
+							results.push(lines.join('\n'));
 						}
 					}
-					const lastToken: Token = this.tokens[index - 1];
-					const lines: string[] = this.getUnformattedContentLines(firstToken, lastToken);
-					// Start with an empty string for the first newline after comment.
-					if (startsWithNewLine) {
-						lines.unshift('');
-					}
-					// Trim the last line, since indentation of formatted pug is handled separately.
-					const lastLine: string | undefined = lines.pop();
-					if (lastLine !== undefined) {
-						lines.push(lastLine.trimRight());
-					}
-					results.push(lines.join('\n'));
 				}
 			} catch {
 				throw new Error('Unhandled token: ' + JSON.stringify(token));
 			}
+			token = this.getNextToken();
 		}
 		return results.join('');
 	}
@@ -267,6 +264,19 @@ export class PugPrinter {
 				return this.indentString;
 		}
 		return '';
+	}
+
+	private get previousToken(): Token | undefined {
+		return this.tokens[this.currentIndex - 1];
+	}
+
+	private get nextToken(): Token | undefined {
+		return this.tokens[this.currentIndex + 1];
+	}
+
+	private getNextToken(): Token | null {
+		this.currentIndex++;
+		return this.tokens[this.currentIndex] ?? null;
 	}
 
 	private quoteString(val: string): string {
