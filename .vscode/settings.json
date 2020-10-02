@@ -1,4 +1,5 @@
 {
+	"cSpell.words": ["blockcode", "codemirror", "endregion", "outdent", "pipeless", "Quadflieg"],
 	"eslint.validate": ["javascript", "typescript"],
 	"typescript.tsdk": "node_modules/typescript/lib"
 }
