@@ -164,12 +164,12 @@ These additional options are specific to pug templates and can be configured in 
   [Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)  
   _This feature was planned since `1.2.0`, but it was always a bit unstable and opinionated._  
   _If there are any bugs, please report them._
-  
+
 - `pugSortAttributes`
   Sort attributes that are not on _beginning_ and _end_ patterns.
 
   Choices:
-  
+
   - `'as-is'` _default_ -> Keep the attributes untouched.  
     Example: `Foo(a c d b)`
   - `'asc'` -> Sort attributes ascending.  
@@ -293,3 +293,5 @@ This project was inspired by https://github.com/gicentre/prettier-plugin-elm.
 Many thanks also to [@j-f1](https://github.com/j-f1), [@lipis](https://github.com/lipis) and [@azz](https://github.com/azz) for the help in transferring this repos to the prettier orga.
 
 Thanks to [@Peilonrayz](https://github.com/Peilonrayz), who gave me the [idea](https://codereview.stackexchange.com/a/236031/128216) to rewrite the printer into a [class](https://github.com/prettier/plugin-pug/commit/a6e3a4b776ce67f0d5d763aaf1f88c0c860c6ed3) and thus make the code a lot more maintainable.
+
+Thanks to [@lehni](https://github.com/lehni) and [@SkyaTura](https://github.com/SkyaTura) for the massive contribution and the introduction of many new features into the project.
