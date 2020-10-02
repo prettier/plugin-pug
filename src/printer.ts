@@ -771,7 +771,7 @@ export class PugPrinter {
 
 	private comment(commentToken: CommentToken): string {
 		let result: string = this.computedIndent;
-		if (commentToken.val.trim() === 'prettier-ignore') {
+		if (/^\s*prettier-ignore\b/.test(commentToken.val)) {
 			// Use a own token processing loop to find the end of the stream of tokens to be ignored by formatting,
 			// and uses their `loc` properties to retrieve the original pug code to be used instead.
 			let token: Token | null = this.getNextToken();
