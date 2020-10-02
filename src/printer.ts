@@ -478,17 +478,17 @@ export class PugPrinter {
 			) {
 				const startAttributesIndex: number = this.tokens.indexOf(token);
 				const endAttributesIndex: number = tempIndex;
-				//if (endAttributesIndex - startAttributesIndex > 2) {
-				this.tokens = partialSort(this.tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
-					compareAttributeToken(
-						a as AttributeToken,
-						b as AttributeToken,
-						this.options.pugSortAttributesEnd,
-						this.options.pugSortAttributesBeginning,
-						this.options.pugSortAttributes
-					)
-				);
-				//}
+				if (endAttributesIndex - startAttributesIndex > 2) {
+					this.tokens = partialSort(this.tokens, startAttributesIndex + 1, endAttributesIndex, (a, b) =>
+						compareAttributeToken(
+							a as AttributeToken,
+							b as AttributeToken,
+							this.options.pugSortAttributes,
+							this.options.pugSortAttributesBeginning,
+							this.options.pugSortAttributesEnd
+						)
+					);
+				}
 			}
 		}
 		return result;
