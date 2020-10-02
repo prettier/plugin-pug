@@ -1,68 +1,82 @@
 import { AttributeToken } from 'pug-lexer';
+import { SortAttributes } from './index';
 
 type CompareResult = -1 | 0 | 1;
-
-function compareByIndex(leftIndex: number, rightIndex: number): CompareResult {
-	if (leftIndex !== -1 && rightIndex === -1) {
-		return -1;
-	}
-	if (leftIndex === -1 && rightIndex !== -1) {
-		return 1;
-	}
-	const result = leftIndex - rightIndex;
-	if (result <= -1) {
-		return -1;
-	}
-	if (result >= 1) {
-		return 1;
-	}
-	return 0;
-}
+type CompareFunction = (a: any, b: any) => CompareResult;
 
 export function compareAttributeToken(
 	a: AttributeToken,
 	b: AttributeToken,
-	sortAttributes: string[],
-	moveToEnd: boolean = false
+	sortAttributes: SortAttributes,
+	sortAttributesBeginning: string[],
+	sortAttributesEnd: string[]
 ): CompareResult {
-	const sortPatterns: RegExp[] = sortAttributes.map((sort) => new RegExp(sort));
+	const sortPatternsBeginning: RegExp[] = sortAttributesBeginning.map((sort) => new RegExp(sort)).reverse();
+	const sortPatternsEnd: RegExp[] = sortAttributesEnd.map((sort) => new RegExp(sort));
 
 	const aName = a.name;
 	const bName = b.name;
 
-	let result: CompareResult = 0;
+	const aBeginningIndex: number = sortPatternsBeginning.findIndex((pattern) => pattern.test(aName));
+	const bBeginningIndex: number = sortPatternsBeginning.findIndex((pattern) => pattern.test(bName));
 
-	if (result === 0) {
-		let aIndex: number = moveToEnd ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY;
-		let bIndex: number = moveToEnd ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY;
-		let aFound = false;
-		let bFound = false;
-		for (let index = 0; index < sortPatterns.length; index++) {
-			const pattern = sortPatterns[index];
-			if (!aFound && pattern.test(aName)) {
-				aIndex = index;
-				aFound = true;
-			}
-			if (!bFound && pattern.test(bName)) {
-				bIndex = index;
-				bFound = true;
-			}
-			if (aFound && bFound) {
-				break;
-			}
-		}
-
-		result = compareByIndex(aIndex, bIndex);
+	const beginning = aBeginningIndex - bBeginningIndex;
+	if (beginning > 0) {
+		return -1;
+	}
+	if (beginning < 0) {
+		return 1;
 	}
 
-	return result;
+	const aEndIndex: number = sortPatternsEnd.findIndex((pattern) => pattern.test(aName));
+	const bEndIndex: number = sortPatternsEnd.findIndex((pattern) => pattern.test(bName));
+
+	const end = aEndIndex - bEndIndex;
+	if (end > 0) {
+		return 1;
+	}
+	if (end < 0) {
+		return -1;
+	}
+
+	switch (sortAttributes) {
+		case 'asc': {
+			if (aName > bName) {
+				return 1;
+			}
+			if (aName < bName) {
+				return -1;
+			}
+			break;
+		}
+		case 'desc': {
+			if (aName > bName) {
+				return -1;
+			}
+			if (aName < bName) {
+				return 1;
+			}
+			break;
+		}
+	}
+
+	return 0;
 }
 
-export function partialSort<T>(arr: T[], start: number, end: number, compareFn?: (a: T, b: T) => number): T[] {
-	const preSorted: T[] = arr.slice(0, start);
-	const postSorted: T[] = arr.slice(end);
-	const sorted: T[] = arr.slice(start, end).sort(compareFn);
-	arr.length = 0;
-	arr.push(...preSorted.concat(sorted).concat(postSorted));
-	return arr;
+export function stableSort<T>(array: T[], compare: CompareFunction): T[] {
+	const entries = array.map((value, index): [T, number] => [value, index]);
+	entries.sort((a, b) => {
+		const order = compare(a[0], b[0]);
+		// When order is 0, sort by index to make the sort stable:
+		return order !== 0 ? order : a[1] - b[1];
+	});
+	return entries.map(([value]) => value);
+}
+
+export function partialSort<T>(arr: T[], start: number, end: number, compareFn: CompareFunction): T[] {
+	const preSort: T[] = arr.slice(0, start);
+	const postSort: T[] = arr.slice(end);
+	const attributes: T[] = arr.slice(start, end);
+	const sorted: T[] = stableSort(attributes, compareFn);
+	return [...preSort, ...sorted, ...postSort];
 }

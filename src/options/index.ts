@@ -1,6 +1,11 @@
 import { ParserOptions } from 'prettier';
 import { AttributeSeparator, ATTRIBUTE_SEPARATOR_OPTION, PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
-import { PUG_SORT_ATTRIBUTES_BEGINNING_OPTION, PUG_SORT_ATTRIBUTES_END_OPTION } from './attribute-sorting';
+import {
+	SortAttributes,
+	PUG_SORT_ATTRIBUTES_OPTION,
+	PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
+	PUG_SORT_ATTRIBUTES_END_OPTION
+} from './attribute-sorting';
 import { WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes-threshold';
 import {
 	ClosingBracketPosition,
@@ -49,6 +54,7 @@ export interface PugParserOptions
 	commentPreserveSpaces: CommentPreserveSpaces;
 	pugCommentPreserveSpaces: CommentPreserveSpaces | null;
 
+	pugSortAttributes: SortAttributes;
 	pugSortAttributesBeginning: string[];
 	pugSortAttributesEnd: string[];
 
@@ -69,6 +75,7 @@ export const options = {
 	pugClosingBracketPosition: PUG_CLOSING_BRACKET_POSITION_OPTION,
 	commentPreserveSpaces: COMMENT_PRESERVE_SPACES_OPTION,
 	pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION,
+	pugSortAttributes: PUG_SORT_ATTRIBUTES_OPTION,
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION,
 	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD
