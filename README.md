@@ -164,6 +164,19 @@ These additional options are specific to pug templates and can be configured in 
   [Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)  
   _This feature was planned since `1.2.0`, but it was always a bit unstable and opinionated._  
   _If there are any bugs, please report them._
+  
+- `pugSortAttributes`
+  Sort attributes that are not on _beginning_ and _end_ patterns.
+
+  Choices:
+  
+  - `'as-is'` _default_ -> Keep the attributes untouched.  
+    Example: `Foo(a c d b)`
+  - `'asc'` -> Sort attributes ascending.  
+    Example: `Foo(a b c d)`
+  - `'desc'` -> Sort attributes descending.  
+    Example: `Foo(d c b a)`
+
 - `pugWrapAttributesThreshold`  
   Define the maximum amount of attributes that an element can appear with on one line before it gets wrapped.
 
