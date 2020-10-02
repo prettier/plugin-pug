@@ -1,12 +1,11 @@
 import { ParserOptions } from 'prettier';
 import { AttributeSeparator, ATTRIBUTE_SEPARATOR_OPTION, PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
 import {
-	SortAttributes,
-	PUG_SORT_ATTRIBUTES_OPTION,
 	PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
-	PUG_SORT_ATTRIBUTES_END_OPTION
+	PUG_SORT_ATTRIBUTES_END_OPTION,
+	PUG_SORT_ATTRIBUTES_OPTION,
+	SortAttributes
 } from './attribute-sorting';
-import { WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes-threshold';
 import {
 	ClosingBracketPosition,
 	CLOSING_BRACKET_POSITION_OPTION,
@@ -27,9 +26,16 @@ import {
 	PUG_TAB_WIDTH_OPTION,
 	PUG_USE_TABS_OPTION
 } from './common';
+import { WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes-threshold';
 
+/**
+ * Category for Prettier's CLI
+ */
 export const CATEGORY_PUG: string = 'Pug';
 
+/**
+ * Extended pug option object.
+ */
 export interface PugParserOptions
 	/* eslint-disable @typescript-eslint/indent */
 	extends Pick<

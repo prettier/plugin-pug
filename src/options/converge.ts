@@ -2,6 +2,11 @@ import { ParserOptions } from 'prettier';
 import { PugParserOptions } from '.';
 import { PugPrinterOptions } from '../printer';
 
+/**
+ * Convert and merge options from Prettier and `pug`-specific options into one option object with normalized default values.
+ *
+ * @param options Options passed into the plugin by Prettier
+ */
 export function convergeOptions(options: ParserOptions & PugParserOptions): PugPrinterOptions {
 	return {
 		printWidth: options.printWidth,
