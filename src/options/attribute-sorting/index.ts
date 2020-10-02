@@ -23,7 +23,6 @@ export const PUG_SORT_ATTRIBUTES_OPTION = {
 	since: '1.8.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
-	array: false,
 	default: 'as-is',
 	description: 'Change how the attributes between Beggining and End should be sorted',
 	choices: [
