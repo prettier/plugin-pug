@@ -2,13 +2,14 @@ import { AttributeToken } from 'pug-lexer';
 import { SortAttributes } from './index';
 
 type CompareResult = -1 | 0 | 1;
+type CompareFunction = (a: any, b: any) => CompareResult;
 
 export function compareAttributeToken(
 	a: AttributeToken,
 	b: AttributeToken,
-	sortAttributesEnd: string[],
+	sortAttributes: SortAttributes,
 	sortAttributesBeginning: string[],
-	sortAttributes: SortAttributes
+	sortAttributesEnd: string[]
 ): CompareResult {
 	const sortPatternsBeginning: RegExp[] = sortAttributesBeginning.map((sort) => new RegExp(sort)).reverse();
 	const sortPatternsEnd: RegExp[] = sortAttributesEnd.map((sort) => new RegExp(sort));
@@ -41,9 +42,20 @@ export function compareAttributeToken(
 	return 0;
 }
 
-export function partialSort<T>(arr: T[], start: number, end: number, compareFn?: (a: T, b: T) => number): T[] {
+export function stableSort<T>(array: T[], compare: CompareFunction): any[] {
+	const entries = array.map((value, index): [T, number] => [value, index]);
+	entries.sort((a, b) => {
+		const order = compare(a[0], b[0]);
+		// When order is 0, sort by index to make the sort stable:
+		return order != 0 ? order : a[1] - b[1];
+	});
+	return entries.map(([value]) => value);
+}
+
+export function partialSort<T>(arr: T[], start: number, end: number, compareFn: CompareFunction): T[] {
 	const preSort: T[] = arr.slice(0, start);
 	const postSort: T[] = arr.slice(end);
-	const sorted: T[] = arr.slice(start, end).sort(compareFn);
+	const attributes: T[] = arr.slice(start, end);
+	const sorted: T[] = stableSort(attributes, compareFn);
 	return [...preSort, ...sorted, ...postSort];
 }
