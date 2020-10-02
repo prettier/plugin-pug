@@ -22,6 +22,7 @@
 	},
 	"plugins": ["@typescript-eslint", "prettier"],
 	"rules": {
+		"curly": ["error"],
 		"linebreak-style": ["error", "unix"],
 		"no-case-declarations": "warn",
 		"quotes": ["error", "single", { "avoidEscape": true }],
