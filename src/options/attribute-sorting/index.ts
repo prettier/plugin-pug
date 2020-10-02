@@ -24,7 +24,7 @@ export const PUG_SORT_ATTRIBUTES_OPTION = {
 	category: CATEGORY_PUG,
 	type: 'choice',
 	default: 'as-is',
-	description: 'Change how the attributes between Beggining and End should be sorted',
+	description: 'Change how the attributes between _beginning_ and _end_ should be sorted.',
 	choices: [
 		{ value: 'asc', description: 'Sort middle attributes ascending.' },
 		{ value: 'desc', description: 'Sort middle attributes descending.' },
