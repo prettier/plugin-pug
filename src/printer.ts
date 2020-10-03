@@ -235,10 +235,9 @@ export class PugPrinter {
 	}
 
 	private tokenNeedsSeparator(token: AttributeToken): boolean {
-		return (
-			!this.neverUseAttributeSeparator &&
-			(this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name))
-		);
+		return this.neverUseAttributeSeparator
+			? false
+			: this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name);
 	}
 
 	private formatDelegatePrettier(
@@ -451,9 +450,8 @@ export class PugPrinter {
 						this.currentLineLength += tempToken.name.length;
 						if (hasNonPrefixAttributes) {
 							// This isn't the first non-prefix attribute, add a space and separator
+							this.currentLineLength += 1;
 							if (this.tokenNeedsSeparator(tempToken)) {
-								this.currentLineLength += 2;
-							} else {
 								this.currentLineLength += 1;
 							}
 						}
