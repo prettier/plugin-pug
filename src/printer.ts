@@ -99,10 +99,13 @@ export interface PugPrinterOptions {
 export class PugPrinter {
 	private result: string = '';
 
-	// The current index in the `tokens` array, starts at -1, because `getNextToken()` increases before retrieving
+	/**
+	 * The index of the current token inside the `tokens` array
+	 */
+	// Start at -1, because `getNextToken()` increases it before retreval
 	private currentIndex: number = -1;
 	private currentLineLength: number = 0;
-	
+
 	private readonly indentString: string;
 	private indentLevel: number = 0;
 
@@ -253,11 +256,11 @@ export class PugPrinter {
 		const startLine: number = start.line - 1;
 		const endLine: number = end.line - 1;
 		const parts: string[] = [];
-		parts.push(lines[startLine].substring(start.column - 1));
+		parts.push(lines[startLine].slice(start.column - 1));
 		for (let line: number = startLine + 1; line < endLine; line++) {
 			parts.push(lines[line]);
 		}
-		parts.push(lines[endLine].substring(0, end.column - 1));
+		parts.push(lines[endLine].slice(0, end.column - 1));
 		return parts;
 	}
 
@@ -771,8 +774,11 @@ export class PugPrinter {
 
 	private comment(commentToken: CommentToken): string {
 		let result: string = this.computedIndent;
-		if (/^\s*prettier-ignore\b/.test(commentToken.val)) {
-			// Use a own token processing loop to find the end of the stream of tokens to be ignored by formatting,
+		// See if this is a `//- prettier-ignore` comment, which would indicate that the part of the template
+		// that follows should be left unformatted. Support the same format as typescript-eslint is using for descriptons:
+		// https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/ban-ts-comment.md#allow-with-description
+		if (/^ prettier-ignore($|[: ])/.test(commentToken.val)) {
+			// Use a separate token processing loop to find the end of the stream of tokens to be ignored by formatting,
 			// and uses their `loc` properties to retrieve the original pug code to be used instead.
 			let token: Token | null = this.getNextToken();
 			if (token) {

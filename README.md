@@ -66,9 +66,9 @@ You can disable code formatting for a particular element by adding <nobr>`//- pr
 
 ```pug
 div.text( color =   "primary",  disabled  ="true"  )
-// -prettier-ignore
+//- prettier-ignore
 div.text( color =   "primary",  disabled  ="true"  )
-// -prettier-ignore
+//- prettier-ignore: because of reasons
 div
   div.text( color =   "primary",  disabled  ="true"  )
 ```
@@ -77,9 +77,9 @@ Prettified output:
 
 ```pug
 .text(color="primary", disabled)
-// -prettier-ignore
+//- prettier-ignore
 div.text( color =   "primary",  disabled  ="true"  )
-// -prettier-ignore
+//- prettier-ignore: because of reasons
 div
   div.text( color =   "primary",  disabled  ="true"  )
 ```
