@@ -1,0 +1,16 @@
+svg
+  circle(cx="12", cy="12", r="11")
+  line(x1="12", y1="6", x2="12", y2="13")
+  circle(cx="12", cy="17", r="0.5")
+div(
+  v-if="isList"
+)
+  list(
+    v-for="(node, index) in list",
+    :key="index",
+    :node="node",
+    :options="options"
+  )
+div(
+  v-else
+) Not a list
