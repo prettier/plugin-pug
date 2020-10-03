@@ -100,14 +100,10 @@ export class PugPrinter {
 	private result: string = '';
 
 	private currentIndex: number = 0;
+	private currentLineLength: number = 0;
 
 	private readonly indentString: string;
 	private indentLevel: number = 0;
-
-	/**
-	 * Counting the line length starts at 0
-	 */
-	private currentLineLength: number = 0;
 
 	private readonly quotes: "'" | '"';
 	private readonly otherQuotes: "'" | '"';
@@ -420,21 +416,24 @@ export class PugPrinter {
 			this.possibleClassPosition = this.result.length;
 			result = '(';
 			logger.debug(this.currentLineLength);
-			this.currentLineLength += 1;
 			let tempToken: AttributeToken | EndAttributesToken = this.nextToken;
 			let tempIndex: number = this.currentIndex + 1;
-			let hasPrefixAttribute: boolean = false;
-			let hasNonPrefixAttributes: boolean = false;
-			let numAttributes: number = 0;
+			// In pug, tags can have two kind of attributes: normal attributes that appear between parantheses,
+			// and literals for ids and classes, prefixing the paranthesis, e.g.: `#id.class(attribute="value")`
+			// https://pugjs.org/language/attributes.html#class-literal
+			// https://pugjs.org/language/attributes.html#id-literal
+			// In the stream of attribute tokens, distinguish those that can be converted to literals,
+			// and count those that cannot (normal attributes) to determine the resulting line length correctly.
+			let hasLiteralAttributes: boolean = false;
+			let numNormalAttributes: number = 0;
 			while (tempToken.type === 'attribute') {
-				numAttributes++;
 				if (!this.wrapAttributes && this.wrapAttributesPattern?.test(tempToken.name)) {
 					this.wrapAttributes = true;
 				}
 				switch (tempToken.name) {
 					case 'class':
 					case 'id': {
-						hasPrefixAttribute = true;
+						hasLiteralAttributes = true;
 						const val: string = tempToken.val.toString();
 						if (isQuoted(val)) {
 							this.currentLineLength -= 2;
@@ -448,8 +447,9 @@ export class PugPrinter {
 					}
 					default: {
 						this.currentLineLength += tempToken.name.length;
-						if (hasNonPrefixAttributes) {
-							// This isn't the first non-prefix attribute, add a space and separator
+						if (numNormalAttributes > 0) {
+							// This isn't the first normal attribute that will appear between parantheses,
+							// add space and separator
 							this.currentLineLength += 1;
 							if (this.tokenNeedsSeparator(tempToken)) {
 								this.currentLineLength += 1;
@@ -464,32 +464,29 @@ export class PugPrinter {
 							this.currentLineLength += 1 + val.length;
 							logger.debug({ tokenVal: val, length: val.length }, this.currentLineLength);
 						}
-						hasNonPrefixAttributes = true;
+						numNormalAttributes++;
 						break;
 					}
 				}
 				tempToken = this.tokens[++tempIndex] as AttributeToken | EndAttributesToken;
 			}
 			logger.debug('after token', this.currentLineLength);
-			if (hasPrefixAttribute) {
-				// Remove div
+			if (hasLiteralAttributes) {
+				// Remove div as it will be replaced with the literal for id and/or class
 				if (this.previousToken?.type === 'tag' && this.previousToken.val === 'div') {
 					this.currentLineLength -= 3;
 				}
 			}
-			if (hasNonPrefixAttributes) {
-				// Add trailing brace
-				this.currentLineLength += 1;
-			} else {
-				// Remove leading brace
-				this.currentLineLength -= 1;
+			if (numNormalAttributes > 0) {
+				// Add leading and trailing parantheses
+				this.currentLineLength += 2;
 			}
 			logger.debug(this.currentLineLength);
 			if (
 				!this.wrapAttributes &&
 				(this.currentLineLength > this.options.pugPrintWidth ||
 					(this.options.pugWrapAttributesThreshold >= 0 &&
-						numAttributes > this.options.pugWrapAttributesThreshold))
+						numNormalAttributes > this.options.pugWrapAttributesThreshold))
 			) {
 				this.wrapAttributes = true;
 			}
