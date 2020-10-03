@@ -15,5 +15,5 @@ export const WRAP_ATTRIBUTES_PATTERN = {
 	category: CATEGORY_PUG,
 	type: 'string',
 	default: '',
-	description: 'Regex pattern to match attributes against that should always trigger wrapping.',
+	description: 'Regex pattern to match attributes against that should always trigger wrapping.'
 };

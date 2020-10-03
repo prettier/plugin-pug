@@ -476,11 +476,12 @@ export class PugPrinter {
 				this.currentLineLength += 1;
 			}
 			logger.debug(this.currentLineLength);
-			if (!this.wrapAttributes && (
-				this.currentLineLength > this.options.pugPrintWidth ||
-				(this.options.pugWrapAttributesThreshold >= 0 &&
-					numAttributes > this.options.pugWrapAttributesThreshold)
-			)) {
+			if (
+				!this.wrapAttributes &&
+				(this.currentLineLength > this.options.pugPrintWidth ||
+					(this.options.pugWrapAttributesThreshold >= 0 &&
+						numAttributes > this.options.pugWrapAttributesThreshold))
+			) {
 				this.wrapAttributes = true;
 			}
 
