@@ -2,7 +2,7 @@
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.8.0...master)
 
-# 1.8.0 (not released yet)
+# 1.8.0
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.7.0...1.8.0)
 
