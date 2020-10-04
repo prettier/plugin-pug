@@ -8,6 +8,7 @@
 
 - Implement `pugWrapAttributesThreshold` option ([#118])
 - Implement `pugWrapAttributesPattern` option ([#126])
+- Support `//- prettier-ignore` comments inside pug templates ([#125])
 - Add middle attributes sorting ([#120])
 - Fix counting of current line-length ([#121])
 - Fix handling of literal attributes ([#130])
@@ -15,6 +16,7 @@
 
 [#118]: https://github.com/prettier/plugin-pug/issues/118
 [#126]: https://github.com/prettier/plugin-pug/issues/126
+[#125]: https://github.com/prettier/plugin-pug/pull/125
 [#120]: https://github.com/prettier/plugin-pug/pull/120
 [#121]: https://github.com/prettier/plugin-pug/pull/121
 [#130]: https://github.com/prettier/plugin-pug/issues/130
