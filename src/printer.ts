@@ -188,13 +188,17 @@ export class PugPrinter {
 						// TODO: These tokens read the length of the result
 						this.result = results.join('');
 					// eslint-disable-next-line no-fallthrough
-					default:
+					default: {
+						if (typeof this[token.type] !== 'function') {
+							throw new Error('Unhandled token: ' + JSON.stringify(token));
+						}
 						// @ts-expect-error
 						results.push(this[token.type](token));
 						break;
+					}
 				}
-			} catch {
-				throw new Error('Unhandled token: ' + JSON.stringify(token));
+			} catch (error) {
+				throw new Error(error);
 			}
 			token = this.getNextToken();
 		}
