@@ -544,7 +544,14 @@ export class PugPrinter {
 							this.result.slice(position)
 						].join('');
 						this.possibleClassPosition += 1 + normalClasses.join('.').length;
-						this.result = this.result.replace(/div\./, '.');
+						// See if `div` can be removed from the literal
+						const replaced: string = this.result.replace(/div\./, '.');
+						if (replaced !== this.result) {
+							this.result = replaced;
+							// `div` was removed, so reduce possible positions as well
+							this.possibleIdPosition -= 3;
+							this.possibleClassPosition -= 3;
+						}
 					}
 					if (specialClasses.length > 0) {
 						token.val = makeString(specialClasses.join(' '), this.quotes);
@@ -570,16 +577,18 @@ export class PugPrinter {
 					}
 					// Write css-id in front of css-classes
 					const position: number = this.possibleIdPosition;
-					this.result = [this.result.slice(0, position), `#${val}`, this.result.slice(position)].join('');
-					this.possibleClassPosition += 1 + val.length;
-					this.result = this.result.replace(/div#/, '#');
-					if (
-						this.previousToken &&
-						this.previousToken.type === 'attribute' &&
-						this.previousToken.name !== 'class'
-					) {
-						this.previousAttributeRemapped = true;
+					const literal: string = `#${val}`;
+					this.result = [this.result.slice(0, position), literal, this.result.slice(position)].join('');
+					this.possibleClassPosition += literal.length;
+					// See if `div` can be removed from the literal
+					const replaced: string = this.result.replace(/div#/, '#');
+					if (replaced !== this.result) {
+						this.result = replaced;
+						// `div` was removed, so reduce possible positions as well
+						this.possibleIdPosition -= 3;
+						this.possibleClassPosition -= 3;
 					}
+					this.previousAttributeRemapped = true;
 					return;
 				}
 			}
