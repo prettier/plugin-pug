@@ -123,6 +123,7 @@ export class PugPrinter {
 	>;
 	/* eslint-enable @typescript-eslint/indent */
 
+	private currentTagPosition: number = 0;
 	private possibleIdPosition: number = 0;
 	private possibleClassPosition: number = 0;
 
@@ -262,6 +263,21 @@ export class PugPrinter {
 		}
 		parts.push(lines[endLine].slice(0, end.column - 1));
 		return parts;
+	}
+
+	private replaceTagWithLiteralIfPossible(search: RegExp, replace: string): void {
+		const currentTagEnd: number = Math.max(this.possibleIdPosition, this.possibleClassPosition);
+		const tag: string = this.result.slice(this.currentTagPosition, currentTagEnd);
+		const replaced: string = tag.replace(search, replace);
+		if (replaced !== tag) {
+			const prefix: string = this.result.slice(0, this.currentTagPosition);
+			const suffix: string = this.result.slice(currentTagEnd);
+			this.result = `${prefix}${replaced}${suffix}`;
+			// tag was replaced, so adjust possible positions as well
+			const diff: number = tag.length - replaced.length;
+			this.possibleIdPosition -= diff;
+			this.possibleClassPosition -= diff;
+		}
 	}
 
 	private formatDelegatePrettier(
@@ -432,6 +448,7 @@ export class PugPrinter {
 		this.currentLineLength += val.length;
 		const result: string = `${this.computedIndent}${val}`;
 		logger.debug('tag', { result, val: token.val, length: token.val.length }, this.currentLineLength);
+		this.currentTagPosition = this.result.length + this.computedIndent.length;
 		this.possibleIdPosition = this.result.length + result.length;
 		this.possibleClassPosition = this.result.length + result.length;
 		return result;
@@ -547,11 +564,8 @@ export class PugPrinter {
 			if (isQuoted(token.val)) {
 				if (token.name === 'class') {
 					// Handle class attribute
-					let val: string = token.val;
-					val = val.slice(1, -1);
-					val = val.trim();
-					val = val.replace(/\s\s+/g, ' ');
-					const classes: string[] = val.split(' ');
+					const val: string = token.val.slice(1, -1).trim();
+					const classes: string[] = val.split(/\s+/);
 					const specialClasses: string[] = [];
 					const normalClasses: string[] = [];
 					const validClassNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
@@ -572,14 +586,7 @@ export class PugPrinter {
 							this.result.slice(position)
 						].join('');
 						this.possibleClassPosition += 1 + normalClasses.join('.').length;
-						// See if `div` can be removed from the literal
-						const replaced: string = this.result.replace(/div\./, '.');
-						if (replaced !== this.result) {
-							this.result = replaced;
-							// `div` was removed, so reduce possible positions as well
-							this.possibleIdPosition -= 3;
-							this.possibleClassPosition -= 3;
-						}
+						this.replaceTagWithLiteralIfPossible(/div\./, '.');
 					}
 					if (specialClasses.length > 0) {
 						token.val = makeString(specialClasses.join(' '), this.quotes);
@@ -608,14 +615,7 @@ export class PugPrinter {
 					const literal: string = `#${val}`;
 					this.result = [this.result.slice(0, position), literal, this.result.slice(position)].join('');
 					this.possibleClassPosition += literal.length;
-					// See if `div` can be removed from the literal
-					const replaced: string = this.result.replace(/div#/, '#');
-					if (replaced !== this.result) {
-						this.result = replaced;
-						// `div` was removed, so reduce possible positions as well
-						this.possibleIdPosition -= 3;
-						this.possibleClassPosition -= 3;
-					}
+					this.replaceTagWithLiteralIfPossible(/div#/, '#');
 					this.previousAttributeRemapped = true;
 					return;
 				}
