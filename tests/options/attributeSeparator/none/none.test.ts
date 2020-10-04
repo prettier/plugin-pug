@@ -11,6 +11,8 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'pug' as any,
 				plugins: [plugin],
+				// The `.length-test` elements are tested against a `printWidth` of 80 (currently also the default):
+				printWidth: 80,
 				// @ts-expect-error
 				attributeSeparator: 'none'
 			});
