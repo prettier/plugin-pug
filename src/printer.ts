@@ -102,7 +102,7 @@ export class PugPrinter {
 	/**
 	 * The index of the current token inside the `tokens` array
 	 */
-	// Start at -1, because `getNextToken()` increases it before retreval
+	// Start at -1, because `getNextToken()` increases it before retrieval
 	private currentIndex: number = -1;
 	private currentLineLength: number = 0;
 
@@ -450,8 +450,8 @@ export class PugPrinter {
 			logger.debug(this.currentLineLength);
 			let tempToken: AttributeToken | EndAttributesToken = this.nextToken;
 			let tempIndex: number = this.currentIndex + 1;
-			// In pug, tags can have two kind of attributes: normal attributes that appear between parantheses,
-			// and literals for ids and classes, prefixing the paranthesis, e.g.: `#id.class(attribute="value")`
+			// In pug, tags can have two kind of attributes: normal attributes that appear between parentheses,
+			// and literals for ids and classes, prefixing the parentheses, e.g.: `#id.class(attribute="value")`
 			// https://pugjs.org/language/attributes.html#class-literal
 			// https://pugjs.org/language/attributes.html#id-literal
 			// In the stream of attribute tokens, distinguish those that can be converted to literals,
@@ -480,7 +480,7 @@ export class PugPrinter {
 					default: {
 						this.currentLineLength += tempToken.name.length;
 						if (numNormalAttributes > 0) {
-							// This isn't the first normal attribute that will appear between parantheses,
+							// This isn't the first normal attribute that will appear between parentheses,
 							// add space and separator
 							this.currentLineLength += 1;
 							if (this.tokenNeedsSeparator(tempToken)) {
@@ -510,7 +510,7 @@ export class PugPrinter {
 				}
 			}
 			if (numNormalAttributes > 0) {
-				// Add leading and trailing parantheses
+				// Add leading and trailing parentheses
 				this.currentLineLength += 2;
 			}
 			logger.debug(this.currentLineLength);
@@ -788,7 +788,7 @@ export class PugPrinter {
 	private comment(commentToken: CommentToken): string {
 		let result: string = this.computedIndent;
 		// See if this is a `//- prettier-ignore` comment, which would indicate that the part of the template
-		// that follows should be left unformatted. Support the same format as typescript-eslint is using for descriptons:
+		// that follows should be left unformatted. Support the same format as typescript-eslint is using for descriptions:
 		// https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/ban-ts-comment.md#allow-with-description
 		if (/^ prettier-ignore($|[: ])/.test(commentToken.val)) {
 			// Use a separate token processing loop to find the end of the stream of tokens to be ignored by formatting,
