@@ -1,0 +1,31 @@
+div
+  .wrapper-1(
+    attributes1="foo",
+    :attribute2="bar",
+    attribute3="something too long to keep on one line"
+  )
+  //- prettier-ignore
+  div
+    .wrapper-2(attributes1="foo" :attribute2="bar"  attribute3   =   "something too long to keep on one line")
+    //- prettier-ignore: this is already ignored be the previous statement above
+    div
+      .wrapper-3(attributes1="foo" :attribute2="bar"  attribute3   =   "something too long to keep on one line")
+  div
+    .wrapper-4(
+      attributes1="foo",
+      :attribute2="bar",
+      attribute3="something too long to keep on one line"
+    )
+    div
+      .wrapper-5(
+        attributes1="foo",
+        :attribute2="bar",
+        attribute3="something too long to keep on one line"
+      )
+    //- prettier-ignore
+    div
+      .wrapper-6(attributes1="foo" :attribute2="bar"  attribute3   =   "something too long to keep on one line")
+      //- prettier-ignore: this is already ignored be the previous statement above
+      div
+        .wrapper-7(attributes1="foo" :attribute2="bar"  attribute3   =   "something too long to keep on one line")
+  div

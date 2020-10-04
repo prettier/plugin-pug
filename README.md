@@ -33,23 +33,6 @@ Please note that the [plugin ecosystem in Prettier](https://prettier.io/docs/en/
 
 Plugin for Prettier to format pug code
 
-You can disable code formatting for a particular code block by adding <nobr>`<!-- prettier-ignore -->`</nobr> before ` ```pug `.
-
-````markdown
-Pug code with custom formatting:
-
-<!-- prettier-ignore -->
-```pug
-div.text( color =   "primary",  disabled  ="true"  )
-```
-
-Prettified code:
-
-```pug
-.text(color="primary", disabled)
-```
-````
-
 ## Getting started
 
 Simply install `prettier` and `@prettier/plugin-pug` as your project’s npm devDependencies:
@@ -76,6 +59,47 @@ yarn add --dev prettier @prettier/plugin-pug
 ## or
 yarn prettier --write "**/*.pug"
 ```
+
+### Selectively ignoring automatic formatting
+
+You can disable code formatting for a particular element by adding <nobr>`//- prettier-ignore`</nobr> comments in your pug templates:
+
+```pug
+div.text( color =   "primary",  disabled  ="true"  )
+//- prettier-ignore
+div.text( color =   "primary",  disabled  ="true"  )
+//- prettier-ignore: because of reasons
+div
+  div.text( color =   "primary",  disabled  ="true"  )
+```
+
+Prettified output:
+
+```pug
+.text(color="primary", disabled)
+//- prettier-ignore
+div.text( color =   "primary",  disabled  ="true"  )
+//- prettier-ignore: because of reasons
+div
+  div.text( color =   "primary",  disabled  ="true"  )
+```
+
+You can also disable code formatting in Markdown for a particular ` ```pug ` block by adding <nobr>`<!-- prettier-ignore -->`</nobr> before the block:
+
+````markdown
+Pug code with preserved custom formatting:
+
+<!-- prettier-ignore -->
+```pug
+div.text( color =   "primary",  disabled  ="true"  )
+```
+
+Pug code with automatic formatting:
+
+```pug
+.text(color="primary", disabled)
+```
+````
 
 ### Pug versions of standard prettier options
 

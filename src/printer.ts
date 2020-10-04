@@ -99,7 +99,11 @@ export interface PugPrinterOptions {
 export class PugPrinter {
 	private result: string = '';
 
-	private currentIndex: number = 0;
+	/**
+	 * The index of the current token inside the `tokens` array
+	 */
+	// Start at -1, because `getNextToken()` increases it before retreval
+	private currentIndex: number = -1;
 	private currentLineLength: number = 0;
 
 	private readonly indentString: string;
@@ -128,7 +132,11 @@ export class PugPrinter {
 	private pipelessText: boolean = false;
 	private pipelessComment: boolean = false;
 
-	public constructor(private tokens: Token[], private readonly options: PugPrinterOptions) {
+	public constructor(
+		private readonly content: string,
+		private tokens: Token[],
+		private readonly options: PugPrinterOptions
+	) {
 		this.indentString = options.pugUseTabs ? '\t' : ' '.repeat(options.pugTabWidth);
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
@@ -148,14 +156,6 @@ export class PugPrinter {
 		};
 	}
 
-	private get previousToken(): Token | undefined {
-		return this.tokens[this.currentIndex - 1];
-	}
-
-	private get nextToken(): Token | undefined {
-		return this.tokens[this.currentIndex + 1];
-	}
-
 	public build(): string {
 		const results: string[] = [];
 		if (this.tokens[0]?.type === 'text') {
@@ -163,9 +163,8 @@ export class PugPrinter {
 		} else if (this.tokens[0]?.type === 'eos') {
 			return '';
 		}
-		for (let index: number = 0; index < this.tokens.length; index++) {
-			this.currentIndex = index;
-			const token: Token = this.tokens[index];
+		let token: Token | null = this.getNextToken();
+		while (token) {
 			logger.debug('[PugPrinter]:', JSON.stringify(token));
 			try {
 				switch (token.type) {
@@ -197,6 +196,7 @@ export class PugPrinter {
 			} catch {
 				throw new Error('Unhandled token: ' + JSON.stringify(token));
 			}
+			token = this.getNextToken();
 		}
 		return results.join('');
 	}
@@ -222,6 +222,19 @@ export class PugPrinter {
 		return '';
 	}
 
+	private get previousToken(): Token | undefined {
+		return this.tokens[this.currentIndex - 1];
+	}
+
+	private get nextToken(): Token | undefined {
+		return this.tokens[this.currentIndex + 1];
+	}
+
+	private getNextToken(): Token | null {
+		this.currentIndex++;
+		return this.tokens[this.currentIndex] ?? null;
+	}
+
 	private quoteString(val: string): string {
 		return `${this.quotes}${val}${this.quotes}`;
 	}
@@ -234,6 +247,21 @@ export class PugPrinter {
 		return this.neverUseAttributeSeparator
 			? false
 			: this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name);
+	}
+
+	private getUnformattedContentLines(firstToken: Token, lastToken: Token): string[] {
+		const { start } = firstToken.loc;
+		const { end } = lastToken.loc;
+		const lines: string[] = this.content.split(/\r\n|\n|\r/);
+		const startLine: number = start.line - 1;
+		const endLine: number = end.line - 1;
+		const parts: string[] = [];
+		parts.push(lines[startLine].slice(start.column - 1));
+		for (let line: number = startLine + 1; line < endLine; line++) {
+			parts.push(lines[line]);
+		}
+		parts.push(lines[endLine].slice(0, end.column - 1));
+		return parts;
 	}
 
 	private formatDelegatePrettier(
@@ -753,18 +781,59 @@ export class PugPrinter {
 		this.result += '\n';
 	}
 
-	private comment(token: CommentToken): string {
+	private comment(commentToken: CommentToken): string {
 		let result: string = this.computedIndent;
-		if (this.checkTokenType(this.previousToken, ['newline', 'indent', 'outdent'], true)) {
-			result += ' ';
-		}
-		result += '//';
-		if (!token.buffer) {
-			result += '-';
-		}
-		result += formatCommentPreserveSpaces(token.val, this.options.commentPreserveSpaces);
-		if (this.nextToken?.type === 'start-pipeless-text') {
-			this.pipelessComment = true;
+		// See if this is a `//- prettier-ignore` comment, which would indicate that the part of the template
+		// that follows should be left unformatted. Support the same format as typescript-eslint is using for descriptons:
+		// https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/ban-ts-comment.md#allow-with-description
+		if (/^ prettier-ignore($|[: ])/.test(commentToken.val)) {
+			// Use a separate token processing loop to find the end of the stream of tokens to be ignored by formatting,
+			// and uses their `loc` properties to retrieve the original pug code to be used instead.
+			let token: Token | null = this.getNextToken();
+			if (token) {
+				let skipNewline: boolean = token.type === 'newline';
+				let ignoreLevel: number = 0;
+				while (token) {
+					const { type } = token;
+					if (type === 'newline' && ignoreLevel === 0) {
+						// Skip first newline after `prettier-ignore` comment
+						if (skipNewline) {
+							skipNewline = false;
+						} else {
+							break;
+						}
+					} else if (type === 'indent') {
+						ignoreLevel++;
+					} else if (type === 'outdent') {
+						ignoreLevel--;
+						if (ignoreLevel === 0) {
+							break;
+						}
+					}
+					token = this.getNextToken();
+				}
+				if (token) {
+					const lines: string[] = this.getUnformattedContentLines(commentToken, token);
+					// Trim the last line, since indentation of formatted pug is handled separately.
+					const lastLine: string | undefined = lines.pop();
+					if (lastLine !== undefined) {
+						lines.push(lastLine.trimRight());
+					}
+					result += lines.join('\n');
+				}
+			}
+		} else {
+			if (this.checkTokenType(this.previousToken, ['newline', 'indent', 'outdent'], true)) {
+				result += ' ';
+			}
+			result += '//';
+			if (!commentToken.buffer) {
+				result += '-';
+			}
+			result += formatCommentPreserveSpaces(commentToken.val, this.options.commentPreserveSpaces);
+			if (this.nextToken?.type === 'start-pipeless-text') {
+				this.pipelessComment = true;
+			}
 		}
 		return result;
 	}

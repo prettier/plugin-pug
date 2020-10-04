@@ -22,6 +22,11 @@ if (process.env.NODE_ENV === 'test') {
 	logger.setLogLevel(LogLevel.DEBUG);
 }
 
+type FastPathStackEntry = {
+	content: string;
+	tokens: Token[];
+};
+
 export const plugin: Plugin = {
 	languages: [
 		{
@@ -38,13 +43,14 @@ export const plugin: Plugin = {
 	],
 	parsers: {
 		pug: {
-			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): Token[] {
+			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): FastPathStackEntry {
 				logger.debug('[parsers:pug:parse]:', { text });
-				const tokens: lex.Token[] = lex(text.trimLeft());
+				const content: string = text.trimLeft();
+				const tokens: lex.Token[] = lex(content);
 				// logger.debug('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
 				// const ast: AST = parse(tokens, {});
 				// logger.debug('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
-				return tokens;
+				return { content, tokens };
 			},
 			astFormat: 'pug-ast',
 			hasPragma(text: string): boolean {
@@ -67,9 +73,10 @@ export const plugin: Plugin = {
 	printers: {
 		'pug-ast': {
 			print(path: FastPath, options: ParserOptions & PugParserOptions, print: (path: FastPath) => Doc): Doc {
-				const tokens: Token[] = path.stack[0];
+				const entry: FastPathStackEntry = path.stack[0];
+				const { content, tokens } = entry;
 				const pugOptions: PugPrinterOptions = convergeOptions(options);
-				const printer: PugPrinter = new PugPrinter(tokens, pugOptions);
+				const printer: PugPrinter = new PugPrinter(content, tokens, pugOptions);
 				const result: string = printer.build();
 				logger.debug('[printers:pug-ast:print]:', result);
 				return result;
