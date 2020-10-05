@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.8.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.8.1...master)
+
+# 1.8.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.8.0...1.8.1)
+
+- Improve conversion of tags to literals ([#133])
+- Handle plain-text tokens after outdent ([#135])
+
+[#133]: https://github.com/prettier/plugin-pug/issues/133
+[#135]: https://github.com/prettier/plugin-pug/issues/135
 
 # 1.8.0
 
