@@ -896,7 +896,7 @@ export class PugPrinter {
 					break;
 				case 'indent':
 				case 'outdent':
-					result += this.indentString;
+					result += this.computedIndent;
 					if (/^ .+$/.test(val)) {
 						result += '|\n';
 						result += this.indentString.repeat(this.indentLevel);
