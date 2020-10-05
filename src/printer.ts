@@ -724,9 +724,9 @@ export class PugPrinter {
 
 	private indent(token: IndentToken): string {
 		const result: string = `\n${this.indentString.repeat(this.indentLevel)}`;
+		this.indentLevel++;
 		this.currentLineLength = result.length - 1 + 1 + this.indentString.length; // -1 for \n, +1 for non zero based
 		logger.debug('indent', { result, indentLevel: this.indentLevel }, this.currentLineLength);
-		this.indentLevel++;
 		return result;
 	}
 
@@ -895,6 +895,7 @@ export class PugPrinter {
 					}
 					break;
 				case 'indent':
+				case 'outdent':
 					result += this.indentString;
 					if (/^ .+$/.test(val)) {
 						result += '|\n';
