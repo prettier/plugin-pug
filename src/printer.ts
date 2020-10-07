@@ -94,6 +94,7 @@ export interface PugPrinterOptions {
 	readonly pugSortAttributesEnd: string[];
 	readonly pugWrapAttributesThreshold: number;
 	readonly pugWrapAttributesPattern: string;
+	readonly pugTemplateTagIndentation: boolean;
 }
 
 export class PugPrinter {
@@ -139,14 +140,22 @@ export class PugPrinter {
 		private readonly options: PugPrinterOptions
 	) {
 		this.indentString = options.pugUseTabs ? '\t' : ' '.repeat(options.pugTabWidth);
+		if (options.pugTemplateTagIndentation) {
+			this.indentLevel++;
+		}
+
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
+
 		const attributeSeparator: AttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
 		this.alwaysUseAttributeSeparator = attributeSeparator === 'always';
 		this.neverUseAttributeSeparator = attributeSeparator === 'none';
+
 		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.closingBracketPosition);
+
 		const wrapAttributesPattern: string = options.pugWrapAttributesPattern;
 		this.wrapAttributesPattern = wrapAttributesPattern ? new RegExp(wrapAttributesPattern) : null;
+
 		const codeSingleQuote: boolean = !options.pugSingleQuote;
 		this.codeInterpolationOptions = {
 			singleQuote: codeSingleQuote,
@@ -220,7 +229,7 @@ export class PugPrinter {
 			case 'indent':
 				return this.indentString;
 		}
-		return '';
+		return this.options.pugTemplateTagIndentation ? this.indentString : '';
 	}
 
 	private get previousToken(): Token | undefined {
