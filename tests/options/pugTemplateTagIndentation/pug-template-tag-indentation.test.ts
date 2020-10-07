@@ -38,5 +38,18 @@ describe('Options', () => {
 
 			expect(actual).toBe(expected);
 		});
+
+		test('should not affect markdown', () => {
+			const expected: string = readFileSync(resolve(__dirname, 'not-indented.md'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'not-indented.md'), 'utf8');
+			const actual: string = format(code, {
+				parser: 'markdown',
+				plugins: [plugin],
+				// @ts-expect-error
+				pugTemplateTagIndentation: true
+			});
+
+			expect(actual).toBe(expected);
+		});
 	});
 });
