@@ -17,6 +17,12 @@ import {
 	PUG_COMMENT_PRESERVE_SPACES_OPTION
 } from './comment-preserve-spaces';
 import {
+	PugEmptyAttributes,
+	PugEmptyAttributesExceptions,
+	PUG_EMPTY_ATTRIBUTES_OPTION,
+	PUG_EMPTY_ATTRIBUTES_EXCEPTIONS_OPTION
+} from './empty-attributes';
+import {
 	ArrowParens,
 	PUG_ARROW_PARENS_OPTION,
 	PUG_BRACKET_SPACING_OPTION,
@@ -66,6 +72,9 @@ export interface PugParserOptions
 
 	pugWrapAttributesThreshold: number;
 	pugWrapAttributesPattern: string;
+
+	pugEmptyAttributes: PugEmptyAttributes;
+	pugEmptyAttributesExceptions: PugEmptyAttributesExceptions;
 }
 
 export const options: any = {
@@ -86,5 +95,7 @@ export const options: any = {
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION,
 	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD,
-	pugWrapAttributesPattern: WRAP_ATTRIBUTES_PATTERN
+	pugWrapAttributesPattern: WRAP_ATTRIBUTES_PATTERN,
+	pugEmptyAttributes: PUG_EMPTY_ATTRIBUTES_OPTION,
+	pugEmptyAttributesExceptions: PUG_EMPTY_ATTRIBUTES_EXCEPTIONS_OPTION
 };
