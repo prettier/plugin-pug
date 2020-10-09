@@ -20,7 +20,8 @@ import {
 	PugEmptyAttributes,
 	PugEmptyAttributesExceptions,
 	PUG_EMPTY_ATTRIBUTES_OPTION,
-	PUG_EMPTY_ATTRIBUTES_EXCEPTIONS_OPTION
+	PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION,
+	PugEmptyAttributesForceQuotes
 } from './empty-attributes';
 import {
 	ArrowParens,
@@ -75,6 +76,7 @@ export interface PugParserOptions
 
 	pugEmptyAttributes: PugEmptyAttributes;
 	pugEmptyAttributesExceptions: PugEmptyAttributesExceptions;
+	pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 }
 
 export const options: any = {
@@ -97,5 +99,5 @@ export const options: any = {
 	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD,
 	pugWrapAttributesPattern: WRAP_ATTRIBUTES_PATTERN,
 	pugEmptyAttributes: PUG_EMPTY_ATTRIBUTES_OPTION,
-	pugEmptyAttributesExceptions: PUG_EMPTY_ATTRIBUTES_EXCEPTIONS_OPTION
+	pugEmptyAttributesForceQuotes: PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION
 };

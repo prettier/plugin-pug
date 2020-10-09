@@ -32,6 +32,6 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugWrapAttributesThreshold: options.pugWrapAttributesThreshold,
 		pugWrapAttributesPattern: options.pugWrapAttributesPattern,
 		pugEmptyAttributes: options.pugEmptyAttributes,
-		pugEmptyAttributesExceptions: options.pugEmptyAttributesExceptions
+		pugEmptyAttributesForceQuotes: options.pugEmptyAttributesForceQuotes
 	};
 }
