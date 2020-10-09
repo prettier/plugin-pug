@@ -25,16 +25,6 @@ export const PUG_EMPTY_ATTRIBUTES_OPTION = {
 };
 
 // eslint-disable-next-line @typescript-eslint/typedef
-export const PUG_EMPTY_ATTRIBUTES_EXCEPTIONS_OPTION = {
-	since: '1.9.0',
-	category: CATEGORY_PUG,
-	type: 'path',
-	default: [{ value: [] }],
-	array: true,
-	description: ''
-};
-
-// eslint-disable-next-line @typescript-eslint/typedef
 export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION = {
 	since: '1.9.0',
 	category: CATEGORY_PUG,
@@ -45,7 +35,6 @@ export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION = {
 };
 
 export type PugEmptyAttributes = 'as-is' | 'none' | 'all';
-export type PugEmptyAttributesExceptions = string[];
 export type PugEmptyAttributesForceQuotes = string[];
 
 ////////////////////////////////////////////////////////////////////////////////

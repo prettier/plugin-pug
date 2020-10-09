@@ -51,12 +51,7 @@ import { DoctypeShortcut, DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-r
 import { createLogger, Logger, LogLevel } from './logger';
 import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
 import { SortAttributes } from './options/attribute-sorting';
-import {
-	formatEmptyAttribute,
-	PugEmptyAttributes,
-	PugEmptyAttributesExceptions,
-	PugEmptyAttributesForceQuotes
-} from './options/empty-attributes';
+import { formatEmptyAttribute, PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
 import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
 import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
 import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';

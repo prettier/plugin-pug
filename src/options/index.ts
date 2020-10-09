@@ -18,10 +18,9 @@ import {
 } from './comment-preserve-spaces';
 import {
 	PugEmptyAttributes,
-	PugEmptyAttributesExceptions,
+	PugEmptyAttributesForceQuotes,
 	PUG_EMPTY_ATTRIBUTES_OPTION,
-	PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION,
-	PugEmptyAttributesForceQuotes
+	PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION
 } from './empty-attributes';
 import {
 	ArrowParens,
@@ -75,7 +74,6 @@ export interface PugParserOptions
 	pugWrapAttributesPattern: string;
 
 	pugEmptyAttributes: PugEmptyAttributes;
-	pugEmptyAttributesExceptions: PugEmptyAttributesExceptions;
 	pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 }
 
