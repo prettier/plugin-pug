@@ -36,7 +36,7 @@ describe('Options', () => {
 				pugEmptyAttributesForceQuotes: ['^#']
 			});
 
-            expect(actual).toBe(expected);
+			expect(actual).toBe(expected);
 		});
 	});
 
@@ -51,7 +51,7 @@ describe('Options', () => {
 
 			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
 
-            expect(actual).toStrictEqual(expected);
+			expect(actual).toStrictEqual(expected);
 		});
 		test('should work with single quotes', () => {
 			const name: string = 'disabled';
@@ -63,7 +63,7 @@ describe('Options', () => {
 
 			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
 
-            expect(actual).toStrictEqual(expected);
+			expect(actual).toStrictEqual(expected);
 		});
 		test('should format truthy boolean attributes as empty quotes', () => {
 			const name: string = 'disabled';
@@ -75,7 +75,7 @@ describe('Options', () => {
 
 			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
 
-            expect(actual).toStrictEqual(expected);
+			expect(actual).toStrictEqual(expected);
 		});
 		test('should do nothing if the option is "as-is" (boolean)', () => {
 			const name: string = 'disabled';
@@ -88,7 +88,7 @@ describe('Options', () => {
 
 			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
 
-            expect(actual).toStrictEqual(expected);
+			expect(actual).toStrictEqual(expected);
 		});
 		test('should do nothing if the option is "as-is" (quotes)', () => {
 			const name: string = 'disabled';
@@ -101,7 +101,7 @@ describe('Options', () => {
 
 			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
 
-            expect(actual).toStrictEqual(expected);
+			expect(actual).toStrictEqual(expected);
 		});
 		test('should force quotes on attributes with name starting with #', () => {
 			const name: string = '#boom';
@@ -113,7 +113,7 @@ describe('Options', () => {
 
 			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
 
-            expect(actual).toStrictEqual(expected);
+			expect(actual).toStrictEqual(expected);
 		});
 		test('should do nothing if the value is not empty', () => {
 			const name: string = 'type';
@@ -126,7 +126,7 @@ describe('Options', () => {
 
 			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
 
-            expect(actual).toStrictEqual(expected);
+			expect(actual).toStrictEqual(expected);
 		});
 		test('should do nothing if the forced quotes value is not empty', () => {
 			const name: string = 'type';
@@ -139,7 +139,7 @@ describe('Options', () => {
 
 			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
 
-            expect(actual).toStrictEqual(expected);
+			expect(actual).toStrictEqual(expected);
 		});
 		test('should do nothing if the value already boolean true', () => {
 			const name: string = 'type';
@@ -151,7 +151,7 @@ describe('Options', () => {
 
 			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
 
-            expect(actual).toStrictEqual(expected);
+			expect(actual).toStrictEqual(expected);
 		});
 		test('should do nothing if the value already empty quotes', () => {
 			const name: string = 'type';
@@ -163,7 +163,7 @@ describe('Options', () => {
 
 			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
 
-            expect(actual).toStrictEqual(expected);
+			expect(actual).toStrictEqual(expected);
 		});
 	});
 });

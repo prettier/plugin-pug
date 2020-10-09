@@ -1,5 +1,5 @@
-import {AttributeToken} from 'pug-lexer';
-import {CATEGORY_PUG} from '.';
+import { AttributeToken } from 'pug-lexer';
+import { CATEGORY_PUG } from '.';
 
 // eslint-disable-next-line @typescript-eslint/typedef
 export const PUG_EMPTY_ATTRIBUTES_OPTION = {
@@ -29,7 +29,7 @@ export const PUG_EMPTY_ATTRIBUTES_EXCEPTIONS_OPTION = {
 	since: '1.9.0',
 	category: CATEGORY_PUG,
 	type: 'path',
-	default: [{value: []}],
+	default: [{ value: [] }],
 	array: true,
 	description: ''
 };
@@ -39,7 +39,7 @@ export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION = {
 	since: '1.9.0',
 	category: CATEGORY_PUG,
 	type: 'path',
-	default: [{value: []}],
+	default: [{ value: [] }],
 	array: true,
 	description: ''
 };
@@ -57,7 +57,7 @@ export function formatEmptyAttribute(
 	pugEmptyAttributes: PugEmptyAttributes,
 	pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes
 ): void {
-	const {val, name} = token;
+	const { val, name } = token;
 
 	const forceQuotesPatterns: RegExp[] = pugEmptyAttributesForceQuotes.map((pattern) => new RegExp(pattern));
 	const isForced: boolean = forceQuotesPatterns.some((pattern) => pattern.test(name));
