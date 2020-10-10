@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/typedef */
+import { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
-export const ATTRIBUTE_SEPARATOR_OPTION = {
+export const ATTRIBUTE_SEPARATOR_OPTION: ChoiceSupportOption<AttributeSeparator> = {
 	since: '1.0.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
@@ -26,7 +26,7 @@ export const ATTRIBUTE_SEPARATOR_OPTION = {
 	]
 };
 
-export const PUG_ATTRIBUTE_SEPARATOR_OPTION = {
+export const PUG_ATTRIBUTE_SEPARATOR_OPTION: ChoiceSupportOption<AttributeSeparator | null> = {
 	...ATTRIBUTE_SEPARATOR_OPTION,
 	since: '1.6.0',
 	default: null,
