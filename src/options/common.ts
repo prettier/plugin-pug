@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/typedef */
+import { ChoiceSupportOption, IntSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
-export const PUG_PRINT_WIDTH_OPTION = {
+export const PUG_PRINT_WIDTH_OPTION: IntSupportOption = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
 	type: 'int',
@@ -10,11 +10,12 @@ export const PUG_PRINT_WIDTH_OPTION = {
 	range: { start: -1, end: Infinity, step: 1 }
 };
 
-export const PUG_SINGLE_QUOTE_OPTION = {
+export const PUG_SINGLE_QUOTE_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
 	default: null,
+	description: '',
 	choices: [
 		{
 			value: null,
@@ -36,7 +37,7 @@ export const PUG_SINGLE_QUOTE_OPTION = {
 	]
 };
 
-export const PUG_TAB_WIDTH_OPTION = {
+export const PUG_TAB_WIDTH_OPTION: IntSupportOption = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
 	type: 'int',
@@ -45,11 +46,12 @@ export const PUG_TAB_WIDTH_OPTION = {
 	range: { start: -1, end: Infinity, step: 1 }
 };
 
-export const PUG_USE_TABS_OPTION = {
+export const PUG_USE_TABS_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
 	default: null,
+	description: '',
 	choices: [
 		{
 			value: null,
@@ -71,11 +73,12 @@ export const PUG_USE_TABS_OPTION = {
 	]
 };
 
-export const PUG_BRACKET_SPACING_OPTION = {
+export const PUG_BRACKET_SPACING_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
 	default: null,
+	description: '',
 	choices: [
 		{
 			value: null,
@@ -97,11 +100,12 @@ export const PUG_BRACKET_SPACING_OPTION = {
 	]
 };
 
-export const PUG_SEMI_OPTION = {
+export const PUG_SEMI_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
 	default: null,
+	description: '',
 	choices: [
 		{
 			value: null,
@@ -123,7 +127,7 @@ export const PUG_SEMI_OPTION = {
 	]
 };
 
-export const PUG_ARROW_PARENS_OPTION = {
+export const PUG_ARROW_PARENS_OPTION: ChoiceSupportOption<ArrowParens | null> = {
 	since: '1.7.0',
 	category: CATEGORY_PUG,
 	type: 'choice',

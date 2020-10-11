@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/typedef */
+import { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
-export const CLOSING_BRACKET_POSITION_OPTION = {
+export const CLOSING_BRACKET_POSITION_OPTION: ChoiceSupportOption<ClosingBracketPosition> = {
 	since: '1.3.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
@@ -38,7 +38,7 @@ export const CLOSING_BRACKET_POSITION_OPTION = {
 	]
 };
 
-export const PUG_CLOSING_BRACKET_POSITION_OPTION = {
+export const PUG_CLOSING_BRACKET_POSITION_OPTION: ChoiceSupportOption<ClosingBracketPosition | null> = {
 	...CLOSING_BRACKET_POSITION_OPTION,
 	since: '1.6.0',
 	default: null,
