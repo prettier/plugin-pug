@@ -1,8 +1,9 @@
 import { AttributeToken } from 'pug-lexer';
+import { ChoiceSupportOption, PathArraySupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
 // eslint-disable-next-line @typescript-eslint/typedef
-export const PUG_EMPTY_ATTRIBUTES_OPTION = {
+export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption = {
 	since: '1.9.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
@@ -25,11 +26,11 @@ export const PUG_EMPTY_ATTRIBUTES_OPTION = {
 };
 
 // eslint-disable-next-line @typescript-eslint/typedef
-export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION = {
+export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION: PathArraySupportOption = {
 	since: '1.9.0',
 	category: CATEGORY_PUG,
 	type: 'path',
-	default: [{ value: [] }],
+	default: ([{ value: [] }] as unknown) as string[],
 	array: true,
 	description: ''
 };
