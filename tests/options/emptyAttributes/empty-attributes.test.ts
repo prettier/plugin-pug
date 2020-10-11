@@ -2,12 +2,12 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
 import { AttributeToken } from 'pug-lexer';
+import { plugin } from './../../../src/index';
 import {
 	formatEmptyAttribute,
 	PugEmptyAttributes,
 	PugEmptyAttributesForceQuotes
 } from '../../../src/options/empty-attributes';
-import { plugin } from './../../../src/index';
 
 function createAttributeToken(name: string, val: string | boolean): AttributeToken {
 	return {
@@ -30,10 +30,9 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'pug' as any,
 				plugins: [plugin],
-				// @ts-ignore
+				// @ts-expect-error
 				pugEmptyAttributes: 'none',
-				// @ts-ignore
-				pugEmptyAttributesForceQuotes: ['^#']
+				pugEmptyAttributesForceQuotes: ['foo']
 			});
 
 			expect(actual).toBe(expected);
