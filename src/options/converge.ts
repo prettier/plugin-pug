@@ -31,9 +31,6 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugSortAttributesEnd: options.pugSortAttributesEnd,
 		pugWrapAttributesThreshold: options.pugWrapAttributesThreshold,
 		pugWrapAttributesPattern: options.pugWrapAttributesPattern,
-		pugTemplateTagIndentation:
-			options.pugTemplateTagIndentation &&
-			// @ts-expect-error: missing DefinitelyTyped declaration
-			options.embeddedInHtml
+		pugSingleFileComponentIndentation: options.pugSingleFileComponentIndentation && options.embeddedInHtml
 	};
 }

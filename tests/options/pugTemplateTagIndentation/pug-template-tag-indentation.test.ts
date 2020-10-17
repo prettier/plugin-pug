@@ -4,7 +4,7 @@ import { format } from 'prettier';
 import { plugin } from './../../../src/index';
 
 describe('Options', () => {
-	describe('pugTemplateTagIndentation', () => {
+	describe('pugSingleFileComponentIndentation', () => {
 		test('should indent', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'indented.vue'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'not-indented.vue'), 'utf8');
@@ -12,7 +12,7 @@ describe('Options', () => {
 				parser: 'vue',
 				plugins: [plugin],
 				// @ts-expect-error
-				pugTemplateTagIndentation: true
+				pugSingleFileComponentIndentation: true
 			});
 
 			expect(actual).toBe(expected);
@@ -25,7 +25,7 @@ describe('Options', () => {
 				parser: 'vue',
 				plugins: [plugin],
 				// @ts-expect-error
-				pugTemplateTagIndentation: false
+				pugSingleFileComponentIndentation: false
 			});
 
 			expect(actual).toBe(expected);
@@ -46,7 +46,7 @@ describe('Options', () => {
 				parser: 'markdown',
 				plugins: [plugin],
 				// @ts-expect-error
-				pugTemplateTagIndentation: true
+				pugSingleFileComponentIndentation: true
 			});
 
 			expect(actual).toBe(expected);

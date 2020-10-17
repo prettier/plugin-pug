@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/typedef */
+import { BooleanSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
-export const PUG_TEMPLATE_TAG_INDENTATION = {
+export const PUG_SINGLE_FILE_COMPONENT_INDENTATION: BooleanSupportOption = {
 	since: '1.9.0',
 	category: CATEGORY_PUG,
 	type: 'boolean',
