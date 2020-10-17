@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/typedef */
+import { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
-export const COMMENT_PRESERVE_SPACES_OPTION = {
+export const COMMENT_PRESERVE_SPACES_OPTION: ChoiceSupportOption<CommentPreserveSpaces> = {
 	since: '1.1.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
@@ -23,7 +23,7 @@ export const COMMENT_PRESERVE_SPACES_OPTION = {
 	]
 };
 
-export const PUG_COMMENT_PRESERVE_SPACES_OPTION = {
+export const PUG_COMMENT_PRESERVE_SPACES_OPTION: ChoiceSupportOption<CommentPreserveSpaces | null> = {
 	...COMMENT_PRESERVE_SPACES_OPTION,
 	since: '1.6.0',
 	default: null,

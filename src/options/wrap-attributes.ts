@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/typedef */
+import { IntSupportOption, PathSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
-export const WRAP_ATTRIBUTES_THRESHOLD = {
+export const WRAP_ATTRIBUTES_THRESHOLD: IntSupportOption = {
 	since: '1.8.0',
 	category: CATEGORY_PUG,
 	type: 'int',
@@ -10,10 +10,10 @@ export const WRAP_ATTRIBUTES_THRESHOLD = {
 	range: { start: -1, end: Infinity, step: 1 }
 };
 
-export const WRAP_ATTRIBUTES_PATTERN = {
+export const WRAP_ATTRIBUTES_PATTERN: PathSupportOption = {
 	since: '1.8.0',
 	category: CATEGORY_PUG,
-	type: 'string',
+	type: 'path',
 	default: '',
 	description: 'Regex pattern to match attributes against that should always trigger wrapping.'
 };
