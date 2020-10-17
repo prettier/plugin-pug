@@ -1,4 +1,4 @@
-import { ParserOptions } from 'prettier';
+import { ParserOptions, SupportOptions } from 'prettier';
 import { AttributeSeparator, ATTRIBUTE_SEPARATOR_OPTION, PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
 import {
 	PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
@@ -71,7 +71,7 @@ export interface PugParserOptions
 	pugTemplateTagIndentation: boolean;
 }
 
-export const options: any = {
+export const options: SupportOptions = {
 	pugPrintWidth: PUG_PRINT_WIDTH_OPTION,
 	pugSingleQuote: PUG_SINGLE_QUOTE_OPTION,
 	pugTabWidth: PUG_TAB_WIDTH_OPTION,

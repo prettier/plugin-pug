@@ -9,7 +9,7 @@ describe('Options', () => {
 		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 		test('should keep all spaces within comments', () => {
 			const actual: string = format(code, {
-				parser: 'pug' as any,
+				parser: 'pug',
 				plugins: [plugin],
 				// @ts-expect-error
 				commentPreserveSpaces: 'keep-all'
@@ -18,7 +18,7 @@ describe('Options', () => {
 			expect(actual).toBe(expected);
 		});
 		test('should keep all spaces within comments by default', () => {
-			const actual: string = format(code, { parser: 'pug' as any, plugins: [plugin] });
+			const actual: string = format(code, { parser: 'pug', plugins: [plugin] });
 
 			expect(actual).toBe(expected);
 		});

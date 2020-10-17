@@ -9,7 +9,7 @@ describe('Options', () => {
 		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 		test('should trim all spaces within comments', () => {
 			const actual: string = format(code, {
-				parser: 'pug' as any,
+				parser: 'pug',
 				plugins: [plugin],
 				// @ts-expect-error
 				commentPreserveSpaces: 'trim-all'

@@ -8,7 +8,7 @@ import {
 	Printer,
 	RequiredOptions,
 	SupportLanguage,
-	SupportOption
+	SupportOptions
 } from 'prettier';
 import * as lex from 'pug-lexer';
 import { Token } from 'pug-lexer';
@@ -102,5 +102,5 @@ export const plugin: Plugin = {
 export const languages: SupportLanguage[] | undefined = plugin.languages;
 export const parsers: { [parserName: string]: Parser } | undefined = plugin.parsers;
 export const printers: { [astFormat: string]: Printer } | undefined = plugin.printers;
-export const options: SupportOption[] | undefined = plugin.options;
+export const options: SupportOptions | undefined = plugin.options;
 export const defaultOptions: Partial<RequiredOptions> | undefined = plugin.defaultOptions;
