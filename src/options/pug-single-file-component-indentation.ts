@@ -6,5 +6,5 @@ export const PUG_SINGLE_FILE_COMPONENT_INDENTATION: BooleanSupportOption = {
 	category: CATEGORY_PUG,
 	type: 'boolean',
 	default: false,
-	description: 'Indent pug in template tags.'
+	description: 'Indent pug in template tags in single file components such as from vue or svelte.'
 };
