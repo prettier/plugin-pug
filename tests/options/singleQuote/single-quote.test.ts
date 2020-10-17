@@ -6,7 +6,7 @@ describe('Options', () => {
 		test('should handle singleQuote:true', () => {
 			const expected: string = 'div(:class=\'{ "pt-2": !dense }\')\n';
 			const code: string = 'div(:class="{ \'pt-2\': !dense }")\n';
-			const actual: string = format(code, { parser: 'pug' as any, plugins: [plugin], singleQuote: true });
+			const actual: string = format(code, { parser: 'pug', plugins: [plugin], singleQuote: true });
 
 			expect(actual).toBe(expected);
 		});
@@ -14,7 +14,7 @@ describe('Options', () => {
 		test('should handle singleQuote:false', () => {
 			const expected: string = 'div(:class="{ \'pt-2\': !dense }")\n';
 			const code: string = 'div(:class=\'{ "pt-2": !dense }\')\n';
-			const actual: string = format(code, { parser: 'pug' as any, plugins: [plugin], singleQuote: false });
+			const actual: string = format(code, { parser: 'pug', plugins: [plugin], singleQuote: false });
 
 			expect(actual).toBe(expected);
 		});
@@ -23,7 +23,7 @@ describe('Options', () => {
 			const expected: string = 'div(:class="{ \'pt-2\': !dense }")\n';
 			const code: string = 'div(:class="{ \'pt-2\': !dense }")';
 			const actual: string = format(code, {
-				parser: 'pug' as any,
+				parser: 'pug',
 				plugins: [plugin],
 				singleQuote: true,
 				// @ts-expect-error
@@ -37,7 +37,7 @@ describe('Options', () => {
 			const expected: string = 'div(:class=\'{ "pt-2": !dense }\')\n';
 			const code: string = 'div(:class="{ \'pt-2\': !dense }")';
 			const actual: string = format(code, {
-				parser: 'pug' as any,
+				parser: 'pug',
 				plugins: [plugin],
 				singleQuote: true,
 				// @ts-expect-error
@@ -51,7 +51,7 @@ describe('Options', () => {
 			const expected: string = 'div(:class="{ \'pt-2\': !dense }")\n';
 			const code: string = 'div(:class="{ \'pt-2\': !dense }")';
 			const actual: string = format(code, {
-				parser: 'pug' as any,
+				parser: 'pug',
 				plugins: [plugin],
 				singleQuote: false,
 				// @ts-expect-error
@@ -65,7 +65,7 @@ describe('Options', () => {
 			const expected: string = 'div(:class=\'{ "pt-2": !dense }\')\n';
 			const code: string = 'div(:class="{ \'pt-2\': !dense }")';
 			const actual: string = format(code, {
-				parser: 'pug' as any,
+				parser: 'pug',
 				plugins: [plugin],
 				singleQuote: false,
 				// @ts-expect-error

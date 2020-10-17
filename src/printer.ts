@@ -286,7 +286,7 @@ export class PugPrinter {
 	): string {
 		val = val.trim();
 		val = val.slice(1, -1);
-		val = format(val, { parser: parser as any, ...this.codeInterpolationOptions });
+		val = format(val, { parser, ...this.codeInterpolationOptions });
 		val = unwrapLineFeeds(val);
 		return this.quoteString(val);
 	}
@@ -325,10 +325,7 @@ export class PugPrinter {
 							text = text.slice(end + 2);
 							continue;
 						} else {
-							code = format(code, {
-								parser: '__ng_interpolation' as any,
-								...this.codeInterpolationOptions
-							});
+							code = format(code, { parser: '__ng_interpolation', ...this.codeInterpolationOptions });
 						}
 					} catch (error: unknown) {
 						if (typeof error === 'string') {
@@ -384,7 +381,7 @@ export class PugPrinter {
 	private formatVueEventBinding(val: string): string {
 		val = val.trim();
 		val = val.slice(1, -1); // Remove quotes
-		val = format(val, { parser: '__vue_event_binding' as any, ...this.codeInterpolationOptions });
+		val = format(val, { parser: '__vue_event_binding', ...this.codeInterpolationOptions });
 		val = unwrapLineFeeds(val);
 		if (val[val.length - 1] === ';') {
 			val = val.slice(0, -1);
@@ -418,10 +415,7 @@ export class PugPrinter {
 				val
 			);
 		} else {
-			val = format(val, {
-				parser: '__ng_interpolation' as any,
-				...this.codeInterpolationOptions
-			});
+			val = format(val, { parser: '__ng_interpolation', ...this.codeInterpolationOptions });
 			val = unwrapLineFeeds(val);
 		}
 		val = handleBracketSpacing(this.options.pugBracketSpacing, val);
@@ -668,10 +662,7 @@ export class PugPrinter {
 				// The value is exactly true and is not quoted
 				return;
 			} else if (token.mustEscape) {
-				val = format(val, {
-					parser: '__js_expression' as any,
-					...this.codeInterpolationOptions
-				});
+				val = format(val, { parser: '__js_expression', ...this.codeInterpolationOptions });
 
 				const lines: string[] = val.split('\n');
 				const codeIndentLevel: number = this.wrapAttributes ? this.indentLevel + 1 : this.indentLevel;
