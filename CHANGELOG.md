@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.8.1...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.9.0...master)
+
+# 1.9.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.8.1...1.9.0)
+
+- Support indentation for SFC ([#140])
+- Fix issues with plain-text and nesting ([#138])
+
+[#140]: https://github.com/prettier/plugin-pug/issues/140
+[#138]: https://github.com/prettier/plugin-pug/issues/138
 
 # 1.8.1
 
