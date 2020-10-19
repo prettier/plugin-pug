@@ -202,6 +202,7 @@ These additional options are specific to pug templates and can be configured in 
 
 - `pugWrapAttributesThreshold`  
   Define the maximum amount of attributes that an element can appear with on one line before it gets wrapped.
+
 - `pugWrapAttributesPattern`  
   Define a regex pattern to match attributes against that should always trigger wrapping.
 
@@ -236,6 +237,10 @@ These additional options are specific to pug templates and can be configured in 
     )
     ```
   - `2 .. Infinity` -> Same as above, just with different thresholds.
+
+- `pugSingleFileComponentIndentation`  
+  Indent pug in template tags in single file components such as from vue or svelte.  
+  _default_: `false`
 
 ## Some workarounds
 

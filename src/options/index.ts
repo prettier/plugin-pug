@@ -26,6 +26,7 @@ import {
 	PUG_TAB_WIDTH_OPTION,
 	PUG_USE_TABS_OPTION
 } from './common';
+import { PUG_SINGLE_FILE_COMPONENT_INDENTATION } from './pug-single-file-component-indentation';
 import { WRAP_ATTRIBUTES_PATTERN, WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes';
 
 /**
@@ -66,6 +67,8 @@ export interface PugParserOptions
 
 	pugWrapAttributesThreshold: number;
 	pugWrapAttributesPattern: string;
+
+	pugSingleFileComponentIndentation: boolean;
 }
 
 export const options: SupportOptions = {
@@ -86,5 +89,6 @@ export const options: SupportOptions = {
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION,
 	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD,
-	pugWrapAttributesPattern: WRAP_ATTRIBUTES_PATTERN
+	pugWrapAttributesPattern: WRAP_ATTRIBUTES_PATTERN,
+	pugSingleFileComponentIndentation: PUG_SINGLE_FILE_COMPONENT_INDENTATION
 };
