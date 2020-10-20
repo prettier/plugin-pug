@@ -1,5 +1,5 @@
-import { AttributeToken } from 'pug-lexer';
 import { ChoiceSupportOption, PathArraySupportOption } from 'prettier';
+import { AttributeToken } from 'pug-lexer';
 import { CATEGORY_PUG } from '.';
 
 export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption = {
@@ -37,9 +37,7 @@ export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION: PathArraySupportOption = 
 export type PugEmptyAttributes = 'as-is' | 'none' | 'all';
 export type PugEmptyAttributesForceQuotes = string[];
 
-////////////////////////////////////////////////////////////////////////////////
-
-const emptyValues: [boolean, string, string] = [true, '""', "''"];
+const EMPTY_VALUES: [boolean, string, string] = [true, '""', "''"];
 
 export function formatEmptyAttribute(
 	token: AttributeToken,
@@ -57,7 +55,7 @@ export function formatEmptyAttribute(
 		return;
 	}
 
-	if (pugEmptyAttributes === 'as-is' || !emptyValues.includes(val)) {
+	if (pugEmptyAttributes === 'as-is' || !EMPTY_VALUES.includes(val)) {
 		return;
 	}
 
