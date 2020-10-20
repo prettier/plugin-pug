@@ -30,7 +30,7 @@ export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION: PathArraySupportOption = 
 	since: '1.9.0',
 	category: CATEGORY_PUG,
 	type: 'path',
-	default: ([{ value: [] }] as unknown) as string[],
+	default: [{ value: [] }],
 	array: true,
 	description:
 		'Define a list of patterns for attributes that will be forced to have empty quotes even with "none" selected.'
