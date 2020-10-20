@@ -32,6 +32,7 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugWrapAttributesThreshold: options.pugWrapAttributesThreshold,
 		pugWrapAttributesPattern: options.pugWrapAttributesPattern,
 		pugEmptyAttributes: options.pugEmptyAttributes,
-		pugEmptyAttributesForceQuotes: options.pugEmptyAttributesForceQuotes
+		pugEmptyAttributesForceQuotes: options.pugEmptyAttributesForceQuotes,
+		pugSingleFileComponentIndentation: options.pugSingleFileComponentIndentation && options.embeddedInHtml
 	};
 }

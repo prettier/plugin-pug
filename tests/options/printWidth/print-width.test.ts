@@ -8,7 +8,7 @@ describe('Options', () => {
 		test('should handle printWidth', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-			const actual: string = format(code, { parser: 'pug' as any, plugins: [plugin], printWidth: 120 });
+			const actual: string = format(code, { parser: 'pug', plugins: [plugin], printWidth: 120 });
 
 			expect(actual).toBe(expected);
 		});

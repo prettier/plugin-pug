@@ -6,7 +6,7 @@ const pugSortAttributesOption: PathArraySupportOption = {
 	category: CATEGORY_PUG,
 	type: 'path',
 	array: true,
-	default: ([{ value: [] }] as unknown) as string[],
+	default: [{ value: [] }],
 	description: ''
 };
 

@@ -8,7 +8,7 @@ describe('Issues', () => {
 		const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 		const actual: string = format(code, {
-			parser: 'pug' as any,
+			parser: 'pug',
 			plugins: [plugin],
 
 			semi: false,
