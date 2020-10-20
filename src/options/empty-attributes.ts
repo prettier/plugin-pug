@@ -12,15 +12,15 @@ export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption = {
 	choices: [
 		{
 			value: 'as-is',
-			description: ''
+			description: 'Nothing is changed.'
 		},
 		{
 			value: 'none',
-			description: ''
+			description: 'Every attribute with empty quotes will be replaced by a boolean version without quotes.'
 		},
 		{
 			value: 'all',
-			description: ''
+			description: 'Every boolean attribute will be expressed with empty quotes.'
 		}
 	]
 };
@@ -32,7 +32,8 @@ export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION: PathArraySupportOption = 
 	type: 'path',
 	default: ([{ value: [] }] as unknown) as string[],
 	array: true,
-	description: ''
+	description:
+		'Define a list of patterns for attributes that will be forced to have empty quotes even with "none" selected.'
 };
 
 export type PugEmptyAttributes = 'as-is' | 'none' | 'all';
