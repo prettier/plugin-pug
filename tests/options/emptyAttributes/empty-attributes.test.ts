@@ -7,20 +7,8 @@ import {
 	PugEmptyAttributes,
 	PugEmptyAttributesForceQuotes
 } from '../../../src/options/empty-attributes';
+import { createAttributeToken } from '../../common';
 import { plugin } from './../../../src/index';
-
-function createAttributeToken(name: string, val: string | boolean): AttributeToken {
-	return {
-		name,
-		val,
-		mustEscape: false,
-		type: 'attribute',
-		loc: {
-			start: { line: 0, column: 0 },
-			end: { line: 0, column: 0 }
-		}
-	};
-}
 
 describe('Options', () => {
 	describe('emptyAttributes', () => {
