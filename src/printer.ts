@@ -51,11 +51,11 @@ import { DoctypeShortcut, DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-r
 import { createLogger, Logger, LogLevel } from './logger';
 import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
 import { SortAttributes } from './options/attribute-sorting';
-import { formatEmptyAttribute, PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
 import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
 import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
 import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
 import { ArrowParens } from './options/common';
+import { formatEmptyAttribute, PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
 	handleBracketSpacing,
@@ -567,6 +567,7 @@ export class PugPrinter {
 
 	private attribute(token: AttributeToken): void {
 		formatEmptyAttribute(token, this.options.pugEmptyAttributes, this.options.pugEmptyAttributesForceQuotes);
+
 		if (typeof token.val === 'string') {
 			if (isQuoted(token.val)) {
 				if (token.name === 'class') {

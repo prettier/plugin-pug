@@ -17,12 +17,6 @@ import {
 	PUG_COMMENT_PRESERVE_SPACES_OPTION
 } from './comment-preserve-spaces';
 import {
-	PugEmptyAttributes,
-	PugEmptyAttributesForceQuotes,
-	PUG_EMPTY_ATTRIBUTES_OPTION,
-	PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION
-} from './empty-attributes';
-import {
 	ArrowParens,
 	PUG_ARROW_PARENS_OPTION,
 	PUG_BRACKET_SPACING_OPTION,
@@ -32,6 +26,12 @@ import {
 	PUG_TAB_WIDTH_OPTION,
 	PUG_USE_TABS_OPTION
 } from './common';
+import {
+	PugEmptyAttributes,
+	PugEmptyAttributesForceQuotes,
+	PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION,
+	PUG_EMPTY_ATTRIBUTES_OPTION
+} from './empty-attributes';
 import { PUG_SINGLE_FILE_COMPONENT_INDENTATION } from './pug-single-file-component-indentation';
 import { WRAP_ATTRIBUTES_PATTERN, WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes';
 
