@@ -3,7 +3,7 @@ import { ChoiceSupportOption, PathArraySupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
 export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption = {
-	since: '1.9.0',
+	since: '1.10.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
 	default: 'as-is',
@@ -25,7 +25,7 @@ export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption = {
 };
 
 export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION: PathArraySupportOption = {
-	since: '1.9.0',
+	since: '1.10.0',
 	category: CATEGORY_PUG,
 	type: 'path',
 	default: [{ value: [] }],
