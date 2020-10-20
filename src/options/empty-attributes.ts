@@ -2,7 +2,7 @@ import { ChoiceSupportOption, PathArraySupportOption } from 'prettier';
 import { AttributeToken } from 'pug-lexer';
 import { CATEGORY_PUG } from '.';
 
-export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption = {
+export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption<PugEmptyAttributes> = {
 	since: '1.10.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
