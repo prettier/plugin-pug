@@ -2,7 +2,6 @@ import { AttributeToken } from 'pug-lexer';
 import { ChoiceSupportOption, PathArraySupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
-// eslint-disable-next-line @typescript-eslint/typedef
 export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption = {
 	since: '1.9.0',
 	category: CATEGORY_PUG,
@@ -25,7 +24,6 @@ export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption = {
 	]
 };
 
-// eslint-disable-next-line @typescript-eslint/typedef
 export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION: PathArraySupportOption = {
 	since: '1.9.0',
 	category: CATEGORY_PUG,
