@@ -8,7 +8,7 @@ export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption = {
 	category: CATEGORY_PUG,
 	type: 'choice',
 	default: 'as-is',
-	description: 'Change behavior of boolean attributes',
+	description: 'Change behavior of boolean attributes.',
 	choices: [
 		{
 			value: 'as-is',
