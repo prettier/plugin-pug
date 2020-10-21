@@ -1,3 +1,6 @@
+// Import plugin first
+import { plugin } from './../../../src/index';
+
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
@@ -8,7 +11,6 @@ import {
 	PugEmptyAttributesForceQuotes
 } from '../../../src/options/empty-attributes';
 import { createAttributeToken } from '../../common';
-import { plugin } from './../../../src/index';
 
 describe('Options', () => {
 	describe('emptyAttributes', () => {
