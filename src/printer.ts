@@ -348,11 +348,17 @@ export class PugPrinter {
 							} else if (error.includes('Bindings cannot contain assignments')) {
 								logger.warn(
 									'[PugPrinter:formatText]: Bindings should not contain assignments:',
-									code.trim()
+									`code: \`${code.trim()}\``
 								);
 							} else if (error.includes("Unexpected token '('")) {
 								logger.warn(
-									"[PugPrinter:formatText]: Found unexpected token '('. If you are using Vue, you can ignore this message."
+									"[PugPrinter:formatText]: Found unexpected token '('. If you are using Vue, you can ignore this message.",
+									`code: \`${code.trim()}\``
+								);
+							} else if (error.includes('Missing expected )')) {
+								logger.warn(
+									'[PugPrinter:formatText]: Missing expected ). If you are using Vue, you can ignore this message.',
+									`code: \`${code.trim()}\``
 								);
 							} else {
 								logger.warn('[PugPrinter:formatText]: ', error);
