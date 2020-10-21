@@ -249,7 +249,7 @@ These additional options are specific to pug templates and can be configured in 
 
   - `'as-is'` _default_ -> Nothing is changed.  
     Example: `foo(a, b="", c)`
-  - `'none'` -> Every attribute with empty quotes will be replaced by a boolean version without quotes.  
+  - `'none'` -> Every attribute with empty quotes will have them removed.  
     Example: `foo(a, b, c)`
   - `'all'` -> Every boolean attribute will be expressed with empty quotes.  
     Example: `foo(a="", b="", c="")`

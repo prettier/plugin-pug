@@ -15,7 +15,7 @@ export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption<PugEmptyAttributes
 		},
 		{
 			value: 'none',
-			description: 'Every attribute with empty quotes will be replaced by a boolean version without quotes.'
+			description: 'Every attribute with empty quotes will have them removed.'
 		},
 		{
 			value: 'all',
