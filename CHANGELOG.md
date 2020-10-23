@@ -1,13 +1,15 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.9.1...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.10.0...master)
 
-# 1.9.1 (not released yet)
+# 1.10.0
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.9.0...1.9.1)
+[diff](https://github.com/prettier/plugin-pug/compare/1.9.0...1.10.0)
 
+- Implement `pugEmptyAttributes` and `pugEmptyAttributesForceQuotes` option ([#128])
 - Improve warning message ([#143], [c0319bf])
 
+[#128]: https://github.com/prettier/plugin-pug/issues/128
 [#143]: https://github.com/prettier/plugin-pug/issues/143
 [c0319bf]: https://github.com/prettier/plugin-pug/commit/c0319bf5220ac2aa5ecbc82a473552f76c07009d
 
