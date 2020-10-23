@@ -55,7 +55,8 @@ import { compareAttributeToken, partialSort } from './options/attribute-sorting/
 import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
 import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
 import { ArrowParens } from './options/common';
-import { formatEmptyAttribute, PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
+import { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
+import { formatEmptyAttribute } from './options/empty-attributes/utils';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
 	handleBracketSpacing,

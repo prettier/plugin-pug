@@ -1,16 +1,11 @@
-// Import plugin first
-import { plugin } from './../../../src/index';
-
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
 import { AttributeToken } from 'pug-lexer';
-import {
-	formatEmptyAttribute,
-	PugEmptyAttributes,
-	PugEmptyAttributesForceQuotes
-} from '../../../src/options/empty-attributes';
+import { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from '../../../src/options/empty-attributes';
+import { formatEmptyAttribute } from '../../../src/options/empty-attributes/utils';
 import { createAttributeToken } from '../../common';
+import { plugin } from './../../../src/index';
 
 describe('Options', () => {
 	describe('emptyAttributes', () => {
