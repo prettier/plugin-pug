@@ -30,6 +30,9 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugSortAttributesBeginning: options.pugSortAttributesBeginning,
 		pugSortAttributesEnd: options.pugSortAttributesEnd,
 		pugWrapAttributesThreshold: options.pugWrapAttributesThreshold,
-		pugWrapAttributesPattern: options.pugWrapAttributesPattern
+		pugWrapAttributesPattern: options.pugWrapAttributesPattern,
+		pugEmptyAttributes: options.pugEmptyAttributes,
+		pugEmptyAttributesForceQuotes: options.pugEmptyAttributesForceQuotes,
+		pugSingleFileComponentIndentation: options.pugSingleFileComponentIndentation && options.embeddedInHtml
 	};
 }

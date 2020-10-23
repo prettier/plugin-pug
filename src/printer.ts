@@ -55,6 +55,8 @@ import { compareAttributeToken, partialSort } from './options/attribute-sorting/
 import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
 import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
 import { ArrowParens } from './options/common';
+import { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
+import { formatEmptyAttribute } from './options/empty-attributes/utils';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
 	handleBracketSpacing,
@@ -94,6 +96,9 @@ export interface PugPrinterOptions {
 	readonly pugSortAttributesEnd: string[];
 	readonly pugWrapAttributesThreshold: number;
 	readonly pugWrapAttributesPattern: string;
+	readonly pugEmptyAttributes: PugEmptyAttributes;
+	readonly pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
+	readonly pugSingleFileComponentIndentation: boolean;
 }
 
 export class PugPrinter {
@@ -139,14 +144,22 @@ export class PugPrinter {
 		private readonly options: PugPrinterOptions
 	) {
 		this.indentString = options.pugUseTabs ? '\t' : ' '.repeat(options.pugTabWidth);
+		if (options.pugSingleFileComponentIndentation) {
+			this.indentLevel++;
+		}
+
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
+
 		const attributeSeparator: AttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
 		this.alwaysUseAttributeSeparator = attributeSeparator === 'always';
 		this.neverUseAttributeSeparator = attributeSeparator === 'none';
+
 		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.closingBracketPosition);
+
 		const wrapAttributesPattern: string = options.pugWrapAttributesPattern;
 		this.wrapAttributesPattern = wrapAttributesPattern ? new RegExp(wrapAttributesPattern) : null;
+
 		const codeSingleQuote: boolean = !options.pugSingleQuote;
 		this.codeInterpolationOptions = {
 			singleQuote: codeSingleQuote,
@@ -224,7 +237,7 @@ export class PugPrinter {
 			case 'indent':
 				return this.indentString;
 		}
-		return '';
+		return this.options.pugSingleFileComponentIndentation ? this.indentString : '';
 	}
 
 	private get previousToken(): Token | undefined {
@@ -340,11 +353,17 @@ export class PugPrinter {
 							} else if (error.includes('Bindings cannot contain assignments')) {
 								logger.warn(
 									'[PugPrinter:formatText]: Bindings should not contain assignments:',
-									code.trim()
+									`code: \`${code.trim()}\``
 								);
 							} else if (error.includes("Unexpected token '('")) {
 								logger.warn(
-									"[PugPrinter:formatText]: Found unexpected token '('. If you are using Vue, you can ignore this message."
+									"[PugPrinter:formatText]: Found unexpected token '('. If you are using Vue, you can ignore this message.",
+									`code: \`${code.trim()}\``
+								);
+							} else if (error.includes('Missing expected )')) {
+								logger.warn(
+									'[PugPrinter:formatText]: Missing expected ). If you are using Vue, you can ignore this message.',
+									`code: \`${code.trim()}\``
 								);
 							} else {
 								logger.warn('[PugPrinter:formatText]: ', error);
@@ -558,6 +577,8 @@ export class PugPrinter {
 	}
 
 	private attribute(token: AttributeToken): void {
+		formatEmptyAttribute(token, this.options.pugEmptyAttributes, this.options.pugEmptyAttributesForceQuotes);
+
 		if (typeof token.val === 'string') {
 			if (isQuoted(token.val)) {
 				if (token.name === 'class') {

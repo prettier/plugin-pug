@@ -202,6 +202,7 @@ These additional options are specific to pug templates and can be configured in 
 
 - `pugWrapAttributesThreshold`  
   Define the maximum amount of attributes that an element can appear with on one line before it gets wrapped.
+
 - `pugWrapAttributesPattern`  
   Define a regex pattern to match attributes against that should always trigger wrapping.
 
@@ -236,6 +237,25 @@ These additional options are specific to pug templates and can be configured in 
     )
     ```
   - `2 .. Infinity` -> Same as above, just with different thresholds.
+
+- `pugSingleFileComponentIndentation`  
+  Indent pug in template tags in single file components such as from vue or svelte.  
+  _default_: `false`
+
+- `pugEmptyAttributes`  
+  Change behavior of boolean attributes.
+
+  Choices:
+
+  - `'as-is'` _default_ -> Nothing is changed.  
+    Example: `foo(a, b="", c)`
+  - `'none'` -> Every attribute with empty quotes will have them removed.  
+    Example: `foo(a, b, c)`
+  - `'all'` -> Every boolean attribute will be expressed with empty quotes.  
+    Example: `foo(a="", b="", c="")`
+
+- `pugEmptyAttributesForceQuotes`  
+  Define a list of patterns for attributes that will be forced to have empty quotes even with "none" selected.
 
 ## Some workarounds
 

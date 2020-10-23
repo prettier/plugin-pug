@@ -1,23 +1,10 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { AttributeToken } from 'pug-lexer';
 import { SortAttributes } from '../../../src/options/attribute-sorting/index';
 import { compareAttributeToken, stableSort } from '../../../src/options/attribute-sorting/utils';
+import { createAttributeToken } from '../../common';
 import { plugin } from './../../../src/index';
-
-function createAttributeToken(name: string): AttributeToken {
-	return {
-		name,
-		val: 'dummy',
-		mustEscape: false,
-		type: 'attribute',
-		loc: {
-			start: { line: 0, column: 0 },
-			end: { line: 0, column: 0 }
-		}
-	};
-}
 
 describe('Options', () => {
 	describe('sortAttributes', () => {

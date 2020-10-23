@@ -1,0 +1,40 @@
+import { AttributeToken } from 'pug-lexer';
+import { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from '.';
+
+const EMPTY_VALUES: [boolean, string, string] = [true, '""', "''"];
+
+export function formatEmptyAttribute(
+	token: AttributeToken,
+	pugEmptyAttributes: PugEmptyAttributes,
+	pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes
+): void {
+	const { val, name } = token;
+
+	const forceQuotesPatterns: RegExp[] = pugEmptyAttributesForceQuotes.map((pattern) => new RegExp(pattern));
+	const isForced: boolean = forceQuotesPatterns.some((pattern) => pattern.test(name));
+	if (isForced) {
+		if (token.val === true) {
+			token.val = '""';
+		}
+		return;
+	}
+
+	if (pugEmptyAttributes === 'as-is' || !EMPTY_VALUES.includes(val)) {
+		return;
+	}
+
+	switch (pugEmptyAttributes) {
+		case 'all': {
+			if (token.val === true) {
+				token.val = '""';
+			}
+			break;
+		}
+		case 'none': {
+			if (token.val === '""' || token.val === "''") {
+				token.val = true;
+			}
+			break;
+		}
+	}
+}
