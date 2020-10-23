@@ -242,6 +242,21 @@ These additional options are specific to pug templates and can be configured in 
   Indent pug in template tags in single file components such as from vue or svelte.  
   _default_: `false`
 
+- `pugEmptyAttributes`  
+  Change behavior of boolean attributes.
+
+  Choices:
+
+  - `'as-is'` _default_ -> Nothing is changed.  
+    Example: `foo(a, b="", c)`
+  - `'none'` -> Every attribute with empty quotes will have them removed.  
+    Example: `foo(a, b, c)`
+  - `'all'` -> Every boolean attribute will be expressed with empty quotes.  
+    Example: `foo(a="", b="", c="")`
+
+- `pugEmptyAttributesForceQuotes`  
+  Define a list of patterns for attributes that will be forced to have empty quotes even with "none" selected.
+
 ## Some workarounds
 
 There are some code examples that are not formatted well with this plugin and can damage your code.  
