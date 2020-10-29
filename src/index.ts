@@ -38,7 +38,7 @@ export const plugin: Plugin = {
 			codemirrorMimeType: 'text/x-pug',
 			extensions: ['.jade', '.pug'],
 			linguistLanguageId: 179,
-			vscodeLanguageIds: ['jade']
+			vscodeLanguageIds: ['jade', 'pug']
 		}
 	],
 	parsers: {
