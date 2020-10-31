@@ -236,6 +236,8 @@ export class PugPrinter {
 				return this.indentString.repeat(this.indentLevel);
 			case 'indent':
 				return this.indentString;
+			case 'start-pug-interpolation':
+				return '';
 		}
 		return this.options.pugSingleFileComponentIndentation ? this.indentString : '';
 	}
