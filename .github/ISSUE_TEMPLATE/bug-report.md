@@ -15,11 +15,28 @@ assignees: ''
 | Node     | vx.x.x        |
 | OS       | win,linux,mac |
 
+## Prettier config
+
+```json
+{
+
+}
+```
+
 ## Input
 
 ```pug
 
 ```
+
+<!-- If using embedded pug in vue, please use following template:
+
+```vue
+<template lang="pug">
+
+</template>
+```
+-->
 
 ## Output or Error
 
