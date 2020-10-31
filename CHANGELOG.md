@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.10.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.10.1...master)
+
+# 1.10.1 (not released yet)
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.10.0...1.10.1)
+
+- Fix handling of initial indentation for `pugSingleFileComponentIndentation` ([#145])
+
+[#145]: https://github.com/prettier/plugin-pug/issues/145
 
 # 1.10.0
 
