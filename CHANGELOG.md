@@ -7,9 +7,11 @@
 [diff](https://github.com/prettier/plugin-pug/compare/1.10.0...1.10.1)
 
 - Fix handling of initial indentation for `pugSingleFileComponentIndentation` ([#145])
+- Fix bracket interpolation in combination with `pugSingleFileComponentIndentation` ([#148])
 - Add `'pug'` to `vscodeLanguageIds` ([#150])
 
 [#145]: https://github.com/prettier/plugin-pug/issues/145
+[#148]: https://github.com/prettier/plugin-pug/issues/148
 [#150]: https://github.com/prettier/plugin-pug/issues/150
 
 # 1.10.0
