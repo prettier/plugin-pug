@@ -8,12 +8,13 @@ assignees: ''
 
 ## Info
 
-| Tool     | Version       |
-| -------- | ------------- |
-| Plugin   | v1.x.x        |
-| Prettier | v2.x.x        |
-| Node     | vx.x.x        |
-| OS       | win,linux,mac |
+| Tool      | Version                 |
+| --------- | ----------------------- |
+| Plugin    | v1.x.x                  |
+| Prettier  | v2.x.x                  |
+| Framework | none,vue,angular,svelte |
+| Node      | vx.x.x                  |
+| OS        | win,linux,mac           |
 
 ## Prettier config
 
