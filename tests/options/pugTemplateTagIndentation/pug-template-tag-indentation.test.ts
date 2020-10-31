@@ -51,5 +51,101 @@ describe('Options', () => {
 
 			expect(actual).toBe(expected);
 		});
+
+		test('should not change two-div-not-indented-flat', () => {
+			const expected: string = readFileSync(resolve(__dirname, 'two-div-not-indented-flat.vue'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'two-div-not-indented-flat.vue'), 'utf8');
+			const actual: string = format(code, {
+				parser: 'vue',
+				plugins: [plugin]
+			});
+
+			expect(actual).toBe(expected);
+		});
+
+		test('should not change two-div-not-indented-tree', () => {
+			const expected: string = readFileSync(resolve(__dirname, 'two-div-not-indented-tree.vue'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'two-div-not-indented-tree.vue'), 'utf8');
+			const actual: string = format(code, {
+				parser: 'vue',
+				plugins: [plugin]
+			});
+
+			expect(actual).toBe(expected);
+		});
+
+		test('should not change two-div-indented-flat', () => {
+			const expected: string = readFileSync(resolve(__dirname, 'two-div-indented-flat.vue'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'two-div-indented-flat.vue'), 'utf8');
+			const actual: string = format(code, {
+				parser: 'vue',
+				plugins: [plugin],
+				// @ts-expect-error
+				pugSingleFileComponentIndentation: true
+			});
+
+			expect(actual).toBe(expected);
+		});
+
+		test('should not change two-div-indented-tree', () => {
+			const expected: string = readFileSync(resolve(__dirname, 'two-div-indented-tree.vue'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'two-div-indented-tree.vue'), 'utf8');
+			const actual: string = format(code, {
+				parser: 'vue',
+				plugins: [plugin],
+				// @ts-expect-error
+				pugSingleFileComponentIndentation: true
+			});
+
+			expect(actual).toBe(expected);
+		});
+
+		test('should indent two-div-not-indented-flat', () => {
+			const expected: string = readFileSync(resolve(__dirname, 'two-div-indented-flat.vue'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'two-div-not-indented-flat.vue'), 'utf8');
+			const actual: string = format(code, {
+				parser: 'vue',
+				plugins: [plugin],
+				// @ts-expect-error
+				pugSingleFileComponentIndentation: true
+			});
+
+			expect(actual).toBe(expected);
+		});
+
+		test('should indent two-div-not-indented-tree', () => {
+			const expected: string = readFileSync(resolve(__dirname, 'two-div-indented-tree.vue'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'two-div-not-indented-tree.vue'), 'utf8');
+			const actual: string = format(code, {
+				parser: 'vue',
+				plugins: [plugin],
+				// @ts-expect-error
+				pugSingleFileComponentIndentation: true
+			});
+
+			expect(actual).toBe(expected);
+		});
+
+		test('should not indent two-div-indented-flat', () => {
+			const expected: string = readFileSync(resolve(__dirname, 'two-div-not-indented-flat.vue'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'two-div-indented-flat.vue'), 'utf8');
+			const actual: string = format(code, {
+				parser: 'vue',
+				plugins: [plugin]
+			});
+
+			expect(actual).toBe(expected);
+		});
+
+		test('should not indent two-div-indented-tree', () => {
+			const expected: string = readFileSync(resolve(__dirname, 'two-div-not-indented-tree.vue'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'two-div-indented-tree.vue'), 'utf8');
+			const actual: string = format(code, {
+				parser: 'vue',
+				plugins: [plugin]
+			});
+
+			expect(actual).toBe(expected);
+		});
 	});
 });
