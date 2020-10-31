@@ -45,7 +45,15 @@ export const plugin: Plugin = {
 		pug: {
 			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): FastPathStackEntry {
 				logger.debug('[parsers:pug:parse]:', { text });
-				const content: string = text.trimLeft();
+
+				let trimmedAndAlignedContent: string = text.replace(/^\s*\n/, '');
+				const contentIndentation: RegExpExecArray | null = /^\s*/.exec(trimmedAndAlignedContent);
+				if (contentIndentation?.[0]) {
+					const contentIndentationRegex: RegExp = new RegExp(`(^|\\n)${contentIndentation[0]}`, 'g');
+					trimmedAndAlignedContent = trimmedAndAlignedContent.replace(contentIndentationRegex, '$1');
+				}
+				const content: string = trimmedAndAlignedContent;
+
 				const tokens: lex.Token[] = lex(content);
 				// logger.debug('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
 				// const ast: AST = parse(tokens, {});

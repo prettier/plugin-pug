@@ -1059,7 +1059,8 @@ export class PugPrinter {
 	}
 
 	private extends(token: ExtendsToken): string {
-		return 'extends ';
+		const indent: string = this.options.pugSingleFileComponentIndentation ? this.indentString : '';
+		return `${indent}extends `;
 	}
 
 	private path(token: PathToken): string {
