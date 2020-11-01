@@ -137,6 +137,7 @@ export class PugPrinter {
 
 	private pipelessText: boolean = false;
 	private pipelessComment: boolean = false;
+	private currentlyInPugInterpolation: boolean = false;
 
 	public constructor(
 		private readonly content: string,
@@ -491,7 +492,11 @@ export class PugPrinter {
 			let hasLiteralAttributes: boolean = false;
 			let numNormalAttributes: number = 0;
 			while (tempToken.type === 'attribute') {
-				if (!this.wrapAttributes && this.wrapAttributesPattern?.test(tempToken.name)) {
+				if (
+					!this.currentlyInPugInterpolation &&
+					!this.wrapAttributes &&
+					this.wrapAttributesPattern?.test(tempToken.name)
+				) {
 					this.wrapAttributes = true;
 				}
 				switch (tempToken.name) {
@@ -547,6 +552,7 @@ export class PugPrinter {
 			}
 			logger.debug(this.currentLineLength);
 			if (
+				!this.currentlyInPugInterpolation &&
 				!this.wrapAttributes &&
 				(this.currentLineLength > this.options.pugPrintWidth ||
 					(this.options.pugWrapAttributesThreshold >= 0 &&
@@ -1083,11 +1089,13 @@ export class PugPrinter {
 		) {
 			result += this.indentString.repeat(this.indentLevel + 1);
 		}
+		this.currentlyInPugInterpolation = true;
 		result += '#[';
 		return result;
 	}
 
 	private ['end-pug-interpolation'](token: EndPugInterpolationToken): string {
+		this.currentlyInPugInterpolation = false;
 		return ']';
 	}
 
