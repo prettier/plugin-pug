@@ -372,6 +372,11 @@ export class PugPrinter {
 									'[PugPrinter:formatText]: Missing expected ). If you are using Vue, you can ignore this message.',
 									`code: \`${code.trim()}\``
 								);
+							} else if (error.includes('Missing expected :')) {
+								logger.warn(
+									'[PugPrinter:formatText]: Missing expected :. If you are using Vue, you can ignore this message.',
+									`code: \`${code.trim()}\``
+								);
 							} else {
 								logger.warn('[PugPrinter:formatText]: ', error);
 							}
