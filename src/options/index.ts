@@ -6,6 +6,8 @@ import {
 	PUG_SORT_ATTRIBUTES_OPTION,
 	SortAttributes
 } from './attribute-sorting';
+import { PUG_USE_CLASS_LITERALS, PugUseClassLiterals } from './use-class-literals';
+import { PUG_USE_ID_LITERALS, PugUseIdLiterals } from './use-id-literals';
 import {
 	ClosingBracketPosition,
 	CLOSING_BRACKET_POSITION_OPTION,
@@ -74,6 +76,9 @@ export interface PugParserOptions
 	pugWrapAttributesThreshold: number;
 	pugWrapAttributesPattern: string;
 
+	pugUseClassLiterals: PugUseClassLiterals;
+	pugUseIdLiterals: PugUseIdLiterals;
+
 	pugEmptyAttributes: PugEmptyAttributes;
 	pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 
@@ -100,6 +105,8 @@ export const options: SupportOptions = {
 	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD,
 	pugWrapAttributesPattern: WRAP_ATTRIBUTES_PATTERN,
 	pugEmptyAttributes: PUG_EMPTY_ATTRIBUTES_OPTION,
+	pugUseClassLiterals: PUG_USE_CLASS_LITERALS,
+	pugUseIdLiterals: PUG_USE_ID_LITERALS,
 	pugEmptyAttributesForceQuotes: PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION,
 	pugSingleFileComponentIndentation: PUG_SINGLE_FILE_COMPONENT_INDENTATION
 };

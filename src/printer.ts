@@ -96,6 +96,8 @@ export interface PugPrinterOptions {
 	readonly pugSortAttributesEnd: string[];
 	readonly pugWrapAttributesThreshold: number;
 	readonly pugWrapAttributesPattern: string;
+	readonly pugUseClassLiterals: boolean;
+	readonly pugUseIdLiterals: boolean;
 	readonly pugEmptyAttributes: PugEmptyAttributes;
 	readonly pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 	readonly pugSingleFileComponentIndentation: boolean;
@@ -591,7 +593,7 @@ export class PugPrinter {
 					const normalClasses: string[] = [];
 					const validClassNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 					for (const className of classes) {
-						if (!validClassNameRegex.test(className)) {
+						if (!this.options.pugUseClassLiterals || !validClassNameRegex.test(className)) {
 							specialClasses.push(className);
 						} else {
 							normalClasses.push(className);
@@ -622,7 +624,7 @@ export class PugPrinter {
 					val = val.slice(1, -1);
 					val = val.trim();
 					const validIdNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
-					if (!validIdNameRegex.test(val)) {
+					if (!this.options.pugUseIdLiterals || !validIdNameRegex.test(val)) {
 						val = makeString(val, this.quotes);
 						this.result += 'id';
 						if (token.mustEscape === false) {
