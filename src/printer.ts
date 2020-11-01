@@ -172,6 +172,10 @@ export class PugPrinter {
 	}
 
 	public build(): string {
+		if (logger.isDebugEnabled()) {
+			logger.debug('[PugPrinter]:', JSON.stringify(this.tokens));
+		}
+
 		const results: string[] = [];
 		if (this.tokens[0]?.type === 'text') {
 			results.push('| ');

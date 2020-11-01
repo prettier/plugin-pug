@@ -30,6 +30,10 @@ export class Logger implements ILogger {
 		this.level = level;
 	}
 
+	public isDebugEnabled(): boolean {
+		return this.level <= LogLevel.DEBUG;
+	}
+
 	public debug(message?: unknown, ...optionalParams: any[]): void {
 		this.message(LogLevel.DEBUG, message, ...optionalParams);
 	}
