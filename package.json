@@ -1,6 +1,6 @@
 {
 	"name": "@prettier/plugin-pug",
-	"version": "1.10.0",
+	"version": "1.10.1",
 	"description": "Prettier Pug Plugin",
 	"main": "dist/index.js",
 	"scripts": {
@@ -37,19 +37,20 @@
 	},
 	"devDependencies": {
 		"@types/jest": "~26.0.15",
-		"@types/node": "~14.14.5",
+		"@types/node": "~14.14.9",
 		"@types/prettier": "~2.1.5",
-		"@typescript-eslint/eslint-plugin": "~4.6.0",
-		"@typescript-eslint/parser": "~4.6.0",
+		"@typescript-eslint/eslint-plugin": "~4.8.1",
+		"@typescript-eslint/parser": "~4.8.1",
 		"benchmark": "~2.1.4",
-		"eslint": "~7.12.1",
-		"eslint-config-prettier": "~6.14.0",
+		"eslint": "~7.13.0",
+		"eslint-config-prettier": "~6.15.0",
 		"eslint-plugin-prettier": "~3.1.4",
-		"jest": "~26.6.1",
+		"jest": "~26.6.3",
 		"jest-junit": "~12.0.0",
-		"prettier": "2.1.2",
-		"ts-jest": "~26.4.3",
-		"typescript": "~4.0.5"
+		"prettier": "2.2.0",
+		"prettier-plugin-organize-imports": "~1.1.1",
+		"ts-jest": "~26.4.4",
+		"typescript": "~4.1.2"
 	},
 	"peerDependencies": {
 		"prettier": "^2.0.0"

@@ -137,6 +137,7 @@ export class PugPrinter {
 
 	private pipelessText: boolean = false;
 	private pipelessComment: boolean = false;
+	private currentlyInPugInterpolation: boolean = false;
 
 	public constructor(
 		private readonly content: string,
@@ -171,6 +172,10 @@ export class PugPrinter {
 	}
 
 	public build(): string {
+		if (logger.isDebugEnabled()) {
+			logger.debug('[PugPrinter]:', JSON.stringify(this.tokens));
+		}
+
 		const results: string[] = [];
 		if (this.tokens[0]?.type === 'text') {
 			results.push('| ');
@@ -236,6 +241,8 @@ export class PugPrinter {
 				return this.indentString.repeat(this.indentLevel);
 			case 'indent':
 				return this.indentString;
+			case 'start-pug-interpolation':
+				return '';
 		}
 		return this.options.pugSingleFileComponentIndentation ? this.indentString : '';
 	}
@@ -274,11 +281,20 @@ export class PugPrinter {
 		const startLine: number = start.line - 1;
 		const endLine: number = end.line - 1;
 		const parts: string[] = [];
-		parts.push(lines[startLine].slice(start.column - 1));
-		for (let line: number = startLine + 1; line < endLine; line++) {
-			parts.push(lines[line]);
+		const firstLine: string | undefined = lines[startLine];
+		if (firstLine !== undefined) {
+			parts.push(firstLine.slice(start.column - 1));
 		}
-		parts.push(lines[endLine].slice(0, end.column - 1));
+		for (let lineNumber: number = startLine + 1; lineNumber < endLine; lineNumber++) {
+			const line: string | undefined = lines[lineNumber];
+			if (line !== undefined) {
+				parts.push(line);
+			}
+		}
+		const lastLine: string | undefined = lines[endLine];
+		if (lastLine !== undefined) {
+			parts.push(lastLine.slice(0, end.column - 1));
+		}
 		return parts;
 	}
 
@@ -363,6 +379,11 @@ export class PugPrinter {
 							} else if (error.includes('Missing expected )')) {
 								logger.warn(
 									'[PugPrinter:formatText]: Missing expected ). If you are using Vue, you can ignore this message.',
+									`code: \`${code.trim()}\``
+								);
+							} else if (error.includes('Missing expected :')) {
+								logger.warn(
+									'[PugPrinter:formatText]: Missing expected :. If you are using Vue, you can ignore this message.',
 									`code: \`${code.trim()}\``
 								);
 							} else {
@@ -489,7 +510,11 @@ export class PugPrinter {
 			let hasLiteralAttributes: boolean = false;
 			let numNormalAttributes: number = 0;
 			while (tempToken.type === 'attribute') {
-				if (!this.wrapAttributes && this.wrapAttributesPattern?.test(tempToken.name)) {
+				if (
+					!this.currentlyInPugInterpolation &&
+					!this.wrapAttributes &&
+					this.wrapAttributesPattern?.test(tempToken.name)
+				) {
 					this.wrapAttributes = true;
 				}
 				switch (tempToken.name) {
@@ -545,6 +570,7 @@ export class PugPrinter {
 			}
 			logger.debug(this.currentLineLength);
 			if (
+				!this.currentlyInPugInterpolation &&
 				!this.wrapAttributes &&
 				(this.currentLineLength > this.options.pugPrintWidth ||
 					(this.options.pugWrapAttributesThreshold >= 0 &&
@@ -692,7 +718,7 @@ export class PugPrinter {
 				const lines: string[] = val.split('\n');
 				const codeIndentLevel: number = this.wrapAttributes ? this.indentLevel + 1 : this.indentLevel;
 				if (lines.length > 1) {
-					val = lines[0];
+					val = lines[0] ?? '';
 					for (let index: number = 1; index < lines.length; index++) {
 						val += '\n';
 						val += this.indentString.repeat(codeIndentLevel);
@@ -1059,7 +1085,8 @@ export class PugPrinter {
 	}
 
 	private extends(token: ExtendsToken): string {
-		return 'extends ';
+		const indent: string = this.options.pugSingleFileComponentIndentation ? this.indentString : '';
+		return `${indent}extends `;
 	}
 
 	private path(token: PathToken): string {
@@ -1080,11 +1107,13 @@ export class PugPrinter {
 		) {
 			result += this.indentString.repeat(this.indentLevel + 1);
 		}
+		this.currentlyInPugInterpolation = true;
 		result += '#[';
 		return result;
 	}
 
 	private ['end-pug-interpolation'](token: EndPugInterpolationToken): string {
+		this.currentlyInPugInterpolation = false;
 		return ']';
 	}
 

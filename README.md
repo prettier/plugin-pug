@@ -40,7 +40,7 @@ Simply install `prettier` and `@prettier/plugin-pug` as your project’s npm dev
 ```bash
 cd /path/to/project
 
-## initialise an npm project if you haven’t done it yet
+## initialize an npm project if you haven’t done it yet
 npm init
 ## or
 yarn init

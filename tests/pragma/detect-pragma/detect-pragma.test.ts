@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { parsers } from './../../../src/index';
 import { Parser } from 'prettier';
+import { parsers } from './../../../src/index';
 
 /* eslint @typescript-eslint/no-non-null-assertion: off */
 
 // ts-jest needs the exclamation mark, so it does not have the impression that the variables are undefined
-const pugParser: Parser = parsers!.pug;
+const pugParser: Parser = parsers!.pug!;
 
 describe('Pragma', () => {
 	test('should detect pragma @prettier', () => {

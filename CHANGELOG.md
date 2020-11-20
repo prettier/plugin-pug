@@ -1,6 +1,22 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.10.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.10.1...master)
+
+# 1.10.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.10.0...1.10.1)
+
+- Fix handling of initial indentation for `pugSingleFileComponentIndentation` ([#145])
+- Fix bracket interpolation in combination with `pugSingleFileComponentIndentation` ([#148])
+- Do not wrap attributes in enclosed code interpolation ([#149])
+- Print warning for parsed object shorthand notation ([#147])
+- Add `'pug'` to `vscodeLanguageIds` ([#150])
+
+[#145]: https://github.com/prettier/plugin-pug/issues/145
+[#147]: https://github.com/prettier/plugin-pug/issues/147
+[#148]: https://github.com/prettier/plugin-pug/issues/148
+[#149]: https://github.com/prettier/plugin-pug/issues/149
+[#150]: https://github.com/prettier/plugin-pug/issues/150
 
 # 1.10.0
 
