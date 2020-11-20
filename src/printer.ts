@@ -281,11 +281,20 @@ export class PugPrinter {
 		const startLine: number = start.line - 1;
 		const endLine: number = end.line - 1;
 		const parts: string[] = [];
-		parts.push(lines[startLine].slice(start.column - 1));
-		for (let line: number = startLine + 1; line < endLine; line++) {
-			parts.push(lines[line]);
+		const firstLine: string | undefined = lines[startLine];
+		if (firstLine !== undefined) {
+			parts.push(firstLine.slice(start.column - 1));
 		}
-		parts.push(lines[endLine].slice(0, end.column - 1));
+		for (let lineNumber: number = startLine + 1; lineNumber < endLine; lineNumber++) {
+			const line: string | undefined = lines[lineNumber];
+			if (line !== undefined) {
+				parts.push(line);
+			}
+		}
+		const lastLine: string | undefined = lines[endLine];
+		if (lastLine !== undefined) {
+			parts.push(lastLine.slice(0, end.column - 1));
+		}
 		return parts;
 	}
 
@@ -709,7 +718,7 @@ export class PugPrinter {
 				const lines: string[] = val.split('\n');
 				const codeIndentLevel: number = this.wrapAttributes ? this.indentLevel + 1 : this.indentLevel;
 				if (lines.length > 1) {
-					val = lines[0];
+					val = lines[0] ?? '';
 					for (let index: number = 1; index < lines.length; index++) {
 						val += '\n';
 						val += this.indentString.repeat(codeIndentLevel);

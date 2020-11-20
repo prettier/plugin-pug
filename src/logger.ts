@@ -56,7 +56,11 @@ export class Logger implements ILogger {
 
 	private message(level: LogLevel, message?: any, ...optionalParams: any[]): void {
 		if (this.level !== LogLevel.OFF && this.level <= level) {
-			this.logger[Logger.LOG_LEVELS[level as number]](message, ...optionalParams);
+			const logLevel: 'debug' | 'log' | 'info' | 'warn' | 'error' | undefined =
+				Logger.LOG_LEVELS[level as number];
+			if (logLevel) {
+				this.logger[logLevel](message, ...optionalParams);
+			}
 		}
 	}
 }
