@@ -66,7 +66,7 @@ import {
 	previousNormalAttributeToken,
 	unwrapLineFeeds
 } from './utils/common';
-import { isVueEventBinding, isVueExpression } from './utils/vue';
+import { isVueEventBinding, isVueExpression, isVueVForWithOf } from './utils/vue';
 
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {
@@ -315,7 +315,7 @@ export class PugPrinter {
 
 	private formatDelegatePrettier(
 		val: string,
-		parser: '__vue_expression' | '__ng_binding' | '__ng_action' | '__ng_directive'
+		parser: 'vue' | '__vue_expression' | '__ng_binding' | '__ng_action' | '__ng_directive'
 	): string {
 		val = val.trim();
 		val = val.slice(1, -1);
@@ -695,6 +695,8 @@ export class PugPrinter {
 			let val: string = token.val;
 			if (isMultilineInterpolation(val)) {
 				// do not reformat multiline strings surrounded by `
+			} else if (isVueVForWithOf(token.name, token.val)) {
+				val = this.formatDelegatePrettier(val, 'vue');
 			} else if (isVueExpression(token.name)) {
 				val = this.formatVueExpression(val);
 			} else if (isVueEventBinding(token.name)) {
