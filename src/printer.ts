@@ -1058,7 +1058,7 @@ export class PugPrinter {
 	private ['start-pipeless-text'](token: StartPipelessTextToken): string {
 		this.pipelessText = true;
 
-		let formattedText: string = '';
+		let formattedText: string = '\n';
 
 		if (this.previousToken?.type === 'dot') {
 			const lastScriptTagToken: TagToken | undefined = previousScriptTagToken(this.tokens, this.currentIndex);
@@ -1091,11 +1091,16 @@ export class PugPrinter {
 					.map((line) => indentString + line)
 					.join('\n')}`.trimRight();
 
+				tok = this.tokens[index - 1];
+				if (tok?.type === 'text' && tok.val === '') {
+					formattedText += '\n';
+				}
+
 				this.currentIndex = index - 1;
 			}
 		}
 
-		return `${formattedText}\n${this.indentString.repeat(this.indentLevel)}`;
+		return `${formattedText}${this.indentString.repeat(this.indentLevel)}`;
 	}
 
 	private ['end-pipeless-text'](token: EndPipelessTextToken): string {
