@@ -64,6 +64,7 @@ import {
 	isQuoted,
 	makeString,
 	previousNormalAttributeToken,
+	previousScriptTagToken,
 	unwrapLineFeeds
 } from './utils/common';
 import { isVueEventBinding, isVueExpression, isVueVForWithOf } from './utils/vue';
@@ -1056,7 +1057,41 @@ export class PugPrinter {
 
 	private ['start-pipeless-text'](token: StartPipelessTextToken): string {
 		this.pipelessText = true;
-		return `\n${this.indentString.repeat(this.indentLevel)}`;
+
+		const lastScriptTagToken: TagToken | undefined = previousScriptTagToken(this.tokens, this.currentIndex);
+
+		let formattedText: string = '';
+		if (lastScriptTagToken) {
+			let index: number = this.currentIndex + 1;
+			let tok: Token | undefined = this.tokens[index];
+			let rawText: string = '';
+			while (tok && tok?.type !== 'end-pipeless-text') {
+				switch (tok.type) {
+					case 'text':
+						rawText += tok.val;
+						break;
+					case 'newline':
+						rawText += '\n';
+						break;
+					default:
+						break;
+				}
+
+				index++;
+				tok = this.tokens[index];
+			}
+
+			formattedText = format(rawText, { parser: 'babel', ...this.codeInterpolationOptions });
+			const indentString: string = this.indentString.repeat(this.indentLevel + 1);
+			formattedText = `\n${formattedText
+				.split('\n')
+				.map((u) => indentString + u)
+				.join('\n')}`.trimRight();
+
+			this.currentIndex = index - 1;
+		}
+
+		return `${formattedText}\n${this.indentString.repeat(this.indentLevel)}`;
 	}
 
 	private ['end-pipeless-text'](token: EndPipelessTextToken): string {

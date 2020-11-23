@@ -1,4 +1,17 @@
-import { AttributeToken, Token } from 'pug-lexer';
+import { AttributeToken, TagToken, Token } from 'pug-lexer';
+
+export function previousScriptTagToken(tokens: ReadonlyArray<Token>, index: number): TagToken | undefined {
+	for (let i: number = index - 1; i >= 0; i--) {
+		const token: Token | undefined = tokens[i];
+		if (!token) {
+			return;
+		}
+		if (token.type === 'tag' && token.val === 'script') {
+			return token;
+		}
+	}
+	return;
+}
 
 export function previousNormalAttributeToken(tokens: ReadonlyArray<Token>, index: number): AttributeToken | undefined {
 	for (let i: number = index - 1; i > 0; i--) {
