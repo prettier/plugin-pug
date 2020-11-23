@@ -64,7 +64,7 @@ import {
 	isQuoted,
 	makeString,
 	previousNormalAttributeToken,
-	previousScriptTagToken,
+	previousTagToken,
 	unwrapLineFeeds
 } from './utils/common';
 import { isVueEventBinding, isVueExpression, isVueVForWithOf } from './utils/vue';
@@ -1061,9 +1061,10 @@ export class PugPrinter {
 		let result: string = `\n${this.indentString.repeat(this.indentLevel)}`;
 
 		if (this.previousToken?.type === 'dot') {
-			const lastScriptTagToken: TagToken | undefined = previousScriptTagToken(this.tokens, this.currentIndex);
+			const lastTagToken: TagToken | undefined = previousTagToken(this.tokens, this.currentIndex);
+			const lastTagTokenVal: string | undefined = lastTagToken?.val;
 
-			if (lastScriptTagToken) {
+			if (lastTagTokenVal === 'script' || lastTagTokenVal === 'style') {
 				let index: number = this.currentIndex + 1;
 				let tok: Token | undefined = this.tokens[index];
 				let rawText: string = '';
@@ -1084,7 +1085,10 @@ export class PugPrinter {
 					tok = this.tokens[index];
 				}
 
-				result = format(rawText, { parser: 'babel', ...this.codeInterpolationOptions });
+				result = format(rawText, {
+					parser: lastTagTokenVal === 'script' ? 'babel' : 'css',
+					...this.codeInterpolationOptions
+				});
 				const indentString: string = this.indentString.repeat(this.indentLevel + 1);
 				result = `\n${result
 					.split('\n')
