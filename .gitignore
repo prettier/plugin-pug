@@ -93,8 +93,6 @@ tests/pug-tests/layout.prepend.without-block.formatted.pug
 tests/pug-tests/layout.prepend.without-block.pug
 tests/pug-tests/mixin.merge.formatted.pug
 tests/pug-tests/mixin.merge.pug
-tests/pug-tests/script.whitespace.formatted.pug
-tests/pug-tests/script.whitespace.pug
 tests/pug-tests/styles.formatted.pug
 tests/pug-tests/styles.pug
 tests/pug-tests/tags.self-closing.formatted.pug

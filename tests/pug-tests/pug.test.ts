@@ -20,7 +20,6 @@ describe('Pug Tests', () => {
 		'layout.multi.append.prepend.block.pug',
 		'layout.prepend.without-block.pug',
 		'mixin.merge.pug',
-		'script.whitespace.pug',
 		'styles.pug',
 		'tags.self-closing.pug',
 		'template.pug',
