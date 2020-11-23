@@ -1,4 +1,4 @@
-import { format, RequiredOptions } from 'prettier';
+import { BuiltInParserName, format, RequiredOptions } from 'prettier';
 import {
 	AndAttributesToken,
 	AttributeToken,
@@ -1062,9 +1062,20 @@ export class PugPrinter {
 
 		if (this.previousToken?.type === 'dot') {
 			const lastTagToken: TagToken | undefined = previousTagToken(this.tokens, this.currentIndex);
-			const lastTagTokenVal: string | undefined = lastTagToken?.val;
 
-			if (lastTagTokenVal === 'script' || lastTagTokenVal === 'style') {
+			let parser: BuiltInParserName | undefined;
+			switch (lastTagToken?.val) {
+				case 'script':
+					parser = 'babel';
+					break;
+				case 'style':
+					parser = 'css';
+					break;
+				default:
+					break;
+			}
+
+			if (parser) {
 				let index: number = this.currentIndex + 1;
 				let tok: Token | undefined = this.tokens[index];
 				let rawText: string = '';
@@ -1085,10 +1096,7 @@ export class PugPrinter {
 					tok = this.tokens[index];
 				}
 
-				result = format(rawText, {
-					parser: lastTagTokenVal === 'script' ? 'babel' : 'css',
-					...this.codeInterpolationOptions
-				});
+				result = format(rawText, { parser, ...this.codeInterpolationOptions });
 				const indentString: string = this.indentString.repeat(this.indentLevel + 1);
 				result = `\n${result
 					.split('\n')
