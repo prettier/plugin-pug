@@ -1074,6 +1074,7 @@ export class PugPrinter {
 						rawText += '\n';
 						break;
 					default:
+						logger.warn('Unhandled token for pipeless script tag:', JSON.stringify(tok));
 						break;
 				}
 
@@ -1085,7 +1086,7 @@ export class PugPrinter {
 			const indentString: string = this.indentString.repeat(this.indentLevel + 1);
 			formattedText = `\n${formattedText
 				.split('\n')
-				.map((u) => indentString + u)
+				.map((line) => indentString + line)
 				.join('\n')}`.trimRight();
 
 			this.currentIndex = index - 1;
