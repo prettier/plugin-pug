@@ -1,4 +1,4 @@
-import { format, RequiredOptions } from 'prettier';
+import { BuiltInParserName, format, RequiredOptions } from 'prettier';
 import {
 	AndAttributesToken,
 	AttributeToken,
@@ -64,6 +64,7 @@ import {
 	isQuoted,
 	makeString,
 	previousNormalAttributeToken,
+	previousTagToken,
 	unwrapLineFeeds
 } from './utils/common';
 import { isVueEventBinding, isVueExpression, isVueVForWithOf } from './utils/vue';
@@ -1056,7 +1057,65 @@ export class PugPrinter {
 
 	private ['start-pipeless-text'](token: StartPipelessTextToken): string {
 		this.pipelessText = true;
-		return `\n${this.indentString.repeat(this.indentLevel)}`;
+
+		let result: string = `\n${this.indentString.repeat(this.indentLevel)}`;
+
+		if (this.previousToken?.type === 'dot') {
+			const lastTagToken: TagToken | undefined = previousTagToken(this.tokens, this.currentIndex);
+
+			let parser: BuiltInParserName | undefined;
+			switch (lastTagToken?.val) {
+				case 'script':
+					parser = 'babel';
+					break;
+				case 'style':
+					parser = 'css';
+					break;
+				default:
+					break;
+			}
+
+			if (parser) {
+				let index: number = this.currentIndex + 1;
+				let tok: Token | undefined = this.tokens[index];
+				let rawText: string = '';
+				while (tok && tok?.type !== 'end-pipeless-text') {
+					switch (tok.type) {
+						case 'text':
+							rawText += tok.val;
+							break;
+						case 'newline':
+							rawText += '\n';
+							break;
+						default:
+							logger.warn('Unhandled token for pipeless script tag:', JSON.stringify(tok));
+							break;
+					}
+
+					index++;
+					tok = this.tokens[index];
+				}
+
+				result = format(rawText, { parser, ...this.codeInterpolationOptions });
+				result = result.trimRight();
+				const indentString: string = this.indentString.repeat(this.indentLevel + 1);
+				result = result
+					.split('\n')
+					.map((line) => indentString + line)
+					.join('\n');
+				result = `\n${result}`;
+
+				// Preserve newline
+				tok = this.tokens[index - 1];
+				if (tok?.type === 'text' && tok.val === '') {
+					result += `\n${this.indentString.repeat(this.indentLevel)}`;
+				}
+
+				this.currentIndex = index - 1;
+			}
+		}
+
+		return result;
 	}
 
 	private ['end-pipeless-text'](token: EndPipelessTextToken): string {
