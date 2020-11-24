@@ -1097,11 +1097,13 @@ export class PugPrinter {
 				}
 
 				result = format(rawText, { parser, ...this.codeInterpolationOptions });
+				result = result.trimRight();
 				const indentString: string = this.indentString.repeat(this.indentLevel + 1);
-				result = `\n${result
+				result = result
 					.split('\n')
 					.map((line) => indentString + line)
-					.join('\n')}`.trimRight();
+					.join('\n');
+				result = `\n${result}`;
 
 				// Preserve newline
 				tok = this.tokens[index - 1];
