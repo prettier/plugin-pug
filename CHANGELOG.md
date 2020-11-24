@@ -2,13 +2,16 @@
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.11.0...master)
 
-# 1.11.0 (not released yet)
+# 1.11.0
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.10.1...1.11.0)
 
 - Handle `for...of` in vue `v-for` ([#129])
+- Support embedded formatting of inline `script` and `style` tags ([#158])  
+  _If there are problems, please create an issue_
 
 [#129]: https://github.com/prettier/plugin-pug/issues/129
+[#158]: https://github.com/prettier/plugin-pug/issues/158
 
 # 1.10.1
 
