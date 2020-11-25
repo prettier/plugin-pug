@@ -427,7 +427,7 @@ export class PugPrinter {
 	private formatStyleAttribute(val: string): string {
 		val = val.trim();
 		val = val.slice(1, -1); // Remove quotes
-		val = format(val, { parser: 'css' });
+		val = format(val, { parser: 'css', ...this.codeInterpolationOptions });
 		val = unwrapLineFeeds(val);
 		if (val[val.length - 1] === ';') {
 			val = val.slice(0, -1);
