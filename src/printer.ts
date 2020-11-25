@@ -62,6 +62,7 @@ import {
 	handleBracketSpacing,
 	isMultilineInterpolation,
 	isQuoted,
+	isStyleAttribute,
 	makeString,
 	previousNormalAttributeToken,
 	previousTagToken,
@@ -423,6 +424,14 @@ export class PugPrinter {
 		return result;
 	}
 
+	private formatStyleAttribute(val: string): string {
+		val = val.trim();
+		val = val.slice(1, -1); // Remove quotes
+		val = format(val, { parser: 'css' });
+		val = unwrapLineFeeds(val);
+		return this.quoteString(val);
+	}
+
 	private formatVueEventBinding(val: string): string {
 		val = val.trim();
 		val = val.slice(1, -1); // Remove quotes
@@ -710,6 +719,8 @@ export class PugPrinter {
 				val = this.formatAngularDirective(val);
 			} else if (isAngularInterpolation(val)) {
 				val = this.formatAngularInterpolation(val);
+			} else if (isStyleAttribute(token.name, token.val)) {
+				val = this.formatStyleAttribute(val);
 			} else if (isQuoted(val)) {
 				val = makeString(val.slice(1, -1), this.quotes);
 			} else if (val === 'true') {

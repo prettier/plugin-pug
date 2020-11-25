@@ -39,6 +39,10 @@ export function unwrapLineFeeds(value: string): string {
 		: value;
 }
 
+export function isStyleAttribute(name: string, val: string): boolean {
+	return name === 'style' && isQuoted(val);
+}
+
 /**
  * Indicates whether the value is surrounded by quotes
  *
