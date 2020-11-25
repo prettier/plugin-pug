@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.11.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.12.0...master)
+
+# 1.12.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.11.0...1.12.0)
+
+- Format value of `style` attribute in tags ([#162])
+
+[#162]: https://github.com/prettier/plugin-pug/issues/162
 
 # 1.11.0
 
