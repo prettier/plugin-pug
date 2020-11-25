@@ -429,6 +429,9 @@ export class PugPrinter {
 		val = val.slice(1, -1); // Remove quotes
 		val = format(val, { parser: 'css' });
 		val = unwrapLineFeeds(val);
+		if (val[val.length - 1] === ';') {
+			val = val.slice(0, -1);
+		}
 		return this.quoteString(val);
 	}
 
