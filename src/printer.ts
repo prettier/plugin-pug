@@ -103,6 +103,19 @@ export interface PugPrinterOptions {
 	readonly pugSingleFileComponentIndentation: boolean;
 }
 
+interface FormatDelegatePrettierOptions {
+	trimTrailingSemicolon?: boolean;
+}
+
+type FormatDelegatePrettierSupportedParser =
+	| 'css'
+	| 'vue'
+	| '__vue_event_binding'
+	| '__vue_expression'
+	| '__ng_binding'
+	| '__ng_action'
+	| '__ng_directive';
+
 export class PugPrinter {
 	private result: string = '';
 
@@ -315,17 +328,6 @@ export class PugPrinter {
 		}
 	}
 
-	private formatDelegatePrettier(
-		val: string,
-		parser: 'vue' | '__vue_expression' | '__ng_binding' | '__ng_action' | '__ng_directive'
-	): string {
-		val = val.trim();
-		val = val.slice(1, -1);
-		val = format(val, { parser, ...this.codeInterpolationOptions });
-		val = unwrapLineFeeds(val);
-		return this.quoteString(val);
-	}
-
 	private formatText(text: string): string {
 		let result: string = '';
 		while (text) {
@@ -424,26 +426,27 @@ export class PugPrinter {
 		return result;
 	}
 
-	private formatStyleAttribute(val: string): string {
+	private formatDelegatePrettier(
+		val: string,
+		parser: FormatDelegatePrettierSupportedParser,
+		{ trimTrailingSemicolon = false }: FormatDelegatePrettierOptions = {}
+	): string {
 		val = val.trim();
-		val = val.slice(1, -1); // Remove quotes
-		val = format(val, { parser: 'css', ...this.codeInterpolationOptions });
+		val = val.slice(1, -1);
+		val = format(val, { parser, ...this.codeInterpolationOptions });
 		val = unwrapLineFeeds(val);
-		if (val[val.length - 1] === ';') {
+		if (trimTrailingSemicolon && val[val.length - 1] === ';') {
 			val = val.slice(0, -1);
 		}
 		return this.quoteString(val);
 	}
 
+	private formatStyleAttribute(val: string): string {
+		return this.formatDelegatePrettier(val, 'css', { trimTrailingSemicolon: true });
+	}
+
 	private formatVueEventBinding(val: string): string {
-		val = val.trim();
-		val = val.slice(1, -1); // Remove quotes
-		val = format(val, { parser: '__vue_event_binding', ...this.codeInterpolationOptions });
-		val = unwrapLineFeeds(val);
-		if (val[val.length - 1] === ';') {
-			val = val.slice(0, -1);
-		}
-		return this.quoteString(val);
+		return this.formatDelegatePrettier(val, '__vue_event_binding', { trimTrailingSemicolon: true });
 	}
 
 	private formatVueExpression(val: string): string {
