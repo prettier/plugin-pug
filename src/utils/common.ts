@@ -40,6 +40,27 @@ export function unwrapLineFeeds(value: string): string {
 }
 
 /**
+ * Indicates whether the attribute is a `style` normal attribute
+ *
+ * ---
+ *
+ * Example style tag:
+ * ```
+ * span(style="color: red")
+ * ```
+ *
+ * In this case `name` is `style` and `val` is `"color: red"`
+ *
+ * ---
+ *
+ * @param name Name of tag attribute
+ * @param val Value of `style` tag attribute
+ */
+export function isStyleAttribute(name: string, val: string): boolean {
+	return name === 'style' && isQuoted(val);
+}
+
+/**
  * Indicates whether the value is surrounded by quotes
  *
  * ---
