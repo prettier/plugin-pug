@@ -32,6 +32,8 @@ import {
 	PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION,
 	PUG_EMPTY_ATTRIBUTES_OPTION
 } from './empty-attributes';
+import { PugClassNotation, PUG_CLASS_NOTATION } from './pug-class-notation';
+import { PugIdNotation, PUG_ID_NOTATION } from './pug-id-notation';
 import { PUG_SINGLE_FILE_COMPONENT_INDENTATION } from './pug-single-file-component-indentation';
 import { WRAP_ATTRIBUTES_PATTERN, WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes';
 
@@ -74,6 +76,9 @@ export interface PugParserOptions
 	pugWrapAttributesThreshold: number;
 	pugWrapAttributesPattern: string;
 
+	pugClassNotation: PugClassNotation;
+	pugIdNotation: PugIdNotation;
+
 	pugEmptyAttributes: PugEmptyAttributes;
 	pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 
@@ -100,6 +105,8 @@ export const options: SupportOptions = {
 	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD,
 	pugWrapAttributesPattern: WRAP_ATTRIBUTES_PATTERN,
 	pugEmptyAttributes: PUG_EMPTY_ATTRIBUTES_OPTION,
+	pugClassNotation: PUG_CLASS_NOTATION,
+	pugIdNotation: PUG_ID_NOTATION,
 	pugEmptyAttributesForceQuotes: PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION,
 	pugSingleFileComponentIndentation: PUG_SINGLE_FILE_COMPONENT_INDENTATION
 };

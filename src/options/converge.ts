@@ -31,6 +31,8 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugSortAttributesEnd: options.pugSortAttributesEnd,
 		pugWrapAttributesThreshold: options.pugWrapAttributesThreshold,
 		pugWrapAttributesPattern: options.pugWrapAttributesPattern,
+		pugClassNotation: options.pugClassNotation,
+		pugIdNotation: options.pugIdNotation,
 		pugEmptyAttributes: options.pugEmptyAttributes,
 		pugEmptyAttributesForceQuotes: options.pugEmptyAttributesForceQuotes,
 		pugSingleFileComponentIndentation: options.pugSingleFileComponentIndentation && options.embeddedInHtml

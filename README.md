@@ -257,6 +257,30 @@ These additional options are specific to pug templates and can be configured in 
 - `pugEmptyAttributesForceQuotes`  
   Define a list of patterns for attributes that will be forced to have empty quotes even with "none" selected.
 
+- `pugClassNotation`  
+  Define how classes should be formatted.
+
+  Choices:
+
+  - `'literal'` _default_ -> Forces all valid classes to be printed as literals.  
+    Example: `foo.bar.baz`
+  - ~`'attribute'` -> Forces all classes to be printed as attributes.~ _this option is [still in progress](https://github.com/prettier/plugin-pug/issues/167)_  
+    Example: `foo(class="bar baz")`
+  - `'as-is'` -> Disables class formatting.  
+    Example: `foo.bar(class="baz")`
+
+- `pugIdNotation`  
+  Define how ids should be formatted.
+
+  Choices:
+
+  - `'literal'` _default_ -> Forces all valid ids to be printed as literals.  
+    Example: `foo#bar`
+  - ~`'attribute'` -> Forces all ids to be printed as attributes.~ _this option is [still in progress](https://github.com/prettier/plugin-pug/issues/167)_  
+    Example: `foo(id="bar")`
+  - `'as-is'` -> Disables id formatting.  
+    Example: `foo(id="bar")`
+
 ## Some workarounds
 
 There are some code examples that are not formatted well with this plugin and can damage your code.  

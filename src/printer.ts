@@ -57,6 +57,8 @@ import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/co
 import { ArrowParens } from './options/common';
 import { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
 import { formatEmptyAttribute } from './options/empty-attributes/utils';
+import { PugClassNotation } from './options/pug-class-notation';
+import { PugIdNotation } from './options/pug-id-notation';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
 	handleBracketSpacing,
@@ -98,6 +100,8 @@ export interface PugPrinterOptions {
 	readonly pugSortAttributesEnd: string[];
 	readonly pugWrapAttributesThreshold: number;
 	readonly pugWrapAttributesPattern: string;
+	readonly pugClassNotation: PugClassNotation;
+	readonly pugIdNotation: PugIdNotation;
 	readonly pugEmptyAttributes: PugEmptyAttributes;
 	readonly pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 	readonly pugSingleFileComponentIndentation: boolean;
@@ -623,7 +627,7 @@ export class PugPrinter {
 
 		if (typeof token.val === 'string') {
 			if (isQuoted(token.val)) {
-				if (token.name === 'class') {
+				if (token.name === 'class' && this.options.pugClassNotation !== 'as-is') {
 					// Handle class attribute
 					const val: string = token.val.slice(1, -1).trim();
 					const classes: string[] = val.split(/\s+/);
@@ -656,7 +660,7 @@ export class PugPrinter {
 						this.previousAttributeRemapped = true;
 						return;
 					}
-				} else if (token.name === 'id') {
+				} else if (token.name === 'id' && this.options.pugIdNotation !== 'as-is') {
 					// Handle id attribute
 					let val: string = token.val;
 					val = val.slice(1, -1);
