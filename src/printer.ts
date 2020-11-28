@@ -627,11 +627,8 @@ export class PugPrinter {
 
 		if (typeof token.val === 'string') {
 			if (isQuoted(token.val)) {
-				if (token.name === 'class') {
+				if (token.name === 'class' && this.options.pugClassNotation !== 'as-is') {
 					// Handle class attribute
-					if (this.options.pugClassNotation === 'as-is') {
-						return;
-					}
 					const val: string = token.val.slice(1, -1).trim();
 					const classes: string[] = val.split(/\s+/);
 					const specialClasses: string[] = [];
@@ -663,11 +660,8 @@ export class PugPrinter {
 						this.previousAttributeRemapped = true;
 						return;
 					}
-				} else if (token.name === 'id') {
+				} else if (token.name === 'id' && this.options.pugIdNotation !== 'as-is') {
 					// Handle id attribute
-					if (this.options.pugIdNotation === 'as-is') {
-						return;
-					}
 					let val: string = token.val;
 					val = val.slice(1, -1);
 					val = val.trim();
