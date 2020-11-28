@@ -5,17 +5,16 @@ import { plugin } from './../../../src/index';
 
 describe('Options', () => {
 	describe('useIdLiterals', () => {
-		test('should keep classes as attribute', () => {
-			const expected: string = readFileSync(resolve(__dirname, 'formatted-attribute.pug'), 'utf8');
+		test('should keep classes as is', () => {
 			const code: string = readFileSync(resolve(__dirname, 'unformatted-attribute.pug'), 'utf8');
 			const actual: string = format(code, {
 				parser: 'pug',
 				plugins: [plugin],
 				// @ts-expect-error
-				pugUseClassLiterals: false
+				pugIdNotation: 'as-is'
 			});
 
-			expect(actual).toBe(expected);
+			expect(actual).toBe(code);
 		});
 		test('should keep classes as literals', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted-literal.pug'), 'utf8');
@@ -24,7 +23,7 @@ describe('Options', () => {
 				parser: 'pug',
 				plugins: [plugin],
 				// @ts-expect-error
-				pugUseClassLiterals: true
+				pugIdNotation: 'literal'
 			});
 
 			expect(actual).toBe(expected);

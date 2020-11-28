@@ -57,6 +57,8 @@ import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/co
 import { ArrowParens } from './options/common';
 import { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
 import { formatEmptyAttribute } from './options/empty-attributes/utils';
+import { PugClassNotation } from './options/pug-class-notation';
+import { PugIdNotation } from './options/pug-id-notation';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
 	handleBracketSpacing,
@@ -96,8 +98,8 @@ export interface PugPrinterOptions {
 	readonly pugSortAttributesEnd: string[];
 	readonly pugWrapAttributesThreshold: number;
 	readonly pugWrapAttributesPattern: string;
-	readonly pugUseClassLiterals: boolean;
-	readonly pugUseIdLiterals: boolean;
+	readonly pugClassNotation: PugClassNotation;
+	readonly pugIdNotation: PugIdNotation;
 	readonly pugEmptyAttributes: PugEmptyAttributes;
 	readonly pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 	readonly pugSingleFileComponentIndentation: boolean;
@@ -587,13 +589,16 @@ export class PugPrinter {
 			if (isQuoted(token.val)) {
 				if (token.name === 'class') {
 					// Handle class attribute
+					if (this.options.pugClassNotation === 'as-is') {
+						return;
+					}
 					const val: string = token.val.slice(1, -1).trim();
 					const classes: string[] = val.split(/\s+/);
 					const specialClasses: string[] = [];
 					const normalClasses: string[] = [];
 					const validClassNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 					for (const className of classes) {
-						if (!this.options.pugUseClassLiterals || !validClassNameRegex.test(className)) {
+						if (!validClassNameRegex.test(className)) {
 							specialClasses.push(className);
 						} else {
 							normalClasses.push(className);
@@ -620,11 +625,14 @@ export class PugPrinter {
 					}
 				} else if (token.name === 'id') {
 					// Handle id attribute
+					if (this.options.pugIdNotation === 'as-is') {
+						return;
+					}
 					let val: string = token.val;
 					val = val.slice(1, -1);
 					val = val.trim();
 					const validIdNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
-					if (!this.options.pugUseIdLiterals || !validIdNameRegex.test(val)) {
+					if (!validIdNameRegex.test(val)) {
 						val = makeString(val, this.quotes);
 						this.result += 'id';
 						if (token.mustEscape === false) {

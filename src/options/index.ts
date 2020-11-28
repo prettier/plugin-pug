@@ -6,8 +6,6 @@ import {
 	PUG_SORT_ATTRIBUTES_OPTION,
 	SortAttributes
 } from './attribute-sorting';
-import { PUG_USE_CLASS_LITERALS, PugUseClassLiterals } from './use-class-literals';
-import { PUG_USE_ID_LITERALS, PugUseIdLiterals } from './use-id-literals';
 import {
 	ClosingBracketPosition,
 	CLOSING_BRACKET_POSITION_OPTION,
@@ -34,6 +32,8 @@ import {
 	PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION,
 	PUG_EMPTY_ATTRIBUTES_OPTION
 } from './empty-attributes';
+import { PugClassNotation, PUG_CLASS_NOTATION } from './pug-class-notation';
+import { PugIdNotation, PUG_ID_NOTATION } from './pug-id-notation';
 import { PUG_SINGLE_FILE_COMPONENT_INDENTATION } from './pug-single-file-component-indentation';
 import { WRAP_ATTRIBUTES_PATTERN, WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes';
 
@@ -76,8 +76,8 @@ export interface PugParserOptions
 	pugWrapAttributesThreshold: number;
 	pugWrapAttributesPattern: string;
 
-	pugUseClassLiterals: PugUseClassLiterals;
-	pugUseIdLiterals: PugUseIdLiterals;
+	pugClassNotation: PugClassNotation;
+	pugIdNotation: PugIdNotation;
 
 	pugEmptyAttributes: PugEmptyAttributes;
 	pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
@@ -105,8 +105,8 @@ export const options: SupportOptions = {
 	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD,
 	pugWrapAttributesPattern: WRAP_ATTRIBUTES_PATTERN,
 	pugEmptyAttributes: PUG_EMPTY_ATTRIBUTES_OPTION,
-	pugUseClassLiterals: PUG_USE_CLASS_LITERALS,
-	pugUseIdLiterals: PUG_USE_ID_LITERALS,
+	pugClassNotation: PUG_CLASS_NOTATION,
+	pugIdNotation: PUG_ID_NOTATION,
 	pugEmptyAttributesForceQuotes: PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION,
 	pugSingleFileComponentIndentation: PUG_SINGLE_FILE_COMPONENT_INDENTATION
 };
