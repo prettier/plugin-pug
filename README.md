@@ -264,6 +264,8 @@ These additional options are specific to pug templates and can be configured in 
 
   - `'literal'` _default_ -> Forces all valid classes to be printed as literals.  
     Example: `foo.bar.baz`
+  - ~`'attribute'` -> Forces all classes to be printed as attributes.~ _this option is [still in progress](https://github.com/prettier/plugin-pug/issues/167)_  
+    Example: `foo(class="bar baz")`
   - `'as-is'` -> Disables class formatting.  
     Example: `foo.bar(class="baz")`
 
@@ -274,6 +276,8 @@ These additional options are specific to pug templates and can be configured in 
 
   - `'literal'` _default_ -> Forces all valid ids to be printed as literals.  
     Example: `foo#bar`
+  - ~`'attribute'` -> Forces all ids to be printed as attributes.~ _this option is [still in progress](https://github.com/prettier/plugin-pug/issues/167)_  
+    Example: `foo(id="bar")`
   - `'as-is'` -> Disables id formatting.  
     Example: `foo(id="bar")`
 
