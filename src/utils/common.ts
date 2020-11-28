@@ -1,9 +1,22 @@
-import { AttributeToken, Token } from 'pug-lexer';
+import { AttributeToken, TagToken, Token } from 'pug-lexer';
+
+export function previousTagToken(tokens: ReadonlyArray<Token>, index: number): TagToken | undefined {
+	for (let i: number = index - 1; i >= 0; i--) {
+		const token: Token | undefined = tokens[i];
+		if (!token) {
+			return;
+		}
+		if (token.type === 'tag') {
+			return token;
+		}
+	}
+	return;
+}
 
 export function previousNormalAttributeToken(tokens: ReadonlyArray<Token>, index: number): AttributeToken | undefined {
 	for (let i: number = index - 1; i > 0; i--) {
-		const token: Token = tokens[i];
-		if (token.type === 'start-attributes') {
+		const token: Token | undefined = tokens[i];
+		if (!token || token.type === 'start-attributes') {
 			return;
 		}
 		if (token.type === 'attribute') {
@@ -24,6 +37,27 @@ export function unwrapLineFeeds(value: string): string {
 				.join('')
 				.trim()
 		: value;
+}
+
+/**
+ * Indicates whether the attribute is a `style` normal attribute
+ *
+ * ---
+ *
+ * Example style tag:
+ * ```
+ * span(style="color: red")
+ * ```
+ *
+ * In this case `name` is `style` and `val` is `"color: red"`
+ *
+ * ---
+ *
+ * @param name Name of tag attribute
+ * @param val Value of `style` tag attribute
+ */
+export function isStyleAttribute(name: string, val: string): boolean {
+	return name === 'style' && isQuoted(val);
 }
 
 /**

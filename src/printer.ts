@@ -1,4 +1,4 @@
-import { format, RequiredOptions } from 'prettier';
+import { BuiltInParserName, format, RequiredOptions } from 'prettier';
 import {
 	AndAttributesToken,
 	AttributeToken,
@@ -64,11 +64,13 @@ import {
 	handleBracketSpacing,
 	isMultilineInterpolation,
 	isQuoted,
+	isStyleAttribute,
 	makeString,
 	previousNormalAttributeToken,
+	previousTagToken,
 	unwrapLineFeeds
 } from './utils/common';
-import { isVueEventBinding, isVueExpression } from './utils/vue';
+import { isVueEventBinding, isVueExpression, isVueVForWithOf } from './utils/vue';
 
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {
@@ -104,6 +106,19 @@ export interface PugPrinterOptions {
 	readonly pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 	readonly pugSingleFileComponentIndentation: boolean;
 }
+
+interface FormatDelegatePrettierOptions {
+	trimTrailingSemicolon?: boolean;
+}
+
+type FormatDelegatePrettierSupportedParser =
+	| 'css'
+	| 'vue'
+	| '__vue_event_binding'
+	| '__vue_expression'
+	| '__ng_binding'
+	| '__ng_action'
+	| '__ng_directive';
 
 export class PugPrinter {
 	private result: string = '';
@@ -141,6 +156,7 @@ export class PugPrinter {
 
 	private pipelessText: boolean = false;
 	private pipelessComment: boolean = false;
+	private currentlyInPugInterpolation: boolean = false;
 
 	public constructor(
 		private readonly content: string,
@@ -175,6 +191,10 @@ export class PugPrinter {
 	}
 
 	public build(): string {
+		if (logger.isDebugEnabled()) {
+			logger.debug('[PugPrinter]:', JSON.stringify(this.tokens));
+		}
+
 		const results: string[] = [];
 		if (this.tokens[0]?.type === 'text') {
 			results.push('| ');
@@ -280,11 +300,20 @@ export class PugPrinter {
 		const startLine: number = start.line - 1;
 		const endLine: number = end.line - 1;
 		const parts: string[] = [];
-		parts.push(lines[startLine].slice(start.column - 1));
-		for (let line: number = startLine + 1; line < endLine; line++) {
-			parts.push(lines[line]);
+		const firstLine: string | undefined = lines[startLine];
+		if (firstLine !== undefined) {
+			parts.push(firstLine.slice(start.column - 1));
 		}
-		parts.push(lines[endLine].slice(0, end.column - 1));
+		for (let lineNumber: number = startLine + 1; lineNumber < endLine; lineNumber++) {
+			const line: string | undefined = lines[lineNumber];
+			if (line !== undefined) {
+				parts.push(line);
+			}
+		}
+		const lastLine: string | undefined = lines[endLine];
+		if (lastLine !== undefined) {
+			parts.push(lastLine.slice(0, end.column - 1));
+		}
 		return parts;
 	}
 
@@ -301,17 +330,6 @@ export class PugPrinter {
 			this.possibleIdPosition -= diff;
 			this.possibleClassPosition -= diff;
 		}
-	}
-
-	private formatDelegatePrettier(
-		val: string,
-		parser: '__vue_expression' | '__ng_binding' | '__ng_action' | '__ng_directive'
-	): string {
-		val = val.trim();
-		val = val.slice(1, -1);
-		val = format(val, { parser, ...this.codeInterpolationOptions });
-		val = unwrapLineFeeds(val);
-		return this.quoteString(val);
 	}
 
 	private formatText(text: string): string {
@@ -371,6 +389,11 @@ export class PugPrinter {
 									'[PugPrinter:formatText]: Missing expected ). If you are using Vue, you can ignore this message.',
 									`code: \`${code.trim()}\``
 								);
+							} else if (error.includes('Missing expected :')) {
+								logger.warn(
+									'[PugPrinter:formatText]: Missing expected :. If you are using Vue, you can ignore this message.',
+									`code: \`${code.trim()}\``
+								);
 							} else {
 								logger.warn('[PugPrinter:formatText]: ', error);
 							}
@@ -407,15 +430,27 @@ export class PugPrinter {
 		return result;
 	}
 
-	private formatVueEventBinding(val: string): string {
+	private formatDelegatePrettier(
+		val: string,
+		parser: FormatDelegatePrettierSupportedParser,
+		{ trimTrailingSemicolon = false }: FormatDelegatePrettierOptions = {}
+	): string {
 		val = val.trim();
 		val = val.slice(1, -1); // Remove quotes
-		val = format(val, { parser: '__vue_event_binding', ...this.codeInterpolationOptions });
+		val = format(val, { parser, ...this.codeInterpolationOptions });
 		val = unwrapLineFeeds(val);
-		if (val[val.length - 1] === ';') {
+		if (trimTrailingSemicolon && val[val.length - 1] === ';') {
 			val = val.slice(0, -1);
 		}
 		return this.quoteString(val);
+	}
+
+	private formatStyleAttribute(val: string): string {
+		return this.formatDelegatePrettier(val, 'css', { trimTrailingSemicolon: true });
+	}
+
+	private formatVueEventBinding(val: string): string {
+		return this.formatDelegatePrettier(val, '__vue_event_binding', { trimTrailingSemicolon: true });
 	}
 
 	private formatVueExpression(val: string): string {
@@ -495,7 +530,11 @@ export class PugPrinter {
 			let hasLiteralAttributes: boolean = false;
 			let numNormalAttributes: number = 0;
 			while (tempToken.type === 'attribute') {
-				if (!this.wrapAttributes && this.wrapAttributesPattern?.test(tempToken.name)) {
+				if (
+					!this.currentlyInPugInterpolation &&
+					!this.wrapAttributes &&
+					this.wrapAttributesPattern?.test(tempToken.name)
+				) {
 					this.wrapAttributes = true;
 				}
 				switch (tempToken.name) {
@@ -551,6 +590,7 @@ export class PugPrinter {
 			}
 			logger.debug(this.currentLineLength);
 			if (
+				!this.currentlyInPugInterpolation &&
 				!this.wrapAttributes &&
 				(this.currentLineLength > this.options.pugPrintWidth ||
 					(this.options.pugWrapAttributesThreshold >= 0 &&
@@ -681,6 +721,8 @@ export class PugPrinter {
 			let val: string = token.val;
 			if (isMultilineInterpolation(val)) {
 				// do not reformat multiline strings surrounded by `
+			} else if (isVueVForWithOf(token.name, token.val)) {
+				val = this.formatDelegatePrettier(val, 'vue');
 			} else if (isVueExpression(token.name)) {
 				val = this.formatVueExpression(val);
 			} else if (isVueEventBinding(token.name)) {
@@ -693,6 +735,8 @@ export class PugPrinter {
 				val = this.formatAngularDirective(val);
 			} else if (isAngularInterpolation(val)) {
 				val = this.formatAngularInterpolation(val);
+			} else if (isStyleAttribute(token.name, token.val)) {
+				val = this.formatStyleAttribute(val);
 			} else if (isQuoted(val)) {
 				val = makeString(val.slice(1, -1), this.quotes);
 			} else if (val === 'true') {
@@ -704,7 +748,7 @@ export class PugPrinter {
 				const lines: string[] = val.split('\n');
 				const codeIndentLevel: number = this.wrapAttributes ? this.indentLevel + 1 : this.indentLevel;
 				if (lines.length > 1) {
-					val = lines[0];
+					val = lines[0] ?? '';
 					for (let index: number = 1; index < lines.length; index++) {
 						val += '\n';
 						val += this.indentString.repeat(codeIndentLevel);
@@ -1040,7 +1084,65 @@ export class PugPrinter {
 
 	private ['start-pipeless-text'](token: StartPipelessTextToken): string {
 		this.pipelessText = true;
-		return `\n${this.indentString.repeat(this.indentLevel)}`;
+
+		let result: string = `\n${this.indentString.repeat(this.indentLevel)}`;
+
+		if (this.previousToken?.type === 'dot') {
+			const lastTagToken: TagToken | undefined = previousTagToken(this.tokens, this.currentIndex);
+
+			let parser: BuiltInParserName | undefined;
+			switch (lastTagToken?.val) {
+				case 'script':
+					parser = 'babel';
+					break;
+				case 'style':
+					parser = 'css';
+					break;
+				default:
+					break;
+			}
+
+			if (parser) {
+				let index: number = this.currentIndex + 1;
+				let tok: Token | undefined = this.tokens[index];
+				let rawText: string = '';
+				while (tok && tok?.type !== 'end-pipeless-text') {
+					switch (tok.type) {
+						case 'text':
+							rawText += tok.val;
+							break;
+						case 'newline':
+							rawText += '\n';
+							break;
+						default:
+							logger.warn('Unhandled token for pipeless script tag:', JSON.stringify(tok));
+							break;
+					}
+
+					index++;
+					tok = this.tokens[index];
+				}
+
+				result = format(rawText, { parser, ...this.codeInterpolationOptions });
+				result = result.trimRight();
+				const indentString: string = this.indentString.repeat(this.indentLevel + 1);
+				result = result
+					.split('\n')
+					.map((line) => indentString + line)
+					.join('\n');
+				result = `\n${result}`;
+
+				// Preserve newline
+				tok = this.tokens[index - 1];
+				if (tok?.type === 'text' && tok.val === '') {
+					result += `\n${this.indentString.repeat(this.indentLevel)}`;
+				}
+
+				this.currentIndex = index - 1;
+			}
+		}
+
+		return result;
 	}
 
 	private ['end-pipeless-text'](token: EndPipelessTextToken): string {
@@ -1093,11 +1195,13 @@ export class PugPrinter {
 		) {
 			result += this.indentString.repeat(this.indentLevel + 1);
 		}
+		this.currentlyInPugInterpolation = true;
 		result += '#[';
 		return result;
 	}
 
 	private ['end-pug-interpolation'](token: EndPugInterpolationToken): string {
+		this.currentlyInPugInterpolation = false;
 		return ']';
 	}
 

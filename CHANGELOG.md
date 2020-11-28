@@ -1,17 +1,40 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.10.1...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.12.0...master)
 
-# 1.10.1 (not released yet)
+# 1.12.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.11.0...1.12.0)
+
+- Format value of `style` attribute in tags ([#162])
+
+[#162]: https://github.com/prettier/plugin-pug/issues/162
+
+# 1.11.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.10.1...1.11.0)
+
+- Handle `for...of` in vue `v-for` ([#129])
+- Support embedded formatting of inline `script` and `style` tags ([#158])  
+  _If there are problems, please create an issue_
+
+[#129]: https://github.com/prettier/plugin-pug/issues/129
+[#158]: https://github.com/prettier/plugin-pug/issues/158
+
+# 1.10.1
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.10.0...1.10.1)
 
 - Fix handling of initial indentation for `pugSingleFileComponentIndentation` ([#145])
 - Fix bracket interpolation in combination with `pugSingleFileComponentIndentation` ([#148])
+- Do not wrap attributes in enclosed code interpolation ([#149])
+- Print warning for parsed object shorthand notation ([#147])
 - Add `'pug'` to `vscodeLanguageIds` ([#150])
 
 [#145]: https://github.com/prettier/plugin-pug/issues/145
+[#147]: https://github.com/prettier/plugin-pug/issues/147
 [#148]: https://github.com/prettier/plugin-pug/issues/148
+[#149]: https://github.com/prettier/plugin-pug/issues/149
 [#150]: https://github.com/prettier/plugin-pug/issues/150
 
 # 1.10.0

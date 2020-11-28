@@ -8,6 +8,7 @@
 		"moduleResolution": "Node",
 		"rootDir": "src",
 		"strict": true,
+		"noUncheckedIndexedAccess": true,
 		"removeComments": true
 	},
 	"include": ["src/**/*"],
