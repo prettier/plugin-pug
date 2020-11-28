@@ -1,6 +1,6 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.12.0...master)
+[diff](https://github.com/prettier/plugin-pug/compare/1.12.0...main)
 
 # 1.12.0
 

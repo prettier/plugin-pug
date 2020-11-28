@@ -10,7 +10,7 @@
 <h2 align="center">Prettier Pug plugin</h2>
 
 <p align="center">
-  <a href="https://github.com/prettier/plugin-pug/blob/master/LICENSE">
+  <a href="https://github.com/prettier/plugin-pug/blob/main/LICENSE">
     <img alt="license: MIT" src="https://img.shields.io/github/license/prettier/plugin-pug.svg?style=flat-square"><!--
   --></a>
   <a href="https://www.npmjs.com/package/@prettier/plugin-pug">
@@ -22,8 +22,8 @@
   <a href="#badge">
     <img alt="code style: Prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"><!--
   --></a>
-  <a href="https://github.com/prettier/plugin-pug/actions?query=branch%3Amaster+workflow%3ACI">
-    <img alt="Build Status" src="https://github.com/prettier/plugin-pug/workflows/CI/badge.svg?branch=master"><!--
+  <a href="https://github.com/prettier/plugin-pug/actions?query=branch%3Amain+workflow%3ACI">
+    <img alt="Build Status" src="https://github.com/prettier/plugin-pug/workflows/CI/badge.svg?branch=main"><!--
   --></a>
 </p>
 
