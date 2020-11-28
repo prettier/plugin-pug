@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.12.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.0...main)
+
+# 1.13.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.12.0...1.13.0)
+
+- Option for disabling formatting of `class` and `id` literals ([#36])
+- Switching from `master` to `main` branch ([#166])
+
+[#36]: https://github.com/prettier/plugin-pug/issues/36
+[#166]: https://github.com/prettier/plugin-pug/issues/166
 
 # 1.12.0
 
