@@ -127,18 +127,18 @@ By using versions of these standard options prefixed with `pug`, you can overrid
 
 These additional options are specific to pug templates and can be configured in your global `.prettierrc` file:
 
-- [pugAttributeSeparator](#pugAttributeSeparator)
-- [pugClosingBracketPosition](#pugClosingBracketPosition)
-- [pugCommentPreserveSpaces](#pugCommentPreserveSpaces)
-- [pugSortAttributesBeginning & pugSortAttributesEnd](#pugSortAttributesBeginning-&-pugSortAttributesEnd)
-- [pugSortAttributes](#pugSortAttributes)
-- [pugWrapAttributesThreshold](#pugWrapAttributesThreshold)
-- [pugWrapAttributesPattern](#pugWrapAttributesPattern)
-- [pugSingleFileComponentIndentation](#pugSingleFileComponentIndentation)
-- [pugEmptyAttributes](#pugEmptyAttributes)
-- [pugEmptyAttributesForceQuotes](#pugEmptyAttributesForceQuotes)
-- [pugClassNotation](#pugClassNotation)
-- [pugIdNotation](#pugIdNotation)
+- [pugAttributeSeparator](#pugattributeseparator)
+- [pugClosingBracketPosition](#pugclosingbracketposition)
+- [pugCommentPreserveSpaces](#pugcommentpreservespaces)
+- [pugSortAttributesBeginning & pugSortAttributesEnd](#pugsortattributesbeginning--pugsortattributesend)
+- [pugSortAttributes](#pugsortattributes)
+- [pugWrapAttributesThreshold](#pugwrapattributesthreshold)
+- [pugWrapAttributesPattern](#pugwrapattributespattern)
+- [pugSingleFileComponentIndentation](#pugsinglefilecomponentindentation)
+- [pugEmptyAttributes](#pugemptyattributes)
+- [pugEmptyAttributesForceQuotes](#pugemptyattributesforcequotes)
+- [pugClassNotation](#pugclassnotation)
+- [pugIdNotation](#pugidnotation)
 
 #### `pugAttributeSeparator`
 
