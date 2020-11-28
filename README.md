@@ -127,159 +127,184 @@ By using versions of these standard options prefixed with `pug`, you can overrid
 
 These additional options are specific to pug templates and can be configured in your global `.prettierrc` file:
 
-- `pugAttributeSeparator`  
-  Change when attributes are separated by commas in tags.
+- [pugAttributeSeparator](#pugAttributeSeparator)
+- [pugClosingBracketPosition](#pugClosingBracketPosition)
+- [pugCommentPreserveSpaces](#pugCommentPreserveSpaces)
+- [pugSortAttributesBeginning & pugSortAttributesEnd](#pugSortAttributesBeginning-&-pugSortAttributesEnd)
+- [pugSortAttributes](#pugSortAttributes)
+- [pugWrapAttributesThreshold](#pugWrapAttributesThreshold)
+- [pugWrapAttributesPattern](#pugWrapAttributesPattern)
+- [pugSingleFileComponentIndentation](#pugSingleFileComponentIndentation)
+- [pugEmptyAttributes](#pugEmptyAttributes)
+- [pugEmptyAttributesForceQuotes](#pugEmptyAttributesForceQuotes)
+- [pugClassNotation](#pugClassNotation)
+- [pugIdNotation](#pugIdNotation)
 
-  Choices:
+#### `pugAttributeSeparator`
 
-  - `'always'` _default_ -> Always separate attributes with commas.  
-    Example: `button(type="submit", (click)="play()", disabled)`
-  - `'as-needed'` -> Only add commas between attributes where required.  
-    Example: `button(type="submit", (click)="play()" disabled)`
-  - `'none'` -> Never add commas between attributes.  
-    Example: `button(type="submit" @click="play()" :style="style" disabled)`
-    Please note that while this option will process Angular syntax (e.g. `(click)="play()"`), the resulting pug file will throw a syntax error when parsed: `Syntax Error: Assigning to rvalue`
+Change when attributes are separated by commas in tags.
 
-- `pugClosingBracketPosition`  
-  Position of closing bracket of attributes.
+Choices:
 
-  Choices:
+- `'always'` _default_ -> Always separate attributes with commas.  
+  Example: `button(type="submit", (click)="play()", disabled)`
+- `'as-needed'` -> Only add commas between attributes where required.  
+  Example: `button(type="submit", (click)="play()" disabled)`
+- `'none'` -> Never add commas between attributes.  
+  Example: `button(type="submit" @click="play()" :style="style" disabled)`
+  Please note that while this option will process Angular syntax (e.g. `(click)="play()"`), the resulting pug file will throw a syntax error when parsed: `Syntax Error: Assigning to rvalue`
 
-  - `'new-line'` _default_ -> Closing bracket ends with a new line.  
-    Example:
+#### `pugClosingBracketPosition`
 
-    ```pug
-    input(
-      type="text",
-      value="my_value",
-      name="my_name",
-      alt="my_alt",
-      autocomplete="on"
-    )
-    ```
+Position of closing bracket of attributes.
 
-  - `'last-line'` -> Closing bracket remains with last attribute's line.  
-    Example:
+Choices:
 
-    ```pug
-    input(
-      type="text",
-      value="my_value",
-      name="my_name",
-      alt="my_alt",
-      autocomplete="on")
-    ```
+- `'new-line'` _default_ -> Closing bracket ends with a new line.  
+  Example:
 
-- `pugCommentPreserveSpaces`  
-  Change behavior of spaces within comments.
+  ```pug
+  input(
+    type="text",
+    value="my_value",
+    name="my_name",
+    alt="my_alt",
+    autocomplete="on"
+  )
+  ```
 
-  Choices:
+- `'last-line'` -> Closing bracket remains with last attribute's line.  
+  Example:
 
-  - `'keep-all'` _default_ -> Keep all spaces within comments.  
-    Example: `// ___this _is __a __comment_`
-  - `'keep-leading'` -> Keep leading spaces within comments.  
-    Example: `// ___this is a comment`
-  - `'trim-all'` -> Trim all spaces within comments.  
-    Example: `// this is a comment`
+  ```pug
+  input(
+    type="text",
+    value="my_value",
+    name="my_name",
+    alt="my_alt",
+    autocomplete="on")
+  ```
 
-- `pugSortAttributesBeginning` & `pugSortAttributesEnd`  
-  Sort attributes by regex patterns to the beginning or the end.  
-  [Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)  
-  _This feature was planned since `1.2.0`, but it was always a bit unstable and opinionated._  
-  _If there are any bugs, please report them._
+#### `pugCommentPreserveSpaces`
 
-- `pugSortAttributes`
-  Sort attributes that are not on _beginning_ and _end_ patterns.
+Change behavior of spaces within comments.
 
-  Choices:
+Choices:
 
-  - `'as-is'` _default_ -> Keep the attributes untouched.  
-    Example: `Foo(a c d b)`
-  - `'asc'` -> Sort attributes ascending.  
-    Example: `Foo(a b c d)`
-  - `'desc'` -> Sort attributes descending.  
-    Example: `Foo(d c b a)`
+- `'keep-all'` _default_ -> Keep all spaces within comments.  
+  Example: `// ___this _is __a __comment_`
+- `'keep-leading'` -> Keep leading spaces within comments.  
+  Example: `// ___this is a comment`
+- `'trim-all'` -> Trim all spaces within comments.  
+  Example: `// this is a comment`
 
-- `pugWrapAttributesThreshold`  
-  Define the maximum amount of attributes that an element can appear with on one line before it gets wrapped.
+#### `pugSortAttributesBeginning` & `pugSortAttributesEnd`
 
-  Choices:
+Sort attributes by regex patterns to the beginning or the end.  
+ [Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)  
+ _This feature was planned since `1.2.0`, but it was always a bit unstable and opinionated._  
+ _If there are any bugs, please report them._
 
-  - `-1` _default_ -> Only wrap attributes as needed.  
-    Example:
-    ```pug
-    input(type="text")
-    input(type="text", value="my_value", name="my_name")
-    ```
-  - `0` -> Always wrap attributes.  
-    Example:
-    ```pug
-    input(
-      type="text"
-    )
-    input(
-      type="text",
-      value="my_value",
-      name="my_name"
-    )
-    ```
-  - `1` -> Allow one unwrapped attribute, wrap two and more.  
-    Example:
-    ```pug
-    input(type="text")
-    input(
-      type="text",
-      value="my_value",
-      name="my_name"
-    )
-    ```
-  - `2 .. Infinity` -> Same as above, just with different thresholds.
+#### `pugSortAttributes`
 
-- `pugWrapAttributesPattern`  
-  Define a regex pattern to match attributes against that should always trigger wrapping.
+Sort attributes that are not on _beginning_ and _end_ patterns.
 
-- `pugSingleFileComponentIndentation`  
-  Indent pug in template tags in single file components such as from vue or svelte.  
-  _default_: `false`
+Choices:
 
-- `pugEmptyAttributes`  
-  Change behavior of boolean attributes.
+- `'as-is'` _default_ -> Keep the attributes untouched.  
+  Example: `Foo(a c d b)`
+- `'asc'` -> Sort attributes ascending.  
+  Example: `Foo(a b c d)`
+- `'desc'` -> Sort attributes descending.  
+  Example: `Foo(d c b a)`
 
-  Choices:
+#### `pugWrapAttributesThreshold`
 
-  - `'as-is'` _default_ -> Nothing is changed.  
-    Example: `foo(a, b="", c)`
-  - `'none'` -> Every attribute with empty quotes will have them removed.  
-    Example: `foo(a, b, c)`
-  - `'all'` -> Every boolean attribute will be expressed with empty quotes.  
-    Example: `foo(a="", b="", c="")`
+Define the maximum amount of attributes that an element can appear with on one line before it gets wrapped.
 
-- `pugEmptyAttributesForceQuotes`  
-  Define a list of patterns for attributes that will be forced to have empty quotes even with "none" selected.
+Choices:
 
-- `pugClassNotation`  
-  Define how classes should be formatted.
+- `-1` _default_ -> Only wrap attributes as needed.  
+  Example:
+  ```pug
+  input(type="text")
+  input(type="text", value="my_value", name="my_name")
+  ```
+- `0` -> Always wrap attributes.  
+  Example:
+  ```pug
+  input(
+    type="text"
+  )
+  input(
+    type="text",
+    value="my_value",
+    name="my_name"
+  )
+  ```
+- `1` -> Allow one unwrapped attribute, wrap two and more.  
+  Example:
+  ```pug
+  input(type="text")
+  input(
+    type="text",
+    value="my_value",
+    name="my_name"
+  )
+  ```
+- `2 .. Infinity` -> Same as above, just with different thresholds.
 
-  Choices:
+#### `pugWrapAttributesPattern`
 
-  - `'literal'` _default_ -> Forces all valid classes to be printed as literals.  
-    Example: `foo.bar.baz`
-  - ~`'attribute'` -> Forces all classes to be printed as attributes.~ _this option is [still in progress](https://github.com/prettier/plugin-pug/issues/167)_  
-    Example: `foo(class="bar baz")`
-  - `'as-is'` -> Disables class formatting.  
-    Example: `foo.bar(class="baz")`
+Define a regex pattern to match attributes against that should always trigger wrapping.
 
-- `pugIdNotation`  
-  Define how ids should be formatted.
+#### `pugSingleFileComponentIndentation`
 
-  Choices:
+Indent pug in template tags in single file components such as from vue or svelte.  
+ _default_: `false`
 
-  - `'literal'` _default_ -> Forces all valid ids to be printed as literals.  
-    Example: `foo#bar`
-  - ~`'attribute'` -> Forces all ids to be printed as attributes.~ _this option is [still in progress](https://github.com/prettier/plugin-pug/issues/167)_  
-    Example: `foo(id="bar")`
-  - `'as-is'` -> Disables id formatting.  
-    Example: `foo(id="bar")`
+#### `pugEmptyAttributes`
+
+Change behavior of boolean attributes.
+
+Choices:
+
+- `'as-is'` _default_ -> Nothing is changed.  
+  Example: `foo(a, b="", c)`
+- `'none'` -> Every attribute with empty quotes will have them removed.  
+  Example: `foo(a, b, c)`
+- `'all'` -> Every boolean attribute will be expressed with empty quotes.  
+  Example: `foo(a="", b="", c="")`
+
+#### `pugEmptyAttributesForceQuotes`
+
+Define a list of patterns for attributes that will be forced to have empty quotes even with "none" selected.
+
+#### `pugClassNotation`
+
+Define how classes should be formatted.
+
+Choices:
+
+- `'literal'` _default_ -> Forces all valid classes to be printed as literals.  
+  Example: `foo.bar.baz`
+- ~`'attribute'` -> Forces all classes to be printed as attributes.~ _this option is [still in progress](https://github.com/prettier/plugin-pug/issues/167)_  
+  Example: `foo(class="bar baz")`
+- `'as-is'` -> Disables class formatting.  
+  Example: `foo.bar(class="baz")`
+
+#### `pugIdNotation`
+
+Define how ids should be formatted.
+
+Choices:
+
+- `'literal'` _default_ -> Forces all valid ids to be printed as literals.  
+  Example: `foo#bar`
+- ~`'attribute'` -> Forces all ids to be printed as attributes.~ _this option is [still in progress](https://github.com/prettier/plugin-pug/issues/167)_  
+  Example: `foo(id="bar")`
+- `'as-is'` -> Disables id formatting.  
+  Example: `foo(id="bar")`
 
 ## Some workarounds
 
