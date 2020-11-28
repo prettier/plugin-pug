@@ -262,20 +262,20 @@ These additional options are specific to pug templates and can be configured in 
 
   Choices:
 
-  - `'as-is'` -> Disables class formatting.  
-    Example: `foo.bar(class="baz")`
   - `'literal'` _default_ -> Forces all valid classes to be printed as literals.  
     Example: `foo.bar.baz`
+  - `'as-is'` -> Disables class formatting.  
+    Example: `foo.bar(class="baz")`
 
 - `pugIdNotation`  
   Define how ids should be formatted.
 
   Choices:
 
-  - `'as-is'` -> Disables id formatting.  
-    Example: `foo(id="bar")`
   - `'literal'` _default_ -> Forces all valid ids to be printed as literals.  
     Example: `foo#bar`
+  - `'as-is'` -> Disables id formatting.  
+    Example: `foo(id="bar")`
 
 ## Some workarounds
 

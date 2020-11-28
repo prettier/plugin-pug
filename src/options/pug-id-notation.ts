@@ -8,8 +8,8 @@ export const PUG_ID_NOTATION: ChoiceSupportOption = {
 	default: 'literal',
 	description: 'Define how the Id should be formatted',
 	choices: [
-		{ value: 'as-is', description: 'Disables id formatting.' },
-		{ value: 'literal', description: 'Forces all valid ids to be printed as literals.' }
+		{ value: 'literal', description: 'Forces all valid ids to be printed as literals.' },
+		{ value: 'as-is', description: 'Disables id formatting.' }
 	]
 };
 
