@@ -1157,7 +1157,8 @@ export class PugPrinter {
 					logger.warn(
 						'[PugPrinter:start-pipeless-text]:',
 						'The following expression could not be formatted correctly.',
-						'Please try to fix it yourself and if there is a problem, please open a bug issue:',
+						'This is likely a syntax error or an issue caused by the missing execution context.',
+						'If you think this is a bug, please open a bug issue.',
 						rawText
 					);
 
