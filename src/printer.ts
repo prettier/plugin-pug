@@ -1131,36 +1131,35 @@ export class PugPrinter {
 				try {
 					result = format(rawText, { parser, ...this.codeInterpolationOptions });
 				} catch (error: unknown) {
-					if (usedInterpolatedCode) {
-						if (types.isNativeError(error)) {
-							logger.warn(
-								'[PugPrinter:start-pipeless-text]:',
-								`Found ${parser} ${error.name}: ${error.message}.`,
-								'You used interpolated code in your pipeless script tag, so you may ignore this warning.',
-								`code: \`${rawText.trim()}\``
-							);
-						} else {
-							logger.debug('typeof error:', typeof error);
-							logger.warn(
-								'[PugPrinter:start-pipeless-text]:',
-								`Unexpected error for parser ${parser}.`,
-								'You used interpolated code in your pipeless script tag, so you may ignore this warning.',
-								`code: \`${rawText.trim()}\``,
-								error
-							);
-						}
-					} else {
+					if (!usedInterpolatedCode) {
 						logger.error(error);
 						throw error;
 					}
 
-					logger.warn(
+					// Continue without formatting the content
+
+					const warningContext: string[] = [
 						'[PugPrinter:start-pipeless-text]:',
 						'The following expression could not be formatted correctly.',
 						'This is likely a syntax error or an issue caused by the missing execution context.',
-						'If you think this is a bug, please open a bug issue.',
-						rawText
+						'If you think this is a bug, please open a bug issue.'
+					];
+
+					warningContext.push(`\ncode: \`${rawText.trim()}\``);
+
+					// TODO: If other token types occur use `if (usedInterpolatedCode)`
+					warningContext.push(
+						'\nYou used interpolated code in your pipeless script tag, so you may ignore this warning.'
 					);
+
+					if (types.isNativeError(error)) {
+						warningContext.push(`\nFound ${parser} ${error.name}: ${error.message}.`);
+					} else {
+						logger.debug('typeof error:', typeof error);
+						warningContext.push(`\nUnexpected error for parser ${parser}.`, error as string);
+					}
+
+					logger.warn(...warningContext);
 
 					result = rawText;
 				}
