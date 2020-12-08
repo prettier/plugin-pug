@@ -6,8 +6,10 @@
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.13.0...1.13.1)
 
+- Set `prettier` peer dependency to `>= 2.1.0` ([#168])
 - Handle error thrown by interpolated code in pipeless script tag ([#169])
 
+[#168]: https://github.com/prettier/plugin-pug/issues/168
 [#169]: https://github.com/prettier/plugin-pug/issues/169
 
 # 1.13.0
