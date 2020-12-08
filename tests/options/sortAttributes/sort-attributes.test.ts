@@ -29,7 +29,7 @@ describe('Options', () => {
 			const pugSortAttributes: SortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = ['v-for', ':key', 'src', 'alt'];
 			const pugSortAttributesEnd: string[] = [];
-			const expected: ReadonlyArray<string> = ['v-for', ':key', 'src', 'alt'];
+			const expected: string[] = ['v-for', ':key', 'src', 'alt'];
 			const code: string[] = ['alt', ':key', 'v-for', 'src'];
 			const actual: string[] = stableSort(code, (a, b) =>
 				compareAttributeToken(
@@ -47,7 +47,7 @@ describe('Options', () => {
 			const pugSortAttributes: SortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = [];
 			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
-			const expected: ReadonlyArray<string> = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
+			const expected: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
 			const code: string[] = ['v-for', ':disabled', ':key', '@click', 'src', 'alt'];
 			const actual: string[] = stableSort(code, (a, b) =>
 				compareAttributeToken(
@@ -65,7 +65,7 @@ describe('Options', () => {
 			const pugSortAttributes: SortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
 			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
-			const expected: ReadonlyArray<string> = [
+			const expected: string[] = [
 				'x',
 				'y',
 				'z',
@@ -96,7 +96,7 @@ describe('Options', () => {
 			const pugSortAttributes: SortAttributes = 'asc';
 			const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
 			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
-			const expected: ReadonlyArray<string> = [
+			const expected: string[] = [
 				'x',
 				'y',
 				'z',
@@ -142,7 +142,7 @@ describe('Options', () => {
 			const pugSortAttributes: SortAttributes = 'desc';
 			const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
 			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
-			const expected: ReadonlyArray<string> = [
+			const expected: string[] = [
 				'x',
 				'y',
 				'z',
@@ -173,7 +173,7 @@ describe('Options', () => {
 			const pugSortAttributes: SortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = ['a'];
 			const pugSortAttributesEnd: string[] = ['b'];
-			const expected: ReadonlyArray<string> = 'aedcfghilnb'.split('');
+			const expected: string[] = 'aedcfghilnb'.split('');
 			const code: string[] = 'aedcfbghiln'.split('');
 			const actual: string[] = stableSort(code, (a, b) =>
 				compareAttributeToken(
@@ -191,7 +191,7 @@ describe('Options', () => {
 			const pugSortAttributes: SortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = [];
 			const pugSortAttributesEnd: string[] = [];
-			const expected: ReadonlyArray<string> = 'aedcfghilnb'.split('');
+			const expected: string[] = 'aedcfghilnb'.split('');
 			const code: string[] = 'aedcfghilnb'.split('');
 			const actual: string[] = stableSort(code, (a, b) =>
 				compareAttributeToken(
