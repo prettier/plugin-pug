@@ -47,6 +47,7 @@ import {
 	WhileToken,
 	YieldToken
 } from 'pug-lexer';
+import { types } from 'util';
 import { DoctypeShortcut, DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
 import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
@@ -1100,6 +1101,7 @@ export class PugPrinter {
 				let index: number = this.currentIndex + 1;
 				let tok: Token | undefined = this.tokens[index];
 				let rawText: string = '';
+				let usedInterpolatedCode: boolean = false;
 				while (tok && tok?.type !== 'end-pipeless-text') {
 					switch (tok.type) {
 						case 'text':
@@ -1107,6 +1109,11 @@ export class PugPrinter {
 							break;
 						case 'newline':
 							rawText += '\n';
+							break;
+						case 'interpolated-code':
+							usedInterpolatedCode = true;
+							rawText += tok.mustEscape ? '#' : '!';
+							rawText += `{${tok.val}}`;
 							break;
 						default:
 							logger.warn('Unhandled token for pipeless script tag:', JSON.stringify(tok));
@@ -1117,7 +1124,29 @@ export class PugPrinter {
 					tok = this.tokens[index];
 				}
 
-				result = format(rawText, { parser, ...this.codeInterpolationOptions });
+				try {
+					result = format(rawText, { parser, ...this.codeInterpolationOptions });
+				} catch (error: unknown) {
+					if (usedInterpolatedCode) {
+						if (types.isNativeError(error)) {
+							logger.warn(
+								`[PugPrinter:start-pipeless-text]: Found ${parser} ${error.name}: ${error.message}. You used interpolated code in your pipeless script tag, so you may ignore this warning.`,
+								`code: \`${rawText.trim()}\``
+							);
+						} else {
+							logger.debug('typeof error:', typeof error);
+							logger.warn(
+								`[PugPrinter:start-pipeless-text]: Unexpected error for parser ${parser}. You used interpolated code in your pipeless script tag, so you may ignore this warning.`,
+								`code: \`${rawText.trim()}\``,
+								error
+							);
+						}
+					} else {
+						logger.error(error);
+					}
+					result = rawText;
+				}
+
 				result = result.trimRight();
 				const indentString: string = this.indentString.repeat(this.indentLevel + 1);
 				result = result
