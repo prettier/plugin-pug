@@ -1143,6 +1143,7 @@ export class PugPrinter {
 						}
 					} else {
 						logger.error(error);
+						throw error;
 					}
 					result = rawText;
 				}
