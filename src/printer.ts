@@ -1116,7 +1116,11 @@ export class PugPrinter {
 							rawText += `{${tok.val}}`;
 							break;
 						default:
-							logger.warn('Unhandled token for pipeless script tag:', JSON.stringify(tok));
+							logger.warn(
+								'[PugPrinter:start-pipeless-text]:',
+								'Unhandled token for pipeless script tag:',
+								JSON.stringify(tok)
+							);
 							break;
 					}
 
@@ -1130,13 +1134,17 @@ export class PugPrinter {
 					if (usedInterpolatedCode) {
 						if (types.isNativeError(error)) {
 							logger.warn(
-								`[PugPrinter:start-pipeless-text]: Found ${parser} ${error.name}: ${error.message}. You used interpolated code in your pipeless script tag, so you may ignore this warning.`,
+								'[PugPrinter:start-pipeless-text]:',
+								`Found ${parser} ${error.name}: ${error.message}.`,
+								'You used interpolated code in your pipeless script tag, so you may ignore this warning.',
 								`code: \`${rawText.trim()}\``
 							);
 						} else {
 							logger.debug('typeof error:', typeof error);
 							logger.warn(
-								`[PugPrinter:start-pipeless-text]: Unexpected error for parser ${parser}. You used interpolated code in your pipeless script tag, so you may ignore this warning.`,
+								'[PugPrinter:start-pipeless-text]:',
+								`Unexpected error for parser ${parser}.`,
+								'You used interpolated code in your pipeless script tag, so you may ignore this warning.',
 								`code: \`${rawText.trim()}\``,
 								error
 							);
@@ -1145,6 +1153,14 @@ export class PugPrinter {
 						logger.error(error);
 						throw error;
 					}
+
+					logger.warn(
+						'[PugPrinter:start-pipeless-text]:',
+						'The following expression could not be formatted correctly.',
+						'Please try to fix it yourself and if there is a problem, please open a bug issue:',
+						rawText
+					);
+
 					result = rawText;
 				}
 
