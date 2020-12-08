@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.13.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.1...main)
+
+# 1.13.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.0...1.13.1)
+
+- Handle error thrown by interpolated code in pipeless script tag ([#169])
+
+[#169]: https://github.com/prettier/plugin-pug/issues/169
 
 # 1.13.0
 
