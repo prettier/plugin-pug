@@ -47,6 +47,7 @@ import {
 	WhileToken,
 	YieldToken
 } from 'pug-lexer';
+import { types } from 'util';
 import { DoctypeShortcut, DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { createLogger, Logger, LogLevel } from './logger';
 import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
@@ -1100,6 +1101,7 @@ export class PugPrinter {
 				let index: number = this.currentIndex + 1;
 				let tok: Token | undefined = this.tokens[index];
 				let rawText: string = '';
+				let usedInterpolatedCode: boolean = false;
 				while (tok && tok?.type !== 'end-pipeless-text') {
 					switch (tok.type) {
 						case 'text':
@@ -1108,8 +1110,17 @@ export class PugPrinter {
 						case 'newline':
 							rawText += '\n';
 							break;
+						case 'interpolated-code':
+							usedInterpolatedCode = true;
+							rawText += tok.mustEscape ? '#' : '!';
+							rawText += `{${tok.val}}`;
+							break;
 						default:
-							logger.warn('Unhandled token for pipeless script tag:', JSON.stringify(tok));
+							logger.warn(
+								'[PugPrinter:start-pipeless-text]:',
+								'Unhandled token for pipeless script tag:',
+								JSON.stringify(tok)
+							);
 							break;
 					}
 
@@ -1117,7 +1128,42 @@ export class PugPrinter {
 					tok = this.tokens[index];
 				}
 
-				result = format(rawText, { parser, ...this.codeInterpolationOptions });
+				try {
+					result = format(rawText, { parser, ...this.codeInterpolationOptions });
+				} catch (error: unknown) {
+					if (!usedInterpolatedCode) {
+						logger.error(error);
+						throw error;
+					}
+
+					// Continue without formatting the content
+
+					const warningContext: string[] = [
+						'[PugPrinter:start-pipeless-text]:',
+						'The following expression could not be formatted correctly.',
+						'This is likely a syntax error or an issue caused by the missing execution context.',
+						'If you think this is a bug, please open a bug issue.'
+					];
+
+					warningContext.push(`\ncode: \`${rawText.trim()}\``);
+
+					// TODO: If other token types occur use `if (usedInterpolatedCode)`
+					warningContext.push(
+						'\nYou used interpolated code in your pipeless script tag, so you may ignore this warning.'
+					);
+
+					if (types.isNativeError(error)) {
+						warningContext.push(`\nFound ${parser} ${error.name}: ${error.message}.`);
+					} else {
+						logger.debug('typeof error:', typeof error);
+						warningContext.push(`\nUnexpected error for parser ${parser}.`, error as string);
+					}
+
+					logger.warn(...warningContext);
+
+					result = rawText;
+				}
+
 				result = result.trimRight();
 				const indentString: string = this.indentString.repeat(this.indentLevel + 1);
 				result = result

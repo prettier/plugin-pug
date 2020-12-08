@@ -10,4 +10,10 @@ describe('Syntax-Errors', () => {
 			format(code, { parser: 'pug', plugins: [plugin] });
 		}).toThrow();
 	});
+	test('should not format if pipeless script tag has syntax error', () => {
+		const code: string = readFileSync(resolve(__dirname, 'pipeless-script-tag.pug'), 'utf8');
+		expect(() => {
+			format(code, { parser: 'pug', plugins: [plugin] });
+		}).toThrow();
+	});
 });
