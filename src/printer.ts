@@ -1168,7 +1168,7 @@ export class PugPrinter {
 				const indentString: string = this.indentString.repeat(this.indentLevel + 1);
 				result = result
 					.split('\n')
-					.map((line) => indentString + line)
+					.map((line) => (line ? indentString + line : ''))
 					.join('\n');
 				result = `\n${result}`;
 
