@@ -36,7 +36,7 @@
 		"pug-lexer": "^5.0.0"
 	},
 	"devDependencies": {
-		"@types/jest": "~26.0.19",
+		"@types/jest": "~26.0.20",
 		"@types/node": "~14.14.20",
 		"@types/prettier": "~2.1.6",
 		"@typescript-eslint/eslint-plugin": "~4.12.0",
