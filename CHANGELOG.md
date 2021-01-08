@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.13.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.2...main)
+
+# 1.13.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.1...1.13.2)
+
+- Fix blank lines in inline syntax ([#171])
+
+[#171]: https://github.com/prettier/plugin-pug/issues/171
 
 # 1.13.1
 
