@@ -37,6 +37,7 @@ jobs:
               run: yarn install --frozen-lockfile
 
             - name: Check outdated dependencies
+              if: github.ref == 'refs/heads/main'
               run: yarn outdated
 
             - name: Lint
