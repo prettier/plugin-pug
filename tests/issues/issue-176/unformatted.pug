@@ -1,0 +1,8 @@
+v-menu(offset-y)
+  template(v-slot:activator="{  on:  menu,  attrs  }")
+    v-tooltip(bottom)
+      template(v-slot:activator="{  on:  tooltip  }")
+        v-btn(v-on="{  ...tooltip ,  ...menu  }", v-bind="attrs") Button
+      span  Tooltip
+  v-list
+    //- Menu Content
