@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.13.2...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.3...main)
+
+# 1.13.3
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.2...1.13.3)
+
+- Handle `v-on` expression separately ([#176])
+
+[#176]: https://github.com/prettier/plugin-pug/issues/176
 
 # 1.13.2
 
