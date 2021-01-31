@@ -1,4 +1,4 @@
-import { ChoiceSupportOption } from 'prettier';
+import type { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
 export const PUG_CLASS_NOTATION: ChoiceSupportOption = {

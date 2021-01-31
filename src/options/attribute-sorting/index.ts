@@ -1,4 +1,4 @@
-import { ChoiceSupportOption, PathArraySupportOption } from 'prettier';
+import type { ChoiceSupportOption, PathArraySupportOption } from 'prettier';
 import { CATEGORY_PUG } from '..';
 
 const pugSortAttributesOption: PathArraySupportOption = {

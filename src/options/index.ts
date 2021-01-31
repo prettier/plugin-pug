@@ -1,23 +1,18 @@
-import { ParserOptions, SupportOptions } from 'prettier';
-import { AttributeSeparator, ATTRIBUTE_SEPARATOR_OPTION, PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
+import type { ParserOptions, SupportOptions } from 'prettier';
+import type { AttributeSeparator } from './attribute-separator';
+import { ATTRIBUTE_SEPARATOR_OPTION, PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
+import type { SortAttributes } from './attribute-sorting';
 import {
 	PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	PUG_SORT_ATTRIBUTES_END_OPTION,
-	PUG_SORT_ATTRIBUTES_OPTION,
-	SortAttributes
+	PUG_SORT_ATTRIBUTES_OPTION
 } from './attribute-sorting';
+import type { ClosingBracketPosition } from './closing-bracket-position';
+import { CLOSING_BRACKET_POSITION_OPTION, PUG_CLOSING_BRACKET_POSITION_OPTION } from './closing-bracket-position';
+import type { CommentPreserveSpaces } from './comment-preserve-spaces';
+import { COMMENT_PRESERVE_SPACES_OPTION, PUG_COMMENT_PRESERVE_SPACES_OPTION } from './comment-preserve-spaces';
+import type { ArrowParens } from './common';
 import {
-	ClosingBracketPosition,
-	CLOSING_BRACKET_POSITION_OPTION,
-	PUG_CLOSING_BRACKET_POSITION_OPTION
-} from './closing-bracket-position';
-import {
-	CommentPreserveSpaces,
-	COMMENT_PRESERVE_SPACES_OPTION,
-	PUG_COMMENT_PRESERVE_SPACES_OPTION
-} from './comment-preserve-spaces';
-import {
-	ArrowParens,
 	PUG_ARROW_PARENS_OPTION,
 	PUG_BRACKET_SPACING_OPTION,
 	PUG_PRINT_WIDTH_OPTION,
@@ -26,14 +21,12 @@ import {
 	PUG_TAB_WIDTH_OPTION,
 	PUG_USE_TABS_OPTION
 } from './common';
-import {
-	PugEmptyAttributes,
-	PugEmptyAttributesForceQuotes,
-	PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION,
-	PUG_EMPTY_ATTRIBUTES_OPTION
-} from './empty-attributes';
-import { PugClassNotation, PUG_CLASS_NOTATION } from './pug-class-notation';
-import { PugIdNotation, PUG_ID_NOTATION } from './pug-id-notation';
+import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './empty-attributes';
+import { PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION, PUG_EMPTY_ATTRIBUTES_OPTION } from './empty-attributes';
+import type { PugClassNotation } from './pug-class-notation';
+import { PUG_CLASS_NOTATION } from './pug-class-notation';
+import type { PugIdNotation } from './pug-id-notation';
+import { PUG_ID_NOTATION } from './pug-id-notation';
 import { PUG_SINGLE_FILE_COMPONENT_INDENTATION } from './pug-single-file-component-indentation';
 import { WRAP_ATTRIBUTES_PATTERN, WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes';
 

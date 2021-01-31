@@ -1,4 +1,4 @@
-import {
+import type {
 	Doc,
 	FastPath,
 	Options,
@@ -10,12 +10,14 @@ import {
 	SupportLanguage,
 	SupportOptions
 } from 'prettier';
+import type { Token } from 'pug-lexer';
 import * as lex from 'pug-lexer';
-import { Token } from 'pug-lexer';
 import { createLogger, Logger, LogLevel } from './logger';
-import { options as pugOptions, PugParserOptions } from './options';
+import type { PugParserOptions } from './options';
+import { options as pugOptions } from './options';
 import { convergeOptions } from './options/converge';
-import { PugPrinter, PugPrinterOptions } from './printer';
+import type { PugPrinterOptions } from './printer';
+import { PugPrinter } from './printer';
 
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {

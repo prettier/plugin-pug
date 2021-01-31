@@ -1,4 +1,4 @@
-import { BooleanSupportOption } from 'prettier';
+import type { BooleanSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
 export const PUG_SINGLE_FILE_COMPONENT_INDENTATION: BooleanSupportOption = {

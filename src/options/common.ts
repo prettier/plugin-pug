@@ -1,4 +1,4 @@
-import { ChoiceSupportOption, IntSupportOption } from 'prettier';
+import type { ChoiceSupportOption, IntSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
 export const PUG_PRINT_WIDTH_OPTION: IntSupportOption = {

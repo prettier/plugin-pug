@@ -1,4 +1,4 @@
-import { ChoiceSupportOption } from 'prettier';
+import type { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
 export const COMMENT_PRESERVE_SPACES_OPTION: ChoiceSupportOption<CommentPreserveSpaces> = {

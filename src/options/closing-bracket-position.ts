@@ -1,4 +1,4 @@
-import { ChoiceSupportOption } from 'prettier';
+import type { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
 export const CLOSING_BRACKET_POSITION_OPTION: ChoiceSupportOption<ClosingBracketPosition> = {

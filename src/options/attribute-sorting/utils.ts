@@ -1,5 +1,5 @@
-import { AttributeToken } from 'pug-lexer';
-import { SortAttributes } from './index';
+import type { AttributeToken } from 'pug-lexer';
+import type { SortAttributes } from './index';
 
 type CompareResult = -1 | 0 | 1;
 type CompareFunction<T> = (a: T, b: T) => CompareResult;

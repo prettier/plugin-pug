@@ -1,5 +1,6 @@
-import { BuiltInParserName, format, RequiredOptions } from 'prettier';
-import {
+import type { BuiltInParserName, RequiredOptions } from 'prettier';
+import { format } from 'prettier';
+import type {
 	AndAttributesToken,
 	AttributeToken,
 	BlockcodeToken,
@@ -48,18 +49,23 @@ import {
 	YieldToken
 } from 'pug-lexer';
 import { types } from 'util';
-import { DoctypeShortcut, DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
-import { createLogger, Logger, LogLevel } from './logger';
-import { AttributeSeparator, resolveAttributeSeparatorOption } from './options/attribute-separator';
-import { SortAttributes } from './options/attribute-sorting';
+import type { DoctypeShortcut } from './doctype-shortcut-registry';
+import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
+import type { Logger } from './logger';
+import { createLogger, LogLevel } from './logger';
+import type { AttributeSeparator } from './options/attribute-separator';
+import { resolveAttributeSeparatorOption } from './options/attribute-separator';
+import type { SortAttributes } from './options/attribute-sorting';
 import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
-import { ClosingBracketPosition, resolveClosingBracketPositionOption } from './options/closing-bracket-position';
-import { CommentPreserveSpaces, formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
-import { ArrowParens } from './options/common';
-import { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
+import type { ClosingBracketPosition } from './options/closing-bracket-position';
+import { resolveClosingBracketPositionOption } from './options/closing-bracket-position';
+import type { CommentPreserveSpaces } from './options/comment-preserve-spaces';
+import { formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
+import type { ArrowParens } from './options/common';
+import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
 import { formatEmptyAttribute } from './options/empty-attributes/utils';
-import { PugClassNotation } from './options/pug-class-notation';
-import { PugIdNotation } from './options/pug-id-notation';
+import type { PugClassNotation } from './options/pug-class-notation';
+import type { PugIdNotation } from './options/pug-id-notation';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
 	handleBracketSpacing,
