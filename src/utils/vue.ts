@@ -12,7 +12,7 @@
  *
  * ---
  *
- * Checks for: `v-on`.
+ * Checks for: `v-on:`.
  *
  * Also shorthands like `@*` are checked.
  *
@@ -21,7 +21,7 @@
  * @param name Name of tag attribute
  */
 export function isVueEventBinding(name: string): boolean {
-	return /^(v-on|@).*/.test(name);
+	return /^(v-on:|@).*/.test(name);
 }
 
 /**
@@ -74,4 +74,28 @@ export function isVueExpression(name: string): boolean {
  */
 export function isVueVForWithOf(name: string, val: string): boolean {
 	return 'v-for' === name && val.includes('of');
+}
+
+/**
+ * Indicates whether the attribute name is a Vue v-on
+ *
+ * ---
+ *
+ * Example expression:
+ * ```
+ * v-btn(v-on="on")
+ * ```
+ *
+ * In this case `name` is `v-on`
+ *
+ * ---
+ *
+ * Checks for: `v-on`.
+ *
+ * ---
+ *
+ * @param name Name of tag attribute
+ */
+export function isVueVOnExpression(name: string): boolean {
+	return 'v-on' === name;
 }

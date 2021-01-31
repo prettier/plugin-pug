@@ -71,7 +71,7 @@ import {
 	previousTagToken,
 	unwrapLineFeeds
 } from './utils/common';
-import { isVueEventBinding, isVueExpression, isVueVForWithOf } from './utils/vue';
+import { isVueEventBinding, isVueExpression, isVueVForWithOf, isVueVOnExpression } from './utils/vue';
 
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {
@@ -117,6 +117,7 @@ type FormatDelegatePrettierSupportedParser =
 	| 'vue'
 	| '__vue_event_binding'
 	| '__vue_expression'
+	| '__js_expression'
 	| '__ng_binding'
 	| '__ng_action'
 	| '__ng_directive';
@@ -722,6 +723,8 @@ export class PugPrinter {
 				val = this.formatVueExpression(val);
 			} else if (isVueEventBinding(token.name)) {
 				val = this.formatVueEventBinding(val);
+			} else if (isVueVOnExpression(token.name)) {
+				val = this.formatDelegatePrettier(val, '__js_expression');
 			} else if (isAngularBinding(token.name)) {
 				val = this.formatAngularBinding(val);
 			} else if (isAngularAction(token.name)) {
