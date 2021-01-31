@@ -160,6 +160,9 @@ export class PugPrinter {
 	private possibleClassPosition: number = 0;
 
 	private previousAttributeRemapped: boolean = false;
+	/**
+	 * Specifies whether attributes should be wrapped in a tag or not
+	 */
 	private wrapAttributes: boolean = false;
 
 	private pipelessText: boolean = false;

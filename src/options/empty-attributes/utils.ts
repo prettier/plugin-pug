@@ -3,6 +3,13 @@ import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from '.';
 
 const EMPTY_VALUES: [boolean, string, string] = [true, '""', "''"];
 
+/**
+ * Formats the token's `val` if it's empty, based on the `pugEmptyAttributes` option
+ *
+ * @param token The attribute token
+ * @param pugEmptyAttributes The option
+ * @param pugEmptyAttributesForceQuotes Array with string-patterns for attribute names that needs empty quotes
+ */
 export function formatEmptyAttribute(
 	token: AttributeToken,
 	pugEmptyAttributes: PugEmptyAttributes,

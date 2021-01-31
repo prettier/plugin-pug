@@ -13,6 +13,12 @@ export function previousTagToken(tokens: ReadonlyArray<Token>, index: number): T
 	return;
 }
 
+/**
+ * Returns the previous attribute token between the current token and the last occurrence of a `start-attributes` token
+ *
+ * @param tokens A reference to the whole token array
+ * @param index The current index on which the cursor is in the token array
+ */
 export function previousNormalAttributeToken(tokens: ReadonlyArray<Token>, index: number): AttributeToken | undefined {
 	for (let i: number = index - 1; i > 0; i--) {
 		const token: Token | undefined = tokens[i];
