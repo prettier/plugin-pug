@@ -154,16 +154,16 @@ But there are workarounds for it. These generate even better pug code!
 [Issue 53](https://github.com/prettier/plugin-pug/issues/53)
 
 ```pug
-input(onClick="methodname(\"" + variable + "\", this)")
+input(onClick="methodName(\"" + variable + "\", this)")
 // transforms to
-input(onClick="methodname(\"\" + variable + \"\", this)")
+input(onClick="methodName(\"\" + variable + \"\", this)")
 
 // In most cases ES6 template strings are a good solution
-input(onClick=`methodname("${variable}", this)`)
+input(onClick=`methodName("${variable}", this)`)
 ```
 
 As mentioned in [pugjs.org Attribute Interpolation](https://pugjs.org/language/attributes.html#attribute-interpolation) (2.),
-you should prefere ES2015 template strings to simplify your attributes.
+you should prefer ES2015 template strings to simplify your attributes.
 
 [Issue 54](https://github.com/prettier/plugin-pug/issues/54)
 
@@ -171,12 +171,12 @@ you should prefere ES2015 template strings to simplify your attributes.
 - const id = 42
 - const collapsed = true
 
-div(id=id, class='collapse' + (collapsed ? '' : ' show') + ' cardcontent')
+div(id=id, class='collapse' + (collapsed ? '' : ' show') + ' card-content')
 // transforms to
-.cardcontent(id=id, class="collapse' + (collapsed ? '' : ' show') + '")
+.card-content(id=id, class="collapse' + (collapsed ? '' : ' show') + '")
 
 // better write
-.cardcontent.collapse(id=id, class=collapsed ? '' : 'show')
+.card-content.collapse(id=id, class=collapsed ? '' : 'show')
 // Now your js logic is extracted from the plain logic
 ```
 
@@ -222,7 +222,7 @@ To run `@prettier/plugin-pug` locally:
 ## Credits
 
 This project was inspired by https://github.com/gicentre/prettier-plugin-elm.  
-Many thanks also to [@j-f1](https://github.com/j-f1), [@lipis](https://github.com/lipis) and [@azz](https://github.com/azz) for the help in transferring this repos to the prettier orga.
+Many thanks also to [@j-f1](https://github.com/j-f1), [@lipis](https://github.com/lipis) and [@azz](https://github.com/azz) for the help in transferring this repository to the prettier organization.
 
 Thanks to [@Peilonrayz](https://github.com/Peilonrayz), who gave me the [idea](https://codereview.stackexchange.com/a/236031/128216) to rewrite the printer into a [class](https://github.com/prettier/plugin-pug/commit/a6e3a4b776ce67f0d5d763aaf1f88c0c860c6ed3) and thus make the code a lot more maintainable.
 

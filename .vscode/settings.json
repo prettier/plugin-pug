@@ -1,5 +1,28 @@
 {
-	"cSpell.words": ["blockcode", "codemirror", "endregion", "outdent", "pipeless", "Quadflieg"],
+	"cSpell.words": [
+		"Peilonrayz",
+		"Prettier's",
+		"Quadflieg",
+		"Skya",
+		"blockcode",
+		"codemirror",
+		"endregion",
+		"frameset",
+		"lehni",
+		"linebreak",
+		"lipis",
+		"multiline",
+		"multilines",
+		"nobr",
+		"outdent",
+		"parens",
+		"pipeless",
+		"prettierrc",
+		"pugjs",
+		"readonly",
+		"rvalue",
+		"typeof"
+	],
 	"eslint.validate": ["javascript", "typescript"],
 	"typescript.tsdk": "node_modules/typescript/lib"
 }
