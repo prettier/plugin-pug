@@ -1,5 +1,5 @@
 /**
- * Indicates whether the attribute name is an Angular binding
+ * Indicates whether the attribute name is an Angular binding.
  *
  * ---
  *
@@ -8,18 +8,19 @@
  * button([disabled]="isUnchanged") Save
  * ```
  *
- * In this case `name` is `[disabled]`
+ * In this case `name` is `[disabled]`.
  *
  * ---
  *
- * @param name Name of tag attribute
+ * @param name Name of tag attribute.
+ * @returns `true` if `name` passes the angular binding check, otherwise `false`.
  */
 export function isAngularBinding(name: string): boolean {
 	return name.length >= 3 && name[0] === '[' && name[name.length - 1] === ']';
 }
 
 /**
- * Indicates whether the attribute name is an Angular event
+ * Indicates whether the attribute name is an Angular event.
  *
  * ---
  *
@@ -28,18 +29,19 @@ export function isAngularBinding(name: string): boolean {
  * button((click)="onClickMe()") Click me!
  * ```
  *
- * In this case `name` is `(click)`
+ * In this case `name` is `(click)`.
  *
  * ---
  *
- * @param name Name of tag attribute
+ * @param name Name of tag attribute.
+ * @returns `true` if `name` passes the angular action check, otherwise `false`.
  */
 export function isAngularAction(name: string): boolean {
 	return name.length >= 3 && name[0] === '(' && name[name.length - 1] === ')';
 }
 
 /**
- * Indicates whether the attribute name is an Angular directive
+ * Indicates whether the attribute name is an Angular directive.
  *
  * ---
  *
@@ -48,18 +50,19 @@ export function isAngularAction(name: string): boolean {
  * li(*ngFor="let customer of customers") {{ customer.name }}
  * ```
  *
- * In this case `name` is `*ngFor`
+ * In this case `name` is `*ngFor`.
  *
  * ---
  *
- * @param name Name of tag attribute
+ * @param name Name of tag attribute.
+ * @returns `true` if `name` passes the angular directive check, otherwise `false`.
  */
 export function isAngularDirective(name: string): boolean {
 	return name.length >= 2 && name[0] === '*';
 }
 
 /**
- * Indicates whether the attribute value is an Angular interpolation
+ * Indicates whether the attribute value is an Angular interpolation.
  *
  * ---
  *
@@ -68,11 +71,12 @@ export function isAngularDirective(name: string): boolean {
  * img(src="{{ itemImageUrl }}")
  * ```
  *
- * In this case `val` is `"{{ itemImageUrl }}"`
+ * In this case `val` is `"{{ itemImageUrl }}"`.
  *
  * ---
  *
- * @param name Name of tag attribute
+ * @param val Value of tag attribute.
+ * @returns `true` if `val` passes the angular interpolation check, otherwise `false`.
  */
 export function isAngularInterpolation(val: string): boolean {
 	return (

@@ -10,16 +10,19 @@ const pugSortAttributesOption: PathArraySupportOption = {
 	description: ''
 };
 
+/** Pug sort attributes beginning option. */
 export const PUG_SORT_ATTRIBUTES_BEGINNING_OPTION: PathArraySupportOption = {
 	...pugSortAttributesOption,
 	description: 'Define a list of patterns for attributes that are sorted to the beginning.'
 };
 
+/** Pug sort attributes end option. */
 export const PUG_SORT_ATTRIBUTES_END_OPTION: PathArraySupportOption = {
 	...pugSortAttributesOption,
 	description: 'Define a list of patterns for attributes that are sorted at the end.'
 };
 
+/** Pug sort attributes option. */
 export const PUG_SORT_ATTRIBUTES_OPTION: ChoiceSupportOption<SortAttributes> = {
 	since: '1.8.0',
 	category: CATEGORY_PUG,
@@ -33,4 +36,5 @@ export const PUG_SORT_ATTRIBUTES_OPTION: ChoiceSupportOption<SortAttributes> = {
 	]
 };
 
+/** Sort attributes. */
 export type SortAttributes = 'asc' | 'desc' | 'as-is';

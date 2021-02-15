@@ -24,11 +24,13 @@ if (process.env.NODE_ENV === 'test') {
 	logger.setLogLevel(LogLevel.DEBUG);
 }
 
+/** Fast path stack entry. */
 type FastPathStackEntry = {
 	content: string;
 	tokens: Token[];
 };
 
+/** The plugin object that is picked up by prettier. */
 export const plugin: Plugin = {
 	languages: [
 		{
@@ -43,6 +45,7 @@ export const plugin: Plugin = {
 			vscodeLanguageIds: ['jade', 'pug']
 		}
 	],
+	/* eslint-disable jsdoc/require-jsdoc */
 	parsers: {
 		pug: {
 			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): FastPathStackEntry {
@@ -105,12 +108,18 @@ export const plugin: Plugin = {
 			}
 		}
 	},
+	/* eslint-enable jsdoc/require-jsdoc */
 	options: pugOptions,
 	defaultOptions: {}
 };
 
+/** The languages that are picked up by prettier. */
 export const languages: SupportLanguage[] | undefined = plugin.languages;
+/** The parsers object that is picked up by prettier. */
 export const parsers: { [parserName: string]: Parser } | undefined = plugin.parsers;
+/** The printers object that is picked up by prettier. */
 export const printers: { [astFormat: string]: Printer } | undefined = plugin.printers;
+/** The options object that is picked up by prettier. */
 export const options: SupportOptions | undefined = plugin.options;
+/** The default options object that is picked up by prettier. */
 export const defaultOptions: Partial<RequiredOptions> | undefined = plugin.defaultOptions;

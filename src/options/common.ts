@@ -1,6 +1,7 @@
 import type { ChoiceSupportOption, IntSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
+/** Pug print width option. */
 export const PUG_PRINT_WIDTH_OPTION: IntSupportOption = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
@@ -10,6 +11,7 @@ export const PUG_PRINT_WIDTH_OPTION: IntSupportOption = {
 	range: { start: -1, end: Infinity, step: 1 }
 };
 
+/** Pug single quote option. */
 export const PUG_SINGLE_QUOTE_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
@@ -37,6 +39,7 @@ export const PUG_SINGLE_QUOTE_OPTION: ChoiceSupportOption<boolean | 'true' | nul
 	]
 };
 
+/** Pug tab width option. */
 export const PUG_TAB_WIDTH_OPTION: IntSupportOption = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
@@ -46,6 +49,7 @@ export const PUG_TAB_WIDTH_OPTION: IntSupportOption = {
 	range: { start: -1, end: Infinity, step: 1 }
 };
 
+/** Pug use tabs option. */
 export const PUG_USE_TABS_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
@@ -73,6 +77,7 @@ export const PUG_USE_TABS_OPTION: ChoiceSupportOption<boolean | 'true' | null> =
 	]
 };
 
+/** Pug bracket spacing option. */
 export const PUG_BRACKET_SPACING_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
@@ -100,6 +105,7 @@ export const PUG_BRACKET_SPACING_OPTION: ChoiceSupportOption<boolean | 'true' | 
 	]
 };
 
+/** Pug semi option. */
 export const PUG_SEMI_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
@@ -127,6 +133,7 @@ export const PUG_SEMI_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
 	]
 };
 
+/** Pug arrow parens option. */
 export const PUG_ARROW_PARENS_OPTION: ChoiceSupportOption<ArrowParens | null> = {
 	since: '1.7.0',
 	category: CATEGORY_PUG,
@@ -149,4 +156,5 @@ export const PUG_ARROW_PARENS_OPTION: ChoiceSupportOption<ArrowParens | null> = 
 	]
 };
 
+/** Arrow parens. */
 export type ArrowParens = 'avoid' | 'always';

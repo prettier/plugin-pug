@@ -1,6 +1,7 @@
 import type { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
+/** Pug class notation. */
 export const PUG_CLASS_NOTATION: ChoiceSupportOption = {
 	since: '1.13.0',
 	category: CATEGORY_PUG,
@@ -13,4 +14,5 @@ export const PUG_CLASS_NOTATION: ChoiceSupportOption = {
 	]
 };
 
+/** Pug class notation. */
 export type PugClassNotation = 'literal' | 'as-is';

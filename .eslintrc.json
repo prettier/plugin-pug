@@ -9,7 +9,8 @@
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
 		"prettier",
-		"prettier/@typescript-eslint"
+		"prettier/@typescript-eslint",
+		"plugin:jsdoc/recommended"
 	],
 	"globals": {
 		"Atomics": "readonly",
@@ -20,7 +21,7 @@
 		"project": ["./tsconfig.lint.json"],
 		"warnOnUnsupportedTypeScriptVersion": false
 	},
-	"plugins": ["@typescript-eslint", "prettier", "spellcheck"],
+	"plugins": ["@typescript-eslint", "prettier", "jsdoc", "spellcheck"],
 	"rules": {
 		"curly": ["error"],
 		"linebreak-style": ["error", "unix"],
@@ -44,6 +45,39 @@
 		"@typescript-eslint/restrict-template-expressions": "off",
 		"@typescript-eslint/typedef": ["warn", { "memberVariableDeclaration": true, "variableDeclaration": true }],
 
+		"jsdoc/match-description": [
+			"warn",
+			{
+				"mainDescription": "^([A-Z`].*(\\.|:|-{3})|-\\s.*)$",
+				"matchDescription": "^([A-Z`].*(\\.|:)|-\\s.*)$",
+				"contexts": ["any"],
+				"tags": {
+					"param": true,
+					"returns": true
+				}
+			}
+		],
+		"jsdoc/no-types": "error",
+		"jsdoc/require-jsdoc": [
+			"warn",
+			{
+				"contexts": [
+					"ClassDeclaration",
+					"ClassProperty:not([accessibility='private'])",
+					"ExportNamedDeclaration:has(VariableDeclaration)",
+					"FunctionExpression",
+					"MethodDefinition:not([accessibility='private']) > FunctionExpression",
+					"TSEnumDeclaration",
+					"TSInterfaceDeclaration",
+					"TSMethodSignature",
+					// 'TSPropertySignature',
+					"TSTypeAliasDeclaration"
+				]
+			}
+		],
+		"jsdoc/require-param-type": "off",
+		"jsdoc/require-returns-type": "off",
+
 		"spellcheck/spell-checker": [
 			"warn",
 			{
@@ -64,6 +98,7 @@
 					"func",
 					"href",
 					"javascript",
+					"jsdoc",
 					"len",
 					"lex",
 					"lex",
@@ -96,5 +131,10 @@
 				]
 			}
 		]
+	},
+	"settings": {
+		"jsdoc": {
+			"mode": "typescript"
+		}
 	}
 }

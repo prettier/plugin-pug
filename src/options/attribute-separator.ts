@@ -1,6 +1,7 @@
 import type { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
+/** Attribute separator option. */
 export const ATTRIBUTE_SEPARATOR_OPTION: ChoiceSupportOption<AttributeSeparator> = {
 	since: '1.0.0',
 	category: CATEGORY_PUG,
@@ -26,6 +27,7 @@ export const ATTRIBUTE_SEPARATOR_OPTION: ChoiceSupportOption<AttributeSeparator>
 	]
 };
 
+/** Pug attribute separator option. */
 export const PUG_ATTRIBUTE_SEPARATOR_OPTION: ChoiceSupportOption<AttributeSeparator | null> = {
 	...ATTRIBUTE_SEPARATOR_OPTION,
 	since: '1.6.0',
@@ -53,8 +55,16 @@ export const PUG_ATTRIBUTE_SEPARATOR_OPTION: ChoiceSupportOption<AttributeSepara
 	]
 };
 
+/** Attribute separator. */
 export type AttributeSeparator = 'always' | 'as-needed' | 'none';
 
+/**
+ * Checks if the given `attributeSeparator` is valid.
+ *
+ * @param attributeSeparator The attributeSeparator.
+ * @returns The given `attributeSeparator`.
+ * @throws Error if the attributeSeparator was not valid.
+ */
 export function resolveAttributeSeparatorOption(attributeSeparator: AttributeSeparator): AttributeSeparator {
 	switch (attributeSeparator) {
 		case 'always':

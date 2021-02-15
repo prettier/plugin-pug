@@ -1,6 +1,7 @@
 import type { ChoiceSupportOption, PathArraySupportOption } from 'prettier';
 import { CATEGORY_PUG } from '..';
 
+/** Pug empty attributes option. */
 export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption<PugEmptyAttributes> = {
 	since: '1.10.0',
 	category: CATEGORY_PUG,
@@ -23,6 +24,7 @@ export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption<PugEmptyAttributes
 	]
 };
 
+/** Pug empty attributes force quotes option. */
 export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION: PathArraySupportOption = {
 	since: '1.10.0',
 	category: CATEGORY_PUG,
@@ -33,5 +35,7 @@ export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION: PathArraySupportOption = 
 		'Define a list of patterns for attributes that will be forced to have empty quotes even with "none" selected.'
 };
 
+/** Pug empty attributes. */
 export type PugEmptyAttributes = 'as-is' | 'none' | 'all';
+/** Pug empty attributes force quotes. */
 export type PugEmptyAttributesForceQuotes = string[];

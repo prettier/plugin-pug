@@ -1,6 +1,7 @@
 import type { IntSupportOption, PathSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
+/** Wrap attributes threshold. */
 export const WRAP_ATTRIBUTES_THRESHOLD: IntSupportOption = {
 	since: '1.8.0',
 	category: CATEGORY_PUG,
@@ -10,6 +11,7 @@ export const WRAP_ATTRIBUTES_THRESHOLD: IntSupportOption = {
 	range: { start: -1, end: Infinity, step: 1 }
 };
 
+/** Wrap attributes pattern. */
 export const WRAP_ATTRIBUTES_PATTERN: PathSupportOption = {
 	since: '1.8.0',
 	category: CATEGORY_PUG,

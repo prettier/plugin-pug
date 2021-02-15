@@ -1,6 +1,7 @@
 import type { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
+/** Closing bracket position option. */
 export const CLOSING_BRACKET_POSITION_OPTION: ChoiceSupportOption<ClosingBracketPosition> = {
 	since: '1.3.0',
 	category: CATEGORY_PUG,
@@ -38,6 +39,7 @@ export const CLOSING_BRACKET_POSITION_OPTION: ChoiceSupportOption<ClosingBracket
 	]
 };
 
+/** Pug closing bracket position option. */
 export const PUG_CLOSING_BRACKET_POSITION_OPTION: ChoiceSupportOption<ClosingBracketPosition | null> = {
 	...CLOSING_BRACKET_POSITION_OPTION,
 	since: '1.6.0',
@@ -77,8 +79,16 @@ export const PUG_CLOSING_BRACKET_POSITION_OPTION: ChoiceSupportOption<ClosingBra
 	]
 };
 
+/** Closing bracket position. */
 export type ClosingBracketPosition = 'new-line' | 'last-line';
 
+/**
+ * Checks if the given `closingBracketPosition` is valid.
+ *
+ * @param closingBracketPosition The closingBracketPosition.
+ * @returns `true` if closingBracketPosition was `'new-line'` or `false` if it was `'last-line'`.
+ * @throws Error if the closingBracketPosition was not valid.
+ */
 export function resolveClosingBracketPositionOption(closingBracketPosition: ClosingBracketPosition): boolean {
 	switch (closingBracketPosition) {
 		case 'new-line':

@@ -1,3 +1,4 @@
+/** Doctype shortcut. */
 export type DoctypeShortcut =
 	| 'doctype html'
 	| 'doctype xml'
@@ -9,6 +10,7 @@ export type DoctypeShortcut =
 	| 'doctype mobile'
 	| 'doctype plist';
 
+/** Doctype shortcut registry. */
 // eslint-disable-next-line @typescript-eslint/typedef
 export const DOCTYPE_SHORTCUT_REGISTRY = {
 	'<!doctype html>': 'doctype html',

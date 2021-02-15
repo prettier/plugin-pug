@@ -1,6 +1,7 @@
 import type { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
+/** Comment preserve spaces option. */
 export const COMMENT_PRESERVE_SPACES_OPTION: ChoiceSupportOption<CommentPreserveSpaces> = {
 	since: '1.1.0',
 	category: CATEGORY_PUG,
@@ -23,6 +24,7 @@ export const COMMENT_PRESERVE_SPACES_OPTION: ChoiceSupportOption<CommentPreserve
 	]
 };
 
+/** Pug comment preserve spaces option. */
 export const PUG_COMMENT_PRESERVE_SPACES_OPTION: ChoiceSupportOption<CommentPreserveSpaces | null> = {
 	...COMMENT_PRESERVE_SPACES_OPTION,
 	since: '1.6.0',
@@ -47,8 +49,17 @@ export const PUG_COMMENT_PRESERVE_SPACES_OPTION: ChoiceSupportOption<CommentPres
 	]
 };
 
+/** Comment preserve spaces. */
 export type CommentPreserveSpaces = 'keep-all' | 'keep-leading' | 'trim-all';
 
+/**
+ * Format comment with the given settings.
+ *
+ * @param input The comment.
+ * @param commentPreserveSpaces How to preserve spaces in the comment.
+ * @param pipeless Whether it's a pipeless comment ot not. Default: `false`.
+ * @returns The formatted comment.
+ */
 export function formatCommentPreserveSpaces(
 	input: string,
 	commentPreserveSpaces: CommentPreserveSpaces,

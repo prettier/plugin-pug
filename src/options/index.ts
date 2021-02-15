@@ -31,7 +31,7 @@ import { PUG_SINGLE_FILE_COMPONENT_INDENTATION } from './pug-single-file-compone
 import { WRAP_ATTRIBUTES_PATTERN, WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes';
 
 /**
- * Category for Prettier's CLI
+ * Category for Prettier's CLI.
  */
 export const CATEGORY_PUG: string = 'Pug';
 
@@ -78,6 +78,9 @@ export interface PugParserOptions
 	pugSingleFileComponentIndentation: boolean;
 }
 
+/**
+ * All supported options by `@prettier/plugin-pug`.
+ */
 export const options: SupportOptions = {
 	pugPrintWidth: PUG_PRINT_WIDTH_OPTION,
 	pugSingleQuote: PUG_SINGLE_QUOTE_OPTION,

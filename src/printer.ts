@@ -84,6 +84,9 @@ if (process.env.NODE_ENV === 'test') {
 	logger.setLogLevel(LogLevel.DEBUG);
 }
 
+/**
+ * Options for `@prettier/plugin-pug`.
+ */
 export interface PugPrinterOptions {
 	readonly printWidth: number;
 	readonly pugPrintWidth: number;
@@ -114,10 +117,16 @@ export interface PugPrinterOptions {
 	readonly pugSingleFileComponentIndentation: boolean;
 }
 
+/**
+ * Format delegate Prettier options.
+ */
 interface FormatDelegatePrettierOptions {
 	trimTrailingSemicolon?: boolean;
 }
 
+/**
+ * Supported parsers for the `formatDelegatePrettier` function.
+ */
 type FormatDelegatePrettierSupportedParser =
 	| 'css'
 	| 'vue'
@@ -128,11 +137,14 @@ type FormatDelegatePrettierSupportedParser =
 	| '__ng_action'
 	| '__ng_directive';
 
+/**
+ * The printer class.
+ */
 export class PugPrinter {
 	private result: string = '';
 
 	/**
-	 * The index of the current token inside the `tokens` array
+	 * The index of the current token inside the `tokens` array.
 	 */
 	// Start at -1, because `getNextToken()` increases it before retrieval
 	private currentIndex: number = -1;
@@ -161,7 +173,7 @@ export class PugPrinter {
 
 	private previousAttributeRemapped: boolean = false;
 	/**
-	 * Specifies whether attributes should be wrapped in a tag or not
+	 * Specifies whether attributes should be wrapped in a tag or not.
 	 */
 	private wrapAttributes: boolean = false;
 
@@ -169,6 +181,13 @@ export class PugPrinter {
 	private pipelessComment: boolean = false;
 	private currentlyInPugInterpolation: boolean = false;
 
+	/**
+	 * Constructs a new pug printer.
+	 *
+	 * @param content The pug content string.
+	 * @param tokens The pug token array.
+	 * @param options Options for the printer.
+	 */
 	public constructor(
 		private readonly content: string,
 		private tokens: Token[],
@@ -201,6 +220,11 @@ export class PugPrinter {
 		};
 	}
 
+	/**
+	 * Builds the formatted pug content.
+	 *
+	 * @returns The formatted pug content.
+	 */
 	public build(): string {
 		if (logger.isDebugEnabled()) {
 			logger.debug('[PugPrinter]:', JSON.stringify(this.tokens));

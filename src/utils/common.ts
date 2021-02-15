@@ -1,5 +1,12 @@
 import type { AttributeToken, TagToken, Token } from 'pug-lexer';
 
+/**
+ * Returns the previous tag token if there was one.
+ *
+ * @param tokens The token array.
+ * @param index The current index within the token array..
+ * @returns Previous tag token if there was one.
+ */
 export function previousTagToken(tokens: ReadonlyArray<Token>, index: number): TagToken | undefined {
 	for (let i: number = index - 1; i >= 0; i--) {
 		const token: Token | undefined = tokens[i];
@@ -14,10 +21,11 @@ export function previousTagToken(tokens: ReadonlyArray<Token>, index: number): T
 }
 
 /**
- * Returns the previous attribute token between the current token and the last occurrence of a `start-attributes` token
+ * Returns the previous attribute token between the current token and the last occurrence of a `start-attributes` token.
  *
- * @param tokens A reference to the whole token array
- * @param index The current index on which the cursor is in the token array
+ * @param tokens A reference to the whole token array.
+ * @param index The current index on which the cursor is in the token array.
+ * @returns Previous attribute token if there was one.
  */
 export function previousNormalAttributeToken(tokens: ReadonlyArray<Token>, index: number): AttributeToken | undefined {
 	for (let i: number = index - 1; i > 0; i--) {
@@ -34,6 +42,12 @@ export function previousNormalAttributeToken(tokens: ReadonlyArray<Token>, index
 	return;
 }
 
+/**
+ * Unwraps line feeds from a given value.
+ *
+ * @param value The value to unwrap.
+ * @returns The unwrapped result.
+ */
 export function unwrapLineFeeds(value: string): string {
 	return value.includes('\n')
 		? value
@@ -46,7 +60,7 @@ export function unwrapLineFeeds(value: string): string {
 }
 
 /**
- * Indicates whether the attribute is a `style` normal attribute
+ * Indicates whether the attribute is a `style` normal attribute.
  *
  * ---
  *
@@ -55,19 +69,20 @@ export function unwrapLineFeeds(value: string): string {
  * span(style="color: red")
  * ```
  *
- * In this case `name` is `style` and `val` is `"color: red"`
+ * In this case `name` is `style` and `val` is `"color: red"`.
  *
  * ---
  *
- * @param name Name of tag attribute
- * @param val Value of `style` tag attribute
+ * @param name Name of tag attribute.
+ * @param val Value of `style` tag attribute.
+ * @returns Whether it's a style attribute that is quoted or not.
  */
 export function isStyleAttribute(name: string, val: string): boolean {
 	return name === 'style' && isQuoted(val);
 }
 
 /**
- * Indicates whether the value is surrounded by quotes
+ * Indicates whether the value is surrounded by quotes.
  *
  * ---
  *
@@ -76,7 +91,7 @@ export function isStyleAttribute(name: string, val: string): boolean {
  * a(href="#")
  * ```
  *
- * In this case `val` is `"#"`
+ * In this case `val` is `"#"`.
  *
  * ---
  *
@@ -85,7 +100,7 @@ export function isStyleAttribute(name: string, val: string): boolean {
  * a(href='#')
  * ```
  *
- * In this case `val` is `'#'`
+ * In this case `val` is `'#'`.
  *
  * ---
  *
@@ -95,31 +110,47 @@ export function isStyleAttribute(name: string, val: string): boolean {
  * a(href=route)
  * ```
  *
- * In this case `val` is `route`
+ * In this case `val` is `route`.
  *
  * ---
  *
- * @param val Value of tag attribute
+ * @param val Value of tag attribute.
+ * @returns Whether the value is quoted or not.
  */
 export function isQuoted(val: string): boolean {
 	return /^["'](.*)["']$/.test(val);
 }
 
+/**
+ * Detects whether the given value is a multiline interpolation or not.
+ *
+ * @param val The value to check.
+ * @returns `true` if it's a multiline interpolation, otherwise `false`.
+ */
 export function isMultilineInterpolation(val: string): boolean {
 	return /^`[\s\S]*`$/m.test(val) && val.includes('\n');
 }
 
 /**
- * Encloses code in brackets and possibly spaces
+ * Encloses code in brackets and possibly spaces.
  *
- * @param bracketSpacing Specifies whether or not to insert spaces before and after the code
- * @param code Code that is enclosed in brackets
+ * @param bracketSpacing Specifies whether or not to insert spaces before and after the code.
+ * @param code Code that is enclosed in brackets.
+ * @returns The handled string.
  */
 export function handleBracketSpacing(bracketSpacing: boolean, code: string): string {
 	return bracketSpacing ? `{{ ${code} }}` : `{{${code}}}`;
 }
 
-// Copy of https://github.com/prettier/prettier/blob/master/src/common/util.js#L647
+/**
+ * Bakes a string.
+ *
+ * @param rawContent The raw string.
+ * @param enclosingQuote Enclosing quote.
+ * @param unescapeUnnecessaryEscapes Whether to unescape unnecessary escapes or not. Default: `false`.
+ * @returns The baked string.
+ * @see [copied from Prettier common util](https://github.com/prettier/prettier/blob/master/src/common/util.js#L647)
+ */
 export function makeString(
 	rawContent: string,
 	enclosingQuote: "'" | '"',

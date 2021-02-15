@@ -1,5 +1,5 @@
 /**
- * Indicates whether the attribute name is a Vue event binding
+ * Indicates whether the attribute name is a Vue event binding.
  *
  * ---
  *
@@ -8,7 +8,7 @@
  * v-btn(@click="doSomething") Do Something
  * ```
  *
- * In this case `name` is `@click`
+ * In this case `name` is `@click`.
  *
  * ---
  *
@@ -18,14 +18,15 @@
  *
  * ---
  *
- * @param name Name of tag attribute
+ * @param name Name of tag attribute.
+ * @returns `true` if `name` passes the vue event binding check, otherwise `false`.
  */
 export function isVueEventBinding(name: string): boolean {
 	return /^(v-on:|@).*/.test(name);
 }
 
 /**
- * Indicates whether the attribute name is a Vue expression
+ * Indicates whether the attribute name is a Vue expression.
  *
  * ---
  *
@@ -34,7 +35,7 @@ export function isVueEventBinding(name: string): boolean {
  * v-text-field(v-model="value", :label="label") Do Something
  * ```
  *
- * In this case `name` is `v-model` and `:label`
+ * In this case `name` is `v-model` and `:label`.
  *
  * ---
  *
@@ -45,14 +46,15 @@ export function isVueEventBinding(name: string): boolean {
  *
  * ---
  *
- * @param name Name of tag attribute
+ * @param name Name of tag attribute.
+ * @returns `true` if `name` passes the vue expression check, otherwise `false`.
  */
 export function isVueExpression(name: string): boolean {
 	return /^((v-(bind|slot))?:|v-(model|if|for|else-if|text|html)).*/.test(name);
 }
 
 /**
- * Indicates whether the attribute name is a Vue v-for and includes a `of`
+ * Indicates whether the attribute name is a Vue v-for and includes a `of`.
  *
  * ---
  *
@@ -61,7 +63,7 @@ export function isVueExpression(name: string): boolean {
  * tr(v-for="item of items", :key="item.id")
  * ```
  *
- * In this case `name` is `v-for` and it includes a `of`
+ * In this case `name` is `v-for` and it includes a `of`.
  *
  * ---
  *
@@ -69,15 +71,16 @@ export function isVueExpression(name: string): boolean {
  *
  * ---
  *
- * @param name Name of tag attribute
- * @param val Value of tag attribute
+ * @param name Name of tag attribute.
+ * @param val Value of tag attribute.
+ * @returns `true` if `name` and `val` passes the vue `v-for` with `of` check, otherwise `false`.
  */
 export function isVueVForWithOf(name: string, val: string): boolean {
 	return 'v-for' === name && val.includes('of');
 }
 
 /**
- * Indicates whether the attribute name is a Vue v-on
+ * Indicates whether the attribute name is a Vue v-on.
  *
  * ---
  *
@@ -86,7 +89,7 @@ export function isVueVForWithOf(name: string, val: string): boolean {
  * v-btn(v-on="on")
  * ```
  *
- * In this case `name` is `v-on`
+ * In this case `name` is `v-on`.
  *
  * ---
  *
@@ -94,7 +97,8 @@ export function isVueVForWithOf(name: string, val: string): boolean {
  *
  * ---
  *
- * @param name Name of tag attribute
+ * @param name Name of tag attribute.
+ * @returns `true` if `name` passes the vue `v-on` check, otherwise `false`.
  */
 export function isVueVOnExpression(name: string): boolean {
 	return 'v-on' === name;

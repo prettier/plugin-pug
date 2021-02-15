@@ -1,9 +1,21 @@
 import type { AttributeToken } from 'pug-lexer';
 import type { SortAttributes } from './index';
 
+/** Compare result. */
 type CompareResult = -1 | 0 | 1;
+/** Compare function. */
 type CompareFunction<T> = (a: T, b: T) => CompareResult;
 
+/**
+ * Compare two attributes with each other.
+ *
+ * @param a An attribute token.
+ * @param b An attribute token.
+ * @param sortAttributes How to sort attributes.
+ * @param sortAttributesBeginning Attributes that should sorted to the beginning.
+ * @param sortAttributesEnd Attributes that should sorted to the end.
+ * @returns The compare result.
+ */
 export function compareAttributeToken(
 	a: AttributeToken,
 	b: AttributeToken,
@@ -63,6 +75,13 @@ export function compareAttributeToken(
 	return 0;
 }
 
+/**
+ * Sort an array with a given compare function.
+ *
+ * @param array The array to sort.
+ * @param compare A function for comparing the values.
+ * @returns The sorted array.
+ */
 export function stableSort<T>(array: readonly T[], compare: CompareFunction<T>): T[] {
 	const entries: Array<[T, number]> = array.map((value, index) => [value, index]);
 	entries.sort((a, b) => {
@@ -73,6 +92,15 @@ export function stableSort<T>(array: readonly T[], compare: CompareFunction<T>):
 	return entries.map(([value]) => value);
 }
 
+/**
+ * Partially sorts an array.
+ *
+ * @param arr The array to sort.
+ * @param start The start from where to sort.
+ * @param end The end to where to sort.
+ * @param compareFn A function for comparing the values.
+ * @returns The sorted array.
+ */
 export function partialSort<T>(arr: readonly T[], start: number, end: number, compareFn: CompareFunction<T>): T[] {
 	const preSort: T[] = arr.slice(0, start);
 	const postSort: T[] = arr.slice(end);
