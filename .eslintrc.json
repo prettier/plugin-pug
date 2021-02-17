@@ -48,8 +48,8 @@
 		"jsdoc/match-description": [
 			"warn",
 			{
-				"mainDescription": "^([A-Z`].*(\\.|:|-{3})|-\\s.*)$",
-				"matchDescription": "^([A-Z`].*(\\.|:)|-\\s.*)$",
+				"mainDescription": "/^[A-Z`].+?(\\.|:)(\\n\\n.*((\\n{1,2}- .+)|(_.+_)|`.+`|\\n\\n---))?$/us",
+				"matchDescription": "^[A-Z`].+(\\.|`.+`)$",
 				"contexts": ["any"],
 				"tags": {
 					"param": true,
