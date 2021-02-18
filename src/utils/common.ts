@@ -118,7 +118,11 @@ export function isStyleAttribute(name: string, val: string): boolean {
  * @returns Whether the value is quoted or not.
  */
 export function isQuoted(val: string): boolean {
-	return /^["'](.*)["']$/.test(val);
+	if(/^(["'])(.*)\1$/.test(val)) {
+		const regex : RegExp = new RegExp(`${val[0]}(?<!\\\\${val[0]})`);
+		return !regex.test(val.slice(1, -1));
+	}
+	return false;
 }
 
 /**
