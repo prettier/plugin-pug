@@ -113,13 +113,24 @@ export function isStyleAttribute(name: string, val: string): boolean {
  * In this case `val` is `route`.
  *
  * ---
+ * 
+ * Special cases:
+ * ```
+ * a(href='/' + '#')
+ * a(href="/" + "#")
+ * ```
+ * 
+ * These cases should not be treated as quoted.
+ * 
+ * ---
  *
  * @param val Value of tag attribute.
  * @returns Whether the value is quoted or not.
  */
 export function isQuoted(val: string): boolean {
 	if(/^(["'])(.*)\1$/.test(val)) {
-		const regex : RegExp = new RegExp(`${val[0]}(?<!\\\\${val[0]})`);
+		// Regex for Checking if there are any unescaped quotations.
+		const regex: RegExp = new RegExp(`${val[0]}(?<!\\\\${val[0]})`);
 		return !regex.test(val.slice(1, -1));
 	}
 	return false;

@@ -144,41 +144,12 @@ These additional options are specific to pug templates and can be configured in 
 | `pugClassNotation`                                     | choice  | `'literal'`  | Define how classes should be formatted.<ul><li>`'literal'` -> Forces all valid classes to be printed as literals.<br>Example: `foo.bar.baz`</li><li>~`'attribute'` -> Forces all classes to be printed as attributes.~ _this option is [still in progress](https://github.com/prettier/plugin-pug/issues/167)_<br>Example: `foo(class="bar baz")`</li><li>`'as-is'` -> Disables class formatting.<br>Example: `foo.bar(class="baz")`</li></ul>                                                                                                                                                                                                                                                                                                                                    |
 | `pugIdNotation`                                        | choice  | `'literal'`  | Define how ids should be formatted.<ul><li>`'literal'` -> Forces all valid ids to be printed as literals.<br>Example: `foo#bar`</li><li>~`'attribute'` -> Forces all ids to be printed as attributes.~<br>_this option is [still in progress](https://github.com/prettier/plugin-pug/issues/167)_<br>Example: `foo(id="bar")`</li><li>`'as-is'` -> Disables id formatting.<br>Example: `foo(id="bar")`</li></ul>                                                                                                                                                                                                                                                                                                                                                                  |
 
-## Workarounds / Known Issues
+## Workaround / Known Issue
 
 There are some code examples that are not formatted well with this plugin and can damage your code.  
 But there are workarounds for it. These generate even better pug code!
 
-### Examples
-
-[Issue 53](https://github.com/prettier/plugin-pug/issues/53)
-
-```pug
-input(onClick="methodName(\"" + variable + "\", this)")
-// transforms to
-input(onClick="methodName(\"\" + variable + \"\", this)")
-
-// In most cases ES6 template strings are a good solution
-input(onClick=`methodName("${variable}", this)`)
-```
-
-As mentioned in [pugjs.org Attribute Interpolation](https://pugjs.org/language/attributes.html#attribute-interpolation) (2.),
-you should prefer ES2015 template strings to simplify your attributes.
-
-[Issue 54](https://github.com/prettier/plugin-pug/issues/54)
-
-```pug
-- const id = 42
-- const collapsed = true
-
-div(id=id, class='collapse' + (collapsed ? '' : ' show') + ' card-content')
-// transforms to
-.card-content(id=id, class="collapse' + (collapsed ? '' : ' show') + '")
-
-// better write
-.card-content.collapse(id=id, class=collapsed ? '' : 'show')
-// Now your js logic is extracted from the plain logic
-```
+### Example
 
 [Issue 114](https://github.com/prettier/plugin-pug/issues/114)
 
