@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.13.3...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.4...main)
+
+# 1.13.4
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.3...1.13.4)
+
+- Fix attribute interpolation using quotes ([#179])
+
+[#179]: https://github.com/prettier/plugin-pug/pull/179
 
 # 1.13.3
 
