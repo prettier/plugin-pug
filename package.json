@@ -13,8 +13,9 @@
 	},
 	"keywords": [
 		"pug",
+		"prettier-plugin",
 		"prettier",
-		"prettier-plugin"
+		"formatter"
 	],
 	"author": {
 		"name": "Christopher Quadflieg",
