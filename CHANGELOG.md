@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.13.4...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.5...main)
+
+# 1.13.5
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.4...1.13.5)
+
+- Handle `v-slot` expression correctly ([#180])
+
+[#180]: https://github.com/prettier/plugin-pug/issues/180
 
 # 1.13.4
 
