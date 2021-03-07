@@ -20,7 +20,7 @@
 		"project": ["./tsconfig.lint.json"],
 		"warnOnUnsupportedTypeScriptVersion": false
 	},
-	"plugins": ["@typescript-eslint", "prettier", "jsdoc", "spellcheck"],
+	"plugins": ["@typescript-eslint", "prettier", "jsdoc", "spellcheck", "inclusive-language"],
 	"rules": {
 		"curly": ["error"],
 		"linebreak-style": ["error", "unix"],
@@ -98,6 +98,7 @@
 					"href",
 					"javascript",
 					"jsdoc",
+					"junit",
 					"len",
 					"lex",
 					"lex",
@@ -127,6 +128,24 @@
 					"vue",
 					"whitespace",
 					"xml"
+				]
+			}
+		],
+
+		"inclusive-language/use-inclusive-words": [
+			"warn",
+			{
+				"allowedTerms": [
+					{
+						"term": "/master",
+						"allowPartialMatches": true
+					}
+				],
+				"words": [
+					{
+						"word": "guys",
+						"suggestions": ["folks"]
+					}
 				]
 			}
 		]

@@ -1,5 +1,12 @@
 import { AttributeToken } from 'pug-lexer';
 
+/**
+ * Creates a fake attribute token.
+ *
+ * @param name Name of the attribute.
+ * @param val Value of the attribute. Default `'dummy'`.
+ * @returns A fake attribute token.
+ */
 export function createAttributeToken(name: string, val: string | boolean = 'dummy'): AttributeToken {
 	return {
 		name,
