@@ -1418,7 +1418,11 @@ export class PugPrinter {
 	}
 
 	private slash(token: SlashToken): string {
-		return '/';
+		let result: string = '/';
+		if (this.nextToken?.type === 'text') {
+			result += ' ';
+		}
+		return result;
 	}
 
 	//#endregion
