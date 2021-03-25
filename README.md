@@ -57,7 +57,7 @@ Simply install `prettier` and `@prettier/plugin-pug` as your project’s npm dev
 
 ```bash
 ## add Prettier and its Pug plugin to project’s dev dependencies
-npm install --dev prettier @prettier/plugin-pug
+npm install --save-dev prettier @prettier/plugin-pug
 ## or
 yarn add --dev prettier @prettier/plugin-pug
 ```
