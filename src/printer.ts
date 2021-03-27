@@ -65,6 +65,7 @@ import type { ArrowParens } from './options/common';
 import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
 import { formatEmptyAttribute } from './options/empty-attributes/utils';
 import type { PugClassNotation } from './options/pug-class-notation';
+import { PugFramework } from './options/pug-framework';
 import type { PugIdNotation } from './options/pug-id-notation';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
@@ -115,6 +116,7 @@ export interface PugPrinterOptions {
 	readonly pugEmptyAttributes: PugEmptyAttributes;
 	readonly pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 	readonly pugSingleFileComponentIndentation: boolean;
+	readonly pugFramework: PugFramework;
 }
 
 /**
@@ -367,6 +369,16 @@ export class PugPrinter {
 		}
 	}
 
+	private frameworkFormat(code: string): string {
+		switch (this.options.pugFramework) {
+			case 'vue':
+				return format(code, { parser: 'babel', ...this.codeInterpolationOptions, semi: false });
+			case 'angular':
+			default:
+				return format(code, { parser: '__ng_interpolation', ...this.codeInterpolationOptions });
+		}
+	}
+
 	private formatText(text: string): string {
 		let result: string = '';
 		while (text) {
@@ -401,7 +413,7 @@ export class PugPrinter {
 							text = text.slice(end + 2);
 							continue;
 						} else {
-							code = format(code, { parser: '__ng_interpolation', ...this.codeInterpolationOptions });
+							code = this.frameworkFormat(code);
 						}
 					} catch (error: unknown) {
 						if (typeof error === 'string') {

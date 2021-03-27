@@ -1,0 +1,23 @@
+//- Vue
+p {{ test }}
+p {{ test }} {{ test2 }}
+p {{  new Date().toISOString() }}
+p {{ Date.now()  }}
+p {{ $moment(justificative.createdAt).format('DD/MM/YYYY HH:mm:ss') }}
+
+//- No interpolation
+p {{ test
+p {{ test }} {{
+p {{ test some text
+p {{ test }} {{ some text
+
+p {{title}}
+
+foo(title="{{ 'something' | translate }} - {{ 'something else' | translate }}")
+
+// "The sum of 1 + 1 is not 4"
+p The sum of 1 + 1 is not {{1 + 1 + getVal()}}.
+
+h4 {{recommended  }}
+
+button(@click.native="x = true")
