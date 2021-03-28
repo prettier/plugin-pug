@@ -1,4 +1,4 @@
-import type { BuiltInParserName, RequiredOptions } from 'prettier';
+import type { BuiltInParserName, Options, RequiredOptions } from 'prettier';
 import { format } from 'prettier';
 import type {
 	AndAttributesToken,
@@ -65,7 +65,7 @@ import type { ArrowParens } from './options/common';
 import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
 import { formatEmptyAttribute } from './options/empty-attributes/utils';
 import type { PugClassNotation } from './options/pug-class-notation';
-import { PugFramework } from './options/pug-framework';
+import type { PugFramework } from './options/pug-framework';
 import type { PugIdNotation } from './options/pug-id-notation';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
@@ -370,13 +370,17 @@ export class PugPrinter {
 	}
 
 	private frameworkFormat(code: string): string {
+		const options: Options = { ...this.codeInterpolationOptions };
 		switch (this.options.pugFramework) {
 			case 'vue':
-				return format(code, { parser: 'babel', ...this.codeInterpolationOptions, semi: false });
+				options.parser = 'babel';
+				options.semi = false;
+				break;
 			case 'angular':
 			default:
-				return format(code, { parser: '__ng_interpolation', ...this.codeInterpolationOptions });
+				options.parser = '__ng_interpolation';
 		}
+		return format(code, options);
 	}
 
 	private formatText(text: string): string {
