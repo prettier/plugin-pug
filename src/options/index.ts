@@ -25,7 +25,8 @@ import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './empty-
 import { PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION, PUG_EMPTY_ATTRIBUTES_OPTION } from './empty-attributes';
 import type { PugClassNotation } from './pug-class-notation';
 import { PUG_CLASS_NOTATION } from './pug-class-notation';
-import { PugFramework, PUG_FRAMEWORK } from './pug-framework';
+import type { PugFramework } from './pug-framework';
+import { PUG_FRAMEWORK } from './pug-framework';
 import type { PugIdNotation } from './pug-id-notation';
 import { PUG_ID_NOTATION } from './pug-id-notation';
 import { PUG_SINGLE_FILE_COMPONENT_INDENTATION } from './pug-single-file-component-indentation';
