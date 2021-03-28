@@ -6,6 +6,8 @@
 	"scripts": {
 		"clean": "rm -Rf coverage dist junit.xml yarn.lock node_modules",
 		"build": "tsc",
+		"docs:dev": "vuepress dev docs",
+		"docs:build": "vuepress build docs",
 		"format": "prettier --write .",
 		"lint": "eslint .",
 		"test": "jest"
@@ -55,7 +57,9 @@
 		"prettier": "2.2.1",
 		"prettier-plugin-organize-imports": "~1.1.1",
 		"ts-jest": "~26.5.4",
-		"typescript": "~4.2.3"
+		"typescript": "~4.2.3",
+		"vuepress": "~2.0.0-beta.6",
+		"vuepress-vite": "~2.0.0-beta.6"
 	},
 	"peerDependencies": {
 		"prettier": "^2.1.0"

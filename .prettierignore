@@ -2,5 +2,7 @@
 benchmark/
 coverage/
 dist/
+docs/.vuepress/.cache/
+docs/.vuepress/.temp/
 tests/**/*.vue
 tests/**/*.pug
