@@ -4,6 +4,7 @@
 	"description": "Prettier Pug Plugin",
 	"main": "dist/index.js",
 	"scripts": {
+		"clean": "rm -Rf coverage dist junit.xml yarn.lock node_modules",
 		"build": "tsc",
 		"format": "prettier --write .",
 		"lint": "eslint .",
