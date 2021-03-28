@@ -420,6 +420,7 @@ export class PugPrinter {
 							code = this.frameworkFormat(code);
 						}
 					} catch (error: unknown) {
+						const { pugFramework } = this.options;
 						if (typeof error === 'string') {
 							if (error.includes('Unexpected token Lexer Error')) {
 								if (!error.includes('Unexpected character [`]')) {
@@ -431,20 +432,26 @@ export class PugPrinter {
 									`code: \`${code.trim()}\``
 								);
 							} else if (error.includes("Unexpected token '('")) {
-								logger.warn(
-									"[PugPrinter:formatText]: Found unexpected token '('. If you are using Vue, you can ignore this message.",
-									`code: \`${code.trim()}\``
-								);
-							} else if (error.includes('Missing expected )')) {
-								logger.warn(
-									'[PugPrinter:formatText]: Missing expected ). If you are using Vue, you can ignore this message.',
-									`code: \`${code.trim()}\``
-								);
-							} else if (error.includes('Missing expected :')) {
-								logger.warn(
-									'[PugPrinter:formatText]: Missing expected :. If you are using Vue, you can ignore this message.',
-									`code: \`${code.trim()}\``
-								);
+								if (pugFramework !== 'vue') {
+									logger.warn(
+										'[PugPrinter:formatText]: Found unexpected token `(`.',
+										`code: \`${code.trim()}\``
+									);
+								}
+							} else if (error.includes('Missing expected `)`')) {
+								if (pugFramework !== 'vue') {
+									logger.warn(
+										'[PugPrinter:formatText]: Missing expected `)`.',
+										`code: \`${code.trim()}\``
+									);
+								}
+							} else if (error.includes('Missing expected `:`')) {
+								if (pugFramework !== 'vue') {
+									logger.warn(
+										'[PugPrinter:formatText]: Missing expected `:`.',
+										`code: \`${code.trim()}\``
+									);
+								}
 							} else {
 								logger.warn('[PugPrinter:formatText]: ', error);
 							}
