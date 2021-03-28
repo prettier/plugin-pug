@@ -4,6 +4,7 @@ module.exports = defineUserConfig({
 	lang: 'en-US',
 	title: 'Documentation',
 	description: '@prettier/plugin-pug documentation',
+	base: process.env.NODE_ENV === 'production' ? '/plugin-pug/' : '',
 
 	// theme: 'yuu',
 	themeConfig: {
