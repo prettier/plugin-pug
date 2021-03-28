@@ -28,12 +28,14 @@ module.exports = {
 			'/guide/': [
 				{
 					title: 'Guide',
+					collapsable: false,
 					children: ['getting-started']
 				}
 			],
 			'/rules/': [
 				{
 					title: 'Rules',
+					collapsable: false,
 					children: ['pugAttributeSeparator']
 				}
 			]
