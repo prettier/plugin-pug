@@ -7,11 +7,11 @@ export const PUG_FRAMEWORK: ChoiceSupportOption = {
 	category: CATEGORY_PUG,
 	type: 'choice',
 	default: 'none',
-	description: 'Define which framework is used in the project',
+	description: 'Define which framework is used in the project.',
 	choices: [
-		{ value: 'none', description: 'No framework specifically' },
-		{ value: 'angular', description: 'Uses Angular' },
-		{ value: 'vue', description: 'Uses Vue.js' }
+		{ value: 'none', description: 'No framework specifically.' },
+		{ value: 'angular', description: 'Uses Angular.' },
+		{ value: 'vue', description: 'Uses Vue.js.' }
 	]
 };
 
