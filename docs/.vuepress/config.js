@@ -20,8 +20,8 @@ module.exports = {
 				link: '/guide/'
 			},
 			{
-				text: 'Rules',
-				link: '/rules/'
+				text: 'Configuration',
+				link: '/configuration/'
 			}
 		],
 		sidebar: 'auto'

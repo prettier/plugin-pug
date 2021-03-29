@@ -1,3 +1,7 @@
+---
+next: /configuration/
+---
+
 # Guide
 
 ## Getting Started
@@ -79,4 +83,4 @@ Pug code with automatic formatting:
 
 ## Configuration
 
-[Link](../rules/README.md)
+[Link](../configuration/README.md)

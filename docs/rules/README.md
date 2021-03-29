@@ -1,3 +1,0 @@
-# Rules
-
-- [pugAttributeSeparator](./pugAttributeSeparator.md)
