@@ -7,8 +7,13 @@ prev: /configuration/
 
 ## Description
 
-coming soon
+Define a regex pattern to match attributes against that should always trigger wrapping.
 
 ## Options
 
-coming soon
+**Type:** `array`  
+**Default:** `[]`
+
+## See also
+
+- [pugWrapAttributesThreshold](./pugWrapAttributesThreshold.md)

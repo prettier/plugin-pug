@@ -7,8 +7,9 @@ prev: /configuration/
 
 ## Description
 
-coming soon
+Indent pug in template tags in single file components such as from vue or svelte.
 
 ## Options
 
-coming soon
+**Type:** `boolean`  
+**Default:** `false`

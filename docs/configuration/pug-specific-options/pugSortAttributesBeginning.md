@@ -7,8 +7,16 @@ prev: /configuration/
 
 ## Description
 
-coming soon
+Sort attributes by regex patterns to the beginning.
 
 ## Options
 
-coming soon
+**Type:** `array`  
+**Default:** `[]`
+
+[Example](https://github.com/prettier/plugin-pug/issues/22#issuecomment-699509995)
+
+## See also
+
+- [pugSortAttributes](./pugSortAttributes.md)
+- [pugSortAttributesEnd](./pugSortAttributesEnd.md)
