@@ -80,7 +80,3 @@ Pug code with automatic formatting:
 .text(color="primary", disabled)
 ```
 ````
-
-## Configuration
-
-[Move to configuration](../configuration/README.md)
