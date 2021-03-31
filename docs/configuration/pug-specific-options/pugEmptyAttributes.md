@@ -1,6 +1,10 @@
 ---
 title: pugEmptyAttributes
 prev: /configuration/
+tags:
+  - empty
+  - attributes
+  - choice
 ---
 
 # pugEmptyAttributes

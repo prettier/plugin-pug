@@ -1,6 +1,11 @@
 ---
 title: pugWrapAttributesPattern
 prev: /configuration/
+tags:
+  - wrap
+  - attributes
+  - pattern
+  - array
 ---
 
 # pugWrapAttributesPattern

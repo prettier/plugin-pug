@@ -1,6 +1,13 @@
 ---
 title: pugSingleFileComponentIndentation
 prev: /configuration/
+tags:
+  - single
+  - file
+  - component
+  - indentation
+  - sfc
+  - boolean
 ---
 
 # pugSingleFileComponentIndentation

@@ -83,4 +83,4 @@ Pug code with automatic formatting:
 
 ## Configuration
 
-[Link](../configuration/README.md)
+[Move to configuration](../configuration/README.md)

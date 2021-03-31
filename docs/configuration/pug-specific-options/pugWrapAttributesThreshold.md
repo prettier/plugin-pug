@@ -1,6 +1,11 @@
 ---
 title: pugWrapAttributesThreshold
 prev: /configuration/
+tags:
+  - wrap
+  - attributes
+  - threshold
+  - choice
 ---
 
 # pugWrapAttributesThreshold

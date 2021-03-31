@@ -1,6 +1,10 @@
 ---
 title: pugIdNotation
 prev: /configuration/
+tags:
+  - id
+  - notation
+  - choice
 ---
 
 # pugIdNotation

@@ -1,6 +1,12 @@
 ---
 title: pugEmptyAttributesForceQuotes
 prev: /configuration/
+tags:
+  - empty
+  - attributes
+  - force
+  - quotes
+  - array
 ---
 
 # pugEmptyAttributesForceQuotes

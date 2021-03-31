@@ -1,6 +1,11 @@
 ---
 title: pugClosingBracketPosition
 prev: /configuration/
+tags:
+  - closing
+  - bracket
+  - position
+  - choice
 ---
 
 # pugClosingBracketPosition

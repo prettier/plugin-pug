@@ -1,6 +1,10 @@
 ---
 title: pugClassNotation
 prev: /configuration/
+tags:
+  - class
+  - notation
+  - choice
 ---
 
 # pugClassNotation

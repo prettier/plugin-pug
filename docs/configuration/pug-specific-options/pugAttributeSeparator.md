@@ -1,6 +1,10 @@
 ---
 title: pugAttributeSeparator
 prev: /configuration/
+tags:
+  - attribute
+  - separator
+  - choice
 ---
 
 # pugAttributeSeparator

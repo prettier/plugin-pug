@@ -1,6 +1,11 @@
 ---
 title: pugSortAttributesEnd
 prev: /configuration/
+tags:
+  - sort
+  - attributes
+  - end
+  - array
 ---
 
 # pugSortAttributesEnd

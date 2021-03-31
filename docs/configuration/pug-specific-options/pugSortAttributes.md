@@ -1,6 +1,10 @@
 ---
 title: pugSortAttributes
 prev: /configuration/
+tags:
+  - sort
+  - attributes
+  - choice
 ---
 
 # pugSortAttributes

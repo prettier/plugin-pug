@@ -1,6 +1,11 @@
 ---
 title: pugCommentPreserveSpaces
 prev: /configuration/
+tags:
+  - comment
+  - preserve
+  - spaces
+  - choice
 ---
 
 # pugCommentPreserveSpaces
