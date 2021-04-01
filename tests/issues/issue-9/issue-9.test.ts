@@ -11,6 +11,8 @@ describe('Issues', () => {
 			parser: 'pug',
 			plugins: [plugin],
 
+			// @ts-expect-error
+			pugFramework: 'angular',
 			printWidth: 120,
 			tabWidth: 2,
 			useTabs: false,
