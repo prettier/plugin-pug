@@ -372,13 +372,13 @@ export class PugPrinter {
 	private frameworkFormat(code: string): string {
 		const options: Options = { ...this.codeInterpolationOptions };
 		switch (this.options.pugFramework) {
+			case 'angular':
+				options.parser = '__ng_interpolation';
+				break;
 			case 'vue':
+			default:
 				options.parser = 'babel';
 				options.semi = false;
-				break;
-			case 'angular':
-			default:
-				options.parser = '__ng_interpolation';
 		}
 		return format(code, options);
 	}
