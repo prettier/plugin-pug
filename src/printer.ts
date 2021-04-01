@@ -375,6 +375,7 @@ export class PugPrinter {
 			case 'angular':
 				options.parser = '__ng_interpolation';
 				break;
+			case 'svelte':
 			case 'vue':
 			default:
 				options.parser = 'babel';
