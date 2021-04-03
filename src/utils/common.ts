@@ -194,7 +194,7 @@ export function makeString(
 }
 
 /**
- * Try to detect used framework within the project by reading `process.env.npm_package_dependencies_*`.
+ * Try to detect used framework within the project by reading `process.env.npm_package_*`.
  *
  * @returns PugFramework.
  */
