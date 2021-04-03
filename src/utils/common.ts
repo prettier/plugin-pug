@@ -202,9 +202,9 @@ export function detectFramework(): PugFramework {
 	try {
 		if (process.env.npm_package_dependencies_vue) {
 			return 'vue';
-		} else if (process.env.npm_package_dependencies_svelte) {
+		} else if (process.env.npm_package_devDependencies_svelte) {
 			return 'svelte';
-		} else if (process.env.npm_package_dependencies_angular) {
+		} else if (process.env.npm_package_dependencies__angular_core) {
 			return 'angular';
 		}
 	} catch {
