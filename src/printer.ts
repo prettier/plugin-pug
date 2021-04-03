@@ -69,6 +69,7 @@ import type { PugFramework } from './options/pug-framework';
 import type { PugIdNotation } from './options/pug-id-notation';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
+	detectFramework,
 	handleBracketSpacing,
 	isMultilineInterpolation,
 	isQuoted,
@@ -155,6 +156,8 @@ export class PugPrinter {
 	private readonly indentString: string;
 	private indentLevel: number = 0;
 
+	private readonly framework: PugFramework = 'none';
+
 	private readonly quotes: "'" | '"';
 	private readonly otherQuotes: "'" | '"';
 
@@ -199,6 +202,7 @@ export class PugPrinter {
 		if (options.pugSingleFileComponentIndentation) {
 			this.indentLevel++;
 		}
+		this.framework = options.pugFramework !== 'none' ? options.pugFramework : detectFramework();
 
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
@@ -371,7 +375,7 @@ export class PugPrinter {
 
 	private frameworkFormat(code: string): string {
 		const options: Options = { ...this.codeInterpolationOptions };
-		switch (this.options.pugFramework) {
+		switch (this.framework) {
 			case 'angular':
 				options.parser = '__ng_interpolation';
 				break;
@@ -421,7 +425,6 @@ export class PugPrinter {
 							code = this.frameworkFormat(code);
 						}
 					} catch (error: unknown) {
-						const { pugFramework } = this.options;
 						if (typeof error === 'string') {
 							if (error.includes('Unexpected token Lexer Error')) {
 								if (!error.includes('Unexpected character [`]')) {
@@ -433,21 +436,21 @@ export class PugPrinter {
 									`code: \`${code.trim()}\``
 								);
 							} else if (error.includes("Unexpected token '('")) {
-								if (pugFramework !== 'vue') {
+								if (this.framework !== 'vue') {
 									logger.warn(
 										'[PugPrinter:formatText]: Found unexpected token `(`.',
 										`code: \`${code.trim()}\``
 									);
 								}
 							} else if (error.includes('Missing expected `)`')) {
-								if (pugFramework !== 'vue') {
+								if (this.framework !== 'vue') {
 									logger.warn(
 										'[PugPrinter:formatText]: Missing expected `)`.',
 										`code: \`${code.trim()}\``
 									);
 								}
 							} else if (error.includes('Missing expected `:`')) {
-								if (pugFramework !== 'vue') {
+								if (this.framework !== 'vue') {
 									logger.warn(
 										'[PugPrinter:formatText]: Missing expected `:`.',
 										`code: \`${code.trim()}\``
