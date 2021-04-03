@@ -10,11 +10,11 @@ export const PUG_FRAMEWORK: ChoiceSupportOption = {
 	description: 'Define which framework is used in the project.',
 	choices: [
 		{ value: 'none', description: 'No framework specifically.' },
-		{ value: 'angular', description: 'Uses Angular.' },
+		{ value: 'vue', description: 'Uses Vue.js.' },
 		{ value: 'svelte', description: 'Uses Svelte.' },
-		{ value: 'vue', description: 'Uses Vue.js.' }
+		{ value: 'angular', description: 'Uses Angular.' }
 	]
 };
 
 /** Pug class notation. */
-export type PugFramework = 'none' | 'angular' | 'svelte' | 'vue';
+export type PugFramework = 'none' | 'vue' | 'svelte' | 'angular';
