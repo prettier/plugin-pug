@@ -4,7 +4,7 @@ describe('Frameworks', () => {
 	describe('Detection', () => {
 		const backupProcessEnv: Record<string, string | undefined> = process.env;
 
-		beforeEach(() => {
+		afterEach(() => {
 			process.env = { ...backupProcessEnv };
 		});
 
