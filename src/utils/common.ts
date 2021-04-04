@@ -1,4 +1,5 @@
 import type { AttributeToken, TagToken, Token } from 'pug-lexer';
+import type { PugFramework } from '../options/pug-framework';
 
 /**
  * Returns the previous tag token if there was one.
@@ -190,4 +191,25 @@ export function makeString(
 		}
 	);
 	return enclosingQuote + newContent + enclosingQuote;
+}
+
+/**
+ * Try to detect used framework within the project by reading `process.env.npm_package_*`.
+ *
+ * @returns PugFramework.
+ */
+export function detectFramework(): PugFramework {
+	try {
+		const npmPackages: string[] = Object.keys(process.env).filter((key) => key.startsWith('npm_package_'));
+		if (npmPackages.some((pack) => pack.includes('_vue'))) {
+			return 'vue';
+		} else if (npmPackages.some((pack) => pack.includes('_svelte'))) {
+			return 'svelte';
+		} else if (npmPackages.some((pack) => pack.includes('_angular'))) {
+			return 'angular';
+		}
+	} catch {
+		return 'none';
+	}
+	return 'none';
 }

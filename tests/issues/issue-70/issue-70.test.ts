@@ -4,10 +4,15 @@ import { format } from 'prettier';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-	test('should handle Framework interpolation', () => {
+	test('should handle angular framework interpolation', () => {
 		const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-		const actual: string = format(code, { parser: 'pug', plugins: [plugin] });
+		const actual: string = format(code, {
+			parser: 'pug',
+			plugins: [plugin],
+			// @ts-expect-error
+			pugFramework: 'angular'
+		});
 
 		expect(actual).toBe(expected);
 	});

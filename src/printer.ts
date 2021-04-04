@@ -1,4 +1,4 @@
-import type { BuiltInParserName, RequiredOptions } from 'prettier';
+import type { BuiltInParserName, Options, RequiredOptions } from 'prettier';
 import { format } from 'prettier';
 import type {
 	AndAttributesToken,
@@ -65,9 +65,11 @@ import type { ArrowParens } from './options/common';
 import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
 import { formatEmptyAttribute } from './options/empty-attributes/utils';
 import type { PugClassNotation } from './options/pug-class-notation';
+import type { PugFramework } from './options/pug-framework';
 import type { PugIdNotation } from './options/pug-id-notation';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
+	detectFramework,
 	handleBracketSpacing,
 	isMultilineInterpolation,
 	isQuoted,
@@ -115,6 +117,7 @@ export interface PugPrinterOptions {
 	readonly pugEmptyAttributes: PugEmptyAttributes;
 	readonly pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 	readonly pugSingleFileComponentIndentation: boolean;
+	readonly pugFramework: PugFramework;
 }
 
 /**
@@ -152,6 +155,8 @@ export class PugPrinter {
 
 	private readonly indentString: string;
 	private indentLevel: number = 0;
+
+	private readonly framework: PugFramework = 'none';
 
 	private readonly quotes: "'" | '"';
 	private readonly otherQuotes: "'" | '"';
@@ -197,6 +202,7 @@ export class PugPrinter {
 		if (options.pugSingleFileComponentIndentation) {
 			this.indentLevel++;
 		}
+		this.framework = options.pugFramework !== 'none' ? options.pugFramework : detectFramework();
 
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
@@ -367,6 +373,21 @@ export class PugPrinter {
 		}
 	}
 
+	private frameworkFormat(code: string): string {
+		const options: Options = { ...this.codeInterpolationOptions };
+		switch (this.framework) {
+			case 'angular':
+				options.parser = '__ng_interpolation';
+				break;
+			case 'svelte':
+			case 'vue':
+			default:
+				options.parser = 'babel';
+				options.semi = false;
+		}
+		return format(code, options);
+	}
+
 	private formatText(text: string): string {
 		let result: string = '';
 		while (text) {
@@ -401,7 +422,7 @@ export class PugPrinter {
 							text = text.slice(end + 2);
 							continue;
 						} else {
-							code = format(code, { parser: '__ng_interpolation', ...this.codeInterpolationOptions });
+							code = this.frameworkFormat(code);
 						}
 					} catch (error: unknown) {
 						if (typeof error === 'string') {
@@ -415,20 +436,26 @@ export class PugPrinter {
 									`code: \`${code.trim()}\``
 								);
 							} else if (error.includes("Unexpected token '('")) {
-								logger.warn(
-									"[PugPrinter:formatText]: Found unexpected token '('. If you are using Vue, you can ignore this message.",
-									`code: \`${code.trim()}\``
-								);
-							} else if (error.includes('Missing expected )')) {
-								logger.warn(
-									'[PugPrinter:formatText]: Missing expected ). If you are using Vue, you can ignore this message.',
-									`code: \`${code.trim()}\``
-								);
-							} else if (error.includes('Missing expected :')) {
-								logger.warn(
-									'[PugPrinter:formatText]: Missing expected :. If you are using Vue, you can ignore this message.',
-									`code: \`${code.trim()}\``
-								);
+								if (this.framework !== 'vue') {
+									logger.warn(
+										'[PugPrinter:formatText]: Found unexpected token `(`.',
+										`code: \`${code.trim()}\``
+									);
+								}
+							} else if (error.includes('Missing expected `)`')) {
+								if (this.framework !== 'vue') {
+									logger.warn(
+										'[PugPrinter:formatText]: Missing expected `)`.',
+										`code: \`${code.trim()}\``
+									);
+								}
+							} else if (error.includes('Missing expected `:`')) {
+								if (this.framework !== 'vue') {
+									logger.warn(
+										'[PugPrinter:formatText]: Missing expected `:`.',
+										`code: \`${code.trim()}\``
+									);
+								}
 							} else {
 								logger.warn('[PugPrinter:formatText]: ', error);
 							}

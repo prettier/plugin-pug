@@ -36,6 +36,7 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugIdNotation: options.pugIdNotation,
 		pugEmptyAttributes: options.pugEmptyAttributes,
 		pugEmptyAttributesForceQuotes: options.pugEmptyAttributesForceQuotes,
-		pugSingleFileComponentIndentation: options.pugSingleFileComponentIndentation && options.embeddedInHtml
+		pugSingleFileComponentIndentation: options.pugSingleFileComponentIndentation && options.embeddedInHtml,
+		pugFramework: options.pugFramework
 	};
 }

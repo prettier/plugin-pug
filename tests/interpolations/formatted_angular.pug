@@ -1,0 +1,25 @@
+//- Angular
+p {{ test }}
+p {{ test }} {{ test2 }}
+p {{ title }}
+
+div
+  img(src="{{ itemImageUrl }}")
+
+foo(title="{{ 'something' | translate }} - {{ 'something else' | translate }}")
+
+//- No interpolation
+p {{ test
+p {{ test }} {{
+p {{ test some text
+p {{ test }} {{ some text
+
+// "The sum of 1 + 1 is not 4"
+p The sum of 1 + 1 is not {{ 1 + 1 + getVal() }}.
+
+h4 {{ recommended }}
+img([src]="itemImageUrl2")
+
+button((click)="onSave($event)") Save
+button(*ngfor="let hero of heroes", (click)="deleteHero(hero)") {{ hero.name }}
+form(#heroform="", (ngsubmit)="onSubmit(heroForm)") ...
