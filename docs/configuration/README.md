@@ -79,8 +79,9 @@ These additional options are specific to pug templates and can be configured in 
 - [pugWrapAttributesPattern](./pug-specific-options/pugWrapAttributesPattern.md)
 - [pugWrapAttributesThreshold](./pug-specific-options/pugWrapAttributesThreshold.md)
 
-### Single File Component Indentation
+### Framework specific
 
+- [pugFramework](./pug-specific-options/pugFramework.md)
 - [pugSingleFileComponentIndentation](./pug-specific-options/pugSingleFileComponentIndentation.md)
 
 ### Empty Attributes

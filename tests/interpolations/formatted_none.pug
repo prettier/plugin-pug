@@ -1,0 +1,13 @@
+p {{ test }}
+p {{ test }} {{ test2 }}
+
+//- No interpolation
+p {{ test
+p {{ test }} {{
+p {{ test some text
+p {{ test }} {{ some text
+
+div
+  img(src="{{ itemImageUrl }}")
+
+foo(title="{{ 'something' | translate }} - {{ 'something else' | translate }}")
