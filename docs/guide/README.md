@@ -1,7 +1,3 @@
----
-next: /configuration/
----
-
 # Guide
 
 ## Getting Started
