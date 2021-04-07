@@ -23,9 +23,31 @@ module.exports = {
 			},
 			{
 				text: 'Configuration',
-				link: '/configuration/'
+				items: [
+					{
+						text: 'Standard Prettier Overrides',
+						link: '/guide/standard-prettier-overrides.md'
+					},
+					{
+						text: 'Pug specific options',
+						link: '/guide/pug-specific-options.md'
+					}
+				]
 			}
 		],
-		sidebar: 'auto'
+		sidebar: {
+			'/guide/': [
+				{
+					title: 'Guide',
+					collapsable: false,
+					children: ['']
+				},
+				{
+					title: 'Configuration',
+					collapsable: false,
+					children: ['standard-prettier-overrides', 'pug-specific-options']
+				}
+			]
+		}
 	}
 };
