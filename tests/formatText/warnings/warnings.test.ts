@@ -6,23 +6,34 @@ import { plugin } from '../../../src/index';
 /**
  * Mocked console.warn calls.
  */
-type Call = [message?: any, ...optionalParams: any[]];
+type Call = Parameters<Console['warn']>;
 
-const getFormatWarnings: (calls: Call[]) => string[] = (calls) =>
-	calls
-		.map(([message]) => message)
-		.filter((message) => typeof message === 'string')
-		.filter((message) => message.startsWith('[PugPrinter:formatText]: '))
-		.map((message) => message.substring(25));
+const DEFAULT_LOG_PREFIX: string = '[PugPrinter:formatText]: ';
 
-const getCode: (filename: string) => string = (filename) => readFileSync(resolve(__dirname, filename), 'utf8');
+/**
+ * Return all warning messages.
+ *
+ * @param calls `console.warn` calls.
+ * @param logPrefix Prefix of the log message.
+ * @returns Return array of warning messages.
+ */
+function getFormatWarnings(calls: Call[], logPrefix: string = DEFAULT_LOG_PREFIX): string[] {
+	return calls
+		.map(
+			([message]) =>
+				// Assume the first argument is of type string, we filter it anyways in the next line
+				message as string
+		)
+		.filter((message) => typeof message === 'string' && message.startsWith(logPrefix))
+		.map((message) => message.slice(logPrefix.length));
+}
 
 describe('Frameworks', () => {
 	describe('Angular', () => {
 		test('foo-bar', () => {
 			// this test is not completed yet
-			const consoleSpy = jest.spyOn(console, 'warn');
-			const code: string = getCode('unexpected-end-of-expression.pug');
+			const consoleSpy: jest.SpyInstance<void, Call> = jest.spyOn(console, 'warn');
+			const code: string = readFileSync(resolve(__dirname, 'unexpected-end-of-expression.pug'), 'utf8');
 			format(code, {
 				parser: 'pug',
 				plugins: [plugin],
