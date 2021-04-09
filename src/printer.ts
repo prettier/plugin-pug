@@ -81,14 +81,7 @@ import {
 } from './utils/common';
 import { isVueEventBinding, isVueExpression, isVueVForWithOf, isVueVOnExpression } from './utils/vue';
 
-/**
- * Printer logger instance.
- */
 const logger: Logger = createLogger(console);
-/**
- *
- */
-export const loggerInstance: Logger = logger;
 if (process.env.NODE_ENV === 'test') {
 	logger.setLogLevel(LogLevel.DEBUG);
 }
