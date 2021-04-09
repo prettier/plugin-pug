@@ -55,7 +55,7 @@
 		"prettier": "2.2.1",
 		"prettier-plugin-organize-imports": "~1.1.1",
 		"ts-jest": "~26.5.4",
-		"typescript": "~4.2.3"
+		"typescript": "~4.2.4"
 	},
 	"peerDependencies": {
 		"prettier": "^2.1.0"
