@@ -17,11 +17,6 @@ export interface ILogger {
 	error: typeof console.error;
 }
 
-/**
- *
- */
-export type LoggerListener = (level: LogLevel, message?: unknown, ...optionalParams: any[]) => void;
-
 /** The logger class. */
 export class Logger implements ILogger {
 	private static readonly LOG_LEVELS: ['debug', 'log', 'info', 'warn', 'error'] = [
@@ -31,8 +26,6 @@ export class Logger implements ILogger {
 		'warn',
 		'error'
 	];
-
-	private readonly listeners: LoggerListener[] = [];
 
 	/**
 	 * Constructs a new logger.
@@ -110,32 +103,12 @@ export class Logger implements ILogger {
 		this.message(LogLevel.ERROR, message, ...optionalParams);
 	}
 
-	/**
-	 * Adds a log listener.
-	 *
-	 * @param callback The listener callback.
-	 */
-	public addListener(callback: LoggerListener): void {
-		this.listeners.push(callback);
-	}
-
-	/**
-	 * Removes a log listener.
-	 *
-	 * @param callback The listener callback.
-	 */
-	public removeListener(callback: LoggerListener): void {
-		const index: number = this.listeners.indexOf(callback);
-		this.listeners.splice(index, 1);
-	}
-
 	private message(level: LogLevel, message?: any, ...optionalParams: any[]): void {
 		if (this.level !== LogLevel.OFF && this.level <= level) {
 			const logLevel: 'debug' | 'log' | 'info' | 'warn' | 'error' | undefined =
 				Logger.LOG_LEVELS[level as number];
 			if (logLevel) {
 				this.logger[logLevel](message, ...optionalParams);
-				this.listeners.forEach((cb) => cb(level, message, ...optionalParams));
 			}
 		}
 	}
