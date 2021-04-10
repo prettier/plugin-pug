@@ -19,21 +19,17 @@ const DEFAULT_LOG_PREFIX: string = '[PugPrinter:formatText]: ';
  */
 function getFormatWarnings(calls: Call[], logPrefix: string = DEFAULT_LOG_PREFIX): string[] {
 	return calls
-		.map(
-			([message]) =>
-				// Assume the first argument is of type string, we filter it anyways in the next line
-				message as string
-		)
+		.map((params) => params.join(''))
 		.filter((message) => typeof message === 'string' && message.startsWith(logPrefix))
 		.map((message) => message.slice(logPrefix.length));
 }
 
 describe('Frameworks', () => {
 	describe('Angular', () => {
-		test('foo-bar', () => {
+		test('should warn for missing parenthesis', () => {
 			// this test is not completed yet
 			const consoleSpy: jest.SpyInstance<void, Call> = jest.spyOn(console, 'warn');
-			const code: string = readFileSync(resolve(__dirname, 'unexpected-end-of-expression.pug'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'missing-expected-close-parenthesis.pug'), 'utf8');
 			format(code, {
 				parser: 'pug',
 				plugins: [plugin],
@@ -41,10 +37,11 @@ describe('Frameworks', () => {
 				// @ts-expect-error
 				pugFramework: 'angular'
 			});
+			const expected: string = 'SyntaxError: Missing expected )\n';
 			const thrownWarnings: string[] = getFormatWarnings(consoleSpy.mock.calls);
-			console.log(thrownWarnings);
+			const hasWarning: boolean = thrownWarnings.some((warning) => warning.startsWith(expected));
 
-			expect(thrownWarnings).toContain('');
+			expect(hasWarning).toBe(true);
 		});
 	});
 });
