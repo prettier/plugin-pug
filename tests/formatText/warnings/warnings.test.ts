@@ -27,7 +27,6 @@ function getFormatWarnings(calls: Call[], logPrefix: string = DEFAULT_LOG_PREFIX
 describe('Frameworks', () => {
 	describe('Angular', () => {
 		test('should warn for missing parentheses', () => {
-			// this test is not completed yet
 			const consoleSpy: jest.SpyInstance<void, Call> = jest.spyOn(console, 'warn');
 			const code: string = readFileSync(resolve(__dirname, 'missing-expected-close-parentheses.pug'), 'utf8');
 			format(code, {
