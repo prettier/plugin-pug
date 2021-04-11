@@ -427,6 +427,7 @@ export class PugPrinter {
 					} catch (error: unknown) {
 						if (typeof error === 'string') {
 							if (error.includes('Unexpected token Lexer Error')) {
+								// ref: https://github.com/prettier/plugin-pug/issues/9#issuecomment-511214531
 								if (!error.includes('Unexpected character [`]')) {
 									logger.debug('[PugPrinter:formatText]: Using fallback strategy');
 								}
@@ -436,6 +437,7 @@ export class PugPrinter {
 									`code: \`${code.trim()}\``
 								);
 							} else if (error.includes("Unexpected token '('")) {
+								// ref: https://github.com/prettier/plugin-pug/issues/115
 								if (this.framework === 'angular') {
 									logger.warn(
 										'[PugPrinter:formatText]: Found unexpected token `(`.',
@@ -443,6 +445,7 @@ export class PugPrinter {
 									);
 								}
 							} else if (error.includes('Missing expected `)`')) {
+								// ref: https://github.com/prettier/plugin-pug/issues/143
 								if (this.framework === 'angular') {
 									logger.warn(
 										'[PugPrinter:formatText]: Missing expected `)`.',
@@ -450,6 +453,7 @@ export class PugPrinter {
 									);
 								}
 							} else if (error.includes('Missing expected `:`')) {
+								// ref: https://github.com/prettier/plugin-pug/issues/147
 								if (this.framework === 'angular') {
 									logger.warn(
 										'[PugPrinter:formatText]: Missing expected `:`.',
