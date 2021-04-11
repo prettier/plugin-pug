@@ -3,31 +3,51 @@ import { resolve } from 'path';
 import { format } from 'prettier';
 import { plugin } from '../../../src/index';
 
-/**
- * Mocked console.warn calls.
- */
-type Call = Parameters<Console['warn']>;
-
-const DEFAULT_LOG_PREFIX: string = '[PugPrinter:formatText]: ';
-
-/**
- * Return all warning messages.
- *
- * @param calls `console.warn` calls.
- * @param logPrefix Prefix of the log message.
- * @returns Return array of warning messages.
- */
-function getFormatWarnings(calls: Call[], logPrefix: string = DEFAULT_LOG_PREFIX): string[] {
-	return calls
-		.map((params) => params.join(''))
-		.filter((message) => typeof message === 'string' && message.startsWith(logPrefix))
-		.map((message) => message.slice(logPrefix.length));
-}
-
 describe('Frameworks', () => {
-	describe('Angular', () => {
-		test('should warn for missing parentheses', () => {
-			const consoleSpy: jest.SpyInstance<void, Call> = jest.spyOn(console, 'warn');
+	const consoleSpy: jest.SpyInstance<void, Parameters<Console['warn']>> = jest.spyOn(console, 'warn');
+
+	describe('formatText:warnings', () => {
+		beforeEach(() => {
+			consoleSpy.mockClear();
+		});
+
+		test("should warn for 'Bindings should not contain assignments'", () => {
+			const code: string = readFileSync(
+				resolve(__dirname, 'bindings-should-not-contain-assignments.pug'),
+				'utf8'
+			);
+			format(code, { parser: 'pug', plugins: [plugin] });
+			const expected: string[] = [
+				'[PugPrinter:formatText]: Bindings should not contain assignments:',
+				'code: `...`'
+			];
+			expect(consoleSpy).toHaveBeenCalledTimes(1);
+			expect(consoleSpy).toHaveBeenLastCalledWith(...expected);
+			expect(consoleSpy.mock.calls).toEqual([expected]);
+		});
+
+		test("should warn for 'Unexpected token '(''", () => {
+			const code: string = readFileSync(
+				resolve(__dirname, 'found-unexpected-token-open-parentheses.pug'),
+				'utf8'
+			);
+			format(code, {
+				parser: 'pug',
+				plugins: [plugin],
+
+				// @ts-expect-error
+				pugFramework: 'angular'
+			});
+			const expected: string[] = [
+				'[PugPrinter:formatText]: Found unexpected token `(`.',
+				'code: `issueDate | dateFormat("DD MMM YYYY")`'
+			];
+			expect(consoleSpy).toHaveBeenCalledTimes(1);
+			expect(consoleSpy).toHaveBeenLastCalledWith(...expected);
+			expect(consoleSpy.mock.calls).toEqual([expected]);
+		});
+
+		test("should warn for 'Missing expected `)`'", () => {
 			const code: string = readFileSync(resolve(__dirname, 'missing-expected-close-parentheses.pug'), 'utf8');
 			format(code, {
 				parser: 'pug',
@@ -36,11 +56,25 @@ describe('Frameworks', () => {
 				// @ts-expect-error
 				pugFramework: 'angular'
 			});
-			const expected: string = 'SyntaxError: Missing expected )\n';
-			const thrownWarnings: string[] = getFormatWarnings(consoleSpy.mock.calls);
-			const hasWarning: boolean = thrownWarnings.some((warning) => warning.startsWith(expected));
+			const expected: string[] = ['[PugPrinter:formatText]: Missing expected `)`.', 'code: `...`'];
+			expect(consoleSpy).toHaveBeenCalledTimes(1);
+			expect(consoleSpy).toHaveBeenLastCalledWith(...expected);
+			expect(consoleSpy.mock.calls).toEqual([expected]);
+		});
 
-			expect(hasWarning).toBe(true);
+		test("should warn for 'Missing expected `:`'", () => {
+			const code: string = readFileSync(resolve(__dirname, 'missing-expected-colon.pug'), 'utf8');
+			format(code, {
+				parser: 'pug',
+				plugins: [plugin],
+
+				// @ts-expect-error
+				pugFramework: 'angular'
+			});
+			const expected: string[] = ['[PugPrinter:formatText]: Missing expected `:`.', 'code: `...`'];
+			expect(consoleSpy).toHaveBeenCalledTimes(1);
+			expect(consoleSpy).toHaveBeenLastCalledWith(...expected);
+			expect(consoleSpy.mock.calls).toEqual([expected]);
 		});
 	});
 });
