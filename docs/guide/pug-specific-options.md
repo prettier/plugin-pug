@@ -254,7 +254,7 @@ input(
 
 #### `1`
 
-Allow one unwrapped attribute, wrap two and more.
+Allow up to one attribute to remain in the same line. Wrap all attributes, if there are two or more attributes.
 
 ```pug
 input(type="text")
