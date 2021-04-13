@@ -10,7 +10,7 @@ These additional options are specific to pug templates and can be configured in 
 
 ### Description
 
-Change when attributes are separated by commas in tags.
+Choose when to use commas to separate attributes in tags.
 
 ### Options
 
@@ -229,6 +229,7 @@ Only wrap attributes as needed.
 
 ```pug
 input(type="text")
+input(type="text", value="my_value")
 input(type="text", value="my_value", name="my_name")
 ```
 
@@ -239,6 +240,10 @@ Always wrap attributes.
 ```pug
 input(
   type="text"
+)
+input(
+  type="text",
+  value="my_value"
 )
 input(
   type="text",
@@ -255,6 +260,10 @@ Allow one unwrapped attribute, wrap two and more.
 input(type="text")
 input(
   type="text",
+  value="my_value"
+)
+input(
+  type="text",
   value="my_value",
   name="my_name"
 )
@@ -263,6 +272,16 @@ input(
 #### `2 .. Infinity`
 
 Same as above, just with different thresholds.
+
+```pug
+input(type="text")
+input(type="text", value="my_value")
+input(
+  type="text",
+  value="my_value",
+  name="my_name"
+)
+```
 
 ---
 
@@ -322,14 +341,12 @@ Indent pug in template tags in single file components such as from vue or svelte
 
 ### Description
 
-coming soon
+Change behavior of boolean attributes.
 
 ### Options
 
 **Type:** `choice`  
 **Default:** `'as-is'`
-
-Change behavior of boolean attributes.
 
 #### `'as-is'`
 
@@ -361,7 +378,7 @@ foo(a="", b="", c="")
 
 ### Description
 
-Define a list of patterns for attributes that will be forced to have empty quotes even with "none" selected.
+Define a list of patterns for attributes that will be forced to have empty quotes even with `pugEmptyAttributes` set to `'none'`.
 
 ### Options
 
@@ -371,6 +388,8 @@ Define a list of patterns for attributes that will be forced to have empty quote
 ---
 
 ## Notation
+
+`pugClassNotation`
 
 ### Description
 
@@ -398,7 +417,7 @@ foo(class="bar baz")
 ```
 
 ::: warning
-This option is not yet available  
+This option is not yet available.  
 If you would like to offer this option, please let us know here [#167](https://github.com/prettier/plugin-pug/issues/167)
 :::
 
@@ -440,7 +459,7 @@ foo(id="bar")
 ```
 
 ::: warning
-This option is not yet available  
+This option is not yet available.  
 If you would like to offer this option, please let us know here [#167](https://github.com/prettier/plugin-pug/issues/167)
 :::
 
