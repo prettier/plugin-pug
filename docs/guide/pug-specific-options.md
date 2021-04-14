@@ -62,7 +62,7 @@ Position of closing bracket of attributes.
 
 #### `'new-line'`
 
-Closing bracket ends with a new line.
+The closing bracket is placed on a new line.
 
 ```pug
 input(
@@ -76,7 +76,7 @@ input(
 
 #### `'last-line'`
 
-Closing bracket remains with last attribute's line.
+The closing bracket is placed directly after the last attribute without an additional line break.
 
 ```pug
 input(
