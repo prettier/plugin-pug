@@ -64,7 +64,7 @@ yarn prettier --write "**/*.pug"
 
 ## Configuration
 
-See [documentation](https://prettier.github.io/plugin-pug/configuration)
+See [documentation](https://prettier.github.io/plugin-pug/guide)
 
 ## Workaround / Known Issue
 
