@@ -200,12 +200,14 @@ export function makeString(
  */
 export function detectFramework(): PugFramework {
 	try {
-		const npmPackages: string[] = Object.keys(process.env).filter((key) => key.startsWith('npm_package_'));
-		if (npmPackages.some((pack) => pack.includes('_vue'))) {
+		const npmPackages: string[] = Object.keys(process.env)
+			.filter((key) => key.startsWith('npm_package_'))
+			.filter((key) => /(dev)?[Dd]ependencies_+/.test(key));
+		if (npmPackages.some((pack) => pack.includes('vue') && !pack.includes('vuepress'))) {
 			return 'vue';
-		} else if (npmPackages.some((pack) => pack.includes('_svelte'))) {
+		} else if (npmPackages.some((pack) => pack.includes('svelte'))) {
 			return 'svelte';
-		} else if (npmPackages.some((pack) => pack.includes('_angular'))) {
+		} else if (npmPackages.some((pack) => pack.includes('angular'))) {
 			return 'angular';
 		}
 	} catch {

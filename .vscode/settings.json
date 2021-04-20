@@ -22,7 +22,9 @@
 		"pugjs",
 		"readonly",
 		"rvalue",
-		"typeof"
+		"typeof",
+		"vite",
+		"vuepress"
 	],
 	"eslint.validate": ["javascript", "typescript"],
 	"typescript.tsdk": "node_modules/typescript/lib"

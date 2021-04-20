@@ -131,6 +131,7 @@ module.exports = defineConfig({
 					'utf8',
 					'vscode',
 					'vue',
+					'vuepress',
 					'whitespace',
 					'xml'
 				]
