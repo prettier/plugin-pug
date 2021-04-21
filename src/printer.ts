@@ -186,6 +186,8 @@ export class PugPrinter {
 	private pipelessComment: boolean = false;
 	private currentlyInPugInterpolation: boolean = false;
 
+	private readonly classLiteralToAttribute: string[] = [];
+
 	/**
 	 * Constructs a new pug printer.
 	 *
@@ -689,7 +691,7 @@ export class PugPrinter {
 
 		if (typeof token.val === 'string') {
 			if (isQuoted(token.val)) {
-				if (token.name === 'class' && this.options.pugClassNotation !== 'as-is') {
+				if (token.name === 'class' && this.options.pugClassNotation === 'literal') {
 					// Handle class attribute
 					const val: string = token.val.slice(1, -1).trim();
 					const classes: string[] = val.split(/\s+/);
@@ -773,6 +775,20 @@ export class PugPrinter {
 			if (token.val !== true) {
 				this.result += `=${token.val}`;
 			}
+		} else if (token.name === 'class' && this.options.pugClassNotation === 'attribute') {
+			const val: string = token.val.slice(1, -1).trim();
+			const classes: string[] = val.split(/\s+/);
+
+			if (this.classLiteralToAttribute.length) {
+				for (let i: number = this.classLiteralToAttribute.length - 1; i > -1; i--) {
+					const className: string | undefined = this.classLiteralToAttribute.splice(i, 1)[0];
+					if (className) {
+						classes.unshift(className);
+					}
+				}
+			}
+
+			this.result += `=${this.quoteString(classes.join(' '))}`;
 		} else {
 			let val: string = token.val;
 			if (isMultilineInterpolation(val)) {
@@ -838,6 +854,24 @@ export class PugPrinter {
 			this.result += this.indentString.repeat(this.indentLevel);
 		}
 		this.wrapAttributes = false;
+
+		if (this.classLiteralToAttribute.length) {
+			if (this.previousToken?.type === 'start-attributes') {
+				this.result += '(';
+			}
+
+			if (this.previousToken?.type === 'attribute') {
+				this.result += ' ';
+			}
+
+			const classes: string[] = this.classLiteralToAttribute.splice(0, this.classLiteralToAttribute.length);
+			this.result += `class=${this.quoteString(classes.join(' '))}`;
+
+			if (this.previousToken?.type === 'start-attributes') {
+				this.result += ')';
+			}
+		}
+
 		if (this.result[this.result.length - 1] === '(') {
 			// There were no attributes
 			this.result = this.result.slice(0, -1);
@@ -876,29 +910,46 @@ export class PugPrinter {
 	}
 
 	private class(token: ClassToken): void {
-		const val: string = `.${token.val}`;
-		this.currentLineLength += val.length;
-		logger.debug('class', { val, length: val.length }, this.currentLineLength);
-		switch (this.previousToken?.type) {
-			case 'newline':
-			case 'outdent':
-			case 'indent': {
-				this.possibleIdPosition = this.result.length + this.computedIndent.length;
-				const result: string = `${this.computedIndent}${val}`;
-				this.result += result;
-				this.possibleClassPosition = this.result.length;
-				break;
+		if (this.options.pugClassNotation === 'attribute') {
+			this.classLiteralToAttribute.push(token.val);
+
+			if (this.previousToken?.type !== 'tag' && this.previousToken?.type !== 'class') {
+				this.result += 'div';
 			}
-			default: {
-				const prefix: string = this.result.slice(0, this.possibleClassPosition);
-				this.result = [prefix, val, this.result.slice(this.possibleClassPosition)].join('');
-				this.possibleClassPosition += val.length;
-				break;
+
+			if (this.nextToken && ['text', 'newline', 'indent', 'eos'].includes(this.nextToken?.type)) {
+				const classes: string[] = this.classLiteralToAttribute.splice(0, this.classLiteralToAttribute.length);
+				this.result += `(class=${this.quoteString(classes.join(' '))})`;
+
+				if (this.nextToken?.type === 'text') {
+					this.result += ' ';
+				}
 			}
-		}
-		if (this.nextToken?.type === 'text') {
-			this.currentLineLength += 1;
-			this.result += ' ';
+		} else {
+			const val: string = `.${token.val}`;
+			this.currentLineLength += val.length;
+			logger.debug('class', { val, length: val.length }, this.currentLineLength);
+			switch (this.previousToken?.type) {
+				case 'newline':
+				case 'outdent':
+				case 'indent': {
+					this.possibleIdPosition = this.result.length + this.computedIndent.length;
+					const result: string = `${this.computedIndent}${val}`;
+					this.result += result;
+					this.possibleClassPosition = this.result.length;
+					break;
+				}
+				default: {
+					const prefix: string = this.result.slice(0, this.possibleClassPosition);
+					this.result = [prefix, val, this.result.slice(this.possibleClassPosition)].join('');
+					this.possibleClassPosition += val.length;
+					break;
+				}
+			}
+			if (this.nextToken?.type === 'text') {
+				this.currentLineLength += 1;
+				this.result += ' ';
+			}
 		}
 	}
 
