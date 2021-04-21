@@ -292,14 +292,14 @@ input(
 ### Description
 
 Specify the used framework within the project.  
-If not set, or set to 'none', the plugin tries to find the correct framework by reading `process.env.npm_package_*`.
+If not set, or set to 'auto', the plugin tries to find the correct framework by reading `process.env.npm_package_*`.
 
 ### Options
 
 **Type:** `choice`  
-**Default:** `'none'`
+**Default:** `'auto'`
 
-#### `'none'`
+#### `'auto'`
 
 Try to detect a framework by checking `process.env.npm_package_*`.  
 If no framework could be detected, the default strategy will be used.
