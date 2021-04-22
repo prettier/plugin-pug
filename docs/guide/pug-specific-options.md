@@ -14,7 +14,7 @@ Choose when to use commas to separate attributes in tags.
 
 ### Options
 
-**Type:** `choice`
+**Type:** `choice`  
 **Default:** `'always'`
 
 #### `'always'`
@@ -57,7 +57,7 @@ Position of closing bracket of attributes.
 
 ### Options
 
-**Type:** `choice`
+**Type:** `choice`  
 **Default:** `'new-line'`
 
 #### `'new-line'`
@@ -99,7 +99,7 @@ Change behavior of spaces within comments.
 
 ### Options
 
-**Type:** `choice`
+**Type:** `choice`  
 **Default:** `'keep-all'`
 
 #### `'keep-all'`
@@ -138,7 +138,7 @@ Sort attributes that are not on _beginning_ and _end_ patterns.
 
 ### Options
 
-**Type:** `choice`
+**Type:** `choice`  
 **Default:** `'as-is'`
 
 #### `'as-is'`
@@ -175,7 +175,7 @@ Sort attributes by regex patterns to the beginning.
 
 ### Options
 
-**Type:** `array`
+**Type:** `array`  
 **Default:** `[]`
 
 ---
@@ -188,7 +188,7 @@ Sort attributes by regex patterns to the end.
 
 ### Options
 
-**Type:** `array`
+**Type:** `array`  
 **Default:** `[]`
 
 ---
@@ -207,7 +207,7 @@ Define a regex pattern to match attributes against that should always trigger wr
 
 ### Options
 
-**Type:** `array`
+**Type:** `array`  
 **Default:** `[]`
 
 ---
@@ -220,7 +220,7 @@ Define the maximum amount of attributes that an element can appear with on one l
 
 ### Options
 
-**Type:** `choice`
+**Type:** `choice`  
 **Default:** `-1`
 
 #### `-1`
@@ -291,33 +291,33 @@ input(
 
 ### Description
 
-Specify the used framework within the project.
+Specify the used framework within the project.  
 If not set, or set to 'auto', the plugin tries to find the correct framework by reading `process.env.npm_package_*`.
 
 ### Options
 
-**Type:** `choice`
+**Type:** `choice`  
 **Default:** `'auto'`
 
 #### `'auto'`
 
-Try to detect a framework by checking `process.env.npm_package_*`.
+Try to detect a framework by checking `process.env.npm_package_*`.  
 If no framework could be detected, the default strategy will be used.
 
 #### `'vue'`
 
-Set used framework to Vue.
+Set used framework to Vue.  
 This may hide some unrelated warnings that only apply to Angular.
 
 #### `'svelte'`
 
-Set used framework to Svelte.
-_Currently behaves the same as Vue._
+Set used framework to Svelte.  
+_Currently behaves the same as Vue._  
 _If you found an issue with that, please open an [issue](https://github.com/prettier/plugin-pug/issues/new?template=bug-report.md)._
 
 #### `'angular'`
 
-Set used framework to Angular.
+Set used framework to Angular.  
 This uses a specific parser for text interpolation.
 
 ---
@@ -330,7 +330,7 @@ Indent pug in template tags in single file components such as from vue or svelte
 
 ### Options
 
-**Type:** `boolean`
+**Type:** `boolean`  
 **Default:** `false`
 
 ---
@@ -345,7 +345,7 @@ Change behavior of boolean attributes.
 
 ### Options
 
-**Type:** `choice`
+**Type:** `choice`  
 **Default:** `'as-is'`
 
 #### `'as-is'`
@@ -382,7 +382,7 @@ Define a list of patterns for attributes that will be forced to have empty quote
 
 ### Options
 
-**Type:** `array`
+**Type:** `array`  
 **Default:** `[]`
 
 ---
@@ -397,7 +397,7 @@ Define how classes should be formatted.
 
 ### Options
 
-**Type:** `choice`
+**Type:** `choice`  
 **Default:** `'literal'`
 
 #### `'literal'`
@@ -434,7 +434,7 @@ Define how ids should be formatted.
 
 ### Options
 
-**Type:** `choice`
+**Type:** `choice`  
 **Default:** `'literal'`
 
 #### `'literal'`
@@ -454,7 +454,7 @@ foo(id="bar")
 ```
 
 ::: warning
-This option is not yet available.
+This option is not yet available.  
 If you would like to offer this option, please let us know here [#167](https://github.com/prettier/plugin-pug/issues/167)
 :::
 
