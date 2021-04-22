@@ -156,7 +156,7 @@ export class PugPrinter {
 	private readonly indentString: string;
 	private indentLevel: number = 0;
 
-	private readonly framework: PugFramework = 'none';
+	private readonly framework: PugFramework = 'auto';
 
 	private readonly quotes: "'" | '"';
 	private readonly otherQuotes: "'" | '"';
@@ -202,7 +202,7 @@ export class PugPrinter {
 		if (options.pugSingleFileComponentIndentation) {
 			this.indentLevel++;
 		}
-		this.framework = options.pugFramework !== 'none' ? options.pugFramework : detectFramework();
+		this.framework = options.pugFramework !== 'auto' ? options.pugFramework : detectFramework();
 
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";

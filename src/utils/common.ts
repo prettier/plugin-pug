@@ -211,7 +211,7 @@ export function detectFramework(): PugFramework {
 			return 'angular';
 		}
 	} catch {
-		return 'none';
+		return 'auto';
 	}
-	return 'none';
+	return 'auto';
 }

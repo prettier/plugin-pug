@@ -8,8 +8,8 @@ describe('Frameworks', () => {
 			process.env = { ...backupProcessEnv };
 		});
 
-		test('should fallback to none if no framework detected via process.env', () => {
-			expect(detectFramework()).toBe('none');
+		test('should fallback to auto if no framework detected via process.env', () => {
+			expect(detectFramework()).toBe('auto');
 		});
 		test('should detect vue from process.env', () => {
 			process.env.npm_package_dependencies_vue = 'some version';
