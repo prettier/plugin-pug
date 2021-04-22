@@ -776,7 +776,7 @@ export class PugPrinter {
 				this.result += `=${token.val}`;
 			}
 		} else if (token.name === 'class' && this.options.pugClassNotation === 'attribute') {
-			const val: string = token.val.slice(1, -1).trim();
+			const val: string = isQuoted(token.val) ? token.val.slice(1, -1).trim() : token.val;
 			const classes: string[] = val.split(/\s+/);
 
 			if (this.classLiteralToAttribute.length) {
@@ -858,9 +858,7 @@ export class PugPrinter {
 		if (this.classLiteralToAttribute.length) {
 			if (this.previousToken?.type === 'start-attributes') {
 				this.result += '(';
-			}
-
-			if (this.previousToken?.type === 'attribute') {
+			} else if (this.previousToken?.type === 'attribute') {
 				this.result += ' ';
 			}
 
