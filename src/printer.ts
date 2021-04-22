@@ -788,7 +788,7 @@ export class PugPrinter {
 				}
 			}
 
-			this.result += `=${this.quoteString(classes.join(' '))}`;
+			this.result += `=${isQuoted(token.val) ? this.quoteString(classes.join(' ')) : classes.join(' ')}`;
 		} else {
 			let val: string = token.val;
 			if (isMultilineInterpolation(val)) {
