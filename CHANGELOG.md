@@ -1,6 +1,20 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.13.5...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.14.0...main)
+
+# 1.14.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.5...1.14.0)
+
+- New [Documentation](https://prettier.github.io/plugin-pug) :memo:
+- New `pugFramework` option ([#186])
+- Add `'attribute'` choice to `pugClassNotation` ([#203])  
+  _Useful for e.g. [Tailwind CSS](https://tailwindcss.com) / [Windi CSS](https://windicss.org)_
+- Handle autocloseable tag with trailing text correctly ([#182])
+
+[#182]: https://github.com/prettier/plugin-pug/issues/182
+[#186]: https://github.com/prettier/plugin-pug/pull/186
+[#203]: https://github.com/prettier/plugin-pug/pull/203
 
 # 1.13.5
 
