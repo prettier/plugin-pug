@@ -1,8 +1,16 @@
-input.bar(class="foo")
-input.bar(
+input.bar.baz(class="foo")
+input.bar.baz(
   readonly,
   class="foo",
   name="test-input",
   type="password",
   value="Hello World"
 )
+.foo bar
+.foo(bar="baz") Hello World
+.foo
+  div(class="bar") baz
+.baz
+.bar foo
+- var code = 'ma-2 px-1';
+div(class=code)
