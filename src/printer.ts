@@ -1210,7 +1210,7 @@ export class PugPrinter {
 				break;
 		}
 		result += token.mustEscape ? '#' : '!';
-		result += `{${token.val}}`;
+		result += handleBracketSpacing(this.options.pugBracketSpacing, token.val.trim(), ['{', '}']);
 		return result;
 	}
 
