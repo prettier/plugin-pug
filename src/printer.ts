@@ -79,6 +79,7 @@ import {
 	previousTagToken,
 	unwrapLineFeeds
 } from './utils/common';
+import { isSvelteInterpolation } from './utils/svelte';
 import { isVueEventBinding, isVueExpression, isVueVForWithOf, isVueVOnExpression } from './utils/vue';
 
 const logger: Logger = createLogger(console);
@@ -610,6 +611,23 @@ export class PugPrinter {
 		return this.quoteString(val);
 	}
 
+	private formatSvelteInterpolation(val: string): string {
+		val = val.slice(1, -1); // Remove quotes
+		val = val.slice(1, -1); // Remove braces
+		val = val.trim();
+		if (val.includes(`\\${this.otherQuotes}`)) {
+			logger.warn(
+				'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
+				val
+			);
+		} else {
+			val = format(val, { parser: '__ng_interpolation', ...this.codeInterpolationOptions });
+			val = unwrapLineFeeds(val);
+		}
+		val = handleBracketSpacing(this.options.pugBracketSpacing, val, ['{', '}']);
+		return this.quoteString(val);
+	}
+
 	//#endregion
 
 	// ########  #######  ##    ## ######## ##    ##    ########  ########   #######   ######  ########  ######   ######   #######  ########   ######
@@ -869,6 +887,8 @@ export class PugPrinter {
 				val = this.formatAngularDirective(val);
 			} else if (isAngularInterpolation(val)) {
 				val = this.formatAngularInterpolation(val);
+			} else if (isSvelteInterpolation(val)) {
+				val = this.formatSvelteInterpolation(val);
 			} else if (isStyleAttribute(token.name, token.val)) {
 				val = this.formatStyleAttribute(val);
 			} else if (isQuoted(val)) {

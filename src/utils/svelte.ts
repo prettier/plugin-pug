@@ -1,0 +1,26 @@
+/**
+ * Indicates whether the attribute value is a Svelte interpolation.
+ *
+ * ---
+ *
+ * Example interpolation:
+ * ```
+ * a(href="{ cat.id }")
+ * ```
+ *
+ * In this case `val` is `"{ cat.id }"`.
+ *
+ * ---
+ *
+ * @param val Value of tag attribute.
+ * @returns `true` if `val` passes the svelte interpolation check, otherwise `false`.
+ */
+export function isSvelteInterpolation(val: string): boolean {
+	return (
+		val.length >= 3 &&
+		((val[0] === '"' && val[val.length - 1] === '"') || (val[0] === "'" && val[val.length - 1] === "'")) &&
+		val[1] === '{' &&
+		val[val.length - 2] === '}' &&
+		!val.includes('{', 2)
+	);
+}
