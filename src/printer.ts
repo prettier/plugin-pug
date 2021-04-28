@@ -393,6 +393,7 @@ export class PugPrinter {
 	private formatText(text: string): string {
 		let result: string = '';
 		while (text) {
+			// Find double curly brackets
 			const start: number = text.indexOf('{{');
 			if (start !== -1) {
 				result += text.slice(0, start);
@@ -487,8 +488,67 @@ export class PugPrinter {
 					text = '';
 				}
 			} else {
-				result += text;
-				text = '';
+				// Find single curly brackets for svelte
+				const start2: number = text.indexOf('{');
+				if (this.options.pugFramework === 'svelte' && start2 !== -1) {
+					result += text.slice(0, start2);
+					text = text.slice(start2 + 1);
+					const end2: number = text.indexOf('}');
+					if (end2 !== -1) {
+						let code: string = text.slice(0, end2);
+						try {
+							// Index of primary quote
+							const q1: number = code.indexOf(this.quotes);
+							// Index of secondary (other) quote
+							const q2: number = code.indexOf(this.otherQuotes);
+							// Index of backtick
+							const qb: number = code.indexOf('`');
+							if (q1 >= 0 && q2 >= 0 && q2 > q1 && (qb < 0 || q1 < qb)) {
+								logger.log({
+									code,
+									quotes: this.quotes,
+									otherQuotes: this.otherQuotes,
+									q1,
+									q2,
+									qb
+								});
+								logger.warn(
+									'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
+									code
+								);
+								result += handleBracketSpacing(this.options.pugBracketSpacing, code);
+								text = text.slice(end2 + 1);
+								continue;
+							} else {
+								code = this.frameworkFormat(code);
+							}
+						} catch (error: unknown) {
+							logger.warn('[PugPrinter:formatText]: ', error);
+							try {
+								code = format(code, {
+									parser: 'babel',
+									...this.codeInterpolationOptions,
+									semi: false
+								});
+								if (code[0] === ';') {
+									code = code.slice(1);
+								}
+							} catch (error: unknown) {
+								logger.warn(error);
+							}
+						}
+						code = unwrapLineFeeds(code);
+						result += handleBracketSpacing(this.options.pugBracketSpacing, code, ['{', '}']);
+						text = text.slice(end2 + 1);
+					} else {
+						result += '{';
+						result += text;
+						text = '';
+					}
+				} else {
+					result += text;
+					text = '';
+				}
 			}
 		}
 		return result;
