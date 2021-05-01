@@ -8,8 +8,10 @@
 
 - Handle `svelte` syntax ([#201])
 - Support bracket spacing for `interpolated-code` token ([#208])
+- Fix invalid added `;` in front of template string ([#206])
 
 [#201]: https://github.com/prettier/plugin-pug/issues/201
+[#206]: https://github.com/prettier/plugin-pug/issues/206
 [#208]: https://github.com/prettier/plugin-pug/pull/208
 
 # 1.14.0
