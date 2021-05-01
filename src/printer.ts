@@ -389,7 +389,12 @@ export class PugPrinter {
 				options.parser = 'babel';
 				options.semi = false;
 		}
-		return format(code, options);
+
+		let result: string = format(code, options);
+		if (result[0] === ';') {
+			result = result.slice(1);
+		}
+		return result;
 	}
 
 	private formatText(text: string): string {
