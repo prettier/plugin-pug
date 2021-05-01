@@ -1,3 +1,5 @@
+import { isQuoted, isWrappedWith } from './common';
+
 /**
  * Indicates whether the attribute name is an Angular binding.
  *
@@ -81,11 +83,9 @@ export function isAngularDirective(name: string): boolean {
 export function isAngularInterpolation(val: string): boolean {
 	return (
 		val.length >= 5 &&
-		((val[0] === '"' && val[val.length - 1] === '"') || (val[0] === "'" && val[val.length - 1] === "'")) &&
-		val[1] === '{' &&
-		val[2] === '{' &&
-		val[val.length - 2] === '}' &&
-		val[val.length - 3] === '}' &&
+		isQuoted(val) &&
+		isWrappedWith(val, '{', '}', 1) &&
+		isWrappedWith(val, '{', '}', 2) &&
 		!val.includes('{{', 3)
 	);
 }

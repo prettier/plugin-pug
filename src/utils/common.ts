@@ -83,6 +83,10 @@ export function isStyleAttribute(name: string, val: string): boolean {
 	return name === 'style' && isQuoted(val);
 }
 
+export function isWrappedWith(val: string, start: string, end: string, offset: number = 0): boolean {
+	return val.startsWith(start, offset) && val.endsWith(end, val.length - offset);
+}
+
 /**
  * Indicates whether the value is surrounded by quotes.
  *
