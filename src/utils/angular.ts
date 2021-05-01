@@ -81,11 +81,5 @@ export function isAngularDirective(name: string): boolean {
  * @returns `true` if `val` passes the angular interpolation check, otherwise `false`.
  */
 export function isAngularInterpolation(val: string): boolean {
-	return (
-		val.length >= 5 &&
-		isQuoted(val) &&
-		isWrappedWith(val, '{', '}', 1) &&
-		isWrappedWith(val, '{', '}', 2) &&
-		!val.includes('{{', 3)
-	);
+	return val.length >= 5 && isQuoted(val) && isWrappedWith(val, '{{', '}}', 1) && !val.includes('{{', 3);
 }
