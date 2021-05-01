@@ -69,6 +69,7 @@ import type { PugFramework } from './options/pug-framework';
 import type { PugIdNotation } from './options/pug-id-notation';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
+	detectDangerousQuoteCombination,
 	detectFramework,
 	handleBracketSpacing,
 	isMultilineInterpolation,
@@ -79,6 +80,7 @@ import {
 	previousTagToken,
 	unwrapLineFeeds
 } from './utils/common';
+import { isSvelteInterpolation } from './utils/svelte';
 import { isVueEventBinding, isVueExpression, isVueVForWithOf, isVueVOnExpression } from './utils/vue';
 
 const logger: Logger = createLogger(console);
@@ -393,6 +395,7 @@ export class PugPrinter {
 	private formatText(text: string): string {
 		let result: string = '';
 		while (text) {
+			// Find double curly brackets
 			const start: number = text.indexOf('{{');
 			if (start !== -1) {
 				result += text.slice(0, start);
@@ -401,21 +404,13 @@ export class PugPrinter {
 				if (end !== -1) {
 					let code: string = text.slice(0, end);
 					try {
-						// Index of primary quote
-						const q1: number = code.indexOf(this.quotes);
-						// Index of secondary (other) quote
-						const q2: number = code.indexOf(this.otherQuotes);
-						// Index of backtick
-						const qb: number = code.indexOf('`');
-						if (q1 >= 0 && q2 >= 0 && q2 > q1 && (qb < 0 || q1 < qb)) {
-							logger.log({
-								code,
-								quotes: this.quotes,
-								otherQuotes: this.otherQuotes,
-								q1,
-								q2,
-								qb
-							});
+						const dangerousQuoteCombination: boolean = detectDangerousQuoteCombination(
+							code,
+							this.quotes,
+							this.otherQuotes,
+							logger
+						);
+						if (dangerousQuoteCombination) {
 							logger.warn(
 								'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
 								code
@@ -487,8 +482,59 @@ export class PugPrinter {
 					text = '';
 				}
 			} else {
-				result += text;
-				text = '';
+				// Find single curly brackets for svelte
+				const start2: number = text.indexOf('{');
+				if (this.options.pugFramework === 'svelte' && start2 !== -1) {
+					result += text.slice(0, start2);
+					text = text.slice(start2 + 1);
+					const end2: number = text.indexOf('}');
+					if (end2 !== -1) {
+						let code: string = text.slice(0, end2);
+						try {
+							const dangerousQuoteCombination: boolean = detectDangerousQuoteCombination(
+								code,
+								this.quotes,
+								this.otherQuotes,
+								logger
+							);
+							if (dangerousQuoteCombination) {
+								logger.warn(
+									'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
+									code
+								);
+								result += handleBracketSpacing(this.options.pugBracketSpacing, code);
+								text = text.slice(end2 + 1);
+								continue;
+							} else {
+								code = this.frameworkFormat(code);
+							}
+						} catch (error: unknown) {
+							logger.warn('[PugPrinter:formatText]: ', error);
+							try {
+								code = format(code, {
+									parser: 'babel',
+									...this.codeInterpolationOptions,
+									semi: false
+								});
+								if (code[0] === ';') {
+									code = code.slice(1);
+								}
+							} catch (error: unknown) {
+								logger.warn(error);
+							}
+						}
+						code = unwrapLineFeeds(code);
+						result += handleBracketSpacing(this.options.pugBracketSpacing, code, ['{', '}']);
+						text = text.slice(end2 + 1);
+					} else {
+						result += '{';
+						result += text;
+						text = '';
+					}
+				} else {
+					result += text;
+					text = '';
+				}
 			}
 		}
 		return result;
@@ -533,9 +579,13 @@ export class PugPrinter {
 		return this.formatDelegatePrettier(val, '__ng_directive');
 	}
 
-	private formatAngularInterpolation(val: string): string {
+	private formatFrameworkInterpolation(
+		val: string,
+		parser: '__ng_interpolation', // TODO: may be changed to allow a special parser for svelte
+		[opening, closing]: ['{{', '}}'] | ['{', '}']
+	): string {
 		val = val.slice(1, -1); // Remove quotes
-		val = val.slice(2, -2); // Remove braces
+		val = val.slice(opening.length, -closing.length); // Remove braces
 		val = val.trim();
 		if (val.includes(`\\${this.otherQuotes}`)) {
 			logger.warn(
@@ -543,11 +593,19 @@ export class PugPrinter {
 				val
 			);
 		} else {
-			val = format(val, { parser: '__ng_interpolation', ...this.codeInterpolationOptions });
+			val = format(val, { parser, ...this.codeInterpolationOptions });
 			val = unwrapLineFeeds(val);
 		}
-		val = handleBracketSpacing(this.options.pugBracketSpacing, val);
+		val = handleBracketSpacing(this.options.pugBracketSpacing, val, [opening, closing]);
 		return this.quoteString(val);
+	}
+
+	private formatAngularInterpolation(val: string): string {
+		return this.formatFrameworkInterpolation(val, '__ng_interpolation', ['{{', '}}']);
+	}
+
+	private formatSvelteInterpolation(val: string): string {
+		return this.formatFrameworkInterpolation(val, '__ng_interpolation', ['{', '}']);
 	}
 
 	//#endregion
@@ -809,6 +867,8 @@ export class PugPrinter {
 				val = this.formatAngularDirective(val);
 			} else if (isAngularInterpolation(val)) {
 				val = this.formatAngularInterpolation(val);
+			} else if (isSvelteInterpolation(val)) {
+				val = this.formatSvelteInterpolation(val);
 			} else if (isStyleAttribute(token.name, token.val)) {
 				val = this.formatStyleAttribute(val);
 			} else if (isQuoted(val)) {

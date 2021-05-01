@@ -1,4 +1,5 @@
 import type { AttributeToken, TagToken, Token } from 'pug-lexer';
+import type { Logger } from '../logger';
 import type { PugFramework } from '../options/pug-framework';
 
 /**
@@ -80,6 +81,19 @@ export function unwrapLineFeeds(value: string): string {
  */
 export function isStyleAttribute(name: string, val: string): boolean {
 	return name === 'style' && isQuoted(val);
+}
+
+/**
+ * Indicates whether the value is surrounded by the `start` and `end` parameters.
+ *
+ * @param val Value of a tag attribute.
+ * @param start The left hand side of the wrapping.
+ * @param end The right hand side of the wrapping.
+ * @param offset The offset from left and right where to search from.
+ * @returns Whether the value is wrapped wit start and end from the offset or not.
+ */
+export function isWrappedWith(val: string, start: string, end: string, offset: number = 0): boolean {
+	return val.startsWith(start, offset) && val.endsWith(end, val.length - offset);
 }
 
 /**
@@ -194,6 +208,36 @@ export function makeString(
 		}
 	);
 	return enclosingQuote + newContent + enclosingQuote;
+}
+
+/**
+ * See [issue #9](https://github.com/prettier/plugin-pug/issues/9) for more details.
+ *
+ * @param code Code that is checked.
+ * @param quotes Quotes.
+ * @param otherQuotes Opposite of quotes.
+ * @param logger A logger.
+ * @returns Whether dangerous quote combinations where detected or not.
+ */
+export function detectDangerousQuoteCombination(
+	code: string,
+	quotes: "'" | '"',
+	otherQuotes: "'" | '"',
+	logger: Logger
+): boolean {
+	// Index of primary quote
+	const q1: number = code.indexOf(quotes);
+	// Index of secondary (other) quote
+	const q2: number = code.indexOf(otherQuotes);
+	// Index of backtick
+	const qb: number = code.indexOf('`');
+
+	if (q1 >= 0 && q2 >= 0 && q2 > q1 && (qb < 0 || q1 < qb)) {
+		logger.log({ code, quotes, otherQuotes, q1, q2, qb });
+		return true;
+	}
+
+	return false;
 }
 
 /**
