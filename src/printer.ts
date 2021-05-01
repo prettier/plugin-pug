@@ -579,9 +579,13 @@ export class PugPrinter {
 		return this.formatDelegatePrettier(val, '__ng_directive');
 	}
 
-	private formatAngularInterpolation(val: string): string {
+	private formatFrameworkInterpolation(
+		val: string,
+		parser: '__ng_interpolation', // TODO: may be changed to allow a special parser for svelte
+		[opening, closing]: ['{{', '}}'] | ['{', '}']
+	): string {
 		val = val.slice(1, -1); // Remove quotes
-		val = val.slice(2, -2); // Remove braces
+		val = val.slice(opening.length, -closing.length); // Remove braces
 		val = val.trim();
 		if (val.includes(`\\${this.otherQuotes}`)) {
 			logger.warn(
@@ -589,28 +593,19 @@ export class PugPrinter {
 				val
 			);
 		} else {
-			val = format(val, { parser: '__ng_interpolation', ...this.codeInterpolationOptions });
+			val = format(val, { parser, ...this.codeInterpolationOptions });
 			val = unwrapLineFeeds(val);
 		}
-		val = handleBracketSpacing(this.options.pugBracketSpacing, val);
+		val = handleBracketSpacing(this.options.pugBracketSpacing, val, [opening, closing]);
 		return this.quoteString(val);
 	}
 
+	private formatAngularInterpolation(val: string): string {
+		return this.formatFrameworkInterpolation(val, '__ng_interpolation', ['{{', '}}']);
+	}
+
 	private formatSvelteInterpolation(val: string): string {
-		val = val.slice(1, -1); // Remove quotes
-		val = val.slice(1, -1); // Remove braces
-		val = val.trim();
-		if (val.includes(`\\${this.otherQuotes}`)) {
-			logger.warn(
-				'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
-				val
-			);
-		} else {
-			val = format(val, { parser: '__ng_interpolation', ...this.codeInterpolationOptions });
-			val = unwrapLineFeeds(val);
-		}
-		val = handleBracketSpacing(this.options.pugBracketSpacing, val, ['{', '}']);
-		return this.quoteString(val);
+		return this.formatFrameworkInterpolation(val, '__ng_interpolation', ['{', '}']);
 	}
 
 	//#endregion
