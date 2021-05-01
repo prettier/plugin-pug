@@ -69,6 +69,7 @@ import type { PugFramework } from './options/pug-framework';
 import type { PugIdNotation } from './options/pug-id-notation';
 import { isAngularAction, isAngularBinding, isAngularDirective, isAngularInterpolation } from './utils/angular';
 import {
+	detectDangerousQuoteCombination,
 	detectFramework,
 	handleBracketSpacing,
 	isMultilineInterpolation,
@@ -403,21 +404,13 @@ export class PugPrinter {
 				if (end !== -1) {
 					let code: string = text.slice(0, end);
 					try {
-						// Index of primary quote
-						const q1: number = code.indexOf(this.quotes);
-						// Index of secondary (other) quote
-						const q2: number = code.indexOf(this.otherQuotes);
-						// Index of backtick
-						const qb: number = code.indexOf('`');
-						if (q1 >= 0 && q2 >= 0 && q2 > q1 && (qb < 0 || q1 < qb)) {
-							logger.log({
-								code,
-								quotes: this.quotes,
-								otherQuotes: this.otherQuotes,
-								q1,
-								q2,
-								qb
-							});
+						const dangerousQuoteCombination: boolean = detectDangerousQuoteCombination(
+							code,
+							this.quotes,
+							this.otherQuotes,
+							logger
+						);
+						if (dangerousQuoteCombination) {
 							logger.warn(
 								'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
 								code
@@ -498,21 +491,13 @@ export class PugPrinter {
 					if (end2 !== -1) {
 						let code: string = text.slice(0, end2);
 						try {
-							// Index of primary quote
-							const q1: number = code.indexOf(this.quotes);
-							// Index of secondary (other) quote
-							const q2: number = code.indexOf(this.otherQuotes);
-							// Index of backtick
-							const qb: number = code.indexOf('`');
-							if (q1 >= 0 && q2 >= 0 && q2 > q1 && (qb < 0 || q1 < qb)) {
-								logger.log({
-									code,
-									quotes: this.quotes,
-									otherQuotes: this.otherQuotes,
-									q1,
-									q2,
-									qb
-								});
+							const dangerousQuoteCombination: boolean = detectDangerousQuoteCombination(
+								code,
+								this.quotes,
+								this.otherQuotes,
+								logger
+							);
+							if (dangerousQuoteCombination) {
 								logger.warn(
 									'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
 									code
