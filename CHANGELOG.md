@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.14.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.15.0...main)
+
+# 1.15.0 (not released yet)
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.14.0...1.15.0)
+
+- Handle `svelte` syntax ([#201])
+- Support bracket spacing for `interpolated-code` token ([#208])
+
+[#201]: https://github.com/prettier/plugin-pug/issues/201
+[#208]: https://github.com/prettier/plugin-pug/pull/208
 
 # 1.14.0
 
