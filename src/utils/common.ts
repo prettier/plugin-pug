@@ -152,10 +152,13 @@ export function isMultilineInterpolation(val: string): boolean {
  *
  * @param bracketSpacing Specifies whether or not to insert spaces before and after the code.
  * @param code Code that is enclosed in brackets.
+ * @param param2 Brackets.
+ * @param param2."0" Opening brackets.
+ * @param param2."1" Closing brackets.
  * @returns The handled string.
  */
-export function handleBracketSpacing(bracketSpacing: boolean, code: string): string {
-	return bracketSpacing ? `{{ ${code} }}` : `{{${code}}}`;
+export function handleBracketSpacing(bracketSpacing: boolean, code: string, [opening, closing] = ['{{', '}}']): string {
+	return bracketSpacing ? `${opening} ${code} ${closing}` : `${opening}${code}${closing}`;
 }
 
 /**
