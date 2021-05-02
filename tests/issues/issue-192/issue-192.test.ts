@@ -18,10 +18,10 @@ describe('Issues', () => {
 				'^v-else-if$',
 				'^v-model',
 				'^v-',
-				'^v-for$', //v-for should be the last attribute which starts with v-
+				'^v-for$', // v-for should be the last attribute which starts with v-
 				'^:key$', // key binding should always follow v-for
 				'^@',
-				'^:', //any shortcut for v-bind
+				'^:(?!key)', // any shortcut for v-bind
 				'^ref$'
 			],
 			pugSortAttributes: 'asc'
