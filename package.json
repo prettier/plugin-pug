@@ -10,7 +10,8 @@
 		"docs:build": "vuepress build docs",
 		"format": "prettier --write .",
 		"lint": "eslint .",
-		"test": "jest"
+		"test": "jest",
+		"prepublishOnly": "yarn clean && yarn install --cache-folder .yarn && yarn build"
 	},
 	"keywords": [
 		"pug",
@@ -39,7 +40,7 @@
 	},
 	"devDependencies": {
 		"@types/jest": "~26.0.23",
-		"@types/node": "~15.0.1",
+		"@types/node": "~15.0.2",
 		"@types/prettier": "~2.2.3",
 		"@typescript-eslint/eslint-plugin": "~4.22.1",
 		"@typescript-eslint/parser": "~4.22.1",
@@ -48,7 +49,7 @@
 		"eslint-config-prettier": "~8.3.0",
 		"eslint-define-config": "~1.0.8",
 		"eslint-plugin-inclusive-language": "~2.1.1",
-		"eslint-plugin-jsdoc": "~33.0.0",
+		"eslint-plugin-jsdoc": "~33.1.0",
 		"eslint-plugin-prettier": "~3.4.0",
 		"eslint-plugin-spellcheck": "~0.0.17",
 		"jest": "~26.6.3",
