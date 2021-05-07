@@ -80,6 +80,31 @@ export function isVueVForWithOf(name: string, val: string): boolean {
 }
 
 /**
+ * Indicates whether the attribute name is a Vue v-bind.
+ *
+ * ---
+ *
+ * Example expression:
+ * ```
+ * v-btn(v-bind="$attrs")
+ * ```
+ *
+ * In this case `name` is `v-bind`.
+ *
+ * ---
+ *
+ * Checks for: `v-bind`.
+ *
+ * ---
+ *
+ * @param name Name of tag attribute.
+ * @returns `true` if `name` passes the vue `v-bind` check, otherwise `false`.
+ */
+export function isVueVBindExpression(name: string): boolean {
+	return 'v-bind' === name;
+}
+
+/**
  * Indicates whether the attribute name is a Vue v-on.
  *
  * ---

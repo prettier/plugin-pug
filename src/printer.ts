@@ -81,7 +81,13 @@ import {
 	unwrapLineFeeds
 } from './utils/common';
 import { isSvelteInterpolation } from './utils/svelte';
-import { isVueEventBinding, isVueExpression, isVueVForWithOf, isVueVOnExpression } from './utils/vue';
+import {
+	isVueEventBinding,
+	isVueExpression,
+	isVueVBindExpression,
+	isVueVForWithOf,
+	isVueVOnExpression
+} from './utils/vue';
 
 const logger: Logger = createLogger(console);
 if (process.env.NODE_ENV === 'test') {
@@ -862,6 +868,8 @@ export class PugPrinter {
 				val = this.formatVueExpression(val);
 			} else if (isVueEventBinding(token.name)) {
 				val = this.formatVueEventBinding(val);
+			} else if (isVueVBindExpression(token.name)) {
+				val = this.formatDelegatePrettier(val, '__js_expression');
 			} else if (isVueVOnExpression(token.name)) {
 				val = this.formatDelegatePrettier(val, '__js_expression');
 			} else if (isAngularBinding(token.name)) {
