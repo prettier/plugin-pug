@@ -29,26 +29,30 @@ export function compareAttributeToken(
 	const aName: string = a.name;
 	const bName: string = b.name;
 
-	const aBeginningIndex: number = sortPatternsBeginning.findIndex((pattern) => pattern.test(aName));
-	const bBeginningIndex: number = sortPatternsBeginning.findIndex((pattern) => pattern.test(bName));
+	if (sortPatternsBeginning.length > 0) {
+		const aBeginningIndex: number = sortPatternsBeginning.findIndex((pattern) => pattern.test(aName));
+		const bBeginningIndex: number = sortPatternsBeginning.findIndex((pattern) => pattern.test(bName));
 
-	const beginning: number = aBeginningIndex - bBeginningIndex;
-	if (beginning > 0) {
-		return -1;
-	}
-	if (beginning < 0) {
-		return 1;
+		const beginning: number = aBeginningIndex - bBeginningIndex;
+		if (beginning > 0) {
+			return -1;
+		}
+		if (beginning < 0) {
+			return 1;
+		}
 	}
 
-	const aEndIndex: number = sortPatternsEnd.findIndex((pattern) => pattern.test(aName));
-	const bEndIndex: number = sortPatternsEnd.findIndex((pattern) => pattern.test(bName));
+	if (sortPatternsEnd.length > 0) {
+		const aEndIndex: number = sortPatternsEnd.findIndex((pattern) => pattern.test(aName));
+		const bEndIndex: number = sortPatternsEnd.findIndex((pattern) => pattern.test(bName));
 
-	const end: number = aEndIndex - bEndIndex;
-	if (end > 0) {
-		return 1;
-	}
-	if (end < 0) {
-		return -1;
+		const end: number = aEndIndex - bEndIndex;
+		if (end > 0) {
+			return 1;
+		}
+		if (end < 0) {
+			return -1;
+		}
 	}
 
 	switch (sortAttributes) {
