@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.15.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.15.2...main)
+
+# 1.15.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.15.1...1.15.2)
+
+- Handle `v-bind` expression separately ([4827855])
+
+[4827855]: https://github.com/prettier/plugin-pug/commit/4827855ccd8130e787f684ff9a189e90f8a9ddf0
 
 # 1.15.1
 
