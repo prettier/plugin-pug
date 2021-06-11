@@ -1,6 +1,6 @@
 import type {
+	AstPath,
 	Doc,
-	FastPath,
 	Options,
 	Parser,
 	ParserOptions,
@@ -24,11 +24,11 @@ if (process.env.NODE_ENV === 'test') {
 	logger.setLogLevel(LogLevel.DEBUG);
 }
 
-/** Fast path stack entry. */
-type FastPathStackEntry = {
+/** Ast path stack entry. */
+interface AstPathStackEntry {
 	content: string;
 	tokens: Token[];
-};
+}
 
 /** The plugin object that is picked up by prettier. */
 export const plugin: Plugin = {
@@ -48,7 +48,7 @@ export const plugin: Plugin = {
 	/* eslint-disable jsdoc/require-jsdoc */
 	parsers: {
 		pug: {
-			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): FastPathStackEntry {
+			parse(text: string, parsers: { [parserName: string]: Parser }, options: ParserOptions): AstPathStackEntry {
 				logger.debug('[parsers:pug:parse]:', { text });
 
 				let trimmedAndAlignedContent: string = text.replace(/^\s*\n/, '');
@@ -85,8 +85,8 @@ export const plugin: Plugin = {
 	},
 	printers: {
 		'pug-ast': {
-			print(path: FastPath, options: ParserOptions & PugParserOptions, print: (path: FastPath) => Doc): Doc {
-				const entry: FastPathStackEntry = path.stack[0];
+			print(path: AstPath, options: ParserOptions & PugParserOptions, print: (path: AstPath) => Doc): Doc {
+				const entry: AstPathStackEntry = path.stack[0];
 				const { content, tokens } = entry;
 				const pugOptions: PugPrinterOptions = convergeOptions(options);
 				const printer: PugPrinter = new PugPrinter(content, tokens, pugOptions);
@@ -95,8 +95,8 @@ export const plugin: Plugin = {
 				return result;
 			},
 			embed(
-				path: FastPath,
-				print: (path: FastPath) => Doc,
+				path: AstPath,
+				print: (path: AstPath) => Doc,
 				textToDoc: (text: string, options: Options) => Doc,
 				options: ParserOptions
 			): Doc | null {

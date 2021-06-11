@@ -1,5 +1,9 @@
 import type { BuiltInParserName, Options, RequiredOptions } from 'prettier';
 import { format } from 'prettier';
+import type { parsers as AngularParsers } from 'prettier/parser-angular';
+import type { parsers as BabelParsers } from 'prettier/parser-babel';
+import type { parsers as HtmlParsers } from 'prettier/parser-html';
+import type { parsers as PostCssParsers } from 'prettier/parser-postcss';
 import type {
 	AndAttributesToken,
 	AttributeToken,
@@ -135,10 +139,12 @@ interface FormatDelegatePrettierOptions {
 	trimTrailingSemicolon?: boolean;
 }
 
+/* eslint-disable @typescript-eslint/indent */
 /**
  * Supported parsers for the `formatDelegatePrettier` function.
  */
-type FormatDelegatePrettierSupportedParser =
+type FormatDelegatePrettierSupportedParser = keyof Pick<
+	typeof AngularParsers & typeof BabelParsers & typeof HtmlParsers & typeof PostCssParsers,
 	| 'css'
 	| 'vue'
 	| '__vue_event_binding'
@@ -146,7 +152,9 @@ type FormatDelegatePrettierSupportedParser =
 	| '__js_expression'
 	| '__ng_binding'
 	| '__ng_action'
-	| '__ng_directive';
+	| '__ng_directive'
+>;
+/* eslint-enable @typescript-eslint/indent */
 
 /**
  * The printer class.
@@ -592,7 +600,7 @@ export class PugPrinter {
 
 	private formatFrameworkInterpolation(
 		val: string,
-		parser: '__ng_interpolation', // TODO: may be changed to allow a special parser for svelte
+		parser: keyof Pick<typeof AngularParsers, '__ng_interpolation'>, // TODO: may be changed to allow a special parser for svelte
 		[opening, closing]: ['{{', '}}'] | ['{', '}']
 	): string {
 		val = val.slice(1, -1); // Remove quotes

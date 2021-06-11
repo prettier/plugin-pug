@@ -8,6 +8,7 @@
 		"moduleResolution": "Node",
 		"rootDir": "src",
 		"strict": true,
+		"noImplicitOverride": true,
 		"noUncheckedIndexedAccess": true,
 		"removeComments": true
 	},

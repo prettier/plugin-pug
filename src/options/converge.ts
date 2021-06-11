@@ -38,10 +38,9 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugEmptyAttributesForceQuotes: options.pugEmptyAttributesForceQuotes,
 		pugSingleFileComponentIndentation:
 			options.pugSingleFileComponentIndentation &&
-			// `embeddedInHtml` was removed in Prettier 2.3.0
-			(options.embeddedInHtml ||
-				// @ts-expect-error: Wait until @types/prettier are updated
-				options.__embeddedInHtml),
+			(options.__embeddedInHtml ||
+				// @ts-expect-error: `embeddedInHtml` was removed in Prettier 2.3.0
+				options.embeddedInHtml),
 		pugFramework: options.pugFramework
 	};
 }
