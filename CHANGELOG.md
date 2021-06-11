@@ -1,6 +1,13 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.15.2...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.15.3...main)
+
+# 1.15.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.15.2...1.15.3)
+
+- Upgrade to Prettier v2.3  
+  _This fixes `pugSingleFileComponentIndentation` option in combination with prettier v2.3_
 
 # 1.15.2
 
