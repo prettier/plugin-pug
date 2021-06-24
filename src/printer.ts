@@ -78,6 +78,7 @@ import {
 	handleBracketSpacing,
 	isMultilineInterpolation,
 	isQuoted,
+	isSingleLineWithInterpolation,
 	isStyleAttribute,
 	makeString,
 	previousNormalAttributeToken,
@@ -870,6 +871,8 @@ export class PugPrinter {
 			let val: string = token.val;
 			if (isMultilineInterpolation(val)) {
 				// do not reformat multiline strings surrounded by `
+			} else if (isSingleLineWithInterpolation(token.val)) {
+				// do not reformat single line interpolated strings surrounded by `
 			} else if (isVueVForWithOf(token.name, token.val)) {
 				val = this.formatDelegatePrettier(val, 'vue');
 			} else if (isVueExpression(token.name)) {
