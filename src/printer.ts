@@ -378,6 +378,8 @@ export class PugPrinter {
 	}
 
 	private replaceTagWithLiteralIfPossible(search: RegExp, replace: string): void {
+		if (this.options.pugExplicitDiv) return;
+
 		const currentTagEnd: number = Math.max(this.possibleIdPosition, this.possibleClassPosition);
 		const tag: string = this.result.slice(this.currentTagPosition, currentTagEnd);
 		const replaced: string = tag.replace(search, replace);
@@ -727,7 +729,7 @@ export class PugPrinter {
 			logger.debug('after token', this.currentLineLength);
 			if (hasLiteralAttributes) {
 				// Remove div as it will be replaced with the literal for id and/or class
-				if (this.previousToken?.type === 'tag' && this.previousToken.val === 'div') {
+				if (this.previousToken?.type === 'tag' && this.previousToken.val === 'div' && !this.options.pugExplicitDiv) {
 					this.currentLineLength -= 3;
 				}
 			}
@@ -1018,8 +1020,10 @@ export class PugPrinter {
 				case 'newline':
 				case 'outdent':
 				case 'indent': {
-					this.possibleIdPosition = this.result.length + this.computedIndent.length;
-					const result: string = `${this.computedIndent}${val}`;
+					const optDiv: string = this.options.pugExplicitDiv ? 'div' : '';
+					const result: string = `${this.computedIndent}${optDiv}${val}`;
+					this.currentLineLength += optDiv.length;
+					this.possibleIdPosition = this.result.length + this.computedIndent.length + optDiv.length;
 					this.result += result;
 					this.possibleClassPosition = this.result.length;
 					break;
@@ -1262,7 +1266,9 @@ export class PugPrinter {
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
-				const result: string = `${this.computedIndent}${val}`;
+				const optDiv: string = this.options.pugExplicitDiv ? 'div' : '';
+				const result: string = `${this.computedIndent}${optDiv}${val}`;
+				this.currentLineLength += optDiv.length;
 				this.result += result;
 				this.possibleClassPosition = this.result.length;
 				break;
