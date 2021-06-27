@@ -12,7 +12,6 @@ describe('Options', () => {
 			// use this common options in all tests to force specific wrapping
 			pugAttributeSeparator: 'none',
 			pugPrintWidth: 80,
-			// pugWrapAttributesThreshold: 100,
 		}
 
 		test('should handle unspecified pugExplicitDiv', () => {
