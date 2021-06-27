@@ -7,5 +7,5 @@ export const PUG_EXPLICIT_DIV: BooleanSupportOption = {
 	category: CATEGORY_PUG,
 	type: 'boolean',
 	default: false,
-	description: 'Include `div` element when followed by literal class or id syntax'
+	description: 'Include `div` tag when followed by literal class or id syntax'
 };
