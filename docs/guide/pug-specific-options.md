@@ -474,7 +474,7 @@ foo(id="bar")
 
 ### Description
 
-Define if a `div` element should *always* be printed with literal class and id formatting.
+Define if a `div` tag should _always_ be printed with literal class and id formatting.
 
 ### Options
 
@@ -482,21 +482,29 @@ Define if a `div` element should *always* be printed with literal class and id f
 **Default:** `false`
 
 #### `false`
+
 Input:
+
 ```pug
 div.foo.bar
 ```
+
 Output:
+
 ```pug
 .foo.bar
 ```
 
 #### `true`
+
 Input:
+
 ```pug
 div.foo.bar
 ```
+
 Output:
+
 ```pug
 div.foo.bar
 ```
