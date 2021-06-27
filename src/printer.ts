@@ -130,6 +130,7 @@ export interface PugPrinterOptions {
 	readonly pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 	readonly pugSingleFileComponentIndentation: boolean;
 	readonly pugFramework: PugFramework;
+	readonly pugExplicitDiv: boolean;
 }
 
 /**
@@ -641,7 +642,12 @@ export class PugPrinter {
 
 	private tag(token: TagToken): string {
 		let val: string = token.val;
-		if (val === 'div' && this.nextToken && (this.nextToken.type === 'class' || this.nextToken.type === 'id')) {
+		if (
+			val === 'div' &&
+			!this.options.pugExplicitDiv &&
+			this.nextToken &&
+			(this.nextToken.type === 'class' || this.nextToken.type === 'id')
+		) {
 			val = '';
 		}
 		this.currentLineLength += val.length;

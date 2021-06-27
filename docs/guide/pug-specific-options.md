@@ -465,3 +465,38 @@ Disables id formatting.
 ```pug
 foo(id="bar")
 ```
+
+---
+
+## Explicit div
+
+`pugExplicitDiv`
+
+### Description
+
+Define if a `div` element should *always* be printed with literal class and id formatting.
+
+### Options
+
+**Type:** `boolean`  
+**Default:** `false`
+
+#### `false`
+Input:
+```pug
+div.foo.bar
+```
+Output:
+```pug
+.foo.bar
+```
+
+#### `true`
+Input:
+```pug
+div.foo.bar
+```
+Output:
+```pug
+div.foo.bar
+```
