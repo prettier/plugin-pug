@@ -500,7 +500,7 @@ Output:
 Input:
 
 ```pug
-div.foo.bar
+.foo.bar
 ```
 
 Output:
