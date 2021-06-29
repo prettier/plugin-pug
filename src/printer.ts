@@ -1020,10 +1020,10 @@ export class PugPrinter {
 				case 'newline':
 				case 'outdent':
 				case 'indent': {
-					const optDiv: string = this.options.pugExplicitDiv ? 'div' : '';
-					const result: string = `${this.computedIndent}${optDiv}${val}`;
-					this.currentLineLength += optDiv.length;
-					this.possibleIdPosition = this.result.length + this.computedIndent.length + optDiv.length;
+					const optionalDiv: string = this.options.pugExplicitDiv ? 'div' : '';
+					const result: string = `${this.computedIndent}${optionalDiv}${val}`;
+					this.currentLineLength += optionalDiv.length;
+					this.possibleIdPosition = this.result.length + this.computedIndent.length + optionalDiv.length;
 					this.result += result;
 					this.possibleClassPosition = this.result.length;
 					break;
@@ -1266,9 +1266,9 @@ export class PugPrinter {
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
-				const optDiv: string = this.options.pugExplicitDiv ? 'div' : '';
-				const result: string = `${this.computedIndent}${optDiv}${val}`;
-				this.currentLineLength += optDiv.length;
+				const optionalDiv: string = this.options.pugExplicitDiv ? 'div' : '';
+				const result: string = `${this.computedIndent}${optionalDiv}${val}`;
+				this.currentLineLength += optionalDiv.length;
 				this.result += result;
 				this.possibleClassPosition = this.result.length;
 				break;

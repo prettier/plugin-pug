@@ -26,9 +26,9 @@ describe('Options', () => {
 		test('should handle pugExplicitDiv:false', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted-implicit-div.pug'), 'utf8');
 			const actual: string = format(code, {
+				...commonOpts,
 				// @ts-expect-error
 				pugExplicitDiv: false,
-				...commonOpts,
 			});
 
 			expect(actual).toBe(expected);
@@ -37,9 +37,9 @@ describe('Options', () => {
 		test('should handle pugExplicitDiv:true', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted-explicit-div.pug'), 'utf8');
 			const actual: string = format(code, {
+				...commonOpts,
 				// @ts-expect-error
 				pugExplicitDiv: true,
-				...commonOpts,
 			});
 
 			expect(actual).toBe(expected);
