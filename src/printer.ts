@@ -378,7 +378,9 @@ export class PugPrinter {
 	}
 
 	private replaceTagWithLiteralIfPossible(search: RegExp, replace: string): void {
-		if (this.options.pugExplicitDiv) return;
+		if (this.options.pugExplicitDiv) {
+		  return;
+		}
 
 		const currentTagEnd: number = Math.max(this.possibleIdPosition, this.possibleClassPosition);
 		const tag: string = this.result.slice(this.currentTagPosition, currentTagEnd);
@@ -729,7 +731,11 @@ export class PugPrinter {
 			logger.debug('after token', this.currentLineLength);
 			if (hasLiteralAttributes) {
 				// Remove div as it will be replaced with the literal for id and/or class
-				if (this.previousToken?.type === 'tag' && this.previousToken.val === 'div' && !this.options.pugExplicitDiv) {
+				if (
+				  this.previousToken?.type === 'tag' &&
+				  this.previousToken.val === 'div' &&
+				  !this.options.pugExplicitDiv
+				) {
 					this.currentLineLength -= 3;
 				}
 			}

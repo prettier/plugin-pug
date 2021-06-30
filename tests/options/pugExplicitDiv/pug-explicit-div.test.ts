@@ -11,13 +11,13 @@ describe('Options', () => {
 			plugins: [plugin],
 			// use this common options in all tests to force specific wrapping
 			pugAttributeSeparator: 'none',
-			pugPrintWidth: 80,
-		}
+			pugPrintWidth: 80
+		};
 
 		test('should handle unspecified pugExplicitDiv', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted-implicit-div.pug'), 'utf8');
 			const actual: string = format(code, {
-				...commonOpts,
+				...commonOpts
 			});
 
 			expect(actual).toBe(expected);
@@ -28,7 +28,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				...commonOpts,
 				// @ts-expect-error
-				pugExplicitDiv: false,
+				pugExplicitDiv: false
 			});
 
 			expect(actual).toBe(expected);
@@ -39,7 +39,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				...commonOpts,
 				// @ts-expect-error
-				pugExplicitDiv: true,
+				pugExplicitDiv: true
 			});
 
 			expect(actual).toBe(expected);
