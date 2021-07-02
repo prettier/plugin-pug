@@ -130,6 +130,7 @@ export interface PugPrinterOptions {
 	readonly pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
 	readonly pugSingleFileComponentIndentation: boolean;
 	readonly pugFramework: PugFramework;
+	readonly pugExplicitDiv: boolean;
 }
 
 /**
@@ -377,6 +378,10 @@ export class PugPrinter {
 	}
 
 	private replaceTagWithLiteralIfPossible(search: RegExp, replace: string): void {
+		if (this.options.pugExplicitDiv) {
+			return;
+		}
+
 		const currentTagEnd: number = Math.max(this.possibleIdPosition, this.possibleClassPosition);
 		const tag: string = this.result.slice(this.currentTagPosition, currentTagEnd);
 		const replaced: string = tag.replace(search, replace);
@@ -641,7 +646,12 @@ export class PugPrinter {
 
 	private tag(token: TagToken): string {
 		let val: string = token.val;
-		if (val === 'div' && this.nextToken && (this.nextToken.type === 'class' || this.nextToken.type === 'id')) {
+		if (
+			val === 'div' &&
+			!this.options.pugExplicitDiv &&
+			this.nextToken &&
+			(this.nextToken.type === 'class' || this.nextToken.type === 'id')
+		) {
 			val = '';
 		}
 		this.currentLineLength += val.length;
@@ -721,7 +731,11 @@ export class PugPrinter {
 			logger.debug('after token', this.currentLineLength);
 			if (hasLiteralAttributes) {
 				// Remove div as it will be replaced with the literal for id and/or class
-				if (this.previousToken?.type === 'tag' && this.previousToken.val === 'div') {
+				if (
+					this.previousToken?.type === 'tag' &&
+					this.previousToken.val === 'div' &&
+					!this.options.pugExplicitDiv
+				) {
 					this.currentLineLength -= 3;
 				}
 			}
@@ -1012,8 +1026,10 @@ export class PugPrinter {
 				case 'newline':
 				case 'outdent':
 				case 'indent': {
-					this.possibleIdPosition = this.result.length + this.computedIndent.length;
-					const result: string = `${this.computedIndent}${val}`;
+					const optionalDiv: string = this.options.pugExplicitDiv ? 'div' : '';
+					const result: string = `${this.computedIndent}${optionalDiv}${val}`;
+					this.currentLineLength += optionalDiv.length;
+					this.possibleIdPosition = this.result.length + this.computedIndent.length + optionalDiv.length;
 					this.result += result;
 					this.possibleClassPosition = this.result.length;
 					break;
@@ -1256,7 +1272,9 @@ export class PugPrinter {
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
-				const result: string = `${this.computedIndent}${val}`;
+				const optionalDiv: string = this.options.pugExplicitDiv ? 'div' : '';
+				const result: string = `${this.computedIndent}${optionalDiv}${val}`;
+				this.currentLineLength += optionalDiv.length;
 				this.result += result;
 				this.possibleClassPosition = this.result.length;
 				break;
