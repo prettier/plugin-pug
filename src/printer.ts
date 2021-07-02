@@ -1295,12 +1295,27 @@ export class PugPrinter {
 
 		if (this.previousToken?.type === 'dot') {
 			const lastTagToken: TagToken | undefined = previousTagToken(this.tokens, this.currentIndex);
+			let typeAttributeToken: AttributeToken | undefined;
+			if (lastTagToken != null) {
+				const tokens: Token[] = this.tokens.slice(this.tokens.indexOf(lastTagToken) + 1, this.currentIndex - 1);
+				typeAttributeToken = tokens.find((token) => token.type === 'attribute' && token.name === 'type') as
+					| AttributeToken
+					| undefined;
+			}
 
 			let parser: BuiltInParserName | undefined;
 			switch (lastTagToken?.val) {
-				case 'script':
-					parser = 'babel';
+				case 'script': {
+					const knownJSTypeValues: string[] = [
+						"'text/javascript'",
+						"'application/javascript'",
+						"'application/ecmascript'"
+					];
+					if (typeAttributeToken == null || knownJSTypeValues.includes(typeAttributeToken.val as string)) {
+						parser = 'babel';
+					}
 					break;
+				}
 				case 'style':
 					parser = 'css';
 					break;

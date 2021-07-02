@@ -94,6 +94,7 @@ module.exports = defineConfig({
 					'coffeescript',
 					'colno',
 					'doctype',
+					'ecmascript',
 					'endregion',
 					'eos',
 					'fallthrough',
