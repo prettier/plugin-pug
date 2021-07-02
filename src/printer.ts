@@ -78,6 +78,7 @@ import {
 	handleBracketSpacing,
 	isMultilineInterpolation,
 	isQuoted,
+	isSingleLineWithInterpolation,
 	isStyleAttribute,
 	makeString,
 	previousNormalAttributeToken,
@@ -884,7 +885,11 @@ export class PugPrinter {
 			let val: string = token.val;
 			if (isMultilineInterpolation(val)) {
 				// do not reformat multiline strings surrounded by `
-			} else if (isVueVForWithOf(token.name, token.val)) {
+			} else if (isSingleLineWithInterpolation(val)) {
+				// do not reformat single line interpolated strings surrounded by `
+				// cannot format due to it would expect e.g. json in js and then see a dollar sign that cannot be handled
+				// see https://github.com/prettier/plugin-pug/issues/238#issuecomment-873224173
+			} else if (isVueVForWithOf(token.name, val)) {
 				val = this.formatDelegatePrettier(val, 'vue');
 			} else if (isVueExpression(token.name)) {
 				val = this.formatVueExpression(val);

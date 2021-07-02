@@ -152,6 +152,16 @@ export function isQuoted(val: string): boolean {
 }
 
 /**
+ * Detects whether the given value is a single line interpolation or not.
+ *
+ * @param val The value to check.
+ * @returns `true` if it's a single line interpolation, otherwise `false`.
+ */
+export function isSingleLineWithInterpolation(val: string): boolean {
+	return /^`[\s\S]*`$/.test(val) && val.includes('${');
+}
+
+/**
  * Detects whether the given value is a multiline interpolation or not.
  *
  * @param val The value to check.
