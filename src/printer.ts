@@ -82,8 +82,10 @@ import {
 	makeString,
 	previousNormalAttributeToken,
 	previousTagToken,
+	previousTypeAttributeToken,
 	unwrapLineFeeds
 } from './utils/common';
+import { getScriptParserName } from './utils/script-mime-types';
 import { isSvelteInterpolation } from './utils/svelte';
 import {
 	isVueEventBinding,
@@ -1281,7 +1283,7 @@ export class PugPrinter {
 			let parser: BuiltInParserName | undefined;
 			switch (lastTagToken?.val) {
 				case 'script':
-					parser = 'babel';
+					parser = getScriptParserName(previousTypeAttributeToken(this.tokens, this.currentIndex));
 					break;
 				case 'style':
 					parser = 'css';
