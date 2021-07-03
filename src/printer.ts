@@ -1306,14 +1306,20 @@ export class PugPrinter {
 			let parser: BuiltInParserName | undefined;
 			switch (lastTagToken?.val) {
 				case 'script': {
-					const knownJSTypeValues: string[] = [
-						"'text/javascript'",
-						"'application/javascript'",
-						"'application/ecmascript'"
-					];
-					if (typeAttributeToken == null || knownJSTypeValues.includes(typeAttributeToken.val as string)) {
+					if (typeAttributeToken == null) {
 						parser = 'babel';
+						break;
 					}
+					const knownJSTypeValues: Record<string, BuiltInParserName> = {
+						// js
+						"'text/javascript'": 'babel',
+						"'application/javascript'": 'babel',
+						"'application/ecmascript'": 'babel',
+						// json
+						"'application/json'": 'json',
+						"'application/ld+json'": 'json'
+					};
+					parser = knownJSTypeValues[typeAttributeToken.val as string];
 					break;
 				}
 				case 'style':
@@ -1401,7 +1407,10 @@ export class PugPrinter {
 				// Preserve newline
 				tok = this.tokens[index - 1];
 				if (tok?.type === 'text' && tok.val === '') {
-					result += `\n${this.indentString.repeat(this.indentLevel)}`;
+					result += '\n';
+				}
+				if (this.tokens[index + 1]?.type !== 'outdent') {
+					result += this.indentString.repeat(this.indentLevel);
 				}
 
 				this.currentIndex = index - 1;
