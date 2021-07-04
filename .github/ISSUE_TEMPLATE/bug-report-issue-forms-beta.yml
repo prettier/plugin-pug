@@ -2,7 +2,7 @@ name: Bug Report (Issue Forms Beta)
 description: Create a report to help us improve
 title: 'Bug: '
 labels: []
-assignees: ''
+assignees: []
 body:
   - type: input
     id: plugin-version
