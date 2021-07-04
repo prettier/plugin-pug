@@ -1,5 +1,5 @@
-import { BuiltInParserName } from 'prettier';
-import { AttributeToken } from 'pug-lexer';
+import type { BuiltInParserName } from 'prettier';
+import type { AttributeToken } from 'pug-lexer';
 
 // NOTE: XML would be useful, but it's not a default parser.
 //       YAML is not official, but it costs nothing to support it right now.
@@ -10,15 +10,15 @@ const wrappingQuotesRe: RegExp = /(^("|'|`))|(("|'|`)$)/g;
 // https://iana.org/assignments/media-types/media-types.xhtml
 // Note: Don't need to put any suffixed types (+json, +xml) in here as it
 //       will be handled separately
-const scriptTypeToParserMap: Map<string, BuiltInParserName> = new Map([
-	['application/ecmascript', 'babel'],
-	['application/javascript', 'babel'],
-	['application/json', 'json'],
-	['text/ecmascript', 'babel'],
-	['text/javascript', 'babel'],
-	['text/markdown', 'markdown'],
-	['text/typescript', 'typescript']
-]);
+const scriptTypeToParserMap: Record<string, BuiltInParserName> = {
+	'application/ecmascript': 'babel',
+	'application/javascript': 'babel',
+	'application/json': 'json',
+	'text/ecmascript': 'babel',
+	'text/javascript': 'babel',
+	'text/markdown': 'markdown',
+	'text/typescript': 'typescript'
+} as const;
 
 /**
  * Decides which parser to format script contents with.
@@ -34,7 +34,7 @@ export function getScriptParserName(typeAttrToken?: AttributeToken): BuiltInPars
 
 	const typeRaw: string | boolean = typeAttrToken.val;
 	// If it's not a string, best not do anything
-	if ('string' !== typeof typeRaw) {
+	if (typeof typeRaw !== 'string') {
 		return;
 	}
 
@@ -50,5 +50,5 @@ export function getScriptParserName(typeAttrToken?: AttributeToken): BuiltInPars
 		return suffixExec[1] as unknown as 'json' | 'yaml';
 	}
 
-	return scriptTypeToParserMap.get(type);
+	return scriptTypeToParserMap[type];
 }
