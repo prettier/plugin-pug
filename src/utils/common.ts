@@ -45,6 +45,28 @@ export function previousNormalAttributeToken(tokens: ReadonlyArray<Token>, index
 }
 
 /**
+ * Returns the previous type attribute token or undefined if no attribute is present.
+ *
+ * @param tokens A reference to the whole token array.
+ * @param index The current index on which the cursor is in the token array.
+ * @returns Previous attribute token if there was one.
+ */
+export function previousTypeAttributeToken(tokens: ReadonlyArray<Token>, index: number): AttributeToken | undefined {
+	for (let i: number = index - 1; i > 0; i--) {
+		const token: Token | undefined = tokens[i];
+		if (!token || token.type === 'start-attributes') {
+			return;
+		}
+		if (token.type === 'attribute') {
+			if (token.name === 'type') {
+				return token;
+			}
+		}
+	}
+	return;
+}
+
+/**
  * Unwraps line feeds from a given value.
  *
  * @param value The value to unwrap.

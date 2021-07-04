@@ -94,6 +94,7 @@ module.exports = defineConfig({
 					'coffeescript',
 					'colno',
 					'doctype',
+					'ecmascript',
 					'endregion',
 					'eos',
 					'fallthrough',
@@ -133,7 +134,8 @@ module.exports = defineConfig({
 					'vue',
 					'vuepress',
 					'whitespace',
-					'xml'
+					'xml',
+					'yaml'
 				]
 			}
 		],
