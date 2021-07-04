@@ -134,7 +134,8 @@ module.exports = defineConfig({
 					'vue',
 					'vuepress',
 					'whitespace',
-					'xml'
+					'xml',
+					'yaml'
 				]
 			}
 		],

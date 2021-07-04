@@ -78,12 +78,15 @@ import {
 	handleBracketSpacing,
 	isMultilineInterpolation,
 	isQuoted,
+	isSingleLineWithInterpolation,
 	isStyleAttribute,
 	makeString,
 	previousNormalAttributeToken,
 	previousTagToken,
+	previousTypeAttributeToken,
 	unwrapLineFeeds
 } from './utils/common';
+import { getScriptParserName } from './utils/script-mime-types';
 import { isSvelteInterpolation } from './utils/svelte';
 import {
 	isVueEventBinding,
@@ -884,7 +887,11 @@ export class PugPrinter {
 			let val: string = token.val;
 			if (isMultilineInterpolation(val)) {
 				// do not reformat multiline strings surrounded by `
-			} else if (isVueVForWithOf(token.name, token.val)) {
+			} else if (isSingleLineWithInterpolation(val)) {
+				// do not reformat single line interpolated strings surrounded by `
+				// cannot format due to it would expect e.g. json in js and then see a dollar sign that cannot be handled
+				// see https://github.com/prettier/plugin-pug/issues/238#issuecomment-873224173
+			} else if (isVueVForWithOf(token.name, val)) {
 				val = this.formatDelegatePrettier(val, 'vue');
 			} else if (isVueExpression(token.name)) {
 				val = this.formatVueExpression(val);
@@ -1305,23 +1312,9 @@ export class PugPrinter {
 
 			let parser: BuiltInParserName | undefined;
 			switch (lastTagToken?.val) {
-				case 'script': {
-					if (typeAttributeToken == null) {
-						parser = 'babel';
-						break;
-					}
-					const knownJSTypeValues: Record<string, BuiltInParserName> = {
-						// js
-						"'text/javascript'": 'babel',
-						"'application/javascript'": 'babel',
-						"'application/ecmascript'": 'babel',
-						// json
-						"'application/json'": 'json',
-						"'application/ld+json'": 'json'
-					};
-					parser = knownJSTypeValues[typeAttributeToken.val as string];
+				case 'script':
+					parser = getScriptParserName(previousTypeAttributeToken(this.tokens, this.currentIndex));
 					break;
-				}
 				case 'style':
 					parser = 'css';
 					break;

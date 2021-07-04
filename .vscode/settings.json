@@ -25,7 +25,8 @@
 		"rvalue",
 		"typeof",
 		"vite",
-		"vuepress"
+		"vuepress",
+		"yaml"
 	],
 	"eslint.validate": ["javascript", "typescript"],
 	"typescript.tsdk": "node_modules/typescript/lib"

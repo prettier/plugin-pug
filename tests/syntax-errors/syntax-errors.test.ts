@@ -16,4 +16,10 @@ describe('Syntax-Errors', () => {
 			format(code, { parser: 'pug', plugins: [plugin] });
 		}).toThrow();
 	});
+	test('should format non-JS script without syntax error', () => {
+		const code: string = readFileSync(resolve(__dirname, 'scripts-with-non-js-contents.pug'), 'utf8');
+		expect(() => {
+			format(code, { parser: 'pug', plugins: [plugin] });
+		}).not.toThrow();
+	});
 });
