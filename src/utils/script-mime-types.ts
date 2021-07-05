@@ -10,15 +10,15 @@ const wrappingQuotesRe: RegExp = /(^("|'|`))|(("|'|`)$)/g;
 // https://iana.org/assignments/media-types/media-types.xhtml
 // Note: Don't need to put any suffixed types (+json, +xml) in here as it
 //       will be handled separately
-const scriptTypeToParserMap: Record<string, BuiltInParserName> = {
-	'application/ecmascript': 'babel',
-	'application/javascript': 'babel',
-	'application/json': 'json',
-	'text/ecmascript': 'babel',
-	'text/javascript': 'babel',
-	'text/markdown': 'markdown',
-	'text/typescript': 'typescript'
-} as const;
+const scriptTypeToParserMap: Map<string, BuiltInParserName> = new Map([
+	['application/ecmascript', 'babel'],
+	['application/javascript', 'babel'],
+	['application/json', 'json'],
+	['text/ecmascript', 'babel'],
+	['text/javascript', 'babel'],
+	['text/markdown', 'markdown'],
+	['text/typescript', 'typescript']
+]);
 
 /**
  * Decides which parser to format script contents with.
@@ -50,5 +50,5 @@ export function getScriptParserName(typeAttrToken?: AttributeToken): BuiltInPars
 		return suffixExec[1] as unknown as 'json' | 'yaml';
 	}
 
-	return scriptTypeToParserMap[type];
+	return scriptTypeToParserMap.get(type);
 }
