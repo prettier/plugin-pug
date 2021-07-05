@@ -1,5 +1,5 @@
-import { BuiltInParserName } from 'prettier';
-import { AttributeToken } from 'pug-lexer';
+import type { BuiltInParserName } from 'prettier';
+import type { AttributeToken } from 'pug-lexer';
 
 // NOTE: XML would be useful, but it's not a default parser.
 //       YAML is not official, but it costs nothing to support it right now.
@@ -10,6 +10,7 @@ const wrappingQuotesRe: RegExp = /(^("|'|`))|(("|'|`)$)/g;
 // https://iana.org/assignments/media-types/media-types.xhtml
 // Note: Don't need to put any suffixed types (+json, +xml) in here as it
 //       will be handled separately
+// Why using a Map: https://github.com/prettier/plugin-pug/pull/248#discussion_r663854854
 const scriptTypeToParserMap: Map<string, BuiltInParserName> = new Map([
 	['application/ecmascript', 'babel'],
 	['application/javascript', 'babel'],
@@ -17,7 +18,8 @@ const scriptTypeToParserMap: Map<string, BuiltInParserName> = new Map([
 	['text/ecmascript', 'babel'],
 	['text/javascript', 'babel'],
 	['text/markdown', 'markdown'],
-	['text/typescript', 'typescript']
+	['text/typescript', 'typescript'],
+	['module', 'babel']
 ]);
 
 /**
@@ -34,7 +36,7 @@ export function getScriptParserName(typeAttrToken?: AttributeToken): BuiltInPars
 
 	const typeRaw: string | boolean = typeAttrToken.val;
 	// If it's not a string, best not do anything
-	if ('string' !== typeof typeRaw) {
+	if (typeof typeRaw !== 'string') {
 		return;
 	}
 

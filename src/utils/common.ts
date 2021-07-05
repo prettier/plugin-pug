@@ -54,7 +54,7 @@ export function previousNormalAttributeToken(tokens: ReadonlyArray<Token>, index
 export function previousTypeAttributeToken(tokens: ReadonlyArray<Token>, index: number): AttributeToken | undefined {
 	for (let i: number = index - 1; i > 0; i--) {
 		const token: Token | undefined = tokens[i];
-		if (!token || token.type === 'start-attributes') {
+		if (!token || token.type === 'start-attributes' || token.type === 'tag') {
 			return;
 		}
 		if (token.type === 'attribute') {

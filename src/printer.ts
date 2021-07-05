@@ -1393,7 +1393,10 @@ export class PugPrinter {
 				// Preserve newline
 				tok = this.tokens[index - 1];
 				if (tok?.type === 'text' && tok.val === '') {
-					result += `\n${this.indentString.repeat(this.indentLevel)}`;
+					result += '\n';
+				}
+				if (this.tokens[index + 1]?.type !== 'outdent') {
+					result += this.indentString.repeat(this.indentLevel);
 				}
 
 				this.currentIndex = index - 1;
