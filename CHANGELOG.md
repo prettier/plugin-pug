@@ -6,7 +6,7 @@
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.15.3...1.16.0)
 
-- New option `pubExplicitDiv` ([#241])
+- New option `pugExplicitDiv` ([#241])
 - Ignore formatting for single line interpolated attributes ([#238])
 - Handle non-JS script content ([#244])
 
