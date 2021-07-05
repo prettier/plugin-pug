@@ -1,8 +1,20 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.15.3...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.0...main)
 
-# 1.15.2
+# 1.16.0 (currently in beta)
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.15.3...1.16.0)
+
+- New option `pubExplicitDiv` ([#241])
+- Ignore formatting for single line interpolated attributes ([#238])
+- Handle non-JS script content ([#244])
+
+[#238]: https://github.com/prettier/plugin-pug/issues/238
+[#241]: https://github.com/prettier/plugin-pug/issues/241
+[#244]: https://github.com/prettier/plugin-pug/issues/244
+
+# 1.15.3
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.15.2...1.15.3)
 
