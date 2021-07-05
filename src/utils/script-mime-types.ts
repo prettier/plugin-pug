@@ -17,7 +17,8 @@ const scriptTypeToParserMap: Map<string, BuiltInParserName> = new Map([
 	['text/ecmascript', 'babel'],
 	['text/javascript', 'babel'],
 	['text/markdown', 'markdown'],
-	['text/typescript', 'typescript']
+	['text/typescript', 'typescript'],
+	['module', 'babel']
 ]);
 
 /**
