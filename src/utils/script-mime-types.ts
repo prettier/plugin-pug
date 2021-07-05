@@ -10,6 +10,7 @@ const wrappingQuotesRe: RegExp = /(^("|'|`))|(("|'|`)$)/g;
 // https://iana.org/assignments/media-types/media-types.xhtml
 // Note: Don't need to put any suffixed types (+json, +xml) in here as it
 //       will be handled separately
+// Why using a Map: https://github.com/prettier/plugin-pug/pull/248#discussion_r663854854
 const scriptTypeToParserMap: Map<string, BuiltInParserName> = new Map([
 	['application/ecmascript', 'babel'],
 	['application/javascript', 'babel'],
