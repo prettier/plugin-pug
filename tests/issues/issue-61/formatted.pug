@@ -11,3 +11,8 @@ div
           a(
             [href]='Nav.currentProject().repo(getRepository(pipeline).slug).buildNoContext()'
           )
+          - const interpolation = "code"
+          //- Vue
+          a(:href=`interpolated-${interpolation}`)
+          //- Angular
+          a([href]=`interpolated-${interpolation}`)
