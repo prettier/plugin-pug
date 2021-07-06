@@ -4,7 +4,7 @@ import { format } from 'prettier';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-	test('should handle spread destructuring in Vue syntax', () => {
+	test('should not quote pug variables assigned to Vue props', () => {
 		const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 		const actual: string = format(code, { parser: 'pug', plugins: [plugin] });
