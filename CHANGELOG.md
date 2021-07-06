@@ -9,10 +9,12 @@
 - New option `pugExplicitDiv` ([#241])
 - Ignore formatting for single line interpolated attributes ([#238])
 - Handle non-JS script content ([#244])
+- Fix corrupt attribute values on dynamically bound Vue props without quotes ([#250])
 
 [#238]: https://github.com/prettier/plugin-pug/issues/238
 [#241]: https://github.com/prettier/plugin-pug/issues/241
 [#244]: https://github.com/prettier/plugin-pug/issues/244
+[#250]: https://github.com/prettier/plugin-pug/issues/250
 
 # 1.15.3
 
