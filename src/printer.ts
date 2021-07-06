@@ -573,7 +573,9 @@ export class PugPrinter {
 		{ trimTrailingSemicolon = false }: FormatDelegatePrettierOptions = {}
 	): string {
 		val = val.trim();
-		val = val.slice(1, -1); // Remove quotes
+		if (isQuoted(val)) {
+			val = val.slice(1, -1); // Remove quotes
+		}
 		val = format(val, { parser, ...this.codeInterpolationOptions });
 		val = unwrapLineFeeds(val);
 		if (trimTrailingSemicolon && val[val.length - 1] === ';') {

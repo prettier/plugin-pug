@@ -165,7 +165,7 @@ export function isWrappedWith(val: string, start: string, end: string, offset: n
  * @returns Whether the value is quoted or not.
  */
 export function isQuoted(val: string): boolean {
-	if (/^(["'])(.*)\1$/.test(val)) {
+	if (/^(["'`])(.*)\1$/.test(val)) {
 		// Regex for checking if there are any unescaped quotations.
 		const regex: RegExp = new RegExp(`${val[0]}(?<!\\\\${val[0]})`);
 		return !regex.test(val.slice(1, -1));
