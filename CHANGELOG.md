@@ -2,7 +2,7 @@
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.16.0...main)
 
-# 1.16.0 (currently in beta)
+# 1.16.0
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.15.3...1.16.0)
 
