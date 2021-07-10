@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.16.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.1...main)
+
+# 1.16.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.0...1.16.1)
+
+- Prevent wrong quotation ([#255])
+
+[#255]: https://github.com/prettier/plugin-pug/issues/255
 
 # 1.16.0
 
