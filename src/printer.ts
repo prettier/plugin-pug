@@ -916,30 +916,34 @@ export class PugPrinter {
 				val = this.formatSvelteInterpolation(val);
 			} else if (isStyleAttribute(token.name, token.val)) {
 				val = this.formatStyleAttribute(val);
-			} else if (isQuoted(val)) {
-				val = makeString(val.slice(1, -1), this.quotes);
-			} else if (val === 'true') {
-				// The value is exactly true and is not quoted
-				return;
-			} else if (token.mustEscape) {
-				val = format(val, { parser: '__js_expression', ...this.codeInterpolationOptions });
-
-				const lines: string[] = val.split('\n');
-				const codeIndentLevel: number = this.wrapAttributes ? this.indentLevel + 1 : this.indentLevel;
-				if (lines.length > 1) {
-					val = lines[0] ?? '';
-					for (let index: number = 1; index < lines.length; index++) {
-						val += '\n';
-						val += this.indentString.repeat(codeIndentLevel);
-						val += lines[index];
-					}
-				}
 			} else {
-				// The value is not quoted and may be js-code
-				val = val.trim();
-				val = val.replace(/\s\s+/g, ' ');
-				if (val[0] === '{' && val[1] === ' ') {
-					val = `{${val.slice(2, val.length)}`;
+				// Prevent wrong quotation if there is an extra whitespace at the end
+				const rightTrimmedVal: string = val.trimRight();
+				if (isQuoted(rightTrimmedVal)) {
+					val = makeString(rightTrimmedVal.slice(1, -1), this.quotes);
+				} else if (val === 'true') {
+					// The value is exactly true and is not quoted
+					return;
+				} else if (token.mustEscape) {
+					val = format(val, { parser: '__js_expression', ...this.codeInterpolationOptions });
+
+					const lines: string[] = val.split('\n');
+					const codeIndentLevel: number = this.wrapAttributes ? this.indentLevel + 1 : this.indentLevel;
+					if (lines.length > 1) {
+						val = lines[0] ?? '';
+						for (let index: number = 1; index < lines.length; index++) {
+							val += '\n';
+							val += this.indentString.repeat(codeIndentLevel);
+							val += lines[index];
+						}
+					}
+				} else {
+					// The value is not quoted and may be js-code
+					val = val.trim();
+					val = val.replace(/\s\s+/g, ' ');
+					if (val[0] === '{' && val[1] === ' ') {
+						val = `{${val.slice(2, val.length)}`;
+					}
 				}
 			}
 
