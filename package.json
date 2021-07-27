@@ -44,7 +44,6 @@
 		"@types/prettier": "~2.3.2",
 		"@typescript-eslint/eslint-plugin": "~4.28.5",
 		"@typescript-eslint/parser": "~4.28.5",
-		"@yarnpkg/sdks": "~2.4.1-rc.4",
 		"benchmark": "~2.1.4",
 		"eslint": "~7.31.0",
 		"eslint-config-prettier": "~8.3.0",

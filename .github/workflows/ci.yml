@@ -36,15 +36,13 @@ jobs:
               with:
                   node-version: ${{ matrix.node_version }}
 
-            - name: Get yarn cache directory path
-              id: yarn-cache-dir-path
-              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-            - name: Fetch cached yarn dependencies
+            - name: Fetch cached dependencies
               uses: actions/cache@v2
               id: yarn-cache
               with:
-                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  path: |
+                      **/.yarn/cache
+                      **/node_modules
                   key: node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
                   restore-keys: |
                       node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-
@@ -87,15 +85,13 @@ jobs:
               with:
                   node-version: 14
 
-            - name: Get yarn cache directory path
-              id: yarn-cache-dir-path
-              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-            - name: Fetch cached yarn dependencies
+            - name: Fetch cached dependencies
               uses: actions/cache@v2
               id: yarn-cache
               with:
-                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  path: |
+                      **/.yarn/cache
+                      **/node_modules
                   key: node-14-os-ubuntu-latest-yarn-${{ hashFiles('**/yarn.lock') }}
                   restore-keys: |
                       node-14-os-ubuntu-latest-yarn-
@@ -120,15 +116,13 @@ jobs:
               with:
                   node-version: 14
 
-            - name: Get yarn cache directory path
-              id: yarn-cache-dir-path
-              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-            - name: Fetch cached yarn dependencies
+            - name: Fetch cached dependencies
               uses: actions/cache@v2
               id: yarn-cache
               with:
-                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  path: |
+                      **/.yarn/cache
+                      **/node_modules
                   key: node-14-os-ubuntu-latest-yarn-${{ hashFiles('**/yarn.lock') }}
                   restore-keys: |
                       node-14-os-ubuntu-latest-yarn-
