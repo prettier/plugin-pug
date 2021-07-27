@@ -38,9 +38,9 @@ jobs:
 
             - name: Versions
               run: |
-			    npm --version
-				node --version
-				yarn --version
+                  npm --version
+                  node --version
+                  yarn --version
 
             - name: Install dependencies
               run: yarn install --immutable
