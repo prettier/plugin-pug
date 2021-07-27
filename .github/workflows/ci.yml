@@ -45,9 +45,9 @@ jobs:
               id: yarn-cache
               with:
                   path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  key: node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
                   restore-keys: |
-                      ${{ runner.os }}-yarn-
+                      node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-
 
             - name: Versions
               run: |
@@ -58,6 +58,7 @@ jobs:
                   yarn node -p process.versions
 
             - name: Install dependencies
+              if: steps.yarn-cache.outputs.cache-hit != 'true'
               run: yarn install --immutable
 
             - name: Build
@@ -86,7 +87,21 @@ jobs:
               with:
                   node-version: 14
 
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+            - name: Fetch cached yarn dependencies
+              uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-
+
             - name: Prepare
+              if: steps.yarn-cache.outputs.cache-hit != 'true'
               run: yarn install --immutable
 
             - name: Lint
@@ -105,7 +120,21 @@ jobs:
               with:
                   node-version: 14
 
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+            - name: Fetch cached yarn dependencies
+              uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-
+
             - name: Prepare
+              if: steps.yarn-cache.outputs.cache-hit != 'true'
               run: yarn install --immutable
 
             - name: Audit production
