@@ -96,9 +96,9 @@ jobs:
               id: yarn-cache
               with:
                   path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  key: node-14-os-ubuntu-latest-yarn-${{ hashFiles('**/yarn.lock') }}
                   restore-keys: |
-                      node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-
+                      node-14-os-ubuntu-latest-yarn-
 
             - name: Prepare
               if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -129,9 +129,9 @@ jobs:
               id: yarn-cache
               with:
                   path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  key: node-14-os-ubuntu-latest-yarn-${{ hashFiles('**/yarn.lock') }}
                   restore-keys: |
-                      node-${{ matrix.node_version }}-os-${{ matrix.os }}-yarn-
+                      node-14-os-ubuntu-latest-yarn-
 
             - name: Prepare
               if: steps.yarn-cache.outputs.cache-hit != 'true'
