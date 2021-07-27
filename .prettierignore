@@ -1,4 +1,5 @@
 .github/ISSUE_TEMPLATE/
+.yarn/
 benchmark/
 coverage/
 dist/

@@ -12,8 +12,7 @@ rm yarn.lock
 yarn install
 yarn lint
 yarn test --silent
-yarn audit --groups dependencies
-yarn audit --groups peerDependencies
+yarn npm audit --all --recursive
 yarn build
 
 # Publish

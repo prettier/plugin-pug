@@ -33,7 +33,7 @@ jobs:
 
             - name: Install dependencies
               if: steps.yarn-cache.outputs.cache-hit != 'true'
-              run: yarn --frozen-lockfile
+              run: yarn install --immutable
 
             - name: Build VuePress site
               run: yarn docs:build
