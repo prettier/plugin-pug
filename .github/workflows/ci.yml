@@ -41,6 +41,8 @@ jobs:
                   echo "yarn: $(yarn --version)"
                   echo "npm : $(npm --version)"
                   echo "node: $(node --version)"
+                  echo "process.versions:"
+                  yarn node -p process.versions
 
             - name: Install dependencies
               run: yarn install --immutable
