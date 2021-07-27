@@ -58,7 +58,7 @@ jobs:
                   yarn node -p process.versions
 
             - name: Install dependencies
-              if: steps.yarn-cache.outputs.cache-hit != 'true'
+              # if: steps.yarn-cache.outputs.cache-hit != 'true'
               run: yarn install --immutable
 
             - name: Build
@@ -101,7 +101,7 @@ jobs:
                       node-14-os-ubuntu-latest-yarn-
 
             - name: Prepare
-              if: steps.yarn-cache.outputs.cache-hit != 'true'
+              # if: steps.yarn-cache.outputs.cache-hit != 'true'
               run: yarn install --immutable
 
             - name: Lint
@@ -134,7 +134,7 @@ jobs:
                       node-14-os-ubuntu-latest-yarn-
 
             - name: Prepare
-              if: steps.yarn-cache.outputs.cache-hit != 'true'
+              # if: steps.yarn-cache.outputs.cache-hit != 'true'
               run: yarn install --immutable
 
             - name: Audit production

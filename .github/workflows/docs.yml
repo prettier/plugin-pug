@@ -35,7 +35,7 @@ jobs:
                       node-14-os-ubuntu-latest-yarn-
 
             - name: Install dependencies
-              if: steps.yarn-cache.outputs.cache-hit != 'true'
+              # if: steps.yarn-cache.outputs.cache-hit != 'true'
               run: yarn install --immutable
 
             - name: Build VuePress site
