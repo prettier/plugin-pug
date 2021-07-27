@@ -38,9 +38,9 @@ jobs:
 
             - name: Versions
               run: |
-                  npm --version
-                  node --version
-                  yarn --version
+                  echo "yarn: $(yarn --version)"
+                  echo "npm : $(npm --version)"
+                  echo "node: $(node --version)"
 
             - name: Install dependencies
               run: yarn install --immutable
