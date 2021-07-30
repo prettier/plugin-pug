@@ -76,6 +76,7 @@ import {
 	detectDangerousQuoteCombination,
 	detectFramework,
 	handleBracketSpacing,
+	isBacktickQuoted,
 	isMultilineInterpolation,
 	isQuoted,
 	isSingleLineWithInterpolation,
@@ -787,7 +788,7 @@ export class PugPrinter {
 		formatEmptyAttribute(token, this.options.pugEmptyAttributes, this.options.pugEmptyAttributesForceQuotes);
 
 		if (typeof token.val === 'string') {
-			if (isQuoted(token.val)) {
+			if (isQuoted(token.val) && !isBacktickQuoted(token.val)) {
 				if (token.name === 'class' && this.options.pugClassNotation === 'literal') {
 					// Handle class attribute
 					const val: string = token.val.slice(1, -1).trim();
