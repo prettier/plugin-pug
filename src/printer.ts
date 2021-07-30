@@ -188,7 +188,7 @@ export class PugPrinter {
 	/* eslint-disable @typescript-eslint/indent */
 	private readonly codeInterpolationOptions: Pick<
 		RequiredOptions,
-		'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine'
+		'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine' | 'useTabs'
 	>;
 	/* eslint-enable @typescript-eslint/indent */
 
@@ -244,7 +244,8 @@ export class PugPrinter {
 			bracketSpacing: options.pugBracketSpacing ?? options.bracketSpacing,
 			arrowParens: options.pugArrowParens ?? options.arrowParens,
 			printWidth: 9000,
-			endOfLine: 'lf'
+			endOfLine: 'lf',
+			useTabs: options.pugUseTabs ?? options.useTabs
 		};
 	}
 
