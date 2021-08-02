@@ -1,42 +1,38 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { format } from 'prettier';
+import { format, Options } from 'prettier';
 import { plugin } from './../../src/index';
 
+const unformatted: string = readFile('unformatted');
+
+function comparisonTest(message: string, { output, settings }: { output: string; settings?: Options }): void {
+	test(message, () => {
+		const expected: string = readFile(output);
+		const actual: string = format(unformatted, { parser: 'pug', plugins: [plugin], ...settings });
+
+		expect(actual).toBe(expected);
+	});
+}
+
+function readFile(fileName: string): string {
+	return readFileSync(resolve(__dirname, fileName + '.pug'), 'utf8');
+}
+
 describe('Indents', () => {
-	test('should indent by default with 2 spaces', () => {
-		const expected: string = readFileSync(resolve(__dirname, 'formatted-2-spaces.pug'), 'utf8');
-		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-		const actual: string = format(code, { parser: 'pug', plugins: [plugin] });
-
-		expect(actual).toBe(expected);
+	// Spaces
+	comparisonTest('should indent by default with 2 spaces', {
+		output: 'formatted-2-spaces',
+		settings: { tabWidth: undefined }
 	});
-	test('should indent with 2 spaces', () => {
-		const expected: string = readFileSync(resolve(__dirname, 'formatted-2-spaces.pug'), 'utf8');
-		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-		const actual: string = format(code, { parser: 'pug', plugins: [plugin], tabWidth: 2 });
+	comparisonTest('should indent with 2 spaces', { output: 'formatted-2-spaces', settings: { tabWidth: 2 } });
+	comparisonTest('should indent with 3 spaces', { output: 'formatted-3-spaces', settings: { tabWidth: 3 } });
+	comparisonTest('should indent with 4 spaces', { output: 'formatted-4-spaces', settings: { tabWidth: 4 } });
+	comparisonTest('should indent with 8 spaces', { output: 'formatted-8-spaces', settings: { tabWidth: 8 } });
 
-		expect(actual).toBe(expected);
-	});
-	test('should indent with 3 spaces', () => {
-		const expected: string = readFileSync(resolve(__dirname, 'formatted-3-spaces.pug'), 'utf8');
-		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-		const actual: string = format(code, { parser: 'pug', plugins: [plugin], tabWidth: 3 });
-
-		expect(actual).toBe(expected);
-	});
-	test('should indent with 4 spaces', () => {
-		const expected: string = readFileSync(resolve(__dirname, 'formatted-4-spaces.pug'), 'utf8');
-		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-		const actual: string = format(code, { parser: 'pug', plugins: [plugin], tabWidth: 4 });
-
-		expect(actual).toBe(expected);
-	});
-	test('should indent with tabs', () => {
-		const expected: string = readFileSync(resolve(__dirname, 'formatted-tabs.pug'), 'utf8');
-		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-		const actual: string = format(code, { parser: 'pug', plugins: [plugin], useTabs: true });
-
-		expect(actual).toBe(expected);
+	// Tabs
+	comparisonTest('should indent with tabs', {
+		output: 'formatted-tabs-1-width',
+		settings: { useTabs: true, tabWidth: 1 }
 	});
 });
