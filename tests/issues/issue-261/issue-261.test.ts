@@ -4,7 +4,7 @@ import { format } from 'prettier';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-	test('should preserve backticks', () => {
+	test('should preserve backticks for class and id attributes', () => {
 		const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 		const actual: string = format(code, { parser: 'pug', plugins: [plugin] });
