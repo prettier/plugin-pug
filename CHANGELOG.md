@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.16.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.2...main)
+
+# 1.16.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.1...1.16.2)
+
+- Preserve backticks for `class` and `id` attributes ([#261])
+- Apply `useTabs` also for code interpolations ([#262])
+
+[#261]: https://github.com/prettier/plugin-pug/issues/261
+[#262]: https://github.com/prettier/plugin-pug/issues/262
 
 # 1.16.1
 
