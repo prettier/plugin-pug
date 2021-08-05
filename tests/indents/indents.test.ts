@@ -15,6 +15,22 @@ function comparisonTest(message: string, { output, settings }: { output: string;
 	});
 }
 
+const tabIndentRe: RegExp = /\t/g;
+
+function comparisonTabTest(message: string, { tabWidth }: { tabWidth: number }): void {
+	test(message, () => {
+		const spaces: string = format(unformatted, { parser: 'pug', plugins: [plugin], tabWidth, useTabs: false });
+		const tabs: string = format(unformatted, {
+			parser: 'pug',
+			plugins: [plugin],
+			tabWidth,
+			useTabs: true
+		}).replace(tabIndentRe, ' '.repeat(tabWidth));
+
+		expect(tabs).toBe(spaces);
+	});
+}
+
 function readFile(fileName: string): string {
 	return readFileSync(resolve(__dirname, fileName + '.pug'), 'utf8');
 }
@@ -31,8 +47,15 @@ describe('Indents', () => {
 	comparisonTest('should indent with 8 spaces', { output: 'formatted-8-spaces', settings: { tabWidth: 8 } });
 
 	// Tabs
+	// These tests compare the formatting between tab and space indents and
+	// asserts they should format the same
 	comparisonTest('should indent with tabs', {
-		output: 'formatted-tabs-1-width',
-		settings: { useTabs: true, tabWidth: 1 }
+		output: 'formatted-tabs',
+		settings: { useTabs: true, tabWidth: 4 }
 	});
+	comparisonTabTest('should format correctly with 1 width tabs', { tabWidth: 1 });
+	comparisonTabTest('should format correctly with 2 width tabs', { tabWidth: 2 });
+	comparisonTabTest('should format correctly with 4 width tabs', { tabWidth: 4 });
+	comparisonTabTest('should format correctly with 8 width tabs', { tabWidth: 8 });
+	comparisonTabTest('should format correctly with 16 width tabs', { tabWidth: 16 });
 });
