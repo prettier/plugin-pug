@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.16.2...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.3...main)
+
+# 1.16.3
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.2...1.16.3)
+
+- Use `pugTabWidth` for calculating line length ([#268])
+
+[#268]: https://github.com/prettier/plugin-pug/issues/268
 
 # 1.16.2
 
