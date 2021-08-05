@@ -1,0 +1,56 @@
+doctype html
+html
+	head
+	body
+		#indentation-tests
+			.short(style="display: none") Hello World
+			.getting-longer(style="display: none") I can't just say "Hello World" here
+			.i-am-not-being-creative-with-these-names(
+				style="display: none",
+				color="red"
+			).
+				There is surely more I could write here
+			.short-again(style="display: none", color="red", font="Sans Serif")
+				| I could surely more I could write here
+
+			.hi(data-wrap="false") This should be wrapped
+
+		section#contact
+			.container
+				h3 Contact
+				form(name="contact", method="POST")
+					.row.gtr-uniform
+						.col-6.col-12-x-small
+							input#name(
+								type="text",
+								name="name",
+								placeholder="Name *",
+								required
+							)
+						.col-6.col-12-x-small
+							input#email(
+								type="email",
+								name="email",
+								placeholder="Email *",
+								required
+							)
+						.col-12
+							input#subject(
+								type="text",
+								name="subject",
+								placeholder="Subject *",
+								required
+							)
+						.col-12
+							textarea#message(
+								name="message",
+								placeholder="Message *",
+								rows="6",
+								required
+							)
+						.col-12
+							ul.actions
+								li
+									input.primary(type="submit", value="Send Message")
+								li
+									input(type="reset", value="Reset Form")
