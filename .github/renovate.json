@@ -6,5 +6,6 @@
 	"reviewers": ["Shinigami92"],
 	"lockFileMaintenance": { "enabled": true },
 	"pin": false,
-	"rangeStrategy": "bump"
+	"rangeStrategy": "bump",
+	"ignoreDeps": ["prettier-plugin-organize-imports"]
 }
