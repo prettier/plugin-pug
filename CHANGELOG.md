@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.16.3...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.4...main)
+
+# 1.16.4
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.3...1.16.4)
+
+- Fix trailing indentations after pipeless text ([#278])
+
+[#278]: https://github.com/prettier/plugin-pug/issues/278
 
 # 1.16.3
 
