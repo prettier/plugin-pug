@@ -1406,9 +1406,10 @@ export class PugPrinter {
 				tok = this.tokens[index - 1];
 				if (tok?.type === 'text' && tok.val === '') {
 					result += '\n';
-				}
-				if (this.tokens[index + 1]?.type !== 'outdent') {
-					result += this.indentString.repeat(this.indentLevel);
+					const nextToken: Token | undefined = this.tokens[index + 1];
+					if (nextToken?.type !== 'outdent' && nextToken?.type !== 'newline') {
+						result += this.indentString.repeat(this.indentLevel);
+					}
 				}
 
 				this.currentIndex = index - 1;
