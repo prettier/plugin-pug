@@ -6,6 +6,12 @@
 	"reviewers": ["Shinigami92"],
 	"lockFileMaintenance": { "enabled": true },
 	"pin": false,
-	"rangeStrategy": "bump",
-	"ignoreDeps": ["prettier-plugin-organize-imports"]
+	"rangeStrategy": "replace",
+	"ignoreDeps": ["prettier-plugin-organize-imports"],
+	"packageRules": [
+		{
+			"matchDepTypes": ["devDependencies"],
+			"groupName": "all devDependencies"
+		}
+	]
 }
