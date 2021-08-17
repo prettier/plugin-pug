@@ -1,5 +1,5 @@
 {
-	"extends": ["config:base", "group:allNonMajor"],
+	"extends": ["config:base"],
 	"schedule": ["after 9am and before 7pm on friday"],
 	"timezone": "Europe/Berlin",
 	"labels": ["dependencies"],
@@ -10,8 +10,16 @@
 	"ignoreDeps": ["prettier-plugin-organize-imports"],
 	"packageRules": [
 		{
+			"matchPackagePatterns": ["*"],
+			"matchUpdateTypes": ["minor", "patch"],
+			"groupName": "all non-major dependencies",
+			"groupSlug": "all-minor-patch"
+		},
+		{
 			"matchDepTypes": ["devDependencies"],
-			"groupName": "all devDependencies"
+			"groupName": "all devDependencies",
+			"groupSlug": "all-dev-dependencies",
+			"rangeStrategy": "bump"
 		}
 	]
 }
