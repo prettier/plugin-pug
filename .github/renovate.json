@@ -8,6 +8,7 @@
 	"pin": false,
 	"rangeStrategy": "replace",
 	"ignoreDeps": ["prettier-plugin-organize-imports"],
+	"ignorePresets": ["workarounds:typesNodeVersioning"],
 	"packageRules": [
 		{
 			"matchPackagePatterns": ["*"],
