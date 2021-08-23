@@ -1042,6 +1042,7 @@ export class PugPrinter {
 			this.currentLineLength += val.length;
 			logger.debug('class', { val, length: val.length }, this.currentLineLength);
 			switch (this.previousToken?.type) {
+				case undefined:
 				case 'newline':
 				case 'outdent':
 				case 'indent': {
@@ -1288,6 +1289,7 @@ export class PugPrinter {
 		const val: string = `#${token.val}`;
 		this.currentLineLength += val.length;
 		switch (this.previousToken?.type) {
+			case undefined:
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
