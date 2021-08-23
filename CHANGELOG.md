@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.16.4...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.5...main)
+
+# 1.16.5
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.4...1.16.5)
+
+- Fix indentation of templates starting with class or ID when using `pugSingleFileComponentIndentation` ([#282])
+
+[#282]: https://github.com/prettier/plugin-pug/issues/282
 
 # 1.16.4
 
