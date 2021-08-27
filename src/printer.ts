@@ -299,7 +299,7 @@ export class PugPrinter {
 						break;
 					}
 				}
-			} catch (error) {
+			} catch (error: any) {
 				throw new Error(error);
 			}
 			token = this.getNextToken();
