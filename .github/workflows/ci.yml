@@ -141,4 +141,4 @@ jobs:
             - name: Check outdated dependencies
               continue-on-error: true
               if: github.ref == 'refs/heads/main'
-              run: yarn outdated
+              run: yarn outdated --url
