@@ -265,6 +265,36 @@ export function makeString(
   return enclosingQuote + newContent + enclosingQuote;
 }
 
+export function splitArguments(args: string): string[] {
+  const results: string[] = [];
+  let current: string = '';
+  const block: { '{': number; '[': number } = { '{': 0, '[': 0 };
+  for (const char of args) {
+    if (char !== ',' || block['{'] > 0 || block['['] > 0) {
+      current += char;
+      switch (char) {
+        case '{':
+          block['{']++;
+          break;
+        case '}':
+          block['{']--;
+          break;
+        case '[':
+          block['[']++;
+          break;
+        case ']':
+          block['[']--;
+          break;
+      }
+    } else {
+      results.push(current);
+      current = '';
+    }
+  }
+  results.push(current);
+  return results;
+}
+
 /**
  * See [issue #9](https://github.com/prettier/plugin-pug/issues/9) for more details.
  *

@@ -94,6 +94,7 @@ import {
   previousNormalAttributeToken,
   previousTagToken,
   previousTypeAttributeToken,
+  splitArguments,
   unwrapLineFeeds,
 } from './utils/common';
 import { getScriptParserName } from './utils/script-mime-types';
@@ -1847,7 +1848,17 @@ export class PugPrinter {
     if (args) {
       args = args.trim();
       args = args.replace(/\s\s+/g, ' ');
-      result += `(${args})`;
+      result += `(${splitArguments(args)
+        .map((arg) => arg.trim())
+        .map((arg) => {
+          if (arg[0] === '{' || arg[0] === '[') {
+            return this.formatDelegatePrettier(arg, '__js_expression');
+          } else if (isQuoted(arg)) {
+            return `${this.otherQuotes}${arg.slice(1, -1)}${this.otherQuotes}`;
+          }
+          return arg;
+        })
+        .join(', ')})`;
     }
     this.currentLineLength += result.length;
     this.possibleIdPosition = this.result.length + result.length;
