@@ -11,4 +11,24 @@ describe('Issues', () => {
 
 		expect(actual).toBe(expected);
 	});
+
+	test('should handle vue slot shorthand syntax in vue file', () => {
+		const expected: string = readFileSync(resolve(__dirname, 'formatted.vue'), 'utf8');
+		const code: string = readFileSync(resolve(__dirname, 'unformatted.vue'), 'utf8');
+		const actual: string = format(code, {
+			parser: 'vue',
+			plugins: [plugin],
+			printWidth: 120,
+			singleQuote: true,
+			trailingComma: 'all',
+
+			// @ts-expect-error
+			pugAttributeSeparator: 'none',
+			pugFramework: 'vue',
+			pugSingleFileComponentIndentation: true,
+			pugSingleQuote: false
+		});
+
+		expect(actual).toBe(expected);
+	});
 });
