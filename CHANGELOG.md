@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.16.5...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.6...main)
+
+# 1.16.6
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.5...1.16.6)
+
+- Handle Vue slot shorthand formatting ([#289])
+
+[#289]: https://github.com/prettier/plugin-pug/issues/289
 
 # 1.16.5
 
