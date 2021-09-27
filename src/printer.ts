@@ -1102,7 +1102,10 @@ export class PugPrinter {
 						ignoreLevel++;
 					} else if (type === 'outdent') {
 						ignoreLevel--;
-						if (ignoreLevel === 0) {
+						if (ignoreLevel <= 0) {
+							if (ignoreLevel < 0) {
+								this.indentLevel--;
+							}
 							break;
 						}
 					}
