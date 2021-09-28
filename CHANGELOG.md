@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.16.6...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.7...main)
+
+# 1.16.7
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.6...1.16.7)
+
+- Fix handling of `prettier-ignore` ([#292])
+
+[#292]: https://github.com/prettier/plugin-pug/issues/292
 
 # 1.16.6
 
