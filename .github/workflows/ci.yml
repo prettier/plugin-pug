@@ -31,11 +31,14 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
 
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+
             - name: Set node version to ${{ matrix.node_version }}
               uses: actions/setup-node@v2
               with:
                   node-version: ${{ matrix.node_version }}
-                  cache: "pnpm"
+                  cache: 'pnpm'
 
             - name: Versions
               run: |
@@ -69,11 +72,14 @@ jobs:
               with:
                   fetch-depth: 0
 
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+
             - name: Set node version to 14
               uses: actions/setup-node@v2
               with:
                   node-version: 14
-                  cache: "pnpm"
+                  cache: 'pnpm'
 
             - name: Prepare
               run: pnpm install --frozen-lockfile
@@ -89,11 +95,14 @@ jobs:
               with:
                   fetch-depth: 0
 
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+
             - name: Set node version to 14
               uses: actions/setup-node@v2
               with:
                   node-version: 14
-                  cache: "pnpm"
+                  cache: 'pnpm'
 
             - name: Prepare
               run: pnpm install --frozen-lockfile
