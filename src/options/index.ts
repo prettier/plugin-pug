@@ -1,6 +1,6 @@
 import type { ParserOptions, SupportOptions } from 'prettier';
 import type { AttributeSeparator } from './attribute-separator';
-import { ATTRIBUTE_SEPARATOR_OPTION, PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
+import { PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
 import type { SortAttributes } from './attribute-sorting';
 import {
 	PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
@@ -8,9 +8,9 @@ import {
 	PUG_SORT_ATTRIBUTES_OPTION
 } from './attribute-sorting';
 import type { ClosingBracketPosition } from './closing-bracket-position';
-import { CLOSING_BRACKET_POSITION_OPTION, PUG_CLOSING_BRACKET_POSITION_OPTION } from './closing-bracket-position';
+import { PUG_CLOSING_BRACKET_POSITION_OPTION } from './closing-bracket-position';
 import type { CommentPreserveSpaces } from './comment-preserve-spaces';
-import { COMMENT_PRESERVE_SPACES_OPTION, PUG_COMMENT_PRESERVE_SPACES_OPTION } from './comment-preserve-spaces';
+import { PUG_COMMENT_PRESERVE_SPACES_OPTION } from './comment-preserve-spaces';
 import type { ArrowParens } from './common';
 import {
 	PUG_ARROW_PARENS_OPTION,
@@ -56,14 +56,11 @@ export interface PugParserOptions
 	pugArrowParens: ArrowParens | null;
 	pugSemi: boolean | null;
 
-	attributeSeparator: AttributeSeparator;
-	pugAttributeSeparator: AttributeSeparator | null;
+	pugAttributeSeparator: AttributeSeparator;
 
-	closingBracketPosition: ClosingBracketPosition;
-	pugClosingBracketPosition: ClosingBracketPosition | null;
+	pugClosingBracketPosition: ClosingBracketPosition;
 
-	commentPreserveSpaces: CommentPreserveSpaces;
-	pugCommentPreserveSpaces: CommentPreserveSpaces | null;
+	pugCommentPreserveSpaces: CommentPreserveSpaces;
 
 	pugSortAttributes: SortAttributes;
 	pugSortAttributesBeginning: string[];
@@ -96,11 +93,8 @@ export const options: SupportOptions = {
 	pugBracketSpacing: PUG_BRACKET_SPACING_OPTION,
 	pugArrowParens: PUG_ARROW_PARENS_OPTION,
 	pugSemi: PUG_SEMI_OPTION,
-	attributeSeparator: ATTRIBUTE_SEPARATOR_OPTION,
 	pugAttributeSeparator: PUG_ATTRIBUTE_SEPARATOR_OPTION,
-	closingBracketPosition: CLOSING_BRACKET_POSITION_OPTION,
 	pugClosingBracketPosition: PUG_CLOSING_BRACKET_POSITION_OPTION,
-	commentPreserveSpaces: COMMENT_PRESERVE_SPACES_OPTION,
 	pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION,
 	pugSortAttributes: PUG_SORT_ATTRIBUTES_OPTION,
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,

@@ -4,15 +4,17 @@ import { format } from 'prettier';
 import { plugin } from './../../../../src/index';
 
 describe('Options', () => {
-	describe('closingBracketPosition', () => {
-		test("should closing bracket of attributes stick with last attribute's line", () => {
+	describe('attributeSeparator', () => {
+		test('should insert commas between attributes as-needed', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 			const actual: string = format(code, {
 				parser: 'pug',
 				plugins: [plugin],
+				// The `.length-test` elements are tested against a `printWidth` of 80 (currently also the default):
+				printWidth: 80,
 				// @ts-expect-error
-				closingBracketPosition: 'last-line'
+				pugAttributeSeparator: 'as-needed'
 			});
 
 			expect(actual).toBe(expected);

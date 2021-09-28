@@ -14,7 +14,7 @@ describe('Options', () => {
 				// The `.length-test` elements are tested against a `printWidth` of 80 (currently also the default):
 				printWidth: 80,
 				// @ts-expect-error
-				attributeSeparator: 'none'
+				pugAttributeSeparator: 'none'
 			});
 
 			expect(actual).toBe(expected);
@@ -26,7 +26,7 @@ describe('Options', () => {
 				parser: 'pug',
 				plugins: [plugin],
 				// @ts-expect-error
-				attributeSeparator: 'none'
+				pugAttributeSeparator: 'none'
 			});
 			expect(actual).toBe(expected);
 			expect(() => {

@@ -119,9 +119,9 @@ export interface PugPrinterOptions {
 	readonly pugArrowParens: ArrowParens;
 	readonly semi: boolean;
 	readonly pugSemi: boolean;
-	readonly attributeSeparator: AttributeSeparator;
-	readonly closingBracketPosition: ClosingBracketPosition;
-	readonly commentPreserveSpaces: CommentPreserveSpaces;
+	readonly pugAttributeSeparator: AttributeSeparator;
+	readonly pugClosingBracketPosition: ClosingBracketPosition;
+	readonly pugCommentPreserveSpaces: CommentPreserveSpaces;
 	readonly pugSortAttributes: SortAttributes;
 	readonly pugSortAttributesBeginning: string[];
 	readonly pugSortAttributesEnd: string[];
@@ -229,11 +229,11 @@ export class PugPrinter {
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
 
-		const attributeSeparator: AttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
+		const attributeSeparator: AttributeSeparator = resolveAttributeSeparatorOption(options.pugAttributeSeparator);
 		this.alwaysUseAttributeSeparator = attributeSeparator === 'always';
 		this.neverUseAttributeSeparator = attributeSeparator === 'none';
 
-		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.closingBracketPosition);
+		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.pugClosingBracketPosition);
 
 		const wrapAttributesPattern: string = options.pugWrapAttributesPattern;
 		this.wrapAttributesPattern = wrapAttributesPattern ? new RegExp(wrapAttributesPattern) : null;
@@ -1134,7 +1134,7 @@ export class PugPrinter {
 			if (!commentToken.buffer) {
 				result += '-';
 			}
-			result += formatCommentPreserveSpaces(commentToken.val, this.options.commentPreserveSpaces);
+			result += formatCommentPreserveSpaces(commentToken.val, this.options.pugCommentPreserveSpaces);
 			if (this.nextToken?.type === 'start-pipeless-text') {
 				this.pipelessComment = true;
 			}
@@ -1172,7 +1172,7 @@ export class PugPrinter {
 			}
 
 			if (this.pipelessComment) {
-				val = formatCommentPreserveSpaces(val, this.options.commentPreserveSpaces, true);
+				val = formatCommentPreserveSpaces(val, this.options.pugCommentPreserveSpaces, true);
 			}
 		} else {
 			if (this.nextToken && val[val.length - 1] === ' ') {
