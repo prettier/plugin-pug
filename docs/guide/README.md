@@ -5,15 +5,21 @@
 Simply install `prettier` and `@prettier/plugin-pug` as your project’s npm `devDependencies`:
 
 <code-group>
-<code-block title="YARN" active>
+<code-block title="NPM" active>
+```bash
+npm add --save-dev prettier @prettier/plugin-pug
+```
+</code-block>
+
+<code-block title="YARN">
 ```bash
 yarn add --dev prettier @prettier/plugin-pug
 ```
 </code-block>
 
-<code-block title="NPM">
+<code-block title="PNPM">
 ```bash
-npm install --save-dev prettier @prettier/plugin-pug
+pnpm add --save-dev prettier @prettier/plugin-pug
 ```
 </code-block>
 </code-group>
@@ -23,15 +29,21 @@ npm install --save-dev prettier @prettier/plugin-pug
 Format all pug files in your project:
 
 <code-group>
-<code-block title="YARN" active>
+<code-block title="NPM" active>
+```bash
+npx prettier --write "**/*.pug"
+```
+</code-block>
+
+<code-block title="YARN">
 ```bash
 yarn prettier --write "**/*.pug"
 ```
 </code-block>
 
-<code-block title="NPM">
+<code-block title="PNPM">
 ```bash
-npx prettier --write "**/*.pug"
+pnpm prettier --write "**/*.pug"
 ```
 </code-block>
 </code-group>

@@ -6,14 +6,14 @@ rm -Rf coverage
 rm -Rf dist
 rm -Rf node_modules
 rm junit.xml
-rm yarn.lock
+rm pnpm-lock.yaml
 
 # Prepare
-yarn install
-yarn lint
-yarn test --silent
-yarn npm audit --all --recursive
-yarn build
+pnpm install
+pnpm lint
+pnpm test --silent
+pnpm audit
+pnpm build
 
 # Publish
 npm publish --dry-run
