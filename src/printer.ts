@@ -249,6 +249,37 @@ export class PugPrinter {
 		};
 	}
 
+	// ##     ## ######## ##       ########  ######## ########   ######
+	// ##     ## ##       ##       ##     ## ##       ##     ## ##    ##
+	// ##     ## ##       ##       ##     ## ##       ##     ## ##
+	// ######### ######   ##       ########  ######   ########   ######
+	// ##     ## ##       ##       ##        ##       ##   ##         ##
+	// ##     ## ##       ##       ##        ##       ##    ##  ##    ##
+	// ##     ## ######## ######## ##        ######## ##     ##  ######
+
+	//#region Helpers
+
+	private get computedIndent(): string {
+		switch (this.previousToken?.type) {
+			case 'newline':
+			case 'outdent':
+				return this.indentString.repeat(this.indentLevel);
+			case 'indent':
+				return this.indentString;
+			case 'start-pug-interpolation':
+				return '';
+		}
+		return this.options.pugSingleFileComponentIndentation ? this.indentString : '';
+	}
+
+	private get previousToken(): Token | undefined {
+		return this.tokens[this.currentIndex - 1];
+	}
+
+	private get nextToken(): Token | undefined {
+		return this.tokens[this.currentIndex + 1];
+	}
+
 	/**
 	 * Builds the formatted pug content.
 	 *
@@ -299,43 +330,12 @@ export class PugPrinter {
 						break;
 					}
 				}
-			} catch (error) {
+			} catch (error: any) {
 				throw new Error(error);
 			}
 			token = this.getNextToken();
 		}
 		return results.join('');
-	}
-
-	// ##     ## ######## ##       ########  ######## ########   ######
-	// ##     ## ##       ##       ##     ## ##       ##     ## ##    ##
-	// ##     ## ##       ##       ##     ## ##       ##     ## ##
-	// ######### ######   ##       ########  ######   ########   ######
-	// ##     ## ##       ##       ##        ##       ##   ##         ##
-	// ##     ## ##       ##       ##        ##       ##    ##  ##    ##
-	// ##     ## ######## ######## ##        ######## ##     ##  ######
-
-	//#region Helpers
-
-	private get computedIndent(): string {
-		switch (this.previousToken?.type) {
-			case 'newline':
-			case 'outdent':
-				return this.indentString.repeat(this.indentLevel);
-			case 'indent':
-				return this.indentString;
-			case 'start-pug-interpolation':
-				return '';
-		}
-		return this.options.pugSingleFileComponentIndentation ? this.indentString : '';
-	}
-
-	private get previousToken(): Token | undefined {
-		return this.tokens[this.currentIndex - 1];
-	}
-
-	private get nextToken(): Token | undefined {
-		return this.tokens[this.currentIndex + 1];
 	}
 
 	private getNextToken(): Token | null {
@@ -1042,6 +1042,7 @@ export class PugPrinter {
 			this.currentLineLength += val.length;
 			logger.debug('class', { val, length: val.length }, this.currentLineLength);
 			switch (this.previousToken?.type) {
+				case undefined:
 				case 'newline':
 				case 'outdent':
 				case 'indent': {
@@ -1101,7 +1102,10 @@ export class PugPrinter {
 						ignoreLevel++;
 					} else if (type === 'outdent') {
 						ignoreLevel--;
-						if (ignoreLevel === 0) {
+						if (ignoreLevel <= 0) {
+							if (ignoreLevel < 0) {
+								this.indentLevel--;
+							}
 							break;
 						}
 					}
@@ -1288,6 +1292,7 @@ export class PugPrinter {
 		const val: string = `#${token.val}`;
 		this.currentLineLength += val.length;
 		switch (this.previousToken?.type) {
+			case undefined:
 			case 'newline':
 			case 'outdent':
 			case 'indent': {
@@ -1406,9 +1411,6 @@ export class PugPrinter {
 				tok = this.tokens[index - 1];
 				if (tok?.type === 'text' && tok.val === '') {
 					result += '\n';
-				}
-				if (this.tokens[index + 1]?.type !== 'outdent') {
-					result += this.indentString.repeat(this.indentLevel);
 				}
 
 				this.currentIndex = index - 1;

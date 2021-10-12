@@ -1,6 +1,38 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.16.3...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.7...main)
+
+# 1.16.7
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.6...1.16.7)
+
+- Fix handling of `prettier-ignore` ([#292])
+
+[#292]: https://github.com/prettier/plugin-pug/issues/292
+
+# 1.16.6
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.5...1.16.6)
+
+- Handle Vue slot shorthand formatting ([#289])
+
+[#289]: https://github.com/prettier/plugin-pug/issues/289
+
+# 1.16.5
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.4...1.16.5)
+
+- Fix indentation of templates starting with class or ID when using `pugSingleFileComponentIndentation` ([#282])
+
+[#282]: https://github.com/prettier/plugin-pug/issues/282
+
+# 1.16.4
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.3...1.16.4)
+
+- Fix trailing indentations after pipeless text ([#278])
+
+[#278]: https://github.com/prettier/plugin-pug/issues/278
 
 # 1.16.3
 

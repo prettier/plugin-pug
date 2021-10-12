@@ -50,7 +50,7 @@ export function isVueEventBinding(name: string): boolean {
  * @returns `true` if `name` passes the vue expression check, otherwise `false`.
  */
 export function isVueExpression(name: string): boolean {
-	return /^((v-(bind|slot))?:|v-(model|slot|if|for|else-if|text|html)).*/.test(name);
+	return /^((v-(bind|slot))?:|v-(model|slot|if|for|else-if|text|html)|#).*/.test(name);
 }
 
 /**
