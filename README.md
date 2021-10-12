@@ -117,8 +117,8 @@ To run `@prettier/plugin-pug` locally:
 
 - Clone this repository.
 - Execute `pnpm install`.
-- Execute `pnpm lint` to make sure that the code passes formatting and linting.
-- Execute `pnpm test` to make sure that TypeScript successfully compiles into JavaScript and and all unit tests pass.
+- Execute `pnpm run lint` to make sure that the code passes formatting and linting.
+- Execute `pnpm run test` to make sure that TypeScript successfully compiles into JavaScript and all unit tests pass.
 
 ## Credits
 
