@@ -1,6 +1,11 @@
 .github/ISSUE_TEMPLATE/
+.yarn/
+.pnp.cjs
+pnpm-lock.yaml
 benchmark/
 coverage/
 dist/
+docs/.vuepress/.cache/
+docs/.vuepress/.temp/
 tests/**/*.vue
 tests/**/*.pug

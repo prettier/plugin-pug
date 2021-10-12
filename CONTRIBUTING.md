@@ -18,4 +18,4 @@ At first: Thank you for being interested and using my plugin. :smiley_cat:
 
 - Please add tests for your implementation if necessary.
 - Do not change the `CHANGELOG.md` or `version` in `package.json`, that will be my part after merging.
-- Before switching from `Draft` to `Request for review`, please perform `yarn lint` and `yarn format`.
+- Before switching from `Draft` to `Request for review`, please perform `pnpm run lint` and `pnpm run format`.

@@ -5,8 +5,10 @@
 		"Quadflieg",
 		"Skya",
 		"autocloseable",
+		"backticks",
 		"blockcode",
 		"codemirror",
+		"ecmascript",
 		"endregion",
 		"frameset",
 		"lehni",
@@ -22,8 +24,15 @@
 		"pugjs",
 		"readonly",
 		"rvalue",
-		"typeof"
+		"typeof",
+		"vite",
+		"vuepress",
+		"yaml"
 	],
 	"eslint.validate": ["javascript", "typescript"],
+	"search.exclude": {
+		"**/.yarn": true,
+		"**/.pnp.*": true
+	},
 	"typescript.tsdk": "node_modules/typescript/lib"
 }

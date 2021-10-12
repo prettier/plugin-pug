@@ -50,7 +50,7 @@ export function isVueEventBinding(name: string): boolean {
  * @returns `true` if `name` passes the vue expression check, otherwise `false`.
  */
 export function isVueExpression(name: string): boolean {
-	return /^((v-(bind|slot))?:|v-(model|slot|if|for|else-if|text|html)).*/.test(name);
+	return /^((v-(bind|slot))?:|v-(model|slot|if|for|else-if|text|html)|#).*/.test(name);
 }
 
 /**
@@ -77,6 +77,31 @@ export function isVueExpression(name: string): boolean {
  */
 export function isVueVForWithOf(name: string, val: string): boolean {
 	return 'v-for' === name && val.includes('of');
+}
+
+/**
+ * Indicates whether the attribute name is a Vue v-bind.
+ *
+ * ---
+ *
+ * Example expression:
+ * ```
+ * v-btn(v-bind="$attrs")
+ * ```
+ *
+ * In this case `name` is `v-bind`.
+ *
+ * ---
+ *
+ * Checks for: `v-bind`.
+ *
+ * ---
+ *
+ * @param name Name of tag attribute.
+ * @returns `true` if `name` passes the vue `v-bind` check, otherwise `false`.
+ */
+export function isVueVBindExpression(name: string): boolean {
+	return 'v-bind' === name;
 }
 
 /**

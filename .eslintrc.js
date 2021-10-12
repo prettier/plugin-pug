@@ -2,7 +2,7 @@
 const { defineConfig } = require('eslint-define-config');
 
 module.exports = defineConfig({
-	ignorePatterns: ['.eslintrc.js', 'dist/'],
+	ignorePatterns: ['.eslintrc.js', 'dist/', 'benchmark/'],
 	env: {
 		es6: true,
 		jest: true,
@@ -35,11 +35,11 @@ module.exports = defineConfig({
 		'@typescript-eslint/ban-ts-comment': 'off',
 		'@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
 		'@typescript-eslint/indent': ['error', 'tab', { SwitchCase: 1, ignoredNodes: ['MemberExpression'] }],
-		'@typescript-eslint/interface-name-prefix': 'off',
 		'@typescript-eslint/member-ordering': 'warn',
 		'@typescript-eslint/no-explicit-any': 'off',
 		'@typescript-eslint/no-inferrable-types': 'off',
 		'@typescript-eslint/no-parameter-properties': 'off',
+		'@typescript-eslint/no-unsafe-argument': 'off',
 		'@typescript-eslint/no-unsafe-assignment': 'off',
 		'@typescript-eslint/no-unused-vars': 'off',
 		'@typescript-eslint/prefer-nullish-coalescing': 'warn',
@@ -94,6 +94,7 @@ module.exports = defineConfig({
 					'coffeescript',
 					'colno',
 					'doctype',
+					'ecmascript',
 					'endregion',
 					'eos',
 					'fallthrough',
@@ -131,8 +132,10 @@ module.exports = defineConfig({
 					'utf8',
 					'vscode',
 					'vue',
+					'vuepress',
 					'whitespace',
-					'xml'
+					'xml',
+					'yaml'
 				]
 			}
 		],

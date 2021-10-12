@@ -1,14 +1,17 @@
 {
 	"name": "@prettier/plugin-pug",
-	"version": "1.13.5",
+	"version": "1.16.7",
 	"description": "Prettier Pug Plugin",
 	"main": "dist/index.js",
 	"scripts": {
-		"clean": "rm -Rf coverage dist junit.xml yarn.lock node_modules",
+		"clean": "rm -Rf coverage dist junit.xml pnpm-lock.yaml node_modules",
 		"build": "tsc",
+		"docs:dev": "vuepress dev docs",
+		"docs:build": "vuepress build docs",
 		"format": "prettier --write .",
 		"lint": "eslint .",
-		"test": "jest"
+		"test": "jest",
+		"prepublishOnly": "pnpm run clean && pnpm install && pnpm run build"
 	},
 	"keywords": [
 		"pug",
@@ -36,26 +39,28 @@
 		"pug-lexer": "^5.0.0"
 	},
 	"devDependencies": {
-		"@types/jest": "~26.0.22",
-		"@types/node": "~14.14.37",
-		"@types/prettier": "~2.2.3",
-		"@typescript-eslint/eslint-plugin": "~4.21.0",
-		"@typescript-eslint/parser": "~4.21.0",
+		"@types/jest": "~27.0.2",
+		"@types/node": "~16.10.3",
+		"@types/prettier": "~2.4.1",
+		"@typescript-eslint/eslint-plugin": "~5.0.0",
+		"@typescript-eslint/parser": "~5.0.0",
 		"benchmark": "~2.1.4",
-		"eslint": "~7.23.0",
-		"eslint-config-prettier": "~8.1.0",
-		"eslint-define-config": "~1.0.7",
+		"eslint": "~8.0.0",
+		"eslint-config-prettier": "~8.3.0",
+		"eslint-define-config": "~1.1.1",
 		"eslint-plugin-inclusive-language": "~2.1.1",
-		"eslint-plugin-jsdoc": "~32.3.0",
-		"eslint-plugin-prettier": "~3.3.1",
-		"eslint-plugin-spellcheck": "~0.0.17",
-		"jest": "~26.6.3",
-		"jest-junit": "~12.0.0",
-		"np": "~7.4.0",
-		"prettier": "2.2.1",
-		"prettier-plugin-organize-imports": "~1.1.1",
-		"ts-jest": "~26.5.4",
-		"typescript": "~4.2.4"
+		"eslint-plugin-jsdoc": "~36.1.1",
+		"eslint-plugin-prettier": "~4.0.0",
+		"eslint-plugin-spellcheck": "~0.0.19",
+		"jest": "~27.2.5",
+		"jest-junit": "~13.0.0",
+		"np": "~7.5.0",
+		"prettier": "2.4.1",
+		"prettier-plugin-organize-imports": "~2.3.4",
+		"ts-jest": "~27.0.5",
+		"typescript": "~4.4.3",
+		"vuepress": "~1.8.2",
+		"vuepress-theme-yuu": "~3.1.1"
 	},
 	"peerDependencies": {
 		"prettier": "^2.1.0"

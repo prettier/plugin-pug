@@ -1,6 +1,127 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.13.5...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.7...main)
+
+# 1.16.7
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.6...1.16.7)
+
+- Fix handling of `prettier-ignore` ([#292])
+
+[#292]: https://github.com/prettier/plugin-pug/issues/292
+
+# 1.16.6
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.5...1.16.6)
+
+- Handle Vue slot shorthand formatting ([#289])
+
+[#289]: https://github.com/prettier/plugin-pug/issues/289
+
+# 1.16.5
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.4...1.16.5)
+
+- Fix indentation of templates starting with class or ID when using `pugSingleFileComponentIndentation` ([#282])
+
+[#282]: https://github.com/prettier/plugin-pug/issues/282
+
+# 1.16.4
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.3...1.16.4)
+
+- Fix trailing indentations after pipeless text ([#278])
+
+[#278]: https://github.com/prettier/plugin-pug/issues/278
+
+# 1.16.3
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.2...1.16.3)
+
+- Use `pugTabWidth` for calculating line length ([#268])
+
+[#268]: https://github.com/prettier/plugin-pug/issues/268
+
+# 1.16.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.1...1.16.2)
+
+- Preserve backticks for `class` and `id` attributes ([#261])
+- Apply `useTabs` also for code interpolations ([#262])
+
+[#261]: https://github.com/prettier/plugin-pug/issues/261
+[#262]: https://github.com/prettier/plugin-pug/issues/262
+
+# 1.16.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.0...1.16.1)
+
+- Prevent wrong quotation ([#255])
+
+[#255]: https://github.com/prettier/plugin-pug/issues/255
+
+# 1.16.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.15.3...1.16.0)
+
+- New option `pugExplicitDiv` ([#241])
+- Ignore formatting for single line interpolated attributes ([#238])
+- Handle non-JS script content ([#244])
+- Fix corrupt attribute values on dynamically bound Vue props without quotes ([#250])
+
+[#238]: https://github.com/prettier/plugin-pug/issues/238
+[#241]: https://github.com/prettier/plugin-pug/issues/241
+[#244]: https://github.com/prettier/plugin-pug/issues/244
+[#250]: https://github.com/prettier/plugin-pug/issues/250
+
+# 1.15.3
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.15.2...1.15.3)
+
+- Upgrade to Prettier v2.3  
+  _This fixes `pugSingleFileComponentIndentation` option in combination with prettier v2.3_
+
+# 1.15.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.15.1...1.15.2)
+
+- Handle `v-bind` expression separately ([4827855])
+
+[4827855]: https://github.com/prettier/plugin-pug/commit/4827855ccd8130e787f684ff9a189e90f8a9ddf0
+
+# 1.15.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.15.0...1.15.1)
+
+- Same as `1.15.0` but with `dist` folder ([#211])
+
+[#211]: https://github.com/prettier/plugin-pug/issues/211
+
+# 1.15.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.14.0...1.15.0)
+
+- Handle `svelte` syntax ([#201])
+- Support bracket spacing for `interpolated-code` token ([#208])
+- Fix invalid added `;` in front of template string ([#206])
+
+[#201]: https://github.com/prettier/plugin-pug/issues/201
+[#206]: https://github.com/prettier/plugin-pug/issues/206
+[#208]: https://github.com/prettier/plugin-pug/pull/208
+
+# 1.14.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.13.5...1.14.0)
+
+- New [Documentation](https://prettier.github.io/plugin-pug) :memo:
+- New `pugFramework` option ([#186])
+- Add `'attribute'` choice to `pugClassNotation` ([#203])  
+  _Useful for e.g. [Tailwind CSS](https://tailwindcss.com) / [Windi CSS](https://windicss.org)_
+- Handle autocloseable tag with trailing text correctly ([#182])
+
+[#182]: https://github.com/prettier/plugin-pug/issues/182
+[#186]: https://github.com/prettier/plugin-pug/pull/186
+[#203]: https://github.com/prettier/plugin-pug/pull/203
 
 # 1.13.5
 

@@ -12,7 +12,7 @@ jobs:
         strategy:
             matrix:
                 os: [ubuntu-latest]
-                node_version: [12, 14, 15]
+                node_version: [12, 14, 16]
                 include:
                     - os: macos-latest
                       node_version: 14
@@ -31,22 +31,33 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
 
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 6
+
             - name: Set node version to ${{ matrix.node_version }}
               uses: actions/setup-node@v2
               with:
                   node-version: ${{ matrix.node_version }}
+                  cache: 'pnpm'
 
             - name: Versions
-              run: yarn versions
+              run: |
+                  echo "pnpm: $(pnpm --version)"
+                  echo "npm : $(npm --version)"
+                  echo "node: $(node --version)"
+                  echo "process.versions:"
+                  pnpm node -p process.versions
 
             - name: Install dependencies
-              run: yarn install --frozen-lockfile
+              run: pnpm install --frozen-lockfile
 
             - name: Build
-              run: yarn build
+              run: pnpm run build
 
             - name: Test
-              run: yarn jest --ci --silent --reporters=default --reporters=jest-junit
+              run: pnpm jest --ci --silent --reporters=default --reporters=jest-junit
 
             - name: Upload test artifact
               uses: actions/upload-artifact@v2
@@ -63,16 +74,22 @@ jobs:
               with:
                   fetch-depth: 0
 
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 6
+
             - name: Set node version to 14
               uses: actions/setup-node@v2
               with:
                   node-version: 14
+                  cache: 'pnpm'
 
             - name: Prepare
-              run: yarn install --frozen-lockfile
+              run: pnpm install --frozen-lockfile
 
             - name: Lint
-              run: yarn lint
+              run: pnpm run lint
 
     audit:
         runs-on: ubuntu-latest
@@ -82,20 +99,28 @@ jobs:
               with:
                   fetch-depth: 0
 
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 6
+
             - name: Set node version to 14
               uses: actions/setup-node@v2
               with:
                   node-version: 14
+                  cache: 'pnpm'
 
             - name: Prepare
-              run: yarn install --frozen-lockfile
+              run: pnpm install --frozen-lockfile
 
-            - name: Audit dependencies
-              run: yarn audit --groups dependencies
+            - name: Audit production
+              run: pnpm audit --prod
 
-            - name: Audit peerDependencies
-              run: yarn audit --groups peerDependencies
+            - name: Audit all
+              continue-on-error: true
+              run: pnpm audit
 
             - name: Check outdated dependencies
+              continue-on-error: true
               if: github.ref == 'refs/heads/main'
-              run: yarn outdated
+              run: pnpm outdated --long

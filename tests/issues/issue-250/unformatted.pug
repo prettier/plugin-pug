@@ -1,0 +1,9 @@
+- const circleSize = 72;
+- const circleWidth = 7;
+div
+  v-progress-circular(
+    :color="getProgressColor(currentCapacity)",
+    :size=circleSize,
+    :value='capacityPercentage',
+    :width=circleWidth,
+  ) {{ currentCapacity }}/{{ maxCapacity }}

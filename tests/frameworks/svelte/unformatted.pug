@@ -1,0 +1,17 @@
+main
+  h1 Hello {   name}!
+  p
+    | Visit the
+    a(href='https://svelte.dev/tutorial')
+      | Svelte tutorial
+      | to learn how to build Svelte
+      | apps.
+  p
+    +each('cats  as   cat')
+      a(href='{  cat.id   }') {  cat.name  }
+      | !{   ' '  }
+
+  p
+    +if('!user.loggedIn')
+      button(on:click='{  toggle}')
+        | Log out

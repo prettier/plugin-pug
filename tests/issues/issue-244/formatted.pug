@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    script(type="application/ld+json").
+      {
+        "@context": "http://schema.org",
+        "@type": "Website",
+        "name": "Example",
+        "headline": "Example of problem",
+        "url": "https://example.com/"
+      }
+
+  body
+    div Hello World
+
+    //- Should not take type attribute from wrong tag
+    div(type="application/json")
+    script.
+      const notJson = true;

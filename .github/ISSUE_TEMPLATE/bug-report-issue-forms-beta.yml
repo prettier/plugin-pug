@@ -1,0 +1,84 @@
+name: Bug Report (Issue Forms Beta)
+description: Create a report to help us improve
+title: 'Bug: '
+labels: []
+assignees: []
+body:
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin Version
+      placeholder: v1.x.x
+    validations:
+      required: true
+  - type: input
+    id: prettier-version
+    attributes:
+      label: Prettier Version
+      placeholder: v2.x.x
+    validations:
+      required: true
+  - type: checkboxes
+    id: framework
+    attributes:
+      label: Which frameworks are affected?
+      description: You may select more than one.
+      options:
+        - label: none
+        - label: vue
+        - label: angular
+        - label: svelte
+  - type: input
+    id: node-version
+    attributes:
+      label: Node Version
+      placeholder: vx.x.x
+    validations:
+      required: true
+  - type: checkboxes
+    id: operating-systems
+    attributes:
+      label: Which operating systems have you used?
+      description: You may select more than one.
+      options:
+        - label: Linux
+        - label: macOS
+        - label: Windows
+  - type: textarea
+    id: prettier-config
+    attributes:
+      label: Prettier config
+      description: "Content of your prettier config"
+      value: |
+        {
+
+        }
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: pug-input
+    attributes:
+      label: Input
+      description: "Content of your pug file"
+      render: pug
+    validations:
+      required: true
+  - type: textarea
+    id: pug-output-or-error
+    attributes:
+      label: Output or Error
+      render: bash
+    validations:
+      required: true
+  - type: textarea
+    id: pug-expected-output
+    attributes:
+      label: Expected Output
+      render: pug
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context

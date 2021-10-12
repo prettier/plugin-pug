@@ -65,6 +65,20 @@ typings/
 # build
 dist
 
+# docs
+.temp
+.cache
+
+# yarn no zero-install
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# tests
 tests/private
 
 tests/pug-tests/attrs.formatted.pug
@@ -100,5 +114,7 @@ tests/pug-tests/template.pug
 tests/pug-tests/text.formatted.pug
 tests/pug-tests/text.pug
 
+# benchmarking
 benchmark/
 processed-*.txt
+
