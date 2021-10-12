@@ -16,28 +16,22 @@ jobs:
               with:
                   fetch-depth: 0
 
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 6
+
             - name: Setup Node.js
               uses: actions/setup-node@v2
               with:
                   node-version: 14
-
-            - name: Fetch cached dependencies
-              uses: actions/cache@v2
-              id: yarn-cache
-              with:
-                  path: |
-                      **/.yarn/cache
-                      **/node_modules
-                  key: node-14-os-ubuntu-latest-yarn-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      node-14-os-ubuntu-latest-yarn-
+                  cache: 'pnpm'
 
             - name: Install dependencies
-              # if: steps.yarn-cache.outputs.cache-hit != 'true'
-              run: yarn install --immutable
+              run: pnpm install --frozen-lockfile
 
             - name: Build VuePress site
-              run: yarn docs:build
+              run: pnpm run docs:build
 
             - name: Deploy to GitHub Pages
               uses: crazy-max/ghaction-github-pages@v2

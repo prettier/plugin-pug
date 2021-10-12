@@ -4,14 +4,14 @@
 	"description": "Prettier Pug Plugin",
 	"main": "dist/index.js",
 	"scripts": {
-		"clean": "rm -Rf coverage dist junit.xml yarn.lock node_modules",
+		"clean": "rm -Rf coverage dist junit.xml pnpm-lock.yaml node_modules",
 		"build": "tsc",
 		"docs:dev": "vuepress dev docs",
 		"docs:build": "vuepress build docs",
 		"format": "prettier --write .",
 		"lint": "eslint .",
 		"test": "jest",
-		"prepublishOnly": "yarn clean && yarn install && yarn build"
+		"prepublishOnly": "pnpm run clean && pnpm install && pnpm run build"
 	},
 	"keywords": [
 		"pug",

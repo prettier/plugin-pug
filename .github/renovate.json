@@ -7,8 +7,6 @@
 	"lockFileMaintenance": { "enabled": true },
 	"pin": false,
 	"rangeStrategy": "replace",
-	"postUpdateOptions": ["yarnDedupeHighest"],
-	"ignoreDeps": ["prettier-plugin-organize-imports"],
 	"ignorePresets": ["workarounds:typesNodeVersioning"],
 	"packageRules": [
 		{

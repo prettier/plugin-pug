@@ -53,13 +53,21 @@ This plugin adds support for the Pug language to Prettier.
 Simply install `prettier` and `@prettier/plugin-pug` as your project’s `devDependencies`:
 
 ```bash
+npm add --save-dev prettier @prettier/plugin-pug
+# or
 yarn add --dev prettier @prettier/plugin-pug
+# or
+pnpm add --save-dev prettier @prettier/plugin-pug
 ```
 
 ## Usage
 
 ```bash
+npx prettier --write "**/*.pug"
+# or
 yarn prettier --write "**/*.pug"
+# or
+pnpm prettier --write "**/*.pug"
 ```
 
 ## Configuration
@@ -108,9 +116,9 @@ If you’re interested in contributing to the development of Prettier for Pug, y
 To run `@prettier/plugin-pug` locally:
 
 - Clone this repository.
-- Execute `yarn install`.
-- Execute `yarn lint` to make sure that the code passes formatting and linting.
-- Execute `yarn test` to make sure that TypeScript successfully compiles into JavaScript and and all unit tests pass.
+- Execute `pnpm install`.
+- Execute `pnpm run lint` to make sure that the code passes formatting and linting.
+- Execute `pnpm run test` to make sure that TypeScript successfully compiles into JavaScript and all unit tests pass.
 
 ## Credits
 
