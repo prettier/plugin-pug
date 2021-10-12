@@ -54,7 +54,7 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: Build
-              run: pnpm build
+              run: pnpm run build
 
             - name: Test
               run: pnpm jest --ci --silent --reporters=default --reporters=jest-junit
@@ -89,7 +89,7 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: Lint
-              run: pnpm lint
+              run: pnpm run lint
 
     audit:
         runs-on: ubuntu-latest

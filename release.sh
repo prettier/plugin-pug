@@ -10,10 +10,10 @@ rm pnpm-lock.yaml
 
 # Prepare
 pnpm install
-pnpm lint
-pnpm test --silent
+pnpm run lint
+pnpm run test -- --silent
 pnpm audit
-pnpm build
+pnpm run build
 
 # Publish
 npm publish --dry-run
