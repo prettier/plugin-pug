@@ -249,6 +249,37 @@ export class PugPrinter {
 		};
 	}
 
+	// ##     ## ######## ##       ########  ######## ########   ######
+	// ##     ## ##       ##       ##     ## ##       ##     ## ##    ##
+	// ##     ## ##       ##       ##     ## ##       ##     ## ##
+	// ######### ######   ##       ########  ######   ########   ######
+	// ##     ## ##       ##       ##        ##       ##   ##         ##
+	// ##     ## ##       ##       ##        ##       ##    ##  ##    ##
+	// ##     ## ######## ######## ##        ######## ##     ##  ######
+
+	//#region Helpers
+
+	private get computedIndent(): string {
+		switch (this.previousToken?.type) {
+			case 'newline':
+			case 'outdent':
+				return this.indentString.repeat(this.indentLevel);
+			case 'indent':
+				return this.indentString;
+			case 'start-pug-interpolation':
+				return '';
+		}
+		return this.options.pugSingleFileComponentIndentation ? this.indentString : '';
+	}
+
+	private get previousToken(): Token | undefined {
+		return this.tokens[this.currentIndex - 1];
+	}
+
+	private get nextToken(): Token | undefined {
+		return this.tokens[this.currentIndex + 1];
+	}
+
 	/**
 	 * Builds the formatted pug content.
 	 *
@@ -305,37 +336,6 @@ export class PugPrinter {
 			token = this.getNextToken();
 		}
 		return results.join('');
-	}
-
-	// ##     ## ######## ##       ########  ######## ########   ######
-	// ##     ## ##       ##       ##     ## ##       ##     ## ##    ##
-	// ##     ## ##       ##       ##     ## ##       ##     ## ##
-	// ######### ######   ##       ########  ######   ########   ######
-	// ##     ## ##       ##       ##        ##       ##   ##         ##
-	// ##     ## ##       ##       ##        ##       ##    ##  ##    ##
-	// ##     ## ######## ######## ##        ######## ##     ##  ######
-
-	//#region Helpers
-
-	private get computedIndent(): string {
-		switch (this.previousToken?.type) {
-			case 'newline':
-			case 'outdent':
-				return this.indentString.repeat(this.indentLevel);
-			case 'indent':
-				return this.indentString;
-			case 'start-pug-interpolation':
-				return '';
-		}
-		return this.options.pugSingleFileComponentIndentation ? this.indentString : '';
-	}
-
-	private get previousToken(): Token | undefined {
-		return this.tokens[this.currentIndex - 1];
-	}
-
-	private get nextToken(): Token | undefined {
-		return this.tokens[this.currentIndex + 1];
 	}
 
 	private getNextToken(): Token | null {
