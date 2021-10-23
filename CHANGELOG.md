@@ -1,6 +1,22 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.16.7...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.17.0...main)
+
+# 1.17.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.16.7...1.17.0)
+
+## BREAKING CHANGES
+
+- Remove non prefixes options. ([#295])  
+  You now need to use e.g. `pugAttributeSeparator` instead of `attributeSeparator`
+
+## Other changes
+
+- Preserve escaped quotes within bindings ([#303])
+
+[#295]: https://github.com/prettier/plugin-pug/pull/295
+[#303]: https://github.com/prettier/plugin-pug/issues/303
 
 # 1.16.7
 
