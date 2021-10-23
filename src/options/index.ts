@@ -7,8 +7,8 @@ import {
 	PUG_SORT_ATTRIBUTES_END_OPTION,
 	PUG_SORT_ATTRIBUTES_OPTION
 } from './attribute-sorting';
-import type { PugClosingBracketPosition } from './closing-bracket-position';
-import { PUG_CLOSING_BRACKET_POSITION_OPTION } from './closing-bracket-position';
+import type { PugClosingBracketPosition } from './pug-closing-bracket-position';
+import { PUG_CLOSING_BRACKET_POSITION_OPTION } from './pug-closing-bracket-position';
 import type { CommentPreserveSpaces } from './comment-preserve-spaces';
 import { PUG_COMMENT_PRESERVE_SPACES_OPTION } from './comment-preserve-spaces';
 import type { ArrowParens } from './common';
