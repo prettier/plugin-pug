@@ -10,6 +10,7 @@ import type { PugPrinterOptions } from '../printer';
  */
 export function convergeOptions(options: ParserOptions & PugParserOptions): PugPrinterOptions {
 	return {
+		// Prettier base options
 		printWidth: options.printWidth,
 		pugPrintWidth: options.pugPrintWidth !== -1 ? options.pugPrintWidth : options.printWidth,
 		singleQuote: options.singleQuote,
@@ -24,9 +25,11 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugArrowParens: options.pugArrowParens ?? options.arrowParens,
 		semi: options.semi,
 		pugSemi: options.pugSemi ?? options.semi,
-		attributeSeparator: options.pugAttributeSeparator ?? options.attributeSeparator,
-		closingBracketPosition: options.pugClosingBracketPosition ?? options.closingBracketPosition,
-		commentPreserveSpaces: options.pugCommentPreserveSpaces ?? options.commentPreserveSpaces,
+
+		// Pug specific options
+		pugAttributeSeparator: options.pugAttributeSeparator,
+		pugClosingBracketPosition: options.pugClosingBracketPosition,
+		pugCommentPreserveSpaces: options.pugCommentPreserveSpaces,
 		pugSortAttributes: options.pugSortAttributes,
 		pugSortAttributesBeginning: options.pugSortAttributesBeginning,
 		pugSortAttributesEnd: options.pugSortAttributesEnd,
@@ -37,10 +40,7 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugEmptyAttributes: options.pugEmptyAttributes,
 		pugEmptyAttributesForceQuotes: options.pugEmptyAttributesForceQuotes,
 		pugSingleFileComponentIndentation:
-			options.pugSingleFileComponentIndentation &&
-			(options.__embeddedInHtml ||
-				// @ts-expect-error: `embeddedInHtml` was removed in Prettier 2.3.0
-				options.embeddedInHtml),
+			options.pugSingleFileComponentIndentation && options.__embeddedInHtml === true,
 		pugFramework: options.pugFramework,
 		pugExplicitDiv: options.pugExplicitDiv
 	};

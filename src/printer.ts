@@ -57,14 +57,14 @@ import type { DoctypeShortcut } from './doctype-shortcut-registry';
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import type { Logger } from './logger';
 import { createLogger, LogLevel } from './logger';
-import type { AttributeSeparator } from './options/attribute-separator';
-import { resolveAttributeSeparatorOption } from './options/attribute-separator';
-import type { SortAttributes } from './options/attribute-sorting';
+import type { PugAttributeSeparator } from './options/pug-attribute-separator';
+import { resolvePugAttributeSeparatorOption } from './options/pug-attribute-separator';
+import type { PugSortAttributes } from './options/attribute-sorting';
 import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
-import type { ClosingBracketPosition } from './options/closing-bracket-position';
-import { resolveClosingBracketPositionOption } from './options/closing-bracket-position';
-import type { CommentPreserveSpaces } from './options/comment-preserve-spaces';
-import { formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
+import type { PugClosingBracketPosition } from './options/pug-closing-bracket-position';
+import { resolvePugClosingBracketPositionOption } from './options/pug-closing-bracket-position';
+import type { PugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
+import { formatPugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
 import type { ArrowParens } from './options/common';
 import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
 import { formatEmptyAttribute } from './options/empty-attributes/utils';
@@ -119,10 +119,10 @@ export interface PugPrinterOptions {
 	readonly pugArrowParens: ArrowParens;
 	readonly semi: boolean;
 	readonly pugSemi: boolean;
-	readonly attributeSeparator: AttributeSeparator;
-	readonly closingBracketPosition: ClosingBracketPosition;
-	readonly commentPreserveSpaces: CommentPreserveSpaces;
-	readonly pugSortAttributes: SortAttributes;
+	readonly pugAttributeSeparator: PugAttributeSeparator;
+	readonly pugClosingBracketPosition: PugClosingBracketPosition;
+	readonly pugCommentPreserveSpaces: PugCommentPreserveSpaces;
+	readonly pugSortAttributes: PugSortAttributes;
 	readonly pugSortAttributesBeginning: string[];
 	readonly pugSortAttributesEnd: string[];
 	readonly pugWrapAttributesThreshold: number;
@@ -229,11 +229,13 @@ export class PugPrinter {
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
 
-		const attributeSeparator: AttributeSeparator = resolveAttributeSeparatorOption(options.attributeSeparator);
-		this.alwaysUseAttributeSeparator = attributeSeparator === 'always';
-		this.neverUseAttributeSeparator = attributeSeparator === 'none';
+		const pugAttributeSeparator: PugAttributeSeparator = resolvePugAttributeSeparatorOption(
+			options.pugAttributeSeparator
+		);
+		this.alwaysUseAttributeSeparator = pugAttributeSeparator === 'always';
+		this.neverUseAttributeSeparator = pugAttributeSeparator === 'none';
 
-		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.closingBracketPosition);
+		this.closingBracketRemainsAtNewLine = resolvePugClosingBracketPositionOption(options.pugClosingBracketPosition);
 
 		const wrapAttributesPattern: string = options.pugWrapAttributesPattern;
 		this.wrapAttributesPattern = wrapAttributesPattern ? new RegExp(wrapAttributesPattern) : null;
@@ -1134,7 +1136,7 @@ export class PugPrinter {
 			if (!commentToken.buffer) {
 				result += '-';
 			}
-			result += formatCommentPreserveSpaces(commentToken.val, this.options.commentPreserveSpaces);
+			result += formatPugCommentPreserveSpaces(commentToken.val, this.options.pugCommentPreserveSpaces);
 			if (this.nextToken?.type === 'start-pipeless-text') {
 				this.pipelessComment = true;
 			}
@@ -1172,7 +1174,7 @@ export class PugPrinter {
 			}
 
 			if (this.pipelessComment) {
-				val = formatCommentPreserveSpaces(val, this.options.commentPreserveSpaces, true);
+				val = formatPugCommentPreserveSpaces(val, this.options.pugCommentPreserveSpaces, true);
 			}
 		} else {
 			if (this.nextToken && val[val.length - 1] === ' ') {

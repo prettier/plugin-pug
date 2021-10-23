@@ -11,7 +11,7 @@ describe('Comments', () => {
 			parser: 'pug',
 			plugins: [plugin],
 			// @ts-expect-error
-			commentPreserveSpaces: 'trim-all'
+			pugCommentPreserveSpaces: 'trim-all'
 		});
 
 		expect(actual).toBe(expected);

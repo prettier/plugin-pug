@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { SortAttributes } from '../../../src/options/attribute-sorting/index';
+import { PugSortAttributes } from '../../../src/options/attribute-sorting/index';
 import { compareAttributeToken, stableSort } from '../../../src/options/attribute-sorting/utils';
 import { createAttributeToken } from '../../common';
 import { plugin } from './../../../src/index';
@@ -26,7 +26,7 @@ describe('Options', () => {
 
 	describe('sort utilities', () => {
 		test('should sort only the beginning attributes', () => {
-			const pugSortAttributes: SortAttributes = 'as-is';
+			const pugSortAttributes: PugSortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = ['v-for', ':key', 'src', 'alt'];
 			const pugSortAttributesEnd: string[] = [];
 			const expected: string[] = ['v-for', ':key', 'src', 'alt'];
@@ -44,7 +44,7 @@ describe('Options', () => {
 			expect(actual).toStrictEqual(expected);
 		});
 		test('should sort only the end attributes', () => {
-			const pugSortAttributes: SortAttributes = 'as-is';
+			const pugSortAttributes: PugSortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = [];
 			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
 			const expected: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
@@ -62,7 +62,7 @@ describe('Options', () => {
 			expect(actual).toStrictEqual(expected);
 		});
 		test('should sort both beginning and end, but keep middle attributes as is', () => {
-			const pugSortAttributes: SortAttributes = 'as-is';
+			const pugSortAttributes: PugSortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
 			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
 			const expected: string[] = [
@@ -93,7 +93,7 @@ describe('Options', () => {
 			expect(actual).toStrictEqual(expected);
 		});
 		test('should sort beginning, end, and middle should be sorted ascending', () => {
-			const pugSortAttributes: SortAttributes = 'asc';
+			const pugSortAttributes: PugSortAttributes = 'asc';
 			const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
 			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
 			const expected: string[] = [
@@ -139,7 +139,7 @@ describe('Options', () => {
 			expect(actual).toStrictEqual(expected);
 		});
 		test('should sort beginning, end, and middle should be sorted descending', () => {
-			const pugSortAttributes: SortAttributes = 'desc';
+			const pugSortAttributes: PugSortAttributes = 'desc';
 			const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
 			const pugSortAttributesEnd: string[] = ['v-for', ':key', 'src', 'alt', '@click', ':disabled'];
 			const expected: string[] = [
@@ -170,7 +170,7 @@ describe('Options', () => {
 			expect(actual).toStrictEqual(expected);
 		});
 		test('should keep middle attributes untouched', () => {
-			const pugSortAttributes: SortAttributes = 'as-is';
+			const pugSortAttributes: PugSortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = ['a'];
 			const pugSortAttributesEnd: string[] = ['b'];
 			// eslint-disable-next-line spellcheck/spell-checker
@@ -190,7 +190,7 @@ describe('Options', () => {
 			expect(actual).toStrictEqual(expected);
 		});
 		test('should keep every attribute untouched', () => {
-			const pugSortAttributes: SortAttributes = 'as-is';
+			const pugSortAttributes: PugSortAttributes = 'as-is';
 			const pugSortAttributesBeginning: string[] = [];
 			const pugSortAttributesEnd: string[] = [];
 			// eslint-disable-next-line spellcheck/spell-checker

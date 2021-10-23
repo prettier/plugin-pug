@@ -4,7 +4,7 @@ import { format } from 'prettier';
 import { parsers, plugin } from './../../../../src/index';
 
 describe('Options', () => {
-	describe('attributeSeparator', () => {
+	describe('pugAttributeSeparator', () => {
 		test('should never insert commas between attributes', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
@@ -14,7 +14,7 @@ describe('Options', () => {
 				// The `.length-test` elements are tested against a `printWidth` of 80 (currently also the default):
 				printWidth: 80,
 				// @ts-expect-error
-				attributeSeparator: 'none'
+				pugAttributeSeparator: 'none'
 			});
 
 			expect(actual).toBe(expected);
@@ -26,7 +26,7 @@ describe('Options', () => {
 				parser: 'pug',
 				plugins: [plugin],
 				// @ts-expect-error
-				attributeSeparator: 'none'
+				pugAttributeSeparator: 'none'
 			});
 			expect(actual).toBe(expected);
 			expect(() => {
