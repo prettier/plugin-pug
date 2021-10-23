@@ -61,8 +61,8 @@ import type { PugAttributeSeparator } from './options/pug-attribute-separator';
 import { resolvePugAttributeSeparatorOption } from './options/pug-attribute-separator';
 import type { SortAttributes } from './options/attribute-sorting';
 import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
-import type { ClosingBracketPosition } from './options/closing-bracket-position';
-import { resolveClosingBracketPositionOption } from './options/closing-bracket-position';
+import type { PugClosingBracketPosition } from './options/closing-bracket-position';
+import { resolvePugClosingBracketPositionOption } from './options/closing-bracket-position';
 import type { CommentPreserveSpaces } from './options/comment-preserve-spaces';
 import { formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
 import type { ArrowParens } from './options/common';
@@ -120,7 +120,7 @@ export interface PugPrinterOptions {
 	readonly semi: boolean;
 	readonly pugSemi: boolean;
 	readonly pugAttributeSeparator: PugAttributeSeparator;
-	readonly pugClosingBracketPosition: ClosingBracketPosition;
+	readonly pugClosingBracketPosition: PugClosingBracketPosition;
 	readonly pugCommentPreserveSpaces: CommentPreserveSpaces;
 	readonly pugSortAttributes: SortAttributes;
 	readonly pugSortAttributesBeginning: string[];
@@ -235,7 +235,7 @@ export class PugPrinter {
 		this.alwaysUseAttributeSeparator = pugAttributeSeparator === 'always';
 		this.neverUseAttributeSeparator = pugAttributeSeparator === 'none';
 
-		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.pugClosingBracketPosition);
+		this.closingBracketRemainsAtNewLine = resolvePugClosingBracketPositionOption(options.pugClosingBracketPosition);
 
 		const wrapAttributesPattern: string = options.pugWrapAttributesPattern;
 		this.wrapAttributesPattern = wrapAttributesPattern ? new RegExp(wrapAttributesPattern) : null;

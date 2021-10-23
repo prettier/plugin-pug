@@ -2,7 +2,7 @@ import type { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
 /** Pug closing bracket position option. */
-export const PUG_CLOSING_BRACKET_POSITION_OPTION: ChoiceSupportOption<ClosingBracketPosition> = {
+export const PUG_CLOSING_BRACKET_POSITION_OPTION: ChoiceSupportOption<PugClosingBracketPosition> = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
@@ -39,24 +39,24 @@ export const PUG_CLOSING_BRACKET_POSITION_OPTION: ChoiceSupportOption<ClosingBra
 	]
 };
 
-/** Closing bracket position. */
-export type ClosingBracketPosition = 'new-line' | 'last-line';
+/** Pug Closing bracket position. */
+export type PugClosingBracketPosition = 'new-line' | 'last-line';
 
 /**
- * Checks if the given `closingBracketPosition` is valid.
+ * Checks if the given `pugClosingBracketPosition` is valid.
  *
- * @param closingBracketPosition The closingBracketPosition.
- * @returns `true` if closingBracketPosition was `'new-line'` or `false` if it was `'last-line'`.
- * @throws Error if the closingBracketPosition was not valid.
+ * @param pugClosingBracketPosition The pugClosingBracketPosition.
+ * @returns `true` if pugClosingBracketPosition was `'new-line'` or `false` if it was `'last-line'`.
+ * @throws Error if the pugClosingBracketPosition was not valid.
  */
-export function resolveClosingBracketPositionOption(closingBracketPosition: ClosingBracketPosition): boolean {
-	switch (closingBracketPosition) {
+export function resolvePugClosingBracketPositionOption(pugClosingBracketPosition: PugClosingBracketPosition): boolean {
+	switch (pugClosingBracketPosition) {
 		case 'new-line':
 			return true;
 		case 'last-line':
 			return false;
 	}
 	throw new Error(
-		`Invalid option for pug closingBracketPosition. Found '${closingBracketPosition}'. Possible options: 'new-line' or 'last-line'`
+		`Invalid option for pugClosingBracketPosition. Found '${pugClosingBracketPosition}'. Possible options: 'new-line' or 'last-line'`
 	);
 }
