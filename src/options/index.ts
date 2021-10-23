@@ -31,7 +31,7 @@ import { PUG_FRAMEWORK } from './pug-framework';
 import type { PugIdNotation } from './pug-id-notation';
 import { PUG_ID_NOTATION } from './pug-id-notation';
 import { PUG_SINGLE_FILE_COMPONENT_INDENTATION } from './pug-single-file-component-indentation';
-import { WRAP_ATTRIBUTES_PATTERN, WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes';
+import { PUG_WRAP_ATTRIBUTES_PATTERN, PUG_WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes';
 
 /**
  * Category for Prettier's CLI.
@@ -99,8 +99,8 @@ export const options: SupportOptions = {
 	pugSortAttributes: PUG_SORT_ATTRIBUTES_OPTION,
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	pugSortAttributesEnd: PUG_SORT_ATTRIBUTES_END_OPTION,
-	pugWrapAttributesThreshold: WRAP_ATTRIBUTES_THRESHOLD,
-	pugWrapAttributesPattern: WRAP_ATTRIBUTES_PATTERN,
+	pugWrapAttributesThreshold: PUG_WRAP_ATTRIBUTES_THRESHOLD,
+	pugWrapAttributesPattern: PUG_WRAP_ATTRIBUTES_PATTERN,
 	pugEmptyAttributes: PUG_EMPTY_ATTRIBUTES_OPTION,
 	pugClassNotation: PUG_CLASS_NOTATION,
 	pugIdNotation: PUG_ID_NOTATION,

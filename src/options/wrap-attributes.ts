@@ -2,7 +2,7 @@ import type { IntSupportOption, PathSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
 /** Wrap attributes threshold. */
-export const WRAP_ATTRIBUTES_THRESHOLD: IntSupportOption = {
+export const PUG_WRAP_ATTRIBUTES_THRESHOLD: IntSupportOption = {
 	since: '1.8.0',
 	category: CATEGORY_PUG,
 	type: 'int',
@@ -12,7 +12,7 @@ export const WRAP_ATTRIBUTES_THRESHOLD: IntSupportOption = {
 };
 
 /** Wrap attributes pattern. */
-export const WRAP_ATTRIBUTES_PATTERN: PathSupportOption = {
+export const PUG_WRAP_ATTRIBUTES_PATTERN: PathSupportOption = {
 	since: '1.8.0',
 	category: CATEGORY_PUG,
 	type: 'path',
