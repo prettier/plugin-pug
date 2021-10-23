@@ -23,7 +23,7 @@ export const PUG_SORT_ATTRIBUTES_END_OPTION: PathArraySupportOption = {
 };
 
 /** Pug sort attributes option. */
-export const PUG_SORT_ATTRIBUTES_OPTION: ChoiceSupportOption<SortAttributes> = {
+export const PUG_SORT_ATTRIBUTES_OPTION: ChoiceSupportOption<PugSortAttributes> = {
 	since: '1.8.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
@@ -37,4 +37,4 @@ export const PUG_SORT_ATTRIBUTES_OPTION: ChoiceSupportOption<SortAttributes> = {
 };
 
 /** Sort attributes. */
-export type SortAttributes = 'asc' | 'desc' | 'as-is';
+export type PugSortAttributes = 'asc' | 'desc' | 'as-is';

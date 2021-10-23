@@ -59,7 +59,7 @@ import type { Logger } from './logger';
 import { createLogger, LogLevel } from './logger';
 import type { PugAttributeSeparator } from './options/pug-attribute-separator';
 import { resolvePugAttributeSeparatorOption } from './options/pug-attribute-separator';
-import type { SortAttributes } from './options/attribute-sorting';
+import type { PugSortAttributes } from './options/attribute-sorting';
 import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
 import type { PugClosingBracketPosition } from './options/pug-closing-bracket-position';
 import { resolvePugClosingBracketPositionOption } from './options/pug-closing-bracket-position';
@@ -122,7 +122,7 @@ export interface PugPrinterOptions {
 	readonly pugAttributeSeparator: PugAttributeSeparator;
 	readonly pugClosingBracketPosition: PugClosingBracketPosition;
 	readonly pugCommentPreserveSpaces: PugCommentPreserveSpaces;
-	readonly pugSortAttributes: SortAttributes;
+	readonly pugSortAttributes: PugSortAttributes;
 	readonly pugSortAttributesBeginning: string[];
 	readonly pugSortAttributesEnd: string[];
 	readonly pugWrapAttributesThreshold: number;

@@ -1,7 +1,7 @@
 import type { ParserOptions, SupportOptions } from 'prettier';
 import type { PugAttributeSeparator } from './pug-attribute-separator';
 import { PUG_ATTRIBUTE_SEPARATOR_OPTION } from './pug-attribute-separator';
-import type { SortAttributes } from './attribute-sorting';
+import type { PugSortAttributes } from './attribute-sorting';
 import {
 	PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	PUG_SORT_ATTRIBUTES_END_OPTION,
@@ -31,7 +31,7 @@ import { PUG_FRAMEWORK } from './pug-framework';
 import type { PugIdNotation } from './pug-id-notation';
 import { PUG_ID_NOTATION } from './pug-id-notation';
 import { PUG_SINGLE_FILE_COMPONENT_INDENTATION } from './pug-single-file-component-indentation';
-import { PUG_WRAP_ATTRIBUTES_PATTERN, PUG_WRAP_ATTRIBUTES_THRESHOLD } from './wrap-attributes';
+import { PUG_WRAP_ATTRIBUTES_PATTERN, PUG_WRAP_ATTRIBUTES_THRESHOLD } from './pug-wrap-attributes';
 
 /**
  * Category for Prettier's CLI.
@@ -62,7 +62,7 @@ export interface PugParserOptions
 
 	pugCommentPreserveSpaces: PugCommentPreserveSpaces;
 
-	pugSortAttributes: SortAttributes;
+	pugSortAttributes: PugSortAttributes;
 	pugSortAttributesBeginning: string[];
 	pugSortAttributesEnd: string[];
 
