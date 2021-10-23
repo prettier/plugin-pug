@@ -57,8 +57,8 @@ import type { DoctypeShortcut } from './doctype-shortcut-registry';
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import type { Logger } from './logger';
 import { createLogger, LogLevel } from './logger';
-import type { AttributeSeparator } from './options/attribute-separator';
-import { resolveAttributeSeparatorOption } from './options/attribute-separator';
+import type { PugAttributeSeparator } from './options/pug-attribute-separator';
+import { resolvePugAttributeSeparatorOption } from './options/pug-attribute-separator';
 import type { SortAttributes } from './options/attribute-sorting';
 import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
 import type { ClosingBracketPosition } from './options/closing-bracket-position';
@@ -119,7 +119,7 @@ export interface PugPrinterOptions {
 	readonly pugArrowParens: ArrowParens;
 	readonly semi: boolean;
 	readonly pugSemi: boolean;
-	readonly pugAttributeSeparator: AttributeSeparator;
+	readonly pugAttributeSeparator: PugAttributeSeparator;
 	readonly pugClosingBracketPosition: ClosingBracketPosition;
 	readonly pugCommentPreserveSpaces: CommentPreserveSpaces;
 	readonly pugSortAttributes: SortAttributes;
@@ -229,9 +229,11 @@ export class PugPrinter {
 		this.quotes = this.options.pugSingleQuote ? "'" : '"';
 		this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
 
-		const attributeSeparator: AttributeSeparator = resolveAttributeSeparatorOption(options.pugAttributeSeparator);
-		this.alwaysUseAttributeSeparator = attributeSeparator === 'always';
-		this.neverUseAttributeSeparator = attributeSeparator === 'none';
+		const pugAttributeSeparator: PugAttributeSeparator = resolvePugAttributeSeparatorOption(
+			options.pugAttributeSeparator
+		);
+		this.alwaysUseAttributeSeparator = pugAttributeSeparator === 'always';
+		this.neverUseAttributeSeparator = pugAttributeSeparator === 'none';
 
 		this.closingBracketRemainsAtNewLine = resolveClosingBracketPositionOption(options.pugClosingBracketPosition);
 

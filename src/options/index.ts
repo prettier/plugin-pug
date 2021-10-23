@@ -1,6 +1,6 @@
 import type { ParserOptions, SupportOptions } from 'prettier';
-import type { AttributeSeparator } from './attribute-separator';
-import { PUG_ATTRIBUTE_SEPARATOR_OPTION } from './attribute-separator';
+import type { PugAttributeSeparator } from './pug-attribute-separator';
+import { PUG_ATTRIBUTE_SEPARATOR_OPTION } from './pug-attribute-separator';
 import type { SortAttributes } from './attribute-sorting';
 import {
 	PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
@@ -56,7 +56,7 @@ export interface PugParserOptions
 	pugArrowParens: ArrowParens | null;
 	pugSemi: boolean | null;
 
-	pugAttributeSeparator: AttributeSeparator;
+	pugAttributeSeparator: PugAttributeSeparator;
 
 	pugClosingBracketPosition: ClosingBracketPosition;
 

@@ -2,7 +2,7 @@ import type { ChoiceSupportOption } from 'prettier';
 import { CATEGORY_PUG } from '.';
 
 /** Pug attribute separator option. */
-export const PUG_ATTRIBUTE_SEPARATOR_OPTION: ChoiceSupportOption<AttributeSeparator> = {
+export const PUG_ATTRIBUTE_SEPARATOR_OPTION: ChoiceSupportOption<PugAttributeSeparator> = {
 	since: '1.6.0',
 	category: CATEGORY_PUG,
 	type: 'choice',
@@ -27,24 +27,26 @@ export const PUG_ATTRIBUTE_SEPARATOR_OPTION: ChoiceSupportOption<AttributeSepara
 	]
 };
 
-/** Attribute separator. */
-export type AttributeSeparator = 'always' | 'as-needed' | 'none';
+/** Pug Attribute separator. */
+export type PugAttributeSeparator = 'always' | 'as-needed' | 'none';
 
 /**
- * Checks if the given `attributeSeparator` is valid.
+ * Checks if the given `pugAttributeSeparator` is valid.
  *
- * @param attributeSeparator The attributeSeparator.
- * @returns The given `attributeSeparator`.
- * @throws Error if the attributeSeparator was not valid.
+ * @param pugAttributeSeparator The pugAttributeSeparator.
+ * @returns The given `pugAttributeSeparator`.
+ * @throws Error if the pugAttributeSeparator was not valid.
  */
-export function resolveAttributeSeparatorOption(attributeSeparator: AttributeSeparator): AttributeSeparator {
-	switch (attributeSeparator) {
+export function resolvePugAttributeSeparatorOption(
+	pugAttributeSeparator: PugAttributeSeparator
+): PugAttributeSeparator {
+	switch (pugAttributeSeparator) {
 		case 'always':
 		case 'as-needed':
 		case 'none':
-			return attributeSeparator;
+			return pugAttributeSeparator;
 	}
 	throw new Error(
-		`Invalid option for pug attributeSeparator. Found '${attributeSeparator}'. Possible options: 'always', 'as-needed' or 'none'`
+		`Invalid option for pugAttributeSeparator. Found '${pugAttributeSeparator}'. Possible options: 'always', 'as-needed' or 'none'`
 	);
 }

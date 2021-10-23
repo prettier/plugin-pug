@@ -4,7 +4,7 @@ import { format } from 'prettier';
 import { parsers, plugin } from './../../../../src/index';
 
 describe('Options', () => {
-	describe('attributeSeparator', () => {
+	describe('pugAttributeSeparator', () => {
 		test('should never insert commas between attributes', () => {
 			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
