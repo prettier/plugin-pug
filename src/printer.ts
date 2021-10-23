@@ -579,6 +579,11 @@ export class PugPrinter {
 			val = val.slice(1, -1); // Remove quotes
 		}
 		val = format(val, { parser, ...this.codeInterpolationOptions });
+		if (this.quotes === '"') {
+			val = val.replace(/"/g, '\\"');
+		} else {
+			val = val.replace(/'/g, "\\'");
+		}
 		val = unwrapLineFeeds(val);
 		if (trimTrailingSemicolon && val[val.length - 1] === ';') {
 			val = val.slice(0, -1);
