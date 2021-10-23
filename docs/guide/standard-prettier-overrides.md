@@ -8,6 +8,12 @@ By default, the same formatting options are used as configured through the stand
 
 Print spaces between brackets in object literals.
 
+## Bracket Same Line
+
+[pugBracketSameLine](https://prettier.io/docs/en/options.html#bracket-line)
+
+Put the `)` of a multi-line element at the end of the last line instead of being alone on the next line.
+
 ## Print Width
 
 [pugPrintWidth](https://prettier.io/docs/en/options.html#print-width)

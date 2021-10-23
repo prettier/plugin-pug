@@ -7,11 +7,9 @@ import {
 	PUG_SORT_ATTRIBUTES_END_OPTION,
 	PUG_SORT_ATTRIBUTES_OPTION
 } from './attribute-sorting';
-import type { PugClosingBracketPosition } from './pug-closing-bracket-position';
-import { PUG_CLOSING_BRACKET_POSITION_OPTION } from './pug-closing-bracket-position';
 import type { PugCommentPreserveSpaces } from './pug-comment-preserve-spaces';
 import { PUG_COMMENT_PRESERVE_SPACES_OPTION } from './pug-comment-preserve-spaces';
-import type { ArrowParens } from './common';
+import { ArrowParens, PUG_BRACKET_SAME_LINE_OPTION } from './common';
 import {
 	PUG_ARROW_PARENS_OPTION,
 	PUG_BRACKET_SPACING_OPTION,
@@ -45,7 +43,14 @@ export interface PugParserOptions
 	/* eslint-disable @typescript-eslint/indent */
 	extends Pick<
 		ParserOptions,
-		'printWidth' | 'singleQuote' | 'tabWidth' | 'useTabs' | 'bracketSpacing' | 'arrowParens' | 'semi'
+		| 'printWidth'
+		| 'singleQuote'
+		| 'tabWidth'
+		| 'useTabs'
+		| 'bracketSpacing'
+		| 'arrowParens'
+		| 'semi'
+		| 'bracketSameLine'
 	> {
 	/* eslint-enable @typescript-eslint/indent */
 	pugPrintWidth: number;
@@ -55,10 +60,9 @@ export interface PugParserOptions
 	pugBracketSpacing: boolean | null;
 	pugArrowParens: ArrowParens | null;
 	pugSemi: boolean | null;
+	pugBracketSameLine: boolean | null;
 
 	pugAttributeSeparator: PugAttributeSeparator;
-
-	pugClosingBracketPosition: PugClosingBracketPosition;
 
 	pugCommentPreserveSpaces: PugCommentPreserveSpaces;
 
@@ -93,8 +97,8 @@ export const options: SupportOptions = {
 	pugBracketSpacing: PUG_BRACKET_SPACING_OPTION,
 	pugArrowParens: PUG_ARROW_PARENS_OPTION,
 	pugSemi: PUG_SEMI_OPTION,
+	pugBracketSameLine: PUG_BRACKET_SAME_LINE_OPTION,
 	pugAttributeSeparator: PUG_ATTRIBUTE_SEPARATOR_OPTION,
-	pugClosingBracketPosition: PUG_CLOSING_BRACKET_POSITION_OPTION,
 	pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION,
 	pugSortAttributes: PUG_SORT_ATTRIBUTES_OPTION,
 	pugSortAttributesBeginning: PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,

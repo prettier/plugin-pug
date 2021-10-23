@@ -61,8 +61,6 @@ import type { PugAttributeSeparator } from './options/pug-attribute-separator';
 import { resolvePugAttributeSeparatorOption } from './options/pug-attribute-separator';
 import type { PugSortAttributes } from './options/attribute-sorting';
 import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
-import type { PugClosingBracketPosition } from './options/pug-closing-bracket-position';
-import { resolvePugClosingBracketPositionOption } from './options/pug-closing-bracket-position';
 import type { PugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
 import { formatPugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
 import type { ArrowParens } from './options/common';
@@ -119,8 +117,10 @@ export interface PugPrinterOptions {
 	readonly pugArrowParens: ArrowParens;
 	readonly semi: boolean;
 	readonly pugSemi: boolean;
+	readonly bracketSameLine: boolean;
+	readonly pugBracketSameLine: boolean;
+
 	readonly pugAttributeSeparator: PugAttributeSeparator;
-	readonly pugClosingBracketPosition: PugClosingBracketPosition;
 	readonly pugCommentPreserveSpaces: PugCommentPreserveSpaces;
 	readonly pugSortAttributes: PugSortAttributes;
 	readonly pugSortAttributesBeginning: string[];
@@ -183,12 +183,11 @@ export class PugPrinter {
 
 	private readonly alwaysUseAttributeSeparator: boolean;
 	private readonly neverUseAttributeSeparator: boolean;
-	private readonly closingBracketRemainsAtNewLine: boolean;
 	private readonly wrapAttributesPattern: RegExp | null;
 	/* eslint-disable @typescript-eslint/indent */
 	private readonly codeInterpolationOptions: Pick<
 		RequiredOptions,
-		'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine' | 'useTabs'
+		'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine' | 'useTabs' | 'bracketSameLine'
 	>;
 	/* eslint-enable @typescript-eslint/indent */
 
@@ -235,8 +234,6 @@ export class PugPrinter {
 		this.alwaysUseAttributeSeparator = pugAttributeSeparator === 'always';
 		this.neverUseAttributeSeparator = pugAttributeSeparator === 'none';
 
-		this.closingBracketRemainsAtNewLine = resolvePugClosingBracketPositionOption(options.pugClosingBracketPosition);
-
 		const wrapAttributesPattern: string = options.pugWrapAttributesPattern;
 		this.wrapAttributesPattern = wrapAttributesPattern ? new RegExp(wrapAttributesPattern) : null;
 
@@ -247,7 +244,8 @@ export class PugPrinter {
 			arrowParens: options.pugArrowParens ?? options.arrowParens,
 			printWidth: 9000,
 			endOfLine: 'lf',
-			useTabs: options.pugUseTabs ?? options.useTabs
+			useTabs: options.pugUseTabs ?? options.useTabs,
+			bracketSameLine: options.pugBracketSameLine ?? options.bracketSameLine
 		};
 	}
 
@@ -965,7 +963,7 @@ export class PugPrinter {
 
 	private ['end-attributes'](token: EndAttributesToken): void {
 		if (this.wrapAttributes && this.result[this.result.length - 1] !== '(') {
-			if (this.closingBracketRemainsAtNewLine) {
+			if (!this.options.pugBracketSameLine) {
 				this.result += '\n';
 			}
 			this.result += this.indentString.repeat(this.indentLevel);
@@ -991,7 +989,7 @@ export class PugPrinter {
 			// There were no attributes
 			this.result = this.result.slice(0, -1);
 		} else if (this.previousToken?.type === 'attribute') {
-			if (!this.closingBracketRemainsAtNewLine) {
+			if (this.options.pugBracketSameLine) {
 				this.result = this.result.trimRight();
 			}
 			this.result += ')';
