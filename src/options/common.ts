@@ -158,3 +158,59 @@ export const PUG_ARROW_PARENS_OPTION: ChoiceSupportOption<ArrowParens | null> = 
 
 /** Arrow parens. */
 export type ArrowParens = 'avoid' | 'always';
+
+/** Pug bracket same line option. */
+export const PUG_BRACKET_SAME_LINE_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
+	since: '1.17.0',
+	category: CATEGORY_PUG,
+	type: 'choice',
+	default: null,
+	description: 'Determines position of closing bracket which wraps attributes.',
+	choices: [
+		{
+			value: null,
+			description: 'Use `bracketSameLine` value.'
+		},
+		{
+			value: true,
+			description: `
+			Closing bracket remains with last attribute's line.
+			Example:
+			input(
+				type='text',
+				value='my_value',
+				name='my_name',
+				alt='my_alt',
+				autocomplete='on')
+			`
+		},
+		{
+			// Workaround, because prettier doesn't accept just `true` as choice value in CLI
+			value: 'true',
+			description: `
+			Closing bracket remains with last attribute's line.
+			Example:
+			input(
+				type='text',
+				value='my_value',
+				name='my_name',
+				alt='my_alt',
+				autocomplete='on')
+			`
+		},
+		{
+			value: false,
+			description: `
+			Closing bracket ends with a new line.
+			Example:
+			input(
+				type='text',
+				value='my_value',
+				name='my_name',
+				alt='my_alt',
+				autocomplete='on'
+			)
+			`
+		}
+	]
+};

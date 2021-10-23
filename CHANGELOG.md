@@ -8,13 +8,15 @@
 
 ## BREAKING CHANGES
 
-- Remove non prefixes options. ([#295])  
+- Remove non prefixes options ([#295])  
   You now need to use e.g. `pugAttributeSeparator` instead of `attributeSeparator`
+- Replace `pugClosingBracketPosition` with `pugBracketSameLine` ([#291])
 
 ## Other changes
 
 - Preserve escaped quotes within bindings ([#303])
 
+[#291]: https://github.com/prettier/plugin-pug/issues/291
 [#295]: https://github.com/prettier/plugin-pug/pull/295
 [#303]: https://github.com/prettier/plugin-pug/issues/303
 

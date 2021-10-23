@@ -47,48 +47,6 @@ Please note that while this option will process Angular syntax (e.g. `(click)="p
 
 ---
 
-## Closing Bracket Position
-
-`pugClosingBracketPosition`
-
-### Description
-
-Position of closing bracket of attributes.
-
-### Options
-
-**Type:** `choice`  
-**Default:** `'new-line'`
-
-#### `'new-line'`
-
-The closing bracket is placed on a new line.
-
-```pug
-input(
-  type="text",
-  value="my_value",
-  name="my_name",
-  alt="my_alt",
-  autocomplete="on"
-)
-```
-
-#### `'last-line'`
-
-The closing bracket is placed directly after the last attribute without an additional line break.
-
-```pug
-input(
-  type="text",
-  value="my_value",
-  name="my_name",
-  alt="my_alt",
-  autocomplete="on")
-```
-
----
-
 ## Comment Preserve Spaces
 
 `pugCommentPreserveSpaces`

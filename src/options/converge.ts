@@ -25,10 +25,11 @@ export function convergeOptions(options: ParserOptions & PugParserOptions): PugP
 		pugArrowParens: options.pugArrowParens ?? options.arrowParens,
 		semi: options.semi,
 		pugSemi: options.pugSemi ?? options.semi,
+		bracketSameLine: options.bracketSameLine,
+		pugBracketSameLine: options.pugBracketSameLine ?? options.bracketSameLine,
 
 		// Pug specific options
 		pugAttributeSeparator: options.pugAttributeSeparator,
-		pugClosingBracketPosition: options.pugClosingBracketPosition,
 		pugCommentPreserveSpaces: options.pugCommentPreserveSpaces,
 		pugSortAttributes: options.pugSortAttributes,
 		pugSortAttributesBeginning: options.pugSortAttributesBeginning,

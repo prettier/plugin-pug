@@ -21,7 +21,6 @@ describe('Issues', () => {
 
 			// @ts-expect-error
 			pugAttributeSeparator: 'always',
-			pugClosingBracketPosition: 'new-line',
 			pugSingleQuote: false,
 			pugSortAttributes: 'asc',
 			pugWrapAttributesPattern: '0',
