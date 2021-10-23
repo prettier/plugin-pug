@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x
+set -ex
 
 # Cleanup
 rm -Rf coverage
@@ -18,7 +18,7 @@ pnpm run build
 # Publish
 npm publish --dry-run
 
-set +x
+set +ex
 
 echo
 echo "If everything looks okay, use 'npm publish --access public'"
