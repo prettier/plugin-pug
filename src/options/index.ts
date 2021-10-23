@@ -97,7 +97,7 @@ export const options: SupportOptions = {
 	pugBracketSpacing: PUG_BRACKET_SPACING_OPTION,
 	pugArrowParens: PUG_ARROW_PARENS_OPTION,
 	pugSemi: PUG_SEMI_OPTION,
-	pugBracketSameLineOption: PUG_BRACKET_SAME_LINE_OPTION,
+	pugBracketSameLine: PUG_BRACKET_SAME_LINE_OPTION,
 	pugAttributeSeparator: PUG_ATTRIBUTE_SEPARATOR_OPTION,
 	pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION,
 	pugSortAttributes: PUG_SORT_ATTRIBUTES_OPTION,
