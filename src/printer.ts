@@ -63,8 +63,8 @@ import type { SortAttributes } from './options/attribute-sorting';
 import { compareAttributeToken, partialSort } from './options/attribute-sorting/utils';
 import type { PugClosingBracketPosition } from './options/pug-closing-bracket-position';
 import { resolvePugClosingBracketPositionOption } from './options/pug-closing-bracket-position';
-import type { CommentPreserveSpaces } from './options/comment-preserve-spaces';
-import { formatCommentPreserveSpaces } from './options/comment-preserve-spaces';
+import type { PugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
+import { formatPugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
 import type { ArrowParens } from './options/common';
 import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './options/empty-attributes';
 import { formatEmptyAttribute } from './options/empty-attributes/utils';
@@ -121,7 +121,7 @@ export interface PugPrinterOptions {
 	readonly pugSemi: boolean;
 	readonly pugAttributeSeparator: PugAttributeSeparator;
 	readonly pugClosingBracketPosition: PugClosingBracketPosition;
-	readonly pugCommentPreserveSpaces: CommentPreserveSpaces;
+	readonly pugCommentPreserveSpaces: PugCommentPreserveSpaces;
 	readonly pugSortAttributes: SortAttributes;
 	readonly pugSortAttributesBeginning: string[];
 	readonly pugSortAttributesEnd: string[];
@@ -1136,7 +1136,7 @@ export class PugPrinter {
 			if (!commentToken.buffer) {
 				result += '-';
 			}
-			result += formatCommentPreserveSpaces(commentToken.val, this.options.pugCommentPreserveSpaces);
+			result += formatPugCommentPreserveSpaces(commentToken.val, this.options.pugCommentPreserveSpaces);
 			if (this.nextToken?.type === 'start-pipeless-text') {
 				this.pipelessComment = true;
 			}
@@ -1174,7 +1174,7 @@ export class PugPrinter {
 			}
 
 			if (this.pipelessComment) {
-				val = formatCommentPreserveSpaces(val, this.options.pugCommentPreserveSpaces, true);
+				val = formatPugCommentPreserveSpaces(val, this.options.pugCommentPreserveSpaces, true);
 			}
 		} else {
 			if (this.nextToken && val[val.length - 1] === ' ') {

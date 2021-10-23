@@ -4,7 +4,7 @@ import { format } from 'prettier';
 import { plugin } from './../../../../src/index';
 
 describe('Options', () => {
-	describe('commentPreserveSpaces', () => {
+	describe('pugCommentPreserveSpaces', () => {
 		const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 		test('should trim all spaces within comments', () => {

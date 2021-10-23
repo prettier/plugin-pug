@@ -9,8 +9,8 @@ import {
 } from './attribute-sorting';
 import type { PugClosingBracketPosition } from './pug-closing-bracket-position';
 import { PUG_CLOSING_BRACKET_POSITION_OPTION } from './pug-closing-bracket-position';
-import type { CommentPreserveSpaces } from './comment-preserve-spaces';
-import { PUG_COMMENT_PRESERVE_SPACES_OPTION } from './comment-preserve-spaces';
+import type { PugCommentPreserveSpaces } from './pug-comment-preserve-spaces';
+import { PUG_COMMENT_PRESERVE_SPACES_OPTION } from './pug-comment-preserve-spaces';
 import type { ArrowParens } from './common';
 import {
 	PUG_ARROW_PARENS_OPTION,
@@ -60,7 +60,7 @@ export interface PugParserOptions
 
 	pugClosingBracketPosition: PugClosingBracketPosition;
 
-	pugCommentPreserveSpaces: CommentPreserveSpaces;
+	pugCommentPreserveSpaces: PugCommentPreserveSpaces;
 
 	pugSortAttributes: SortAttributes;
 	pugSortAttributesBeginning: string[];
