@@ -9,7 +9,7 @@ specifiers:
   benchmark: ~2.1.4
   eslint: ~8.1.0
   eslint-config-prettier: ~8.3.0
-  eslint-define-config: ~1.1.1
+  eslint-define-config: ~1.1.2
   eslint-plugin-inclusive-language: ~2.1.1
   eslint-plugin-jsdoc: ~37.0.0
   eslint-plugin-prettier: ~4.0.0
@@ -37,7 +37,7 @@ devDependencies:
   benchmark: 2.1.4
   eslint: 8.1.0
   eslint-config-prettier: 8.3.0_eslint@8.1.0
-  eslint-define-config: 1.1.1
+  eslint-define-config: 1.1.2
   eslint-plugin-inclusive-language: 2.1.1
   eslint-plugin-jsdoc: 37.0.0_eslint@8.1.0
   eslint-plugin-prettier: 4.0.0_850528f9ec3c0797b9b19a94a36b5ba3
@@ -4570,8 +4570,8 @@ packages:
       eslint: 8.1.0
     dev: true
 
-  /eslint-define-config/1.1.1:
-    resolution: {integrity: sha512-ZfQUX9WGjwgtrZ6vdYb9a18FMsvf01fyq+SwGOptIhe57lA6NXDeinD2iGHsPGfihKZvqQsdV6NduJ8QobXMiA==}
+  /eslint-define-config/1.1.2:
+    resolution: {integrity: sha512-wf+ATzYNAG3xU1eT4QosuF20E60nGbaAvTwjDARabsTuelRxhmyzJEvk8prO/xJScU427X/gCmUNpzpy6Mc1uQ==}
     dev: true
 
   /eslint-plugin-inclusive-language/2.1.1:
