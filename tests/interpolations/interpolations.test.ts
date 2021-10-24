@@ -28,7 +28,7 @@ describe('Interpolations', () => {
 		const actual: string = format(code, {
 			parser: 'pug',
 			plugins: [plugin],
-			// @ts-expect-error
+
 			pugFramework: 'angular'
 		});
 
@@ -45,7 +45,7 @@ describe('Interpolations', () => {
 		const actual: string = format(code, {
 			parser: 'pug',
 			plugins: [plugin],
-			// @ts-expect-error
+
 			pugFramework: 'vue'
 		});
 

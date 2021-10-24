@@ -22,7 +22,6 @@ describe('Issues', () => {
 			singleQuote: true,
 			trailingComma: 'all',
 
-			// @ts-expect-error
 			pugAttributeSeparator: 'none',
 			pugFramework: 'vue',
 			pugSingleFileComponentIndentation: true,

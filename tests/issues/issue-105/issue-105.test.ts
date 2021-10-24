@@ -14,7 +14,7 @@ describe('Issues', () => {
 			semi: false,
 			vueIndentScriptAndStyle: true,
 			singleQuote: true,
-			// @ts-expect-error
+
 			pugSingleQuote: false
 		});
 

@@ -13,7 +13,7 @@ describe('Options', () => {
 				plugins: [plugin],
 				// The `.length-test` elements are tested against a `printWidth` of 80 (currently also the default):
 				printWidth: 80,
-				// @ts-expect-error
+
 				pugAttributeSeparator: 'always'
 			});
 

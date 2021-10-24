@@ -15,7 +15,6 @@ describe('Issues', () => {
 			trailingComma: 'none',
 			arrowParens: 'avoid',
 
-			// @ts-expect-error
 			pugAttributeSeparator: 'as-needed'
 		});
 

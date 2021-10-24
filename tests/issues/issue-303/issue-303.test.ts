@@ -11,7 +11,7 @@ describe('Issues', () => {
 			parser: 'pug',
 			plugins: [plugin],
 			singleQuote: true,
-			// @ts-expect-error
+
 			pugSingleQuote: false
 		});
 

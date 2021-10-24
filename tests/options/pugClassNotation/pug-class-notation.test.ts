@@ -10,7 +10,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'pug',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugClassNotation: 'as-is'
 			});
 
@@ -22,7 +22,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'pug',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugClassNotation: 'literal'
 			});
 
@@ -34,7 +34,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'pug',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugClassNotation: 'attribute'
 			});
 

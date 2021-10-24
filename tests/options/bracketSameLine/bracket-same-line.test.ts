@@ -23,7 +23,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'pug',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugBracketSameLine: true
 			});
 
@@ -48,7 +48,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'pug',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugBracketSameLine: false
 			});
 

@@ -18,7 +18,7 @@ describe('Issues', () => {
 		const actual: string = format(code, {
 			parser: 'vue',
 			plugins: [plugin],
-			// @ts-expect-error
+
 			pugSingleFileComponentIndentation: true
 		});
 
@@ -32,7 +32,7 @@ describe('Issues', () => {
 			parser: 'vue',
 			plugins: [plugin],
 			tabWidth: 4,
-			// @ts-expect-error
+
 			pugSingleFileComponentIndentation: true
 		});
 

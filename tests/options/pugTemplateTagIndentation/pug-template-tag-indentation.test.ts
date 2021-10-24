@@ -11,7 +11,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'vue',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugSingleFileComponentIndentation: true
 			});
 
@@ -24,7 +24,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'vue',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugSingleFileComponentIndentation: false
 			});
 
@@ -45,7 +45,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'markdown',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugSingleFileComponentIndentation: true
 			});
 
@@ -80,7 +80,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'vue',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugSingleFileComponentIndentation: true
 			});
 
@@ -93,7 +93,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'vue',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugSingleFileComponentIndentation: true
 			});
 
@@ -106,7 +106,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'vue',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugSingleFileComponentIndentation: true
 			});
 
@@ -119,7 +119,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'vue',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugSingleFileComponentIndentation: true
 			});
 

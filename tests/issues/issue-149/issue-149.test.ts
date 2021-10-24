@@ -19,7 +19,6 @@ describe('Issues', () => {
 			singleQuote: true,
 			trailingComma: 'es5',
 
-			// @ts-expect-error
 			pugAttributeSeparator: 'always',
 			pugSingleQuote: false,
 			pugSortAttributes: 'asc',

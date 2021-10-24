@@ -11,7 +11,6 @@ describe('Issues', () => {
 			parser: 'pug',
 			plugins: [plugin],
 
-			// @ts-expect-error
 			pugSortAttributesBeginning: [
 				'^v-else$',
 				'^v-if$',

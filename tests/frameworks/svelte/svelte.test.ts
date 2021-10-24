@@ -12,7 +12,6 @@ describe('Frameworks', () => {
 				parser: 'pug',
 				plugins: [plugin],
 
-				// @ts-expect-error
 				pugFramework: 'svelte'
 			});
 

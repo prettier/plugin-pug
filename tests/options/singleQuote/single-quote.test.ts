@@ -26,7 +26,7 @@ describe('Options', () => {
 				parser: 'pug',
 				plugins: [plugin],
 				singleQuote: true,
-				// @ts-expect-error
+
 				pugSingleQuote: false
 			});
 
@@ -40,7 +40,7 @@ describe('Options', () => {
 				parser: 'pug',
 				plugins: [plugin],
 				singleQuote: true,
-				// @ts-expect-error
+
 				pugSingleQuote: true
 			});
 
@@ -54,7 +54,7 @@ describe('Options', () => {
 				parser: 'pug',
 				plugins: [plugin],
 				singleQuote: false,
-				// @ts-expect-error
+
 				pugSingleQuote: false
 			});
 
@@ -68,7 +68,7 @@ describe('Options', () => {
 				parser: 'pug',
 				plugins: [plugin],
 				singleQuote: false,
-				// @ts-expect-error
+
 				pugSingleQuote: true
 			});
 

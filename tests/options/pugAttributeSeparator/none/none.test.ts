@@ -13,7 +13,7 @@ describe('Options', () => {
 				plugins: [plugin],
 				// The `.length-test` elements are tested against a `printWidth` of 80 (currently also the default):
 				printWidth: 80,
-				// @ts-expect-error
+
 				pugAttributeSeparator: 'none'
 			});
 
@@ -25,7 +25,7 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'pug',
 				plugins: [plugin],
-				// @ts-expect-error
+
 				pugAttributeSeparator: 'none'
 			});
 			expect(actual).toBe(expected);

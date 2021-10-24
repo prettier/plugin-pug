@@ -10,7 +10,7 @@ describe('Issues', () => {
 		const actual: string = format(code, {
 			parser: 'pug',
 			plugins: [plugin],
-			// @ts-expect-error
+
 			pugFramework: 'angular'
 		});
 
