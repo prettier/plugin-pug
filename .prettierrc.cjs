@@ -1,4 +1,5 @@
 // @ts-check
+/// <reference types="./src/prettier" />
 
 /**
  * @type {import('prettier').Options}

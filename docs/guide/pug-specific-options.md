@@ -165,8 +165,8 @@ Define a regex pattern to match attributes against that should always trigger wr
 
 ### Options
 
-**Type:** `array`  
-**Default:** `[]`
+**Type:** `string`  
+**Default:** `''`
 
 ---
 

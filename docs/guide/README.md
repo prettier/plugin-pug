@@ -88,3 +88,26 @@ Pug code with automatic formatting:
 .text(color="primary", disabled)
 ```
 ````
+
+## Type support in configuration file
+
+You can write your `.prettierrc.cjs` like this to get fully type check support with documentation:
+
+```js
+// @ts-check
+/// <reference types="@prettier/plugin-pug/src/prettier" />
+
+/**
+ * @type {import('prettier').Options}
+ */
+module.exports = {
+  // `require.resolve` is needed for e.g. `pnpm`
+  plugins: [require.resolve('@prettier/plugin-pug')],
+
+  printWidth: 120,
+  singleQuote: true,
+
+  pugSingleQuote: false
+  // ... more pug* options
+};
+```

@@ -1,6 +1,12 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.17.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.17.1...main)
+
+# 1.17.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.17.0...1.17.1)
+
+- Add type definitions that can be used in `.prettierrc.cjs`
 
 # 1.17.0
 
