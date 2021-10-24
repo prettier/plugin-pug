@@ -1,17 +1,14 @@
 import type { ParserOptions, SupportOptions } from 'prettier';
-import type { PugAttributeSeparator } from './pug-attribute-separator';
-import { PUG_ATTRIBUTE_SEPARATOR_OPTION } from './pug-attribute-separator';
 import type { PugSortAttributes } from './attribute-sorting';
 import {
 	PUG_SORT_ATTRIBUTES_BEGINNING_OPTION,
 	PUG_SORT_ATTRIBUTES_END_OPTION,
 	PUG_SORT_ATTRIBUTES_OPTION
 } from './attribute-sorting';
-import type { PugCommentPreserveSpaces } from './pug-comment-preserve-spaces';
-import { PUG_COMMENT_PRESERVE_SPACES_OPTION } from './pug-comment-preserve-spaces';
-import { ArrowParens, PUG_BRACKET_SAME_LINE_OPTION } from './common';
 import {
+	ArrowParens,
 	PUG_ARROW_PARENS_OPTION,
+	PUG_BRACKET_SAME_LINE_OPTION,
 	PUG_BRACKET_SPACING_OPTION,
 	PUG_PRINT_WIDTH_OPTION,
 	PUG_SEMI_OPTION,
@@ -21,8 +18,12 @@ import {
 } from './common';
 import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './empty-attributes';
 import { PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION, PUG_EMPTY_ATTRIBUTES_OPTION } from './empty-attributes';
+import type { PugAttributeSeparator } from './pug-attribute-separator';
+import { PUG_ATTRIBUTE_SEPARATOR_OPTION } from './pug-attribute-separator';
 import type { PugClassNotation } from './pug-class-notation';
 import { PUG_CLASS_NOTATION } from './pug-class-notation';
+import type { PugCommentPreserveSpaces } from './pug-comment-preserve-spaces';
+import { PUG_COMMENT_PRESERVE_SPACES_OPTION } from './pug-comment-preserve-spaces';
 import { PUG_EXPLICIT_DIV } from './pug-explicit-div';
 import type { PugFramework } from './pug-framework';
 import { PUG_FRAMEWORK } from './pug-framework';
