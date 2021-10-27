@@ -64,5 +64,6 @@
 	},
 	"peerDependencies": {
 		"prettier": "^2.3.0"
-	}
+	},
+	"packageManager": "pnpm@6"
 }
