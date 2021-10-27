@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ex
+set -x
 
 # Cleanup
 rm -Rf coverage
@@ -7,6 +7,8 @@ rm -Rf dist
 rm -Rf node_modules
 rm junit.xml
 rm pnpm-lock.yaml
+
+set -e
 
 # Prepare
 pnpm install
