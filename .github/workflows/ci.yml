@@ -15,9 +15,9 @@ jobs:
                 node_version: [12, 14, 16]
                 include:
                     - os: macos-latest
-                      node_version: 14
+                      node_version: 16
                     - os: windows-latest
-                      node_version: 14
+                      node_version: 16
             fail-fast: false
 
         name: 'Build&Test: node-${{ matrix.node_version }}, ${{ matrix.os }}'
@@ -48,7 +48,7 @@ jobs:
                   echo "npm : $(npm --version)"
                   echo "node: $(node --version)"
                   echo "process.versions:"
-                  pnpm node -p process.versions
+                  node -p process.versions
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
@@ -68,7 +68,7 @@ jobs:
 
     lint:
         runs-on: ubuntu-latest
-        name: 'Lint: node-14, ubuntu-latest'
+        name: 'Lint: node-16, ubuntu-latest'
         steps:
             - uses: actions/checkout@v2
               with:
@@ -79,10 +79,10 @@ jobs:
               with:
                   version: 6
 
-            - name: Set node version to 14
+            - name: Set node version to 16
               uses: actions/setup-node@v2
               with:
-                  node-version: 14
+                  node-version: 16
                   cache: 'pnpm'
 
             - name: Prepare
@@ -93,7 +93,7 @@ jobs:
 
     audit:
         runs-on: ubuntu-latest
-        name: 'Audit: node-14, ubuntu-latest'
+        name: 'Audit: node-16, ubuntu-latest'
         steps:
             - uses: actions/checkout@v2
               with:
@@ -104,10 +104,10 @@ jobs:
               with:
                   version: 6
 
-            - name: Set node version to 14
+            - name: Set node version to 16
               uses: actions/setup-node@v2
               with:
-                  node-version: 14
+                  node-version: 16
                   cache: 'pnpm'
 
             - name: Prepare
