@@ -187,7 +187,14 @@ export class PugPrinter {
 	/* eslint-disable @typescript-eslint/indent */
 	private readonly codeInterpolationOptions: Pick<
 		RequiredOptions,
-		'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine' | 'useTabs' | 'tabWidth' | 'bracketSameLine'
+		| 'singleQuote'
+		| 'bracketSpacing'
+		| 'arrowParens'
+		| 'printWidth'
+		| 'endOfLine'
+		| 'useTabs'
+		| 'tabWidth'
+		| 'bracketSameLine'
 	>;
 	/* eslint-enable @typescript-eslint/indent */
 
