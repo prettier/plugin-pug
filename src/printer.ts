@@ -187,7 +187,7 @@ export class PugPrinter {
 	/* eslint-disable @typescript-eslint/indent */
 	private readonly codeInterpolationOptions: Pick<
 		RequiredOptions,
-		'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine' | 'useTabs' | 'bracketSameLine'
+		'singleQuote' | 'bracketSpacing' | 'arrowParens' | 'printWidth' | 'endOfLine' | 'useTabs' | 'tabWidth' | 'bracketSameLine'
 	>;
 	/* eslint-enable @typescript-eslint/indent */
 
@@ -245,6 +245,7 @@ export class PugPrinter {
 			printWidth: 9000,
 			endOfLine: 'lf',
 			useTabs: options.pugUseTabs ?? options.useTabs,
+			tabWidth: options.pugTabWidth ?? options.tabWidth,
 			bracketSameLine: options.pugBracketSameLine ?? options.bracketSameLine
 		};
 	}
