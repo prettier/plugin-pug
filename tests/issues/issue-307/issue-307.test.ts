@@ -4,7 +4,7 @@ import { format } from 'prettier';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-	test('should ignore escaping chars in vue prop', () => {
+	test('should set tab to 4 spaces', () => {
 		const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
 		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 		const actual: string = format(code, {
