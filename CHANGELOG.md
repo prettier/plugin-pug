@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.17.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.17.2...main)
+
+# 1.17.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.17.1...1.17.2)
+
+- Fix indentation issue of inline javascript ([#307])
+
+[#307]: https://github.com/prettier/plugin-pug/issues/307
 
 # 1.17.1
 
