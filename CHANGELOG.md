@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.17.2...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.17.3...main)
+
+# 1.17.3
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.17.2...1.17.3)
+
+- Treat `v-t` from vue-i18n as Vue expression ([#310])
+
+[#310]: https://github.com/prettier/plugin-pug/issues/310
 
 # 1.17.2
 
