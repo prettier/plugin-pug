@@ -41,7 +41,7 @@
 	"devDependencies": {
 		"@types/jest": "~27.0.2",
 		"@types/node": "~16.11.7",
-		"@types/prettier": "~2.4.1",
+		"@types/prettier": "~2.4.2",
 		"@typescript-eslint/eslint-plugin": "~5.3.1",
 		"@typescript-eslint/parser": "~5.3.1",
 		"benchmark": "~2.1.4",
@@ -65,5 +65,5 @@
 	"peerDependencies": {
 		"prettier": "^2.3.0"
 	},
-	"packageManager": "pnpm@6.21.0"
+	"packageManager": "pnpm@6.22.1"
 }
