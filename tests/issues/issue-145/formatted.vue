@@ -2,8 +2,8 @@
   DocumentTable(v-if="hasRole(roles.COMPANY_EMPLOYEE)", title="documents.plural")
   div(v-else)
     v-tabs.mb-4(v-model="tab", grow, @change="fetchData")
-      v-tab#user-documents {{ $t('documents.your') }}
-      v-tab#company-documents {{ $t('documents.company') }}
+      v-tab#user-documents {{ $t("documents.your") }}
+      v-tab#company-documents {{ $t("documents.company") }}
 
     Card
       DocumentTable(

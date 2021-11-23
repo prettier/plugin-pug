@@ -1,5 +1,5 @@
 .without-apostrophe(foo="{{ 'hello world' | uppercase }}")
-  | {{ 'hello world' | uppercase }}
+  | {{ "hello world" | uppercase }}
 
 .with-apostrophe(foo="{{ 'it\'s me' | uppercase }}")
   | {{ "it's me" | uppercase }}
@@ -7,4 +7,4 @@
 .very-special-case
   | {{ `"${`Jean ${'"John"'} d'Arc`.toUpperCase()}"` }}
 
-span {{ $t('a-language-key.that-is.very-long', { it: 'also', have: 'some', properties: 'that makes the line very long...' }) }}
+span {{ $t("a-language-key.that-is.very-long", { it: "also", have: "some", properties: "that makes the line very long..." }) }}

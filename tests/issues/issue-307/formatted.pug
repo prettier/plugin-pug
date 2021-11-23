@@ -5,10 +5,10 @@ script(src='javascripts/bootstrap.bundle.js')
 
 #main(style='width: 100%; height: 1000px')
 script.
-    var chartDom = document.getElementById("main");
-    var myChart = echarts.init(chartDom, null, { renderer: "canvas" });
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom, null, { renderer: 'canvas' });
     let option;
-    fetch("data/chResults.json")
+    fetch('data/chResults.json')
         .then(data => data.json())
         .then(json => {
             console.log(json);

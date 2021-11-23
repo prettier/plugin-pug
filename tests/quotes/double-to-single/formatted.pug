@@ -1,7 +1,9 @@
-#test
+- const test = 'test';
+
+#test(class=boolean ? 'grey--text' : 'black--text')
   .a(color='primary')
 
-.grey--text {{ $t("my-language-key.title") }}
+.grey--text {{ $t('my-language-key.title') }}
   v-text-field(
     :label='$t("my-language-key")',
     type='text',
