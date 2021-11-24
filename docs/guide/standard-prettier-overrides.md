@@ -30,8 +30,8 @@ Print semicolons at the ends of code statements.
 
 [pugSingleQuote](https://prettier.io/docs/en/options.html#quotes)
 
-Use single quotes instead of double quotes.
-Please note that the opposite setting will be used automatically for inlined JavaScript when inside of quotes
+Use single quotes instead of double quotes.  
+Please note that the opposite setting will be used automatically for inlined JavaScript when inside of quotes.
 
 ## Tab Width
 
@@ -43,7 +43,7 @@ Use spaces for indentation and specify the number of spaces per indentation-leve
 
 [pugUseTabs](https://prettier.io/docs/en/options.html#tabs)
 
-Indent lines with tabs instead of spaces.
+Indent lines with tabs instead of spaces.  
 Overrides `pugTabWidth`
 
 ## Arrow Function Parentheses
