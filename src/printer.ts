@@ -588,7 +588,6 @@ export class PugPrinter {
 			val = val.slice(1, -1); // Remove quotes
 		}
 		val = format(val, { parser, ...options });
-		logger.debug('what is happening', val);
 		if (this.quotes === '"') {
 			val = val.replace(/"/g, '\\"');
 		} else {
