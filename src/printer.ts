@@ -1574,7 +1574,7 @@ export class PugPrinter {
 	}
 
 	private each(token: EachToken): string {
-		const code: string = format(token.code, { parser: '__js_expression', ...this.codeInterpolationOptions });
+		const code: string = this.formatDelegatePrettier(token.code, '__js_expression');
 		let result: string = `${this.computedIndent}each ${token.val}`;
 		if (token.key !== null) {
 			result += `, ${token.key}`;
