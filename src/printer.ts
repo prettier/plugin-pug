@@ -588,6 +588,7 @@ export class PugPrinter {
 			val = val.slice(1, -1); // Remove quotes
 		}
 		val = format(val, { parser, ...options });
+		logger.debug('what is happening', val);
 		if (this.quotes === '"') {
 			val = val.replace(/"/g, '\\"');
 		} else {
@@ -1574,12 +1575,11 @@ export class PugPrinter {
 	}
 
 	private each(token: EachToken): string {
-		const code: string = this.formatDelegatePrettier(token.code, '__js_expression');
 		let result: string = `${this.computedIndent}each ${token.val}`;
 		if (token.key !== null) {
 			result += `, ${token.key}`;
 		}
-		result += ` in ${code}`;
+		result += ` in ${token.code}`;
 		return result;
 	}
 
