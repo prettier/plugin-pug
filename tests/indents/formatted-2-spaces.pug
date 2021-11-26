@@ -16,7 +16,7 @@ html
     div(v-if="things")
       .box.flex-box
         .flex-main-wrapper
-          .flex-box.header {{ $t('mylangkey.things') }}
+          .flex-box.header {{ $t("mylangkey.things") }}
 
           .flex-box.select(v-if="things[0].visible")
             v-autocomplete(

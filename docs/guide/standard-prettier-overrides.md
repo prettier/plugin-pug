@@ -31,7 +31,7 @@ Print semicolons at the ends of code statements.
 [pugSingleQuote](https://prettier.io/docs/en/options.html#quotes)
 
 Use single quotes instead of double quotes.  
-Please note that the opposite setting will be used automatically for inlined JavaScript.
+Please note that the opposite setting will be used automatically for inlined JavaScript when inside of quotes.
 
 ## Tab Width
 

@@ -244,9 +244,8 @@ export class PugPrinter {
 		const wrapAttributesPattern: string = options.pugWrapAttributesPattern;
 		this.wrapAttributesPattern = wrapAttributesPattern ? new RegExp(wrapAttributesPattern) : null;
 
-		const codeSingleQuote: boolean = !options.pugSingleQuote;
 		this.codeInterpolationOptions = {
-			singleQuote: codeSingleQuote,
+			singleQuote: options.pugSingleQuote ?? options.singleQuote,
 			bracketSpacing: options.pugBracketSpacing ?? options.bracketSpacing,
 			arrowParens: options.pugArrowParens ?? options.arrowParens,
 			printWidth: 9000,
@@ -582,11 +581,13 @@ export class PugPrinter {
 		{ trimTrailingSemicolon = false }: FormatDelegatePrettierOptions = {}
 	): string {
 		val = val.trim();
+		const options: Options = { ...this.codeInterpolationOptions };
 		const wasQuoted: boolean = isQuoted(val);
 		if (wasQuoted) {
+			options.singleQuote = !this.options.pugSingleQuote;
 			val = val.slice(1, -1); // Remove quotes
 		}
-		val = format(val, { parser, ...this.codeInterpolationOptions });
+		val = format(val, { parser, ...options });
 		if (this.quotes === '"') {
 			val = val.replace(/"/g, '\\"');
 		} else {
@@ -637,7 +638,8 @@ export class PugPrinter {
 				val
 			);
 		} else {
-			val = format(val, { parser, ...this.codeInterpolationOptions });
+			const options: Options = { ...this.codeInterpolationOptions, singleQuote: !this.options.pugSingleQuote };
+			val = format(val, { parser, ...options });
 			val = unwrapLineFeeds(val);
 		}
 		val = handleBracketSpacing(this.options.pugBracketSpacing, val, [opening, closing]);
