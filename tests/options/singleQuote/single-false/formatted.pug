@@ -6,7 +6,7 @@
 
 - const nameArray = [];
 
-div(:class="{ 'pt-2': !dense }")
+div(:class="{ 'pt-2': !dense }", test="blah")
   each name in nameArray.length > 0 ? nameArray : ["The 'Rock'"]
     p= `${name}`
     p= "single quoted"
