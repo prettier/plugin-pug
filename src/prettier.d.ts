@@ -107,6 +107,12 @@ declare module 'prettier' {
 		 */
 		pugIdNotation?: PugParserOptions['pugIdNotation'];
 		/**
+		 * Define where classes should be located.
+		 *
+		 * @default 'before-attributes'
+		 */
+		pugClassLocation?: PugParserOptions['pugClassLocation'];
+		/**
 		 * Include `div` tag when followed by literal class or id syntax.
 		 *
 		 * @default false

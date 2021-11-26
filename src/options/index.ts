@@ -20,6 +20,8 @@ import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './empty-
 import { PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION, PUG_EMPTY_ATTRIBUTES_OPTION } from './empty-attributes';
 import type { PugAttributeSeparator } from './pug-attribute-separator';
 import { PUG_ATTRIBUTE_SEPARATOR_OPTION } from './pug-attribute-separator';
+import type { PugClassLocation } from './pug-class-location';
+import { PUG_CLASS_LOCATION } from './pug-class-location';
 import type { PugClassNotation } from './pug-class-notation';
 import { PUG_CLASS_NOTATION } from './pug-class-notation';
 import type { PugCommentPreserveSpaces } from './pug-comment-preserve-spaces';
@@ -77,6 +79,8 @@ export interface PugParserOptions
 	pugClassNotation: PugClassNotation;
 	pugIdNotation: PugIdNotation;
 
+	pugClassLocation: PugClassLocation;
+
 	pugExplicitDiv: boolean;
 
 	pugEmptyAttributes: PugEmptyAttributes;
@@ -109,6 +113,7 @@ export const options: SupportOptions = {
 	pugEmptyAttributes: PUG_EMPTY_ATTRIBUTES_OPTION,
 	pugClassNotation: PUG_CLASS_NOTATION,
 	pugIdNotation: PUG_ID_NOTATION,
+	pugClassLocation: PUG_CLASS_LOCATION,
 	pugExplicitDiv: PUG_EXPLICIT_DIV,
 	pugEmptyAttributesForceQuotes: PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION,
 	pugSingleFileComponentIndentation: PUG_SINGLE_FILE_COMPONENT_INDENTATION,
