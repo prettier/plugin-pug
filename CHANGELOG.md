@@ -1,6 +1,15 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.17.3...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.18.0...main)
+
+# 1.18.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.17.3...1.18.0)
+
+- Handle `singleQuote` option more precisely ([#45])
+  - _for some configurations, this could be a "breaking" change_
+
+[#45]: https://github.com/prettier/plugin-pug/issues/45
 
 # 1.17.3
 
