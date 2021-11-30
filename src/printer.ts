@@ -64,7 +64,7 @@ import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './option
 import { formatEmptyAttribute } from './options/empty-attributes/utils';
 import type { PugAttributeSeparator } from './options/pug-attribute-separator';
 import { resolvePugAttributeSeparatorOption } from './options/pug-attribute-separator';
-import { PugClassLocation } from './options/pug-class-location';
+import type { PugClassLocation } from './options/pug-class-location';
 import type { PugClassNotation } from './options/pug-class-notation';
 import type { PugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
 import { formatPugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
