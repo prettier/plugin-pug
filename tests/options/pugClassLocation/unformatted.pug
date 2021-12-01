@@ -1,0 +1,15 @@
+div.before-class(type="button", class=boolean ? "test" : "fact").class.class-before= "type"
+  div.class.class-before(type="button", class=boolean ? "test" : "fact").after-class= "type"
+  div(type="button", class="test place")= "type"
+
+div#types(type="button", class="test place")= "type"
+
+input.bar.baz(
+  readonly,
+  name="test-input",
+  type="password",
+  value="Hello World",
+  atrr="more attrs"
+).foo
+
+input.bar.baz.foo( readonly, name="test-input", type="password", value="Hello World", atrr="more attrs")

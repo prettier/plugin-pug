@@ -1,12 +1,13 @@
-/* eslint-disable quotes */
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 import { format } from 'prettier';
 import { plugin } from './../../../src/index';
 
 describe('Options', () => {
 	describe('pugClassLocation', () => {
 		test('should position class literals before attributes', () => {
-			const expected: string = `.before-class.class.class-before(type="button", class=boolean ? "test" : "fact")= "type"\n`;
-			const code: string = `div.before-class(type="button", class=boolean ? "test" : "fact").class.class-before= "type"`;
+			const expected: string = readFileSync(resolve(__dirname, 'formatted-before.pug'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 			const actual: string = format(code, {
 				parser: 'pug',
 				plugins: [plugin],
@@ -17,32 +18,8 @@ describe('Options', () => {
 			expect(actual).toBe(expected);
 		});
 		test('should position class literals after attributes', () => {
-			const expected: string = `div(type="button", class=boolean ? "test" : "fact").class.class-before.after-class= "type"\n`;
-			const code: string = `div.class.class-before(type="button", class=boolean ? "test" : "fact").after-class= "type"`;
-			const actual: string = format(code, {
-				parser: 'pug',
-				plugins: [plugin],
-
-				pugClassLocation: 'after-attributes'
-			});
-
-			expect(actual).toBe(expected);
-		});
-		test('should position class attributes that can be literals before attributes', () => {
-			const expected: string = `.test.place(type="button")= "type"\n`;
-			const code: string = `div(type="button", class="test place")= "type"`;
-			const actual: string = format(code, {
-				parser: 'pug',
-				plugins: [plugin],
-
-				pugClassLocation: 'before-attributes'
-			});
-
-			expect(actual).toBe(expected);
-		});
-		test('should position class attributes that can be literals after attributes', () => {
-			const expected: string = `div(type="button").test.place= "type"\n`;
-			const code: string = `div(type="button", class="test place")= "type"`;
+			const expected: string = readFileSync(resolve(__dirname, 'formatted-after.pug'), 'utf8');
+			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
 			const actual: string = format(code, {
 				parser: 'pug',
 				plugins: [plugin],
