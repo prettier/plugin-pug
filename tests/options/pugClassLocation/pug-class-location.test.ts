@@ -17,7 +17,7 @@ describe('Options', () => {
 			expect(actual).toBe(expected);
 		});
 		test('should position class literals after attributes', () => {
-			const expected: string = `(type="button", class=boolean ? "test" : "fact").class.class-before.after-class= "type"\n`;
+			const expected: string = `div(type="button", class=boolean ? "test" : "fact").class.class-before.after-class= "type"\n`;
 			const code: string = `div.class.class-before(type="button", class=boolean ? "test" : "fact").after-class= "type"`;
 			const actual: string = format(code, {
 				parser: 'pug',

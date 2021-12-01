@@ -675,7 +675,8 @@ export class PugPrinter {
 			val === 'div' &&
 			!this.options.pugExplicitDiv &&
 			this.nextToken &&
-			(this.nextToken.type === 'class' || this.nextToken.type === 'id')
+			((this.nextToken.type === 'class' && this.options.pugClassLocation === 'before-attributes') ||
+				this.nextToken.type === 'id')
 		) {
 			val = '';
 		}
@@ -835,7 +836,9 @@ export class PugPrinter {
 							this.result.slice(position)
 						].join('');
 						this.possibleClassPosition += 1 + normalClasses.join('.').length;
-						this.replaceTagWithLiteralIfPossible(/div\./, '.');
+						if (this.options.pugClassLocation === 'before-attributes') {
+							this.replaceTagWithLiteralIfPossible(/div\./, '.');
+						}
 					}
 					if (specialClasses.length > 0) {
 						token.val = makeString(specialClasses.join(' '), this.quotes);
@@ -1069,17 +1072,16 @@ export class PugPrinter {
 			if (this.options.pugClassLocation === 'before-attributes') {
 				this.currentLineLength += val.length;
 			}
-			logger.debug(
-				'class',
-				{ result: this.result, val, length: val.length, previousToken: this.previousToken?.type },
-				this.currentLineLength
-			);
+			logger.debug('before class', { result: this.result, val, length: val.length }, this.currentLineLength);
 			switch (this.previousToken?.type) {
 				case undefined:
 				case 'newline':
 				case 'outdent':
 				case 'indent': {
-					const optionalDiv: string = this.options.pugExplicitDiv ? 'div' : '';
+					const optionalDiv: string =
+						this.options.pugExplicitDiv || this.options.pugClassLocation === 'after-attributes'
+							? 'div'
+							: '';
 					let result: string = `${this.computedIndent}${optionalDiv}`;
 					if (this.options.pugClassLocation === 'after-attributes') {
 						this.classLiteralAfterAttributes.push(val);
@@ -1101,7 +1103,7 @@ export class PugPrinter {
 				default: {
 					if (this.options.pugClassLocation === 'after-attributes') {
 						this.classLiteralAfterAttributes.push(val.slice(1));
-						let result: string = this.result.slice(this.possibleClassPosition);
+						let result: string = this.result.slice(0, this.possibleClassPosition);
 						if (this.nextToken && ['text', 'newline', 'indent', 'eos'].includes(this.nextToken?.type)) {
 							const classes: string[] = this.classLiteralAfterAttributes.splice(
 								0,
@@ -1119,7 +1121,7 @@ export class PugPrinter {
 					break;
 				}
 			}
-			logger.debug('class', { result: this.result, val, length: val.length }, this.currentLineLength);
+			logger.debug('after class', { result: this.result, val, length: val.length }, this.currentLineLength);
 			if (this.nextToken?.type === 'text') {
 				this.currentLineLength += 1;
 				this.result += ' ';
