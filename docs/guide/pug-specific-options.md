@@ -432,7 +432,7 @@ foo(id="bar")
 
 ### Description
 
-Define where classes will be placed
+Define where classes will be placed.
 
 ### Options
 
@@ -441,7 +441,7 @@ Define where classes will be placed
 
 #### `'before-attributes'`
 
-Forces all valid class literals to be placed before attributes
+Forces all valid class literals to be placed before attributes.
 
 ```pug
 foo.bar.baz(attr='this-attr')
@@ -449,7 +449,7 @@ foo.bar.baz(attr='this-attr')
 
 #### `'after-attributes'`
 
-Forces all valid class literals to be placed after attributes
+Forces all valid class literals to be placed after attributes.
 
 ```pug
 foo(attr='this-attr').bar.baz
