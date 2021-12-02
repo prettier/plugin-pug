@@ -1072,7 +1072,11 @@ export class PugPrinter {
 			if (this.options.pugClassLocation === 'before-attributes') {
 				this.currentLineLength += val.length;
 			}
-			logger.debug('before class', { result: this.result, val, length: val.length }, this.currentLineLength);
+			logger.debug(
+				'before class',
+				{ result: this.result, val, length: val.length, previousToken: this.previousToken },
+				this.currentLineLength
+			);
 			switch (this.previousToken?.type) {
 				case undefined:
 				case 'newline':
@@ -1103,13 +1107,16 @@ export class PugPrinter {
 				default: {
 					if (this.options.pugClassLocation === 'after-attributes') {
 						this.classLiteralAfterAttributes.push(val.slice(1));
+						logger.debug('class default', {
+							classLiteralAfterAttributes: this.classLiteralAfterAttributes
+						});
 						let result: string = this.result.slice(0, this.possibleClassPosition);
-						if (this.nextToken && ['text', 'newline', 'indent', 'eos'].includes(this.nextToken?.type)) {
+						if (['text', 'newline', 'indent', 'eos', 'code', undefined].includes(this.nextToken?.type)) {
 							const classes: string[] = this.classLiteralAfterAttributes.splice(
 								0,
 								this.classLiteralAfterAttributes.length
 							);
-							result += classes.join('.');
+							result += '.' + classes.join('.');
 						}
 						this.result = [result, this.result.slice(this.possibleClassPosition)].join('');
 						this.possibleClassPosition = this.result.length;
