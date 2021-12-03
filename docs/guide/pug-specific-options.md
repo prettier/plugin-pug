@@ -426,6 +426,37 @@ foo(id="bar")
 
 ---
 
+## Class Location
+
+`pugClassLocation`
+
+### Description
+
+Define where classes will be placed.
+
+### Options
+
+**Type:** `choice`
+**Default:** `'before-attributes'`
+
+#### `'before-attributes'`
+
+Forces all valid class literals to be placed before attributes.
+
+```pug
+foo.bar.baz(attr='this-attr')
+```
+
+#### `'after-attributes'`
+
+Forces all valid class literals to be placed after attributes.
+
+```pug
+foo(attr='this-attr').bar.baz
+```
+
+---
+
 ## Explicit div
 
 `pugExplicitDiv`

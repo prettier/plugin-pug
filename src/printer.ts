@@ -64,6 +64,7 @@ import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from './option
 import { formatEmptyAttribute } from './options/empty-attributes/utils';
 import type { PugAttributeSeparator } from './options/pug-attribute-separator';
 import { resolvePugAttributeSeparatorOption } from './options/pug-attribute-separator';
+import type { PugClassLocation } from './options/pug-class-location';
 import type { PugClassNotation } from './options/pug-class-notation';
 import type { PugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
 import { formatPugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
@@ -128,6 +129,7 @@ export interface PugPrinterOptions {
 	readonly pugWrapAttributesThreshold: number;
 	readonly pugWrapAttributesPattern: string;
 	readonly pugClassNotation: PugClassNotation;
+	readonly pugClassLocation: PugClassLocation;
 	readonly pugIdNotation: PugIdNotation;
 	readonly pugEmptyAttributes: PugEmptyAttributes;
 	readonly pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes;
@@ -213,6 +215,7 @@ export class PugPrinter {
 	private currentlyInPugInterpolation: boolean = false;
 
 	private readonly classLiteralToAttribute: string[] = [];
+	private readonly classLiteralAfterAttributes: string[] = [];
 
 	/**
 	 * Constructs a new pug printer.
@@ -672,7 +675,8 @@ export class PugPrinter {
 			val === 'div' &&
 			!this.options.pugExplicitDiv &&
 			this.nextToken &&
-			(this.nextToken.type === 'class' || this.nextToken.type === 'id')
+			((this.nextToken.type === 'class' && this.options.pugClassLocation === 'before-attributes') ||
+				this.nextToken.type === 'id')
 		) {
 			val = '';
 		}
@@ -815,7 +819,11 @@ export class PugPrinter {
 						if (!validClassNameRegex.test(className)) {
 							specialClasses.push(className);
 						} else {
-							normalClasses.push(className);
+							if (this.options.pugClassLocation === 'after-attributes') {
+								this.classLiteralAfterAttributes.push(className);
+							} else {
+								normalClasses.push(className);
+							}
 						}
 					}
 					if (normalClasses.length > 0) {
@@ -828,7 +836,9 @@ export class PugPrinter {
 							this.result.slice(position)
 						].join('');
 						this.possibleClassPosition += 1 + normalClasses.join('.').length;
-						this.replaceTagWithLiteralIfPossible(/div\./, '.');
+						if (this.options.pugClassLocation === 'before-attributes') {
+							this.replaceTagWithLiteralIfPossible(/div\./, '.');
+						}
 					}
 					if (specialClasses.length > 0) {
 						token.val = makeString(specialClasses.join(' '), this.quotes);
@@ -1004,6 +1014,14 @@ export class PugPrinter {
 			}
 			this.result += ')';
 		}
+		if (this.result[this.result.length - 1] === ')' && this.classLiteralAfterAttributes.length > 0) {
+			const classes: string[] = this.classLiteralAfterAttributes.splice(
+				0,
+				this.classLiteralAfterAttributes.length
+			);
+			this.result += `.${classes.join('.')}`;
+			this.possibleClassPosition = this.result.length;
+		}
 		if (this.nextToken?.type === 'text' || this.nextToken?.type === 'path') {
 			this.result += ' ';
 		}
@@ -1039,43 +1057,78 @@ export class PugPrinter {
 	private class(token: ClassToken): void {
 		if (this.options.pugClassNotation === 'attribute') {
 			this.classLiteralToAttribute.push(token.val);
-
 			if (this.previousToken?.type !== 'tag' && this.previousToken?.type !== 'class') {
 				this.result += 'div';
 			}
-
 			if (this.nextToken && ['text', 'newline', 'indent', 'eos'].includes(this.nextToken?.type)) {
 				const classes: string[] = this.classLiteralToAttribute.splice(0, this.classLiteralToAttribute.length);
 				this.result += `(class=${this.quoteString(classes.join(' '))})`;
-
 				if (this.nextToken?.type === 'text') {
 					this.result += ' ';
 				}
 			}
 		} else {
 			const val: string = `.${token.val}`;
-			this.currentLineLength += val.length;
-			logger.debug('class', { val, length: val.length }, this.currentLineLength);
+			if (this.options.pugClassLocation === 'before-attributes') {
+				this.currentLineLength += val.length;
+			}
+			logger.debug(
+				'before class',
+				{ result: this.result, val, length: val.length, previousToken: this.previousToken },
+				this.currentLineLength
+			);
 			switch (this.previousToken?.type) {
 				case undefined:
 				case 'newline':
 				case 'outdent':
 				case 'indent': {
-					const optionalDiv: string = this.options.pugExplicitDiv ? 'div' : '';
-					const result: string = `${this.computedIndent}${optionalDiv}${val}`;
+					const optionalDiv: string =
+						this.options.pugExplicitDiv || this.options.pugClassLocation === 'after-attributes'
+							? 'div'
+							: '';
+					let result: string = `${this.computedIndent}${optionalDiv}`;
+					if (this.options.pugClassLocation === 'after-attributes') {
+						this.classLiteralAfterAttributes.push(val);
+					} else {
+						result += val;
+					}
 					this.currentLineLength += optionalDiv.length;
 					this.possibleIdPosition = this.result.length + this.computedIndent.length + optionalDiv.length;
 					this.result += result;
 					this.possibleClassPosition = this.result.length;
 					break;
 				}
-				default: {
+				case 'end-attributes': {
 					const prefix: string = this.result.slice(0, this.possibleClassPosition);
 					this.result = [prefix, val, this.result.slice(this.possibleClassPosition)].join('');
 					this.possibleClassPosition += val.length;
 					break;
 				}
+				default: {
+					if (this.options.pugClassLocation === 'after-attributes') {
+						this.classLiteralAfterAttributes.push(val.slice(1));
+						logger.debug('class default', {
+							classLiteralAfterAttributes: this.classLiteralAfterAttributes
+						});
+						let result: string = this.result.slice(0, this.possibleClassPosition);
+						if (['text', 'newline', 'indent', 'eos', 'code', undefined].includes(this.nextToken?.type)) {
+							const classes: string[] = this.classLiteralAfterAttributes.splice(
+								0,
+								this.classLiteralAfterAttributes.length
+							);
+							result += '.' + classes.join('.');
+						}
+						this.result = [result, this.result.slice(this.possibleClassPosition)].join('');
+						this.possibleClassPosition = this.result.length;
+					} else {
+						const prefix: string = this.result.slice(0, this.possibleClassPosition);
+						this.result = [prefix, val, this.result.slice(this.possibleClassPosition)].join('');
+						this.possibleClassPosition += val.length;
+					}
+					break;
+				}
 			}
+			logger.debug('after class', { result: this.result, val, length: val.length }, this.currentLineLength);
 			if (this.nextToken?.type === 'text') {
 				this.currentLineLength += 1;
 				this.result += ' ';
