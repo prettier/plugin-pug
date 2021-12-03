@@ -2,7 +2,7 @@
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.19.0...main)
 
-# 1.19.0
+# 1.19.0 (next, not released yet)
 
 [diff](https://github.com/prettier/plugin-pug/compare/1.18.0...1.19.0)
 
