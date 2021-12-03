@@ -14,14 +14,19 @@ set -e
 pnpm install
 pnpm run lint
 pnpm run test -- --silent
-pnpm audit
-pnpm run build
+pnpm audit --prod
 
-# Publish
-npm publish --dry-run
+set +e
+pnpm audit
+set -e
+
+pnpm run build
 
 set +ex
 
+# Publish
+echo
+echo "Run 'npm publish --dry-run' to test publishing"
 echo
 echo "If everything looks okay, use 'npm publish --access public'"
 echo
