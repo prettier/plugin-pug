@@ -1088,7 +1088,7 @@ export class PugPrinter {
 							: '';
 					let result: string = `${this.computedIndent}${optionalDiv}`;
 					if (this.options.pugClassLocation === 'after-attributes') {
-						this.classLiteralAfterAttributes.push(val);
+						this.classLiteralAfterAttributes.push(val.slice(1));
 					} else {
 						result += val;
 					}
