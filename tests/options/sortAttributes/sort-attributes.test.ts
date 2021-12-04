@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { PugSortAttributes } from '../../../src/options/attribute-sorting/index';
+import type { PugSortAttributes } from '../../../src/options/attribute-sorting/index';
 import { compareAttributeToken, stableSort } from '../../../src/options/attribute-sorting/utils';
 import { createAttributeToken } from '../../common';
 import { plugin } from './../../../src/index';
@@ -14,9 +14,8 @@ describe('Options', () => {
 			const actual: string = format(code, {
 				parser: 'pug',
 				plugins: [plugin],
-				// @ts-ignore
+
 				pugSortAttributesBeginning: ['v-for', ':key', 'src', 'alt'],
-				// @ts-ignore
 				pugSortAttributesEnd: ['@click']
 			});
 

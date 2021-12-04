@@ -86,7 +86,7 @@ export function compareAttributeToken(
  * @param compare A function for comparing the values.
  * @returns The sorted array.
  */
-export function stableSort<T>(array: readonly T[], compare: CompareFunction<T>): T[] {
+export function stableSort<T>(array: ReadonlyArray<T>, compare: CompareFunction<T>): T[] {
 	const entries: Array<[T, number]> = array.map((value, index) => [value, index]);
 	entries.sort((a, b) => {
 		const order: CompareResult = compare(a[0], b[0]);
@@ -105,7 +105,7 @@ export function stableSort<T>(array: readonly T[], compare: CompareFunction<T>):
  * @param compareFn A function for comparing the values.
  * @returns The sorted array.
  */
-export function partialSort<T>(arr: readonly T[], start: number, end: number, compareFn: CompareFunction<T>): T[] {
+export function partialSort<T>(arr: ReadonlyArray<T>, start: number, end: number, compareFn: CompareFunction<T>): T[] {
 	const preSort: T[] = arr.slice(0, start);
 	const postSort: T[] = arr.slice(end);
 	const attributes: T[] = arr.slice(start, end);

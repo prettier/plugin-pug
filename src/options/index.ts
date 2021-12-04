@@ -5,8 +5,8 @@ import {
 	PUG_SORT_ATTRIBUTES_END_OPTION,
 	PUG_SORT_ATTRIBUTES_OPTION
 } from './attribute-sorting';
+import type { ArrowParens } from './common';
 import {
-	ArrowParens,
 	PUG_ARROW_PARENS_OPTION,
 	PUG_BRACKET_SAME_LINE_OPTION,
 	PUG_BRACKET_SPACING_OPTION,

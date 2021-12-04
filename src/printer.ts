@@ -318,7 +318,7 @@ export class PugPrinter {
 					case 'eos':
 						// TODO: These tokens write directly into the result
 						this.result = results.join('');
-						// @ts-expect-error
+						// @ts-expect-error: The function is always valid
 						this[token.type](token);
 						results.length = 0;
 						results.push(this.result);
@@ -335,7 +335,7 @@ export class PugPrinter {
 						if (typeof this[token.type] !== 'function') {
 							throw new Error('Unhandled token: ' + JSON.stringify(token));
 						}
-						// @ts-expect-error
+						// @ts-expect-error: If the function would be invalid, it would be caught above
 						results.push(this[token.type](token));
 						break;
 					}

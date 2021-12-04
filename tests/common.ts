@@ -1,4 +1,4 @@
-import { AttributeToken } from 'pug-lexer';
+import type { AttributeToken } from 'pug-lexer';
 
 /**
  * Creates a fake attribute token.
