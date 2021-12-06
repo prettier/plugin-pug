@@ -1,0 +1,15 @@
+v-row(no-gutters)
+  v-col(cols="12")
+    div(v-t="'global.copy-variables-title'").text-body-2.font-weight-medium
+  v-col(cols="12")
+    a(
+      v-for="variable in variables",
+      :key="variable",
+      v-text="`$\\{${variable}}`",
+      @click="copyToClipboard(variable)"
+    ).text-body-2.d-inline.mr-4
+
+div(role="document").modal-dialog.modal-lg
+  .modal-content
+    .modal-header.text-center.d-block
+      h1#modal-title.h4.modal-title.d-inline-block.ml-4= "test goes here"
