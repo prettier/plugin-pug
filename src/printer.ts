@@ -770,17 +770,17 @@ export class PugPrinter {
 				this.currentLineLength += 2;
 			}
 			if (this.options.pugClassLocation === 'after-attributes') {
-				let tempClassToken: EndAttributesToken | ClassToken = this.tokens[++tempIndex] as
+				let tempClassIndex: number = tempIndex;
+				let tempClassToken: EndAttributesToken | ClassToken = this.tokens[++tempClassIndex] as
 					| EndAttributesToken
 					| ClassToken;
 				while (tempClassToken.type === 'class') {
 					const val: string = tempClassToken.val.toString();
 					this.currentLineLength += val.length;
 
-					tempClassToken = this.tokens[++tempIndex] as EndAttributesToken | ClassToken;
+					tempClassToken = this.tokens[++tempClassIndex] as EndAttributesToken | ClassToken;
 				}
 			}
-			logger.debug(this.currentLineLength);
 			if (
 				!this.currentlyInPugInterpolation &&
 				!this.wrapAttributes &&
