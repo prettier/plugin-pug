@@ -776,11 +776,14 @@ export class PugPrinter {
 					| ClassToken;
 				while (tempClassToken.type === 'class') {
 					const val: string = tempClassToken.val.toString();
-					this.currentLineLength += val.length;
+					// Add leading . for classes
+					this.currentLineLength += 1 + val.length;
+					logger.debug({ tokenVal: val, length: val.length }, this.currentLineLength);
 
 					tempClassToken = this.tokens[++tempClassIndex] as EndAttributesToken | ClassToken;
 				}
 			}
+			logger.debug('final line length', { currentLineLength: this.currentLineLength });
 			if (
 				!this.currentlyInPugInterpolation &&
 				!this.wrapAttributes &&
