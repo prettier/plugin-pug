@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
+import { describe, expect, test } from 'vitest';
 import { plugin } from './../../src/index';
 
 describe('Pug Tests', () => {

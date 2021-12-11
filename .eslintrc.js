@@ -5,7 +5,6 @@ module.exports = defineConfig({
 	ignorePatterns: ['.eslintrc.js', 'dist/', 'benchmark/'],
 	env: {
 		es6: true,
-		jest: true,
 		node: true
 	},
 	extends: [
@@ -138,6 +137,7 @@ module.exports = defineConfig({
 					'unformatted',
 					'utf',
 					'utf8',
+					'vitest',
 					'vscode',
 					'vue',
 					'vuepress',

@@ -2,6 +2,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
 import type { AttributeToken } from 'pug-lexer';
+import { describe, expect, test } from 'vitest';
 import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from '../../../src/options/empty-attributes';
 import { formatEmptyAttribute } from '../../../src/options/empty-attributes/utils';
 import { createAttributeToken } from '../../common';

@@ -57,14 +57,7 @@ jobs:
               run: pnpm run build
 
             - name: Test
-              run: pnpm jest --ci --silent --reporters=default --reporters=jest-junit
-
-            - name: Upload test artifact
-              uses: actions/upload-artifact@v2
-              if: ${{ always() }}
-              with:
-                  name: JUnit_${{ matrix.os }}_${{ matrix.node }}_${{ github.sha }}
-                  path: junit.xml
+              run: pnpm vitest
 
     lint:
         runs-on: ubuntu-latest
