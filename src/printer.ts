@@ -769,7 +769,21 @@ export class PugPrinter {
 				// Add leading and trailing parentheses
 				this.currentLineLength += 2;
 			}
-			logger.debug(this.currentLineLength);
+			if (this.options.pugClassLocation === 'after-attributes') {
+				let tempClassIndex: number = tempIndex;
+				let tempClassToken: EndAttributesToken | ClassToken = this.tokens[++tempClassIndex] as
+					| EndAttributesToken
+					| ClassToken;
+				while (tempClassToken.type === 'class') {
+					const val: string = tempClassToken.val.toString();
+					// Add leading . for classes
+					this.currentLineLength += 1 + val.length;
+					logger.debug({ tokenVal: val, length: val.length }, this.currentLineLength);
+
+					tempClassToken = this.tokens[++tempClassIndex] as EndAttributesToken | ClassToken;
+				}
+			}
+			logger.debug('final line length', { currentLineLength: this.currentLineLength });
 			if (
 				!this.currentlyInPugInterpolation &&
 				!this.wrapAttributes &&
@@ -1020,6 +1034,8 @@ export class PugPrinter {
 				this.classLiteralAfterAttributes.length
 			);
 			this.result += `.${classes.join('.')}`;
+		}
+		if (this.options.pugClassLocation === 'after-attributes') {
 			this.possibleClassPosition = this.result.length;
 		}
 		if (this.nextToken?.type === 'text' || this.nextToken?.type === 'path') {
@@ -1069,9 +1085,7 @@ export class PugPrinter {
 			}
 		} else {
 			const val: string = `.${token.val}`;
-			if (this.options.pugClassLocation === 'before-attributes') {
-				this.currentLineLength += val.length;
-			}
+			this.currentLineLength += val.length;
 			logger.debug(
 				'before class',
 				{ result: this.result, val, length: val.length, previousToken: this.previousToken },
@@ -1107,19 +1121,6 @@ export class PugPrinter {
 				default: {
 					if (this.options.pugClassLocation === 'after-attributes') {
 						this.classLiteralAfterAttributes.push(val.slice(1));
-						logger.debug('class default', {
-							classLiteralAfterAttributes: this.classLiteralAfterAttributes
-						});
-						let result: string = this.result.slice(0, this.possibleClassPosition);
-						if (['text', 'newline', 'indent', 'eos', 'code', undefined].includes(this.nextToken?.type)) {
-							const classes: string[] = this.classLiteralAfterAttributes.splice(
-								0,
-								this.classLiteralAfterAttributes.length
-							);
-							result += '.' + classes.join('.');
-						}
-						this.result = [result, this.result.slice(this.possibleClassPosition)].join('');
-						this.possibleClassPosition = this.result.length;
 					} else {
 						const prefix: string = this.result.slice(0, this.possibleClassPosition);
 						this.result = [prefix, val, this.result.slice(this.possibleClassPosition)].join('');
@@ -1127,6 +1128,19 @@ export class PugPrinter {
 					}
 					break;
 				}
+			}
+			if (this.options.pugClassLocation === 'after-attributes' && this.classLiteralAfterAttributes.length > 0) {
+				let result: string = this.result.slice(0, this.possibleClassPosition);
+				if (['text', 'newline', 'indent', 'outdent', 'eos', 'code', undefined].includes(this.nextToken?.type)) {
+					const classes: string[] = this.classLiteralAfterAttributes.splice(
+						0,
+						this.classLiteralAfterAttributes.length
+					);
+					result += '.' + classes.join('.');
+				}
+				this.result = [result, this.result.slice(this.possibleClassPosition)].join('');
+				this.possibleClassPosition = this.result.length;
+				this.replaceTagWithLiteralIfPossible(/div\./, '.');
 			}
 			logger.debug('after class', { result: this.result, val, length: val.length }, this.currentLineLength);
 			if (this.nextToken?.type === 'text') {

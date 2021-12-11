@@ -1,0 +1,22 @@
+v-row(no-gutters)
+  v-col(cols="12")
+    div(v-t="'global.copy-variables-title'").text-body-2.font-weight-medium
+  v-col(cols="12")
+    a(
+      v-for="variable in variables",
+      :key="variable",
+      v-text="`$\\{${variable}}`",
+      @click="copyToClipboard(variable)"
+    ).text-body-2.d-inline.mr-4
+      div(
+        v-t="'entity-management.entity-group.crud.entity-types-txt'"
+      ).text-body-2.text--secondary.mb-2.mt-4.class--1519
+
+div(
+  v-t="'type.place.property'"
+).class-1.class-2.class-3.class-4.class-5.class-6.class-7.get-to-121.class-10.class-50.sm
+
+div(role="document").modal-dialog.modal-lg
+  .modal-content
+    .modal-header.text-center.d-block
+      h1#modal-title.h4.modal-title.d-inline-block.ml-4= "test goes here"
