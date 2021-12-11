@@ -127,4 +127,4 @@ Many thanks also to [@j-f1](https://github.com/j-f1), [@lipis](https://github.co
 
 Thanks to [@Peilonrayz](https://github.com/Peilonrayz), who gave me the [idea](https://codereview.stackexchange.com/a/236031/128216) to rewrite the printer into a [class](https://github.com/prettier/plugin-pug/commit/a6e3a4b776ce67f0d5d763aaf1f88c0c860c6ed3) and thus make the code a lot more maintainable.
 
-Thanks to [@lehni](https://github.com/lehni) and [@SkyaTura](https://github.com/SkyaTura) for the massive contribution and the introduction of many new features into the project.
+Thanks to [@lehni](https://github.com/lehni), [@SkyaTura](https://github.com/SkyaTura) and [@shadowgate15](https://github.com/shadowgate15) for the massive contribution and the introduction of many new features into the project.
