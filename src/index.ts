@@ -11,7 +11,7 @@ import type {
 	SupportOptions
 } from 'prettier';
 import type { Token } from 'pug-lexer';
-import * as lex from 'pug-lexer';
+import lex from 'pug-lexer';
 import type { Logger } from './logger';
 import { createLogger, LogLevel } from './logger';
 import type { PugParserOptions } from './options';
