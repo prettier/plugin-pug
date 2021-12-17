@@ -1,17 +1,13 @@
-module.exports = {
+import { defineConfig } from 'vitepress';
+
+export default defineConfig({
   lang: 'en-US',
   title: 'Documentation',
   description: '@prettier/plugin-pug documentation',
   base: process.env.NODE_ENV === 'production' ? '/plugin-pug/' : '/',
   head: [['link', { rel: 'icon', href: `/icon.png` }]],
 
-  theme: 'yuu',
   themeConfig: {
-    yuu: {
-      defaultDarkTheme: true,
-      defaultColorTheme: 'blue',
-    },
-
     repo: 'prettier/plugin-pug',
     docsDir: 'docs',
     docsBranch: 'main',
@@ -27,11 +23,11 @@ module.exports = {
         items: [
           {
             text: 'Standard Prettier Overrides',
-            link: '/guide/standard-prettier-overrides.md',
+            link: '/guide/standard-prettier-overrides',
           },
           {
             text: 'Pug specific options',
-            link: '/guide/pug-specific-options.md',
+            link: '/guide/pug-specific-options',
           },
         ],
       },
@@ -39,16 +35,25 @@ module.exports = {
     sidebar: {
       '/guide/': [
         {
-          title: 'Guide',
+          text: 'Guide',
           collapsable: false,
-          children: [''],
+          children: [{ text: 'Getting Started', link: '/guide/' }],
         },
         {
-          title: 'Configuration',
+          text: 'Configuration',
           collapsable: false,
-          children: ['standard-prettier-overrides', 'pug-specific-options'],
+          children: [
+            {
+              text: 'Standard Prettier overrides',
+              link: '/guide/standard-prettier-overrides',
+            },
+            {
+              text: 'pug specific options',
+              link: '/guide/pug-specific-options',
+            },
+          ],
         },
       ],
     },
   },
-};
+});

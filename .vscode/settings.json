@@ -26,6 +26,7 @@
     "rvalue",
     "typeof",
     "vite",
+    "vitepress",
     "vitest",
     "vuepress",
     "yaml"

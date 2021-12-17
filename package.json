@@ -6,8 +6,8 @@
   "scripts": {
     "clean": "rm -Rf coverage dist junit.xml pnpm-lock.yaml node_modules",
     "build": "tsc",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
     "format": "prettier --write .",
     "lint": "eslint .",
     "test": "vitest --run",
@@ -56,9 +56,8 @@
     "prettier-plugin-organize-imports": "~2.3.4",
     "typescript": "~4.5.5",
     "vite": "~2.8.4",
-    "vitest": "~0.5.5",
-    "vuepress": "~1.9.7",
-    "vuepress-theme-yuu": "~3.1.1"
+    "vitepress": "~0.22.3",
+    "vitest": "~0.5.5"
   },
   "peerDependencies": {
     "prettier": "^2.3.0"
