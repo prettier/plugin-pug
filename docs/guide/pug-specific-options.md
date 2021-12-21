@@ -436,7 +436,7 @@ Define where classes will be placed.
 
 ### Options
 
-**Type:** `choice`
+**Type:** `choice`  
 **Default:** `'before-attributes'`
 
 #### `'before-attributes'`
@@ -454,6 +454,11 @@ Forces all valid class literals to be placed after attributes.
 ```pug
 foo(attr='this-attr').bar.baz
 ```
+
+::: warning
+Pug-lint will fail if `validateDivTags` is set to `true`. We suggest using [`@ladjs/pug-lint-config-lad`](https://www.npmjs.com/package/@ladjs/pug-lint-config-lad) which provides the `lad/validateDivTags` rule which will fix this problem.
+:::
+
 
 ---
 
