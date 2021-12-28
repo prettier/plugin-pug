@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
+import { describe, expect, test } from 'vitest';
 import type { PugSortAttributes } from '../../../src/options/attribute-sorting/index';
 import { compareAttributeToken, stableSort } from '../../../src/options/attribute-sorting/utils';
 import { createAttributeToken } from '../../common';

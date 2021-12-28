@@ -107,7 +107,7 @@ Installing `@prettier/plugin-pug` either locally or globally may require you to 
 
 ## Implementation details
 
-This plugin is written in TypeScript and its quality is maintained using Prettier and [Jest](https://jestjs.io).
+This plugin is written in TypeScript and its quality is maintained using Prettier and [Vitest](https://vitest.dev).
 
 ## Contributing
 

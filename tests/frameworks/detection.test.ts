@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, test } from 'vitest';
 import { detectFramework } from '../../src/utils/common';
 
 describe('Frameworks', () => {

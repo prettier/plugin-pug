@@ -2,6 +2,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import type { Options } from 'prettier';
 import { format } from 'prettier';
+import { describe, expect, test } from 'vitest';
 import { plugin } from '../../../src/index';
 
 describe('Options', () => {
