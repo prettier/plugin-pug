@@ -8,17 +8,17 @@ specifiers:
   benchmark: ~2.1.4
   eslint: ~8.5.0
   eslint-config-prettier: ~8.3.0
-  eslint-define-config: ~1.2.0
+  eslint-define-config: ~1.2.1
   eslint-plugin-inclusive-language: ~2.2.0
-  eslint-plugin-jsdoc: ~37.4.0
+  eslint-plugin-jsdoc: ~37.4.2
   eslint-plugin-prettier: ~4.0.0
   eslint-plugin-spellcheck: ~0.0.19
   prettier: 2.5.1
   prettier-plugin-organize-imports: ~2.3.4
   pug-lexer: ^5.0.0
   typescript: ~4.5.4
-  vite: ~2.7.8
-  vitest: ~0.0.118
+  vite: ~2.7.9
+  vitest: ~0.0.122
   vuepress: ~1.9.5
   vuepress-theme-yuu: ~3.1.1
 
@@ -33,16 +33,16 @@ devDependencies:
   benchmark: 2.1.4
   eslint: 8.5.0
   eslint-config-prettier: 8.3.0_eslint@8.5.0
-  eslint-define-config: 1.2.0
+  eslint-define-config: 1.2.1
   eslint-plugin-inclusive-language: 2.2.0
-  eslint-plugin-jsdoc: 37.4.0_eslint@8.5.0
+  eslint-plugin-jsdoc: 37.4.2_eslint@8.5.0
   eslint-plugin-prettier: 4.0.0_94e1b6d3ce6ea916847122712570e9ae
   eslint-plugin-spellcheck: 0.0.19_eslint@8.5.0
   prettier: 2.5.1
   prettier-plugin-organize-imports: 2.3.4_prettier@2.5.1+typescript@4.5.4
   typescript: 4.5.4
-  vite: 2.7.8
-  vitest: 0.0.118_vite@2.7.8
+  vite: 2.7.9
+  vitest: 0.0.122_vite@2.7.9
   vuepress: 1.9.5
   vuepress-theme-yuu: 3.1.1
 
@@ -1223,13 +1223,13 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
-  /@es-joy/jsdoccomment/0.13.0:
-    resolution: {integrity: sha512-APVqbVPGOprb4BmjEnwbSzV+V2e/6DVIUnZG3zdW5uWXWkN0DKMCpiIy2TdBauoANKYO7RQpO8cTjIYNVSKwUA==}
+  /@es-joy/jsdoccomment/0.14.1:
+    resolution: {integrity: sha512-yiA5X6BSIv99DIeRl7PTBxqg7Lx81cx+ghbW6UJJxoVAKX4NxSAdZ7DKTXsSILUL4FuHDNb54AylTndLdLm8+w==}
     engines: {node: ^12 || ^14 || ^16 || ^17}
     dependencies:
       comment-parser: 1.3.0
       esquery: 1.4.0
-      jsdoc-type-pratt-parser: 2.0.0
+      jsdoc-type-pratt-parser: 2.0.2
     dev: true
 
   /@eslint/eslintrc/1.0.5:
@@ -2336,7 +2336,7 @@ packages:
     hasBin: true
     dependencies:
       browserslist: 4.19.1
-      caniuse-lite: 1.0.30001292
+      caniuse-lite: 1.0.30001294
       normalize-range: 0.1.2
       num2fraction: 1.2.2
       picocolors: 0.2.1
@@ -2625,8 +2625,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001292
-      electron-to-chromium: 1.4.28
+      caniuse-lite: 1.0.30001294
+      electron-to-chromium: 1.4.30
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -2807,13 +2807,13 @@ packages:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
       browserslist: 4.19.1
-      caniuse-lite: 1.0.30001292
+      caniuse-lite: 1.0.30001294
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-lite/1.0.30001292:
-    resolution: {integrity: sha512-jnT4Tq0Q4ma+6nncYQVe7d73kmDmE9C3OGTx3MvW7lBM/eY1S1DZTMBON7dqV481RhNiS5OxD7k9JQvmDOTirw==}
+  /caniuse-lite/1.0.30001294:
+    resolution: {integrity: sha512-LiMlrs1nSKZ8qkNhpUf5KD0Al1KCBE3zaT7OLOwEkagXMEDij98SiOovn9wxVGQpklk9vVC/pUSqgYmkmKOS8g==}
     dev: true
 
   /caseless/0.12.0:
@@ -3803,8 +3803,8 @@ packages:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
     dev: true
 
-  /electron-to-chromium/1.4.28:
-    resolution: {integrity: sha512-Gzbf0wUtKfyPaqf0Plz+Ctinf9eQIzxEqBHwSvbGfeOm9GMNdLxyu1dNiCUfM+x6r4BE0xUJNh3Nmg9gfAtTmg==}
+  /electron-to-chromium/1.4.30:
+    resolution: {integrity: sha512-609z9sIMxDHg+TcR/VB3MXwH+uwtrYyeAwWc/orhnr90ixs6WVGSrt85CDLGUdNnLqCA7liv426V20EecjvflQ==}
     dev: true
 
   /elliptic/6.5.4:
@@ -4296,8 +4296,8 @@ packages:
       eslint: 8.5.0
     dev: true
 
-  /eslint-define-config/1.2.0:
-    resolution: {integrity: sha512-EQ8d9F9LmJVRfkZW9WgSa5VBAVZialrLZKy0k1062zlhM8KFUyFoAC8xRI+mdp5m81FNMPnpKZfyq0AfJDyNTg==}
+  /eslint-define-config/1.2.1:
+    resolution: {integrity: sha512-Mj6OvJXNDrMA+RtFtPFst4BRJPkB4qi9B+8FFr/hdxY0gNbhGoSnp7i3w3/k75vMXTbbfsmeZhQUomI6mK/JVw==}
     engines: {node: '>= 16.9.0', npm: '>= 7.0.0', pnpm: '>= 6.17.0'}
     dev: true
 
@@ -4307,19 +4307,19 @@ packages:
       humps: 2.0.1
     dev: true
 
-  /eslint-plugin-jsdoc/37.4.0_eslint@8.5.0:
-    resolution: {integrity: sha512-XWKMMHFq7eUdC8XMzuQSskevJvlHTDSAJm/2qtEZ7+qhZTZ0YjeqWaUn7KGdrmxLNqtWwtJ67LdIPgrYUZ5EoA==}
+  /eslint-plugin-jsdoc/37.4.2_eslint@8.5.0:
+    resolution: {integrity: sha512-hKTIu5m0PxD21ZXdFVFpknEyp9aMvDMzamR+1bkcRHK9MDIYgroRGBQCeHupvcZ5TyGU0EfE+ed0FhLhkbekfQ==}
     engines: {node: ^12 || ^14 || ^16 || ^17}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0
     dependencies:
-      '@es-joy/jsdoccomment': 0.13.0
+      '@es-joy/jsdoccomment': 0.14.1
       comment-parser: 1.3.0
       debug: 4.3.3
       escape-string-regexp: 4.0.0
       eslint: 8.5.0
       esquery: 1.4.0
-      jsdoc-type-pratt-parser: 2.0.0
+      jsdoc-type-pratt-parser: 2.0.2
       regextras: 0.8.0
       semver: 7.3.5
       spdx-expression-parse: 3.0.1
@@ -5962,8 +5962,8 @@ packages:
     resolution: {integrity: sha1-peZUwuWi3rXyAdls77yoDA7y9RM=}
     dev: true
 
-  /jsdoc-type-pratt-parser/2.0.0:
-    resolution: {integrity: sha512-sUuj2j48wxrEpbFjDp1sAesAxPiLT+z0SWVmMafyIINs6Lj5gIPKh3VrkBZu4E/Dv+wHpOot0m6H8zlHQjwqeQ==}
+  /jsdoc-type-pratt-parser/2.0.2:
+    resolution: {integrity: sha512-gXN5CxeaI9WtYQYzpOO/CtTRfZppQlKxXRTIm73JuAX6kOGTQ7iZ0e+YB+b2m7Fk+gTYYxRtE1nqje7H6dqv8w==}
     engines: {node: '>=12.0.0'}
     dev: true
 
@@ -9115,8 +9115,8 @@ packages:
       extsprintf: 1.3.0
     dev: true
 
-  /vite/2.7.8:
-    resolution: {integrity: sha512-NOgvRtXUq4/7srE2cTQ2IU1oERdGq2njVOlZtgRrjMO+PPJpncd61/AUzxzZklQ1zBkiWXEVrw3Csq0Sbgr0rQ==}
+  /vite/2.7.9:
+    resolution: {integrity: sha512-CyopIJIRrc26Wnbkch5BCHFhQodzeV4jjSegLAEw1RImvXSuoOo2SfpEW9zRVi188WmjJwCqCaoG25C0r4nekw==}
     engines: {node: '>=12.2.0'}
     hasBin: true
     peerDependencies:
@@ -9139,8 +9139,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.0.118_vite@2.7.8:
-    resolution: {integrity: sha512-2zBpowIaVAMPFB+/DkHFpt63QNXMz737dKTpLtC2t4RNUfLS4n+KKg14nFexj5VlhMf4ntSkrvDHnrE+6gFTmg==}
+  /vitest/0.0.122_vite@2.7.9:
+    resolution: {integrity: sha512-ayAY8Ue444rutcU6gXO2fTASmVSEEYGBtrGSRgnVBrBo+RlOkv0i67yUJFLyH3krtKdLbbKGk+lQ5B7kBvhX7w==}
     engines: {node: '>=14.14.0'}
     hasBin: true
     peerDependencies:
@@ -9162,7 +9162,7 @@ packages:
       local-pkg: 0.4.0
       tinypool: 0.0.6
       tinyspy: 0.2.6
-      vite: 2.7.8
+      vite: 2.7.9
     dev: true
 
   /vm-browserify/1.1.2:

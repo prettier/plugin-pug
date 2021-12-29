@@ -46,21 +46,21 @@
 		"benchmark": "~2.1.4",
 		"eslint": "~8.5.0",
 		"eslint-config-prettier": "~8.3.0",
-		"eslint-define-config": "~1.2.0",
+		"eslint-define-config": "~1.2.1",
 		"eslint-plugin-inclusive-language": "~2.2.0",
-		"eslint-plugin-jsdoc": "~37.4.0",
+		"eslint-plugin-jsdoc": "~37.4.2",
 		"eslint-plugin-prettier": "~4.0.0",
 		"eslint-plugin-spellcheck": "~0.0.19",
 		"prettier": "2.5.1",
 		"prettier-plugin-organize-imports": "~2.3.4",
 		"typescript": "~4.5.4",
-		"vite": "~2.7.8",
-		"vitest": "~0.0.118",
+		"vite": "~2.7.9",
+		"vitest": "~0.0.122",
 		"vuepress": "~1.9.5",
 		"vuepress-theme-yuu": "~3.1.1"
 	},
 	"peerDependencies": {
 		"prettier": "^2.3.0"
 	},
-	"packageManager": "pnpm@6.24.3"
+	"packageManager": "pnpm@6.24.4"
 }
