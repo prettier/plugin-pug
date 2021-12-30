@@ -54,8 +54,8 @@
 		"prettier": "2.5.1",
 		"prettier-plugin-organize-imports": "~2.3.4",
 		"typescript": "~4.5.4",
-		"vite": "~2.7.9",
-		"vitest": "~0.0.122",
+		"vite": "~2.7.10",
+		"vitest": "~0.0.124",
 		"vuepress": "~1.9.5",
 		"vuepress-theme-yuu": "~3.1.1"
 	},

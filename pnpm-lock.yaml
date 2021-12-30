@@ -17,8 +17,8 @@ specifiers:
   prettier-plugin-organize-imports: ~2.3.4
   pug-lexer: ^5.0.0
   typescript: ~4.5.4
-  vite: ~2.7.9
-  vitest: ~0.0.122
+  vite: ~2.7.10
+  vitest: ~0.0.124
   vuepress: ~1.9.5
   vuepress-theme-yuu: ~3.1.1
 
@@ -41,8 +41,8 @@ devDependencies:
   prettier: 2.5.1
   prettier-plugin-organize-imports: 2.3.4_prettier@2.5.1+typescript@4.5.4
   typescript: 4.5.4
-  vite: 2.7.9
-  vitest: 0.0.122_vite@2.7.9
+  vite: 2.7.10
+  vitest: 0.0.124
   vuepress: 1.9.5
   vuepress-theme-yuu: 3.1.1
 
@@ -9115,8 +9115,8 @@ packages:
       extsprintf: 1.3.0
     dev: true
 
-  /vite/2.7.9:
-    resolution: {integrity: sha512-CyopIJIRrc26Wnbkch5BCHFhQodzeV4jjSegLAEw1RImvXSuoOo2SfpEW9zRVi188WmjJwCqCaoG25C0r4nekw==}
+  /vite/2.7.10:
+    resolution: {integrity: sha512-KEY96ntXUid1/xJihJbgmLZx7QSC2D4Tui0FdS0Old5OokYzFclcofhtxtjDdGOk/fFpPbHv9yw88+rB93Tb8w==}
     engines: {node: '>=12.2.0'}
     hasBin: true
     peerDependencies:
@@ -9139,16 +9139,18 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.0.122_vite@2.7.9:
-    resolution: {integrity: sha512-ayAY8Ue444rutcU6gXO2fTASmVSEEYGBtrGSRgnVBrBo+RlOkv0i67yUJFLyH3krtKdLbbKGk+lQ5B7kBvhX7w==}
+  /vitest/0.0.124:
+    resolution: {integrity: sha512-azhSsniZCRkInFD/VXONs90WrgNDZLq1hemNVBfX+xE44Ock06R+zFSpk2Jz/LYfZhXXFi/Xr32RCjgquKsklw==}
     engines: {node: '>=14.14.0'}
     hasBin: true
     peerDependencies:
+      '@vitest/ui': '*'
       c8: '*'
       happy-dom: '*'
       jsdom: '*'
-      vite: ^2.7.1
     peerDependenciesMeta:
+      '@vitest/ui':
+        optional: true
       c8:
         optional: true
       happy-dom:
@@ -9162,7 +9164,11 @@ packages:
       local-pkg: 0.4.0
       tinypool: 0.0.6
       tinyspy: 0.2.6
-      vite: 2.7.9
+      vite: 2.7.10
+    transitivePeerDependencies:
+      - less
+      - sass
+      - stylus
     dev: true
 
   /vm-browserify/1.1.2:
