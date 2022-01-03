@@ -1,0 +1,39 @@
+mixin section-intro(content)
+  section.section.section--intro(data-chameleon='black')
+    .wrapper
+      .section__header
+        if content.subhead
+          p.section__subhead.enter.enter--bottom!= content.subhead
+        p.section__heading.enter.enter--bottom.enter--delay-1!= content.heading
+
+      .section__row
+        each column in content.content
+          .section__column
+            .section__content.enter.enter--bottom.enter--delay-2
+              p.section__content-subhead!= column.subhead
+              each paragraph in column.text
+                p.section__content-text!= paragraph
+
+        if content.image
+          img.section__image.enter.enter--bottom.enter--delay-3(
+            src=`/${relativeRoot}assets/images/work/${content.image}`,
+            alt=''
+          )
+
+      if block
+        block
+
++section-intro({
+  subhead: 'Introduction',
+  heading: 'Helping candidates and employers connect through a streamlined platform, all while ensuring no one is left out. ',
+  content: [
+    {
+      subhead: 'The Problem',
+      text: ['Employers are eager to higher a diverse workforce, but struggle to manage the daunting process to access talent that meets their needs. Underrepresented job seekers often go unnoticed or worse, get passed up based on existing market biases. ']
+    },
+    {
+      subhead: 'The Solution',
+      text: ['Create a network that prioritizes inclusivity and transparency by uniting job seekers with employers based on their common strengths.  For employers and admins, use thoughtful automation to encourage autonomy.']
+    }
+  ]
+})
