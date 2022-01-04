@@ -1131,7 +1131,11 @@ export class PugPrinter {
 			}
 			if (this.options.pugClassLocation === 'after-attributes' && this.classLiteralAfterAttributes.length > 0) {
 				let result: string = this.result.slice(0, this.possibleClassPosition);
-				if (['text', 'newline', 'indent', 'outdent', 'eos', 'code', undefined].includes(this.nextToken?.type)) {
+				if (
+					['text', 'newline', 'indent', 'outdent', 'eos', 'code', ':', undefined].includes(
+						this.nextToken?.type
+					)
+				) {
 					const classes: string[] = this.classLiteralAfterAttributes.splice(
 						0,
 						this.classLiteralAfterAttributes.length
