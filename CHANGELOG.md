@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.19.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.19.1...main)
+
+# 1.19.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.19.0...1.19.1)
+
+- Handle colon token in combination with `pugClassLocation: 'after-attributes'` ([#326])
+
+[#326]: https://github.com/prettier/plugin-pug/issues/326
 
 # 1.19.0
 
@@ -8,7 +16,7 @@
 
 - New option `pugClassLocation` ([#313])
 
-[#313]: https://github.com/prettier/plugin-pug/issues/45
+[#313]: https://github.com/prettier/plugin-pug/issues/313
 
 # 1.18.0
 
