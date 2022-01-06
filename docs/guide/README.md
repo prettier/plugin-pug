@@ -7,19 +7,22 @@ Simply install `prettier` and `@prettier/plugin-pug` as your project’s npm `de
 <code-group>
 <code-block title="NPM" active>
 ```bash
-npm add --save-dev prettier @prettier/plugin-pug
+npm add --save-dev --save-exact prettier
+npm add --save-dev @prettier/plugin-pug
 ```
 </code-block>
 
 <code-block title="YARN">
 ```bash
-yarn add --dev prettier @prettier/plugin-pug
+yarn add --dev --exact prettier
+yarn add --dev @prettier/plugin-pug
 ```
 </code-block>
 
 <code-block title="PNPM">
 ```bash
-pnpm add --save-dev prettier @prettier/plugin-pug
+pnpm add --save-dev --save-exact prettier
+pnpm add --save-dev @prettier/plugin-pug
 ```
 </code-block>
 </code-group>
