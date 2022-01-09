@@ -3,152 +3,205 @@ import { resolve } from 'path';
 import { format } from 'prettier';
 import type { AttributeToken } from 'pug-lexer';
 import { describe, expect, test } from 'vitest';
-import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from '../../../src/options/empty-attributes';
+import type {
+  PugEmptyAttributes,
+  PugEmptyAttributesForceQuotes,
+} from '../../../src/options/empty-attributes';
 import { formatEmptyAttribute } from '../../../src/options/empty-attributes/utils';
 import { createAttributeToken } from '../../common';
 import { plugin } from './../../../src/index';
 
 describe('Options', () => {
-	describe('emptyAttributes', () => {
-		test('should remove empty quotes and keep attributes starting with #', () => {
-			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
-			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-			const actual: string = format(code, {
-				parser: 'pug',
-				plugins: [plugin],
+  describe('emptyAttributes', () => {
+    test('should remove empty quotes and keep attributes starting with #', () => {
+      const expected: string = readFileSync(
+        resolve(__dirname, 'formatted.pug'),
+        'utf8',
+      );
+      const code: string = readFileSync(
+        resolve(__dirname, 'unformatted.pug'),
+        'utf8',
+      );
+      const actual: string = format(code, {
+        parser: 'pug',
+        plugins: [plugin],
 
-				pugEmptyAttributes: 'none',
-				pugEmptyAttributesForceQuotes: ['foo']
-			});
+        pugEmptyAttributes: 'none',
+        pugEmptyAttributesForceQuotes: ['foo'],
+      });
 
-			expect(actual).toBe(expected);
-		});
-	});
+      expect(actual).toBe(expected);
+    });
+  });
 
-	describe('empty attributes utilities', () => {
-		test('should format empty attributes as true', () => {
-			const name: string = 'disabled';
-			const pugEmptyAttributes: PugEmptyAttributes = 'none';
-			const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
+  describe('empty attributes utilities', () => {
+    test('should format empty attributes as true', () => {
+      const name: string = 'disabled';
+      const pugEmptyAttributes: PugEmptyAttributes = 'none';
+      const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
 
-			const expected: AttributeToken = createAttributeToken(name, true);
-			const actual: AttributeToken = createAttributeToken(name, '""');
+      const expected: AttributeToken = createAttributeToken(name, true);
+      const actual: AttributeToken = createAttributeToken(name, '""');
 
-			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
+      formatEmptyAttribute(
+        actual,
+        pugEmptyAttributes,
+        pugEmptyAttributesForceQuotes,
+      );
 
-			expect(actual).toStrictEqual(expected);
-		});
-		test('should work with single quotes', () => {
-			const name: string = 'disabled';
-			const pugEmptyAttributes: PugEmptyAttributes = 'none';
-			const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
+      expect(actual).toStrictEqual(expected);
+    });
+    test('should work with single quotes', () => {
+      const name: string = 'disabled';
+      const pugEmptyAttributes: PugEmptyAttributes = 'none';
+      const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
 
-			const expected: AttributeToken = createAttributeToken(name, true);
-			const actual: AttributeToken = createAttributeToken(name, "''");
+      const expected: AttributeToken = createAttributeToken(name, true);
+      const actual: AttributeToken = createAttributeToken(name, "''");
 
-			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
+      formatEmptyAttribute(
+        actual,
+        pugEmptyAttributes,
+        pugEmptyAttributesForceQuotes,
+      );
 
-			expect(actual).toStrictEqual(expected);
-		});
-		test('should format truthy boolean attributes as empty quotes', () => {
-			const name: string = 'disabled';
-			const pugEmptyAttributes: PugEmptyAttributes = 'all';
-			const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
+      expect(actual).toStrictEqual(expected);
+    });
+    test('should format truthy boolean attributes as empty quotes', () => {
+      const name: string = 'disabled';
+      const pugEmptyAttributes: PugEmptyAttributes = 'all';
+      const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
 
-			const expected: AttributeToken = createAttributeToken(name, '""');
-			const actual: AttributeToken = createAttributeToken(name, true);
+      const expected: AttributeToken = createAttributeToken(name, '""');
+      const actual: AttributeToken = createAttributeToken(name, true);
 
-			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
+      formatEmptyAttribute(
+        actual,
+        pugEmptyAttributes,
+        pugEmptyAttributesForceQuotes,
+      );
 
-			expect(actual).toStrictEqual(expected);
-		});
-		test('should do nothing if the option is "as-is" (boolean)', () => {
-			const name: string = 'disabled';
-			const val: boolean = true;
-			const pugEmptyAttributes: PugEmptyAttributes = 'as-is';
-			const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
+      expect(actual).toStrictEqual(expected);
+    });
+    test('should do nothing if the option is "as-is" (boolean)', () => {
+      const name: string = 'disabled';
+      const val: boolean = true;
+      const pugEmptyAttributes: PugEmptyAttributes = 'as-is';
+      const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
 
-			const expected: AttributeToken = createAttributeToken(name, val);
-			const actual: AttributeToken = createAttributeToken(name, val);
+      const expected: AttributeToken = createAttributeToken(name, val);
+      const actual: AttributeToken = createAttributeToken(name, val);
 
-			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
+      formatEmptyAttribute(
+        actual,
+        pugEmptyAttributes,
+        pugEmptyAttributesForceQuotes,
+      );
 
-			expect(actual).toStrictEqual(expected);
-		});
-		test('should do nothing if the option is "as-is" (quotes)', () => {
-			const name: string = 'disabled';
-			const val: string = '""';
-			const pugEmptyAttributes: PugEmptyAttributes = 'as-is';
-			const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
+      expect(actual).toStrictEqual(expected);
+    });
+    test('should do nothing if the option is "as-is" (quotes)', () => {
+      const name: string = 'disabled';
+      const val: string = '""';
+      const pugEmptyAttributes: PugEmptyAttributes = 'as-is';
+      const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
 
-			const expected: AttributeToken = createAttributeToken(name, val);
-			const actual: AttributeToken = createAttributeToken(name, val);
+      const expected: AttributeToken = createAttributeToken(name, val);
+      const actual: AttributeToken = createAttributeToken(name, val);
 
-			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
+      formatEmptyAttribute(
+        actual,
+        pugEmptyAttributes,
+        pugEmptyAttributesForceQuotes,
+      );
 
-			expect(actual).toStrictEqual(expected);
-		});
-		test('should force quotes on attributes with name starting with #', () => {
-			const name: string = '#boom';
-			const pugEmptyAttributes: PugEmptyAttributes = 'none';
-			const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = ['^#'];
+      expect(actual).toStrictEqual(expected);
+    });
+    test('should force quotes on attributes with name starting with #', () => {
+      const name: string = '#boom';
+      const pugEmptyAttributes: PugEmptyAttributes = 'none';
+      const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [
+        '^#',
+      ];
 
-			const expected: AttributeToken = createAttributeToken(name, '""');
-			const actual: AttributeToken = createAttributeToken(name, true);
+      const expected: AttributeToken = createAttributeToken(name, '""');
+      const actual: AttributeToken = createAttributeToken(name, true);
 
-			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
+      formatEmptyAttribute(
+        actual,
+        pugEmptyAttributes,
+        pugEmptyAttributesForceQuotes,
+      );
 
-			expect(actual).toStrictEqual(expected);
-		});
-		test('should do nothing if the value is not empty', () => {
-			const name: string = 'type';
-			const val: string = 'text';
-			const pugEmptyAttributes: PugEmptyAttributes = 'none';
-			const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
+      expect(actual).toStrictEqual(expected);
+    });
+    test('should do nothing if the value is not empty', () => {
+      const name: string = 'type';
+      const val: string = 'text';
+      const pugEmptyAttributes: PugEmptyAttributes = 'none';
+      const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
 
-			const expected: AttributeToken = createAttributeToken(name, val);
-			const actual: AttributeToken = createAttributeToken(name, val);
+      const expected: AttributeToken = createAttributeToken(name, val);
+      const actual: AttributeToken = createAttributeToken(name, val);
 
-			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
+      formatEmptyAttribute(
+        actual,
+        pugEmptyAttributes,
+        pugEmptyAttributesForceQuotes,
+      );
 
-			expect(actual).toStrictEqual(expected);
-		});
-		test('should do nothing if the forced quotes value is not empty', () => {
-			const name: string = 'type';
-			const val: string = 'text';
-			const pugEmptyAttributes: PugEmptyAttributes = 'none';
-			const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = ['^ty'];
+      expect(actual).toStrictEqual(expected);
+    });
+    test('should do nothing if the forced quotes value is not empty', () => {
+      const name: string = 'type';
+      const val: string = 'text';
+      const pugEmptyAttributes: PugEmptyAttributes = 'none';
+      const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [
+        '^ty',
+      ];
 
-			const expected: AttributeToken = createAttributeToken(name, val);
-			const actual: AttributeToken = createAttributeToken(name, val);
+      const expected: AttributeToken = createAttributeToken(name, val);
+      const actual: AttributeToken = createAttributeToken(name, val);
 
-			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
+      formatEmptyAttribute(
+        actual,
+        pugEmptyAttributes,
+        pugEmptyAttributesForceQuotes,
+      );
 
-			expect(actual).toStrictEqual(expected);
-		});
-		test('should do nothing if the value already boolean true', () => {
-			const name: string = 'type';
-			const pugEmptyAttributes: PugEmptyAttributes = 'none';
-			const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
+      expect(actual).toStrictEqual(expected);
+    });
+    test('should do nothing if the value already boolean true', () => {
+      const name: string = 'type';
+      const pugEmptyAttributes: PugEmptyAttributes = 'none';
+      const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
 
-			const expected: AttributeToken = createAttributeToken(name, true);
-			const actual: AttributeToken = createAttributeToken(name, true);
+      const expected: AttributeToken = createAttributeToken(name, true);
+      const actual: AttributeToken = createAttributeToken(name, true);
 
-			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
+      formatEmptyAttribute(
+        actual,
+        pugEmptyAttributes,
+        pugEmptyAttributesForceQuotes,
+      );
 
-			expect(actual).toStrictEqual(expected);
-		});
-		test('should do nothing if the value already empty quotes', () => {
-			const name: string = 'type';
-			const pugEmptyAttributes: PugEmptyAttributes = 'all';
-			const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
+      expect(actual).toStrictEqual(expected);
+    });
+    test('should do nothing if the value already empty quotes', () => {
+      const name: string = 'type';
+      const pugEmptyAttributes: PugEmptyAttributes = 'all';
+      const pugEmptyAttributesForceQuotes: PugEmptyAttributesForceQuotes = [];
 
-			const expected: AttributeToken = createAttributeToken(name, '""');
-			const actual: AttributeToken = createAttributeToken(name, '""');
+      const expected: AttributeToken = createAttributeToken(name, '""');
+      const actual: AttributeToken = createAttributeToken(name, '""');
 
-			formatEmptyAttribute(actual, pugEmptyAttributes, pugEmptyAttributesForceQuotes);
+      formatEmptyAttribute(
+        actual,
+        pugEmptyAttributes,
+        pugEmptyAttributesForceQuotes,
+      );
 
-			expect(actual).toStrictEqual(expected);
-		});
-	});
+      expect(actual).toStrictEqual(expected);
+    });
+  });
 });

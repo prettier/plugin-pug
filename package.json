@@ -1,66 +1,66 @@
 {
-	"name": "@prettier/plugin-pug",
-	"version": "1.19.1",
-	"description": "Prettier Pug Plugin",
-	"main": "dist/index.js",
-	"scripts": {
-		"clean": "rm -Rf coverage dist junit.xml pnpm-lock.yaml node_modules",
-		"build": "tsc",
-		"docs:dev": "vuepress dev docs",
-		"docs:build": "vuepress build docs",
-		"format": "prettier --write .",
-		"lint": "eslint .",
-		"test": "vitest --run",
-		"prepublishOnly": "pnpm run clean && pnpm install && pnpm run build"
-	},
-	"keywords": [
-		"pug",
-		"prettier-plugin",
-		"prettier",
-		"formatter"
-	],
-	"author": {
-		"name": "Christopher Quadflieg",
-		"email": "chrissi92@hotmail.de",
-		"url": "https://github.com/Shinigami92"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/prettier/plugin-pug.git"
-	},
-	"bugs": "https://github.com/prettier/plugin-pug/issues",
-	"license": "MIT",
-	"files": [
-		"dist",
-		"src",
-		"tsconfig.json"
-	],
-	"dependencies": {
-		"pug-lexer": "^5.0.0"
-	},
-	"devDependencies": {
-		"@types/node": "~16.11.19",
-		"@types/prettier": "~2.4.2",
-		"@typescript-eslint/eslint-plugin": "~5.9.0",
-		"@typescript-eslint/parser": "~5.9.0",
-		"benchmark": "~2.1.4",
-		"eslint": "~8.6.0",
-		"eslint-config-prettier": "~8.3.0",
-		"eslint-define-config": "~1.2.2",
-		"eslint-plugin-inclusive-language": "~2.2.0",
-		"eslint-plugin-jsdoc": "~37.6.1",
-		"eslint-plugin-prettier": "~4.0.0",
-		"eslint-plugin-spellcheck": "~0.0.19",
-		"prettier": "2.5.1",
-		"prettier-plugin-organize-imports": "~2.3.4",
-		"typescript": "~4.5.4",
-		"vite": "~2.7.10",
-		"vitest": "~0.0.139",
-		"vuepress": "~1.9.5",
-		"vuepress-theme-yuu": "~3.1.1"
-	},
-	"peerDependencies": {
-		"prettier": "^2.3.0"
-	},
-	"packageManager": "pnpm@6.25.1"
+  "name": "@prettier/plugin-pug",
+  "version": "1.19.1",
+  "description": "Prettier Pug Plugin",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rm -Rf coverage dist junit.xml pnpm-lock.yaml node_modules",
+    "build": "tsc",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "test": "vitest --run",
+    "prepublishOnly": "pnpm run clean && pnpm install && pnpm run build"
+  },
+  "keywords": [
+    "pug",
+    "prettier-plugin",
+    "prettier",
+    "formatter"
+  ],
+  "author": {
+    "name": "Christopher Quadflieg",
+    "email": "chrissi92@hotmail.de",
+    "url": "https://github.com/Shinigami92"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prettier/plugin-pug.git"
+  },
+  "bugs": "https://github.com/prettier/plugin-pug/issues",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "src",
+    "tsconfig.json"
+  ],
+  "dependencies": {
+    "pug-lexer": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "~16.11.19",
+    "@types/prettier": "~2.4.2",
+    "@typescript-eslint/eslint-plugin": "~5.9.0",
+    "@typescript-eslint/parser": "~5.9.0",
+    "benchmark": "~2.1.4",
+    "eslint": "~8.6.0",
+    "eslint-config-prettier": "~8.3.0",
+    "eslint-define-config": "~1.2.2",
+    "eslint-plugin-inclusive-language": "~2.2.0",
+    "eslint-plugin-jsdoc": "~37.6.1",
+    "eslint-plugin-prettier": "~4.0.0",
+    "eslint-plugin-spellcheck": "~0.0.19",
+    "prettier": "2.5.1",
+    "prettier-plugin-organize-imports": "~2.3.4",
+    "typescript": "~4.5.4",
+    "vite": "~2.7.10",
+    "vitest": "~0.0.139",
+    "vuepress": "~1.9.5",
+    "vuepress-theme-yuu": "~3.1.1"
+  },
+  "peerDependencies": {
+    "prettier": "^2.3.0"
+  },
+  "packageManager": "pnpm@6.25.1"
 }

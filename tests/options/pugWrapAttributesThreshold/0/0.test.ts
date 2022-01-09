@@ -5,18 +5,24 @@ import { describe, expect, test } from 'vitest';
 import { plugin } from './../../../../src/index';
 
 describe('Options', () => {
-	describe('pugWrapAttributesThreshold', () => {
-		test('should never allow an attribute without being wrapped', () => {
-			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
-			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-			const actual: string = format(code, {
-				parser: 'pug',
-				plugins: [plugin],
+  describe('pugWrapAttributesThreshold', () => {
+    test('should never allow an attribute without being wrapped', () => {
+      const expected: string = readFileSync(
+        resolve(__dirname, 'formatted.pug'),
+        'utf8',
+      );
+      const code: string = readFileSync(
+        resolve(__dirname, 'unformatted.pug'),
+        'utf8',
+      );
+      const actual: string = format(code, {
+        parser: 'pug',
+        plugins: [plugin],
 
-				pugWrapAttributesThreshold: 0
-			});
+        pugWrapAttributesThreshold: 0,
+      });
 
-			expect(actual).toBe(expected);
-		});
-	});
+      expect(actual).toBe(expected);
+    });
+  });
 });
