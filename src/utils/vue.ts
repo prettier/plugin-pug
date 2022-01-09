@@ -22,7 +22,7 @@
  * @returns `true` if `name` passes the vue event binding check, otherwise `false`.
  */
 export function isVueEventBinding(name: string): boolean {
-	return /^(v-on:|@).*/.test(name);
+  return /^(v-on:|@).*/.test(name);
 }
 
 /**
@@ -50,7 +50,9 @@ export function isVueEventBinding(name: string): boolean {
  * @returns `true` if `name` passes the vue expression check, otherwise `false`.
  */
 export function isVueExpression(name: string): boolean {
-	return /^((v-(bind|slot))?:|v-(model|slot|if|for|else-if|text|html|t)|#).*/.test(name);
+  return /^((v-(bind|slot))?:|v-(model|slot|if|for|else-if|text|html|t)|#).*/.test(
+    name,
+  );
 }
 
 /**
@@ -76,7 +78,7 @@ export function isVueExpression(name: string): boolean {
  * @returns `true` if `name` and `val` passes the vue `v-for` with `of` check, otherwise `false`.
  */
 export function isVueVForWithOf(name: string, val: string): boolean {
-	return 'v-for' === name && val.includes('of');
+  return 'v-for' === name && val.includes('of');
 }
 
 /**
@@ -101,7 +103,7 @@ export function isVueVForWithOf(name: string, val: string): boolean {
  * @returns `true` if `name` passes the vue `v-bind` check, otherwise `false`.
  */
 export function isVueVBindExpression(name: string): boolean {
-	return 'v-bind' === name;
+  return 'v-bind' === name;
 }
 
 /**
@@ -126,5 +128,5 @@ export function isVueVBindExpression(name: string): boolean {
  * @returns `true` if `name` passes the vue `v-on` check, otherwise `false`.
  */
 export function isVueVOnExpression(name: string): boolean {
-	return 'v-on' === name;
+  return 'v-on' === name;
 }

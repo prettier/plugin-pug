@@ -5,16 +5,22 @@ import { describe, expect, test } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-	test('should consider tabWidth when using useTabs', () => {
-		const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
-		const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-		const actual: string = format(code, {
-			parser: 'pug',
-			plugins: [plugin],
-			useTabs: true,
-			tabWidth: 8
-		});
+  test('should consider tabWidth when using useTabs', () => {
+    const expected: string = readFileSync(
+      resolve(__dirname, 'formatted.pug'),
+      'utf8',
+    );
+    const code: string = readFileSync(
+      resolve(__dirname, 'unformatted.pug'),
+      'utf8',
+    );
+    const actual: string = format(code, {
+      parser: 'pug',
+      plugins: [plugin],
+      useTabs: true,
+      tabWidth: 8,
+    });
 
-		expect(actual).toBe(expected);
-	});
+    expect(actual).toBe(expected);
+  });
 });

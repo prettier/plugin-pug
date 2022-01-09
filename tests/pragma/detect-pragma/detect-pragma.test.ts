@@ -10,22 +10,31 @@ import { parsers } from './../../../src/index';
 const pugParser: Parser = parsers!.pug!;
 
 describe('Pragma', () => {
-	test('should detect pragma @prettier', () => {
-		const code: string = readFileSync(resolve(__dirname, 'pragma-prettier.pug'), 'utf8');
-		const actual: boolean = pugParser.hasPragma!(code);
+  test('should detect pragma @prettier', () => {
+    const code: string = readFileSync(
+      resolve(__dirname, 'pragma-prettier.pug'),
+      'utf8',
+    );
+    const actual: boolean = pugParser.hasPragma!(code);
 
-		expect(actual).toBeTruthy();
-	});
-	test('should detect pragma @format', () => {
-		const code: string = readFileSync(resolve(__dirname, 'pragma-format.pug'), 'utf8');
-		const actual: boolean = pugParser.hasPragma!(code);
+    expect(actual).toBeTruthy();
+  });
+  test('should detect pragma @format', () => {
+    const code: string = readFileSync(
+      resolve(__dirname, 'pragma-format.pug'),
+      'utf8',
+    );
+    const actual: boolean = pugParser.hasPragma!(code);
 
-		expect(actual).toBeTruthy();
-	});
-	test('should detect no pragma ', () => {
-		const code: string = readFileSync(resolve(__dirname, 'no-pragma.pug'), 'utf8');
-		const actual: boolean = pugParser.hasPragma!(code);
+    expect(actual).toBeTruthy();
+  });
+  test('should detect no pragma ', () => {
+    const code: string = readFileSync(
+      resolve(__dirname, 'no-pragma.pug'),
+      'utf8',
+    );
+    const actual: boolean = pugParser.hasPragma!(code);
 
-		expect(actual).toBeFalsy();
-	});
+    expect(actual).toBeFalsy();
+  });
 });

@@ -1,119 +1,119 @@
 name: CI
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-    build:
-        runs-on: ${{ matrix.os }}
-        strategy:
-            matrix:
-                os: [ubuntu-latest]
-                node_version: [12, 14, 16, 17]
-                include:
-                    - os: macos-latest
-                      node_version: 16
-                    - os: windows-latest
-                      node_version: 16
-            fail-fast: false
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node_version: [12, 14, 16, 17]
+        include:
+          - os: macos-latest
+            node_version: 16
+          - os: windows-latest
+            node_version: 16
+      fail-fast: false
 
-        name: 'Build&Test: node-${{ matrix.node_version }}, ${{ matrix.os }}'
-        steps:
-            - name: Set git to use LF on Windows
-              if: matrix.os == 'windows-latest'
-              run: |
-                  git config --global core.autocrlf false
-                  git config --global core.eol lf
+    name: 'Build&Test: node-${{ matrix.node_version }}, ${{ matrix.os }}'
+    steps:
+      - name: Set git to use LF on Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
 
-            - name: Checkout
-              uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-            - name: Install pnpm
-              uses: pnpm/action-setup@v2
-              with:
-                  version: 6
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6
 
-            - name: Set node version to ${{ matrix.node_version }}
-              uses: actions/setup-node@v2
-              with:
-                  node-version: ${{ matrix.node_version }}
-                  cache: 'pnpm'
+      - name: Set node version to ${{ matrix.node_version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node_version }}
+          cache: 'pnpm'
 
-            - name: Versions
-              run: |
-                  echo "pnpm: $(pnpm --version)"
-                  echo "npm : $(npm --version)"
-                  echo "node: $(node --version)"
-                  echo "process.versions:"
-                  node -p process.versions
+      - name: Versions
+        run: |
+          echo "pnpm: $(pnpm --version)"
+          echo "npm : $(npm --version)"
+          echo "node: $(node --version)"
+          echo "process.versions:"
+          node -p process.versions
 
-            - name: Install dependencies
-              run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-            - name: Build
-              run: pnpm run build
+      - name: Build
+        run: pnpm run build
 
-            - name: Test
-              run: pnpm vitest --silent
+      - name: Test
+        run: pnpm vitest --silent
 
-    lint:
-        runs-on: ubuntu-latest
-        name: 'Lint: node-16, ubuntu-latest'
-        steps:
-            - uses: actions/checkout@v2
-              with:
-                  fetch-depth: 0
+  lint:
+    runs-on: ubuntu-latest
+    name: 'Lint: node-16, ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-            - name: Install pnpm
-              uses: pnpm/action-setup@v2
-              with:
-                  version: 6
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6
 
-            - name: Set node version to 16
-              uses: actions/setup-node@v2
-              with:
-                  node-version: 16
-                  cache: 'pnpm'
+      - name: Set node version to 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'pnpm'
 
-            - name: Prepare
-              run: pnpm install --frozen-lockfile
+      - name: Prepare
+        run: pnpm install --frozen-lockfile
 
-            - name: Lint
-              run: pnpm run lint
+      - name: Lint
+        run: pnpm run lint
 
-    audit:
-        runs-on: ubuntu-latest
-        name: 'Audit: node-16, ubuntu-latest'
-        steps:
-            - uses: actions/checkout@v2
-              with:
-                  fetch-depth: 0
+  audit:
+    runs-on: ubuntu-latest
+    name: 'Audit: node-16, ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-            - name: Install pnpm
-              uses: pnpm/action-setup@v2
-              with:
-                  version: 6
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6
 
-            - name: Set node version to 16
-              uses: actions/setup-node@v2
-              with:
-                  node-version: 16
-                  cache: 'pnpm'
+      - name: Set node version to 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'pnpm'
 
-            - name: Prepare
-              run: pnpm install --frozen-lockfile
+      - name: Prepare
+        run: pnpm install --frozen-lockfile
 
-            - name: Audit production
-              run: pnpm audit --prod
+      - name: Audit production
+        run: pnpm audit --prod
 
-            - name: Audit all
-              continue-on-error: true
-              run: pnpm audit
+      - name: Audit all
+        continue-on-error: true
+        run: pnpm audit
 
-            - name: Check outdated dependencies
-              continue-on-error: true
-              if: github.ref == 'refs/heads/main'
-              run: pnpm outdated --long
+      - name: Check outdated dependencies
+        continue-on-error: true
+        if: github.ref == 'refs/heads/main'
+        run: pnpm outdated --long

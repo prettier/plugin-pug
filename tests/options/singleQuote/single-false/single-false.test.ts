@@ -5,18 +5,24 @@ import { describe, expect, test } from 'vitest';
 import { plugin } from './../../../../src/index';
 
 describe('Options', () => {
-	describe('singleQuote', () => {
-		test('should handle singleQuote:false', () => {
-			const expected: string = readFileSync(resolve(__dirname, 'formatted.pug'), 'utf8');
-			const code: string = readFileSync(resolve(__dirname, 'unformatted.pug'), 'utf8');
-			const actual: string = format(code, {
-				parser: 'pug',
-				plugins: [plugin],
+  describe('singleQuote', () => {
+    test('should handle singleQuote:false', () => {
+      const expected: string = readFileSync(
+        resolve(__dirname, 'formatted.pug'),
+        'utf8',
+      );
+      const code: string = readFileSync(
+        resolve(__dirname, 'unformatted.pug'),
+        'utf8',
+      );
+      const actual: string = format(code, {
+        parser: 'pug',
+        plugins: [plugin],
 
-				singleQuote: false
-			});
+        singleQuote: false,
+      });
 
-			expect(actual).toBe(expected);
-		});
-	});
+      expect(actual).toBe(expected);
+    });
+  });
 });

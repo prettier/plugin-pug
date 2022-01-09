@@ -18,5 +18,10 @@ import { isQuoted, isWrappedWith } from './common';
  * @returns `true` if `val` passes the svelte interpolation check, otherwise `false`.
  */
 export function isSvelteInterpolation(val: string): boolean {
-	return val.length >= 3 && isQuoted(val) && isWrappedWith(val, '{', '}', 1) && !val.includes('{', 2);
+  return (
+    val.length >= 3 &&
+    isQuoted(val) &&
+    isWrappedWith(val, '{', '}', 1) &&
+    !val.includes('{', 2)
+  );
 }

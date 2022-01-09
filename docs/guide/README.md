@@ -110,7 +110,7 @@ module.exports = {
   printWidth: 120,
   singleQuote: true,
 
-  pugSingleQuote: false
+  pugSingleQuote: false,
   // ... more pug* options
 };
 ```

@@ -18,7 +18,7 @@ import { isQuoted, isWrappedWith } from './common';
  * @returns `true` if `name` passes the angular binding check, otherwise `false`.
  */
 export function isAngularBinding(name: string): boolean {
-	return name.length >= 3 && name[0] === '[' && name[name.length - 1] === ']';
+  return name.length >= 3 && name[0] === '[' && name[name.length - 1] === ']';
 }
 
 /**
@@ -39,7 +39,7 @@ export function isAngularBinding(name: string): boolean {
  * @returns `true` if `name` passes the angular action check, otherwise `false`.
  */
 export function isAngularAction(name: string): boolean {
-	return name.length >= 3 && name[0] === '(' && name[name.length - 1] === ')';
+  return name.length >= 3 && name[0] === '(' && name[name.length - 1] === ')';
 }
 
 /**
@@ -60,7 +60,7 @@ export function isAngularAction(name: string): boolean {
  * @returns `true` if `name` passes the angular directive check, otherwise `false`.
  */
 export function isAngularDirective(name: string): boolean {
-	return name.length >= 2 && name[0] === '*';
+  return name.length >= 2 && name[0] === '*';
 }
 
 /**
@@ -81,5 +81,10 @@ export function isAngularDirective(name: string): boolean {
  * @returns `true` if `val` passes the angular interpolation check, otherwise `false`.
  */
 export function isAngularInterpolation(val: string): boolean {
-	return val.length >= 5 && isQuoted(val) && isWrappedWith(val, '{{', '}}', 1) && !val.includes('{{', 3);
+  return (
+    val.length >= 5 &&
+    isQuoted(val) &&
+    isWrappedWith(val, '{{', '}}', 1) &&
+    !val.includes('{{', 3)
+  );
 }
