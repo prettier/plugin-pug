@@ -39,14 +39,14 @@
     "pug-lexer": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "~16.11.19",
+    "@types/node": "~16.11.21",
     "@types/prettier": "~2.4.3",
-    "@typescript-eslint/eslint-plugin": "~5.9.1",
-    "@typescript-eslint/parser": "~5.9.1",
+    "@typescript-eslint/eslint-plugin": "~5.10.0",
+    "@typescript-eslint/parser": "~5.10.0",
     "benchmark": "~2.1.4",
     "eslint": "~8.7.0",
     "eslint-config-prettier": "~8.3.0",
-    "eslint-define-config": "~1.2.2",
+    "eslint-define-config": "~1.2.3",
     "eslint-plugin-inclusive-language": "~2.2.0",
     "eslint-plugin-jsdoc": "~37.6.1",
     "eslint-plugin-prettier": "~4.0.0",
@@ -54,13 +54,13 @@
     "prettier": "2.5.1",
     "prettier-plugin-organize-imports": "~2.3.4",
     "typescript": "~4.5.4",
-    "vite": "~2.7.12",
-    "vitest": "~0.1.17",
-    "vuepress": "~1.9.5",
+    "vite": "~2.7.13",
+    "vitest": "~0.1.23",
+    "vuepress": "~1.9.7",
     "vuepress-theme-yuu": "~3.1.1"
   },
   "peerDependencies": {
     "prettier": "^2.3.0"
   },
-  "packageManager": "pnpm@6.26.1"
+  "packageManager": "pnpm@6.27.1"
 }
