@@ -121,7 +121,7 @@ export function isStyleAttribute(name: string, val: string): boolean {
  * @param start The left hand side of the wrapping.
  * @param end The right hand side of the wrapping.
  * @param offset The offset from left and right where to search from.
- * @returns Whether the value is wrapped wit start and end from the offset or not.
+ * @returns Whether the value is wrapped with start and end from the offset or not.
  */
 export function isWrappedWith(
   val: string,
