@@ -704,7 +704,14 @@ export class PugPrinter {
         ...this.codeInterpolationOptions,
         singleQuote: !this.options.pugSingleQuote,
       };
-      val = format(val, { parser, ...options });
+      try {
+        val = format(val, { parser, ...options });
+      } catch (error) {
+        logger.warn(
+          'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
+          val,
+        );
+      }
       val = unwrapLineFeeds(val);
     }
     val = handleBracketSpacing(this.options.pugBracketSpacing, val, [
