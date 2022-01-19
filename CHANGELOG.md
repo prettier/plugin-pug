@@ -1,6 +1,15 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.19.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.19.2...main)
+
+# 1.19.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.19.1...1.19.2)
+
+- Handle nested Angular translations ([#329])  
+  _at least don't fail for now_
+
+[#329]: https://github.com/prettier/plugin-pug/issues/329
 
 # 1.19.1
 
