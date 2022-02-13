@@ -1,8 +1,13 @@
 // @ts-check
 const { defineConfig } = require('eslint-define-config');
+const { readGitignoreFiles } = require('eslint-gitignore');
 
 module.exports = defineConfig({
-  ignorePatterns: ['.eslintrc.js', 'dist/', 'benchmark/'],
+  ignorePatterns: [
+    ...readGitignoreFiles(),
+    '.eslintrc.js', // Skip self linting
+  ],
+  root: true,
   env: {
     es6: true,
     node: true,
@@ -14,10 +19,6 @@ module.exports = defineConfig({
     'plugin:jsdoc/recommended',
     'plugin:prettier/recommended',
   ],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-  },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: ['./tsconfig.lint.json'],
