@@ -39,29 +39,29 @@
     "pug-lexer": "^5.0.1"
   },
   "devDependencies": {
-    "@types/node": "~16.11.24",
+    "@types/node": "~16.11.26",
     "@types/prettier": "~2.4.4",
-    "@typescript-eslint/eslint-plugin": "~5.11.0",
-    "@typescript-eslint/parser": "~5.11.0",
+    "@typescript-eslint/eslint-plugin": "~5.12.1",
+    "@typescript-eslint/parser": "~5.12.1",
     "benchmark": "~2.1.4",
     "eslint": "~8.9.0",
-    "eslint-config-prettier": "~8.3.0",
+    "eslint-config-prettier": "~8.4.0",
     "eslint-define-config": "~1.2.5",
     "eslint-gitignore": "~0.1.0",
     "eslint-plugin-inclusive-language": "~2.2.0",
-    "eslint-plugin-jsdoc": "~37.9.1",
+    "eslint-plugin-jsdoc": "~37.9.4",
     "eslint-plugin-prettier": "~4.0.0",
     "eslint-plugin-spellcheck": "~0.0.19",
     "prettier": "2.5.1",
     "prettier-plugin-organize-imports": "~2.3.4",
     "typescript": "~4.5.5",
-    "vite": "~2.8.1",
-    "vitest": "~0.3.4",
+    "vite": "~2.8.4",
+    "vitest": "~0.5.5",
     "vuepress": "~1.9.7",
     "vuepress-theme-yuu": "~3.1.1"
   },
   "peerDependencies": {
     "prettier": "^2.3.0"
   },
-  "packageManager": "pnpm@6.30.1"
+  "packageManager": "pnpm@6.32.1"
 }
