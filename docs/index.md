@@ -2,7 +2,7 @@
 home: true
 actionText: Get Started →
 actionLink: /guide/
-footer: MIT Licensed | Copyright © 2019-2021 Christopher Quadflieg
+footer: MIT Licensed | Copyright © 2019-2022 Christopher Quadflieg
 ---
 
 <!-- TODO christopher 2021-03-29: Move this to heroImage -->
