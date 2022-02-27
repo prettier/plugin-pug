@@ -20,7 +20,7 @@ specifiers:
   typescript: ~4.5.5
   vite: ~2.8.4
   vitepress: ~0.22.3
-  vitest: ~0.5.5
+  vitest: ~0.5.8
 
 dependencies:
   pug-lexer: 5.0.1
@@ -44,7 +44,7 @@ devDependencies:
   typescript: 4.5.5
   vite: 2.8.4
   vitepress: 0.22.3
-  vitest: 0.5.5
+  vitest: 0.5.8
 
 packages:
 
@@ -2004,8 +2004,8 @@ packages:
       - stylus
     dev: true
 
-  /vitest/0.5.5:
-    resolution: {integrity: sha512-oBKIXpFOGN7jDdK0MO4uWcB+UOPRyEJveB8XDx74XsFNbjGF7vHmHqwAomNE8MGtDW8hBKvSSbr58hibFiQc5Q==}
+  /vitest/0.5.8:
+    resolution: {integrity: sha512-LTtjwaNiFKeDm/G/XbvXzFSFRB91uMIjszwfRRr5gNpdhoo9IE2BIeAMAyKbpGaj0oAqTOltCQ6A0x/7b/1Ueg==}
     engines: {node: '>=14.14.0'}
     hasBin: true
     peerDependencies:
