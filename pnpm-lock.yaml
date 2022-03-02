@@ -11,14 +11,14 @@ specifiers:
   eslint-define-config: ~1.2.5
   eslint-gitignore: ~0.1.0
   eslint-plugin-inclusive-language: ~2.2.0
-  eslint-plugin-jsdoc: ~37.9.5
+  eslint-plugin-jsdoc: ~37.9.6
   eslint-plugin-prettier: ~4.0.0
   eslint-plugin-spellcheck: ~0.0.19
   prettier: 2.5.1
   prettier-plugin-organize-imports: ~2.3.4
   pug-lexer: ^5.0.1
   typescript: ~4.5.5
-  vite: ~2.8.5
+  vite: ~2.8.6
   vitepress: ~0.22.3
   vitest: ~0.5.8
 
@@ -36,13 +36,13 @@ devDependencies:
   eslint-define-config: 1.2.5
   eslint-gitignore: 0.1.0_eslint@8.10.0
   eslint-plugin-inclusive-language: 2.2.0
-  eslint-plugin-jsdoc: 37.9.5_eslint@8.10.0
+  eslint-plugin-jsdoc: 37.9.6_eslint@8.10.0
   eslint-plugin-prettier: 4.0.0_1669956a82292b1f29101a00a555e5bf
   eslint-plugin-spellcheck: 0.0.19_eslint@8.10.0
   prettier: 2.5.1
   prettier-plugin-organize-imports: 2.3.4_prettier@2.5.1+typescript@4.5.5
   typescript: 4.5.5
-  vite: 2.8.5
+  vite: 2.8.6
   vitepress: 0.22.3
   vitest: 0.5.8
 
@@ -405,14 +405,14 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vitejs/plugin-vue/2.2.2_vite@2.8.5+vue@3.2.31:
+  /@vitejs/plugin-vue/2.2.2_vite@2.8.6+vue@3.2.31:
     resolution: {integrity: sha512-3C0s45VOwIFEDU+2ownJOpb0zD5fnjXWaHVOLID2R1mYOlAx3doNBFnNbVjaZvpke/L7IdPJXjpyYpXZToDKig==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       vite: ^2.5.10
       vue: ^3.2.25
     dependencies:
-      vite: 2.8.5
+      vite: 2.8.6
       vue: 3.2.31
     dev: true
 
@@ -997,8 +997,8 @@ packages:
       humps: 2.0.1
     dev: true
 
-  /eslint-plugin-jsdoc/37.9.5_eslint@8.10.0:
-    resolution: {integrity: sha512-g2NHlLauufgQIlJBOxtg8afY+JAFG8lPjq/PGcU+IBpEXvaDs2MLoXJ6uDuv+N85nIt4kYaoZrkce0MANEXLZA==}
+  /eslint-plugin-jsdoc/37.9.6_eslint@8.10.0:
+    resolution: {integrity: sha512-GDCB0nEwKVaeIzam+t/yB8XG/6tgvc9XgrSwuxqCXVlKRWUqTuTqntZoqAKZAIbWIgYsrnrvrWAyIX/QvhwBcw==}
     engines: {node: ^12 || ^14 || ^16 || ^17}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0
@@ -1959,8 +1959,8 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
-  /vite/2.8.5:
-    resolution: {integrity: sha512-C/7EGNa1ugWejol6nOcd/0d8PR70Nzd+XXwsPbnNOfzZw0NN2xyXfmw/GNDHgr5fcaTSO4gjxCJCrwNhQUMhmA==}
+  /vite/2.8.6:
+    resolution: {integrity: sha512-e4H0QpludOVKkmOsRyqQ7LTcMUDF3mcgyNU4lmi0B5JUbe0ZxeBBl8VoZ8Y6Rfn9eFKYtdXNPcYK97ZwH+K2ug==}
     engines: {node: '>=12.2.0'}
     hasBin: true
     peerDependencies:
@@ -1990,9 +1990,9 @@ packages:
     dependencies:
       '@docsearch/css': 3.0.0
       '@docsearch/js': 3.0.0
-      '@vitejs/plugin-vue': 2.2.2_vite@2.8.5+vue@3.2.31
+      '@vitejs/plugin-vue': 2.2.2_vite@2.8.6+vue@3.2.31
       prismjs: 1.27.0
-      vite: 2.8.5
+      vite: 2.8.6
       vue: 3.2.31
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -2029,7 +2029,7 @@ packages:
       local-pkg: 0.4.1
       tinypool: 0.1.2
       tinyspy: 0.3.0
-      vite: 2.8.5
+      vite: 2.8.6
     transitivePeerDependencies:
       - less
       - sass
