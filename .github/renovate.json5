@@ -27,8 +27,18 @@
       "matchPackagePrefixes": ["prettier", "@types/prettier"]
     },
     {
+      "groupName": "node",
+      "matchPackagePrefixes": ["@types/node", "node", "npm"],
+      "rangeStrategy": "bump"
+    },
+    {
       "groupName": "dependencies",
       "matchDepTypes": ["dependencies"],
+      "rangeStrategy": "replace"
+    },
+    {
+      "groupName": "devDependencies",
+      "matchDepTypes": ["devDependencies"],
       "rangeStrategy": "bump"
     },
     {
@@ -36,12 +46,6 @@
       "matchDepTypes": ["peerDependencies"],
       "rangeStrategy": "widen"
     }
-  ],
-  "ignoreDeps": [
-    // manually bumping
-    "@types/node",
-    "node",
-    "npm"
   ],
   "vulnerabilityAlerts": {
     "labels": ["security"],
