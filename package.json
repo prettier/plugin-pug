@@ -49,7 +49,7 @@
     "eslint-define-config": "~1.2.5",
     "eslint-gitignore": "~0.1.0",
     "eslint-plugin-inclusive-language": "~2.2.0",
-    "eslint-plugin-jsdoc": "~37.9.6",
+    "eslint-plugin-jsdoc": "~38.0.4",
     "eslint-plugin-prettier": "~4.0.0",
     "eslint-plugin-spellcheck": "~0.0.19",
     "prettier": "2.5.1",
