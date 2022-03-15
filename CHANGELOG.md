@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.19.2...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.19.3...main)
+
+# 1.19.3
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.19.2...1.19.3)
+
+- Add `funding` key to package.json ([#350])
+
+[#350]: https://github.com/prettier/plugin-pug/pull/350
 
 # 1.19.2
 
