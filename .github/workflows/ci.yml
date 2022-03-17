@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -63,7 +63,8 @@ jobs:
     runs-on: ubuntu-latest
     name: 'Lint: node-16, ubuntu-latest'
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -84,11 +85,15 @@ jobs:
       - name: Lint
         run: pnpm run lint
 
+      - name: Check formatting
+        run: pnpm prettier --check .
+
   audit:
     runs-on: ubuntu-latest
     name: 'Audit: node-16, ubuntu-latest'
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
