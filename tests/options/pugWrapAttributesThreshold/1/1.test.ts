@@ -1,25 +1,11 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { format } from 'prettier';
-import { plugin } from 'src/index';
+import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('pugWrapAttributesThreshold', () => {
     it('should not allow more than one attribute as one-liner', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'formatted.pug'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'unformatted.pug'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'pug',
-        plugins: [plugin],
-
-        pugWrapAttributesThreshold: 1,
+      const { actual, expected } = compareFiles(__dirname, {
+        formatOptions: { pugWrapAttributesThreshold: 1 },
       });
 
       expect(actual).toBe(expected);

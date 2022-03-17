@@ -1,42 +1,18 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { format } from 'prettier';
-import { plugin } from 'src/index';
+import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Quotes', () => {
   it('should format single to double quotes', () => {
-    const expected: string = readFileSync(
-      resolve(__dirname, 'formatted.pug'),
-      'utf8',
-    );
-    const code: string = readFileSync(
-      resolve(__dirname, 'unformatted.pug'),
-      'utf8',
-    );
-    const actual: string = format(code, {
-      parser: 'pug',
-      plugins: [plugin],
-      singleQuote: false,
+    const { actual, expected } = compareFiles(__dirname, {
+      formatOptions: {
+        singleQuote: false,
+      },
     });
-
     expect(actual).toBe(expected);
   });
 
   it('should use double quotes by default', () => {
-    const expected: string = readFileSync(
-      resolve(__dirname, 'formatted.pug'),
-      'utf8',
-    );
-    const code: string = readFileSync(
-      resolve(__dirname, 'unformatted.pug'),
-      'utf8',
-    );
-    const actual: string = format(code, {
-      parser: 'pug',
-      plugins: [plugin],
-    });
-
+    const { expected, actual } = compareFiles(__dirname);
     expect(actual).toBe(expected);
   });
 });

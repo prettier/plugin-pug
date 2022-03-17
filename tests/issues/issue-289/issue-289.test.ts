@@ -1,49 +1,29 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { format } from 'prettier';
-import { plugin } from 'src/index';
+import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
   it('should handle vue slot shorthand syntax', () => {
-    const expected: string = readFileSync(
-      resolve(__dirname, 'formatted.pug'),
-      'utf8',
-    );
-    const code: string = readFileSync(
-      resolve(__dirname, 'unformatted.pug'),
-      'utf8',
-    );
-    const actual: string = format(code, {
-      parser: 'pug',
-      plugins: [plugin],
-    });
-
+    const { expected, actual } = compareFiles(__dirname);
     expect(actual).toBe(expected);
   });
 
   it('should handle vue slot shorthand syntax in vue file', () => {
-    const expected: string = readFileSync(
-      resolve(__dirname, 'formatted.vue'),
-      'utf8',
-    );
-    const code: string = readFileSync(
-      resolve(__dirname, 'unformatted.vue'),
-      'utf8',
-    );
-    const actual: string = format(code, {
-      parser: 'vue',
-      plugins: [plugin],
-      printWidth: 120,
-      singleQuote: true,
-      trailingComma: 'all',
+    const { actual, expected } = compareFiles(__dirname, {
+      source: 'unformatted.vue',
+      target: 'formatted.vue',
+      formatOptions: {
+        parser: 'vue',
 
-      pugAttributeSeparator: 'none',
-      pugFramework: 'vue',
-      pugSingleFileComponentIndentation: true,
-      pugSingleQuote: false,
+        printWidth: 120,
+        singleQuote: true,
+        trailingComma: 'all',
+
+        pugAttributeSeparator: 'none',
+        pugFramework: 'vue',
+        pugSingleFileComponentIndentation: true,
+        pugSingleQuote: false,
+      },
     });
-
     expect(actual).toBe(expected);
   });
 });

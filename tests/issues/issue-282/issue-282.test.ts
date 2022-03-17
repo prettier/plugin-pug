@@ -1,45 +1,30 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { format } from 'prettier';
-import { plugin } from 'src/index';
+import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
   it('should indent templates starting with literal class when using pugSingleFileComponentIndentation', () => {
-    const expected: string = readFileSync(
-      resolve(__dirname, 'class-indented.vue'),
-      'utf8',
-    );
-    const code: string = readFileSync(
-      resolve(__dirname, 'class-not-indented.vue'),
-      'utf8',
-    );
-    const actual: string = format(code, {
-      parser: 'vue',
-      plugins: [plugin],
+    const { actual, expected } = compareFiles(__dirname, {
+      source: 'class-not-indented.vue',
+      target: 'class-indented.vue',
+      formatOptions: {
+        parser: 'vue',
 
-      pugSingleFileComponentIndentation: true,
+        pugSingleFileComponentIndentation: true,
+      },
     });
-
     expect(actual).toBe(expected);
   });
 
   it('should indent templates starting with literal ID when using pugSingleFileComponentIndentation', () => {
-    const expected: string = readFileSync(
-      resolve(__dirname, 'id-indented.vue'),
-      'utf8',
-    );
-    const code: string = readFileSync(
-      resolve(__dirname, 'id-not-indented.vue'),
-      'utf8',
-    );
-    const actual: string = format(code, {
-      parser: 'vue',
-      plugins: [plugin],
+    const { actual, expected } = compareFiles(__dirname, {
+      source: 'id-not-indented.vue',
+      target: 'id-indented.vue',
+      formatOptions: {
+        parser: 'vue',
 
-      pugSingleFileComponentIndentation: true,
+        pugSingleFileComponentIndentation: true,
+      },
     });
-
     expect(actual).toBe(expected);
   });
 });

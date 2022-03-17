@@ -14,6 +14,7 @@ describe('Options', () => {
     const commonOptions: Options = {
       parser: 'pug',
       plugins: [plugin],
+
       // use this common options in all tests to force specific wrapping
 
       pugAttributeSeparator: 'none',

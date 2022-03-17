@@ -7,6 +7,7 @@ export default defineConfig({
     alias: {
       // Needed for vitest
       src: resolve(__dirname, './src'),
+      tests: resolve(__dirname, './tests'),
     },
   },
 });

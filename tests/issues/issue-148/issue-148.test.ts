@@ -1,26 +1,17 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { format } from 'prettier';
-import { plugin } from 'src/index';
+import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
   it('should correctly format vue bracket interpolation with pugSingleFileComponentIndentation', () => {
-    const expected: string = readFileSync(
-      resolve(__dirname, 'formatted.vue'),
-      'utf8',
-    );
-    const code: string = readFileSync(
-      resolve(__dirname, 'unformatted.vue'),
-      'utf8',
-    );
-    const actual: string = format(code, {
-      parser: 'vue',
-      plugins: [plugin],
+    const { actual, expected } = compareFiles(__dirname, {
+      source: 'unformatted.vue',
+      target: 'formatted.vue',
+      formatOptions: {
+        parser: 'vue',
 
-      pugSingleFileComponentIndentation: true,
+        pugSingleFileComponentIndentation: true,
+      },
     });
-
     expect(actual).toBe(expected);
   });
 });

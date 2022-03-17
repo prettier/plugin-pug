@@ -1,35 +1,21 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { format } from 'prettier';
 import type { AttributeToken } from 'pug-lexer';
-import { plugin } from 'src/index';
 import type {
   PugEmptyAttributes,
   PugEmptyAttributesForceQuotes,
 } from 'src/options/empty-attributes';
 import { formatEmptyAttribute } from 'src/options/empty-attributes/utils';
+import { compareFiles, createAttributeToken } from 'tests/common';
 import { describe, expect, it } from 'vitest';
-import { createAttributeToken } from '../../common';
 
 describe('Options', () => {
   describe('emptyAttributes', () => {
     it('should remove empty quotes and keep attributes starting with #', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'formatted.pug'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'unformatted.pug'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'pug',
-        plugins: [plugin],
-
-        pugEmptyAttributes: 'none',
-        pugEmptyAttributesForceQuotes: ['foo'],
+      const { actual, expected } = compareFiles(__dirname, {
+        formatOptions: {
+          pugEmptyAttributes: 'none',
+          pugEmptyAttributesForceQuotes: ['foo'],
+        },
       });
-
       expect(actual).toBe(expected);
     });
   });

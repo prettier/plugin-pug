@@ -1,59 +1,35 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { format } from 'prettier';
-import { plugin } from 'src/index';
+import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('useIdLiterals', () => {
     it('should keep classes as is', () => {
-      const code: string = readFileSync(
-        resolve(__dirname, 'formatted-attribute.pug'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'pug',
-        plugins: [plugin],
-
-        pugIdNotation: 'as-is',
+      const { actual, code } = compareFiles(__dirname, {
+        source: 'formatted-attribute.pug',
+        target: null,
+        formatOptions: {
+          pugIdNotation: 'as-is',
+        },
       });
-
       expect(actual).toBe(code);
     });
 
     it('should keep classes as literals', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'formatted-literal.pug'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'formatted-attribute.pug'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'pug',
-        plugins: [plugin],
-
-        pugIdNotation: 'literal',
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'formatted-attribute.pug',
+        target: 'formatted-literal.pug',
+        formatOptions: {
+          pugIdNotation: 'literal',
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should keep classes as literals by default', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'formatted-literal.pug'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'formatted-attribute.pug'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'pug',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'formatted-attribute.pug',
+        target: 'formatted-literal.pug',
       });
-
       expect(actual).toBe(expected);
     });
   });

@@ -14,6 +14,7 @@ describe('Options', () => {
       resolve(__dirname, 'unformatted.pug'),
       'utf8',
     );
+
     it('should keep leading spaces within comments', () => {
       const actual: string = format(code, {
         parser: 'pug',

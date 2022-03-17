@@ -1,226 +1,151 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { format } from 'prettier';
-import { plugin } from 'src/index';
+import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('pugSingleFileComponentIndentation', () => {
     it('should indent', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'indented.vue'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'not-indented.vue'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'vue',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'not-indented.vue',
+        target: 'indented.vue',
+        formatOptions: {
+          parser: 'vue',
 
-        pugSingleFileComponentIndentation: true,
+          pugSingleFileComponentIndentation: true,
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should not indent', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'not-indented.vue'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'indented.vue'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'vue',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'indented.vue',
+        target: 'not-indented.vue',
+        formatOptions: {
+          parser: 'vue',
 
-        pugSingleFileComponentIndentation: false,
+          pugSingleFileComponentIndentation: false,
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should not indent by default', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'not-indented.vue'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'indented.vue'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'vue',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'indented.vue',
+        target: 'not-indented.vue',
+        formatOptions: {
+          parser: 'vue',
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should not affect markdown', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'not-indented.md'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'not-indented.md'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'markdown',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'not-indented.md',
+        target: 'not-indented.md',
+        formatOptions: {
+          parser: 'markdown',
 
-        pugSingleFileComponentIndentation: true,
+          pugSingleFileComponentIndentation: true,
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should not change two-div-not-indented-flat', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'two-div-not-indented-flat.vue'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'two-div-not-indented-flat.vue'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'vue',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'two-div-not-indented-flat.vue',
+        target: 'two-div-not-indented-flat.vue',
+        formatOptions: {
+          parser: 'vue',
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should not change two-div-not-indented-tree', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'two-div-not-indented-tree.vue'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'two-div-not-indented-tree.vue'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'vue',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'two-div-not-indented-tree.vue',
+        target: 'two-div-not-indented-tree.vue',
+        formatOptions: {
+          parser: 'vue',
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should not change two-div-indented-flat', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'two-div-indented-flat.vue'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'two-div-indented-flat.vue'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'vue',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'two-div-indented-flat.vue',
+        target: 'two-div-indented-flat.vue',
+        formatOptions: {
+          parser: 'vue',
 
-        pugSingleFileComponentIndentation: true,
+          pugSingleFileComponentIndentation: true,
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should not change two-div-indented-tree', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'two-div-indented-tree.vue'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'two-div-indented-tree.vue'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'vue',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'two-div-indented-tree.vue',
+        target: 'two-div-indented-tree.vue',
+        formatOptions: {
+          parser: 'vue',
 
-        pugSingleFileComponentIndentation: true,
+          pugSingleFileComponentIndentation: true,
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should indent two-div-not-indented-flat', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'two-div-indented-flat.vue'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'two-div-not-indented-flat.vue'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'vue',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'two-div-not-indented-flat.vue',
+        target: 'two-div-indented-flat.vue',
+        formatOptions: {
+          parser: 'vue',
 
-        pugSingleFileComponentIndentation: true,
+          pugSingleFileComponentIndentation: true,
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should indent two-div-not-indented-tree', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'two-div-indented-tree.vue'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'two-div-not-indented-tree.vue'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'vue',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'two-div-not-indented-tree.vue',
+        target: 'two-div-indented-tree.vue',
+        formatOptions: {
+          parser: 'vue',
 
-        pugSingleFileComponentIndentation: true,
+          pugSingleFileComponentIndentation: true,
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should not indent two-div-indented-flat', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'two-div-not-indented-flat.vue'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'two-div-indented-flat.vue'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'vue',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'two-div-indented-flat.vue',
+        target: 'two-div-not-indented-flat.vue',
+        formatOptions: {
+          parser: 'vue',
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should not indent two-div-indented-tree', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'two-div-not-indented-tree.vue'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'two-div-indented-tree.vue'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'vue',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        source: 'two-div-indented-tree.vue',
+        target: 'two-div-not-indented-tree.vue',
+        formatOptions: {
+          parser: 'vue',
+        },
       });
-
       expect(actual).toBe(expected);
     });
   });

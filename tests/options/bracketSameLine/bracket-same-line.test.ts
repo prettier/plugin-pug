@@ -1,99 +1,52 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { format } from 'prettier';
-import { plugin } from 'src/index';
+import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('bracketSameLine', () => {
     it('should handle bracketSameLine:true', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'same-line.pug'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'unformatted.pug'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'pug',
-        plugins: [plugin],
-        bracketSameLine: true,
+      const { actual, expected } = compareFiles(__dirname, {
+        target: 'same-line.pug',
+        formatOptions: {
+          bracketSameLine: true,
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should handle pugBracketSameLine:true', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'same-line.pug'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'unformatted.pug'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'pug',
-        plugins: [plugin],
-
-        pugBracketSameLine: true,
+      const { actual, expected } = compareFiles(__dirname, {
+        target: 'same-line.pug',
+        formatOptions: {
+          pugBracketSameLine: true,
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should handle bracketSameLine:false', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'new-line.pug'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'unformatted.pug'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'pug',
-        plugins: [plugin],
-        bracketSameLine: false,
+      const { actual, expected } = compareFiles(__dirname, {
+        target: 'new-line.pug',
+        formatOptions: {
+          bracketSameLine: false,
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should handle pugBracketSameLine:false', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'new-line.pug'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'unformatted.pug'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'pug',
-        plugins: [plugin],
-
-        pugBracketSameLine: false,
+      const { actual, expected } = compareFiles(__dirname, {
+        target: 'new-line.pug',
+        formatOptions: {
+          pugBracketSameLine: false,
+        },
       });
-
       expect(actual).toBe(expected);
     });
 
     it('should handle default', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'new-line.pug'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'unformatted.pug'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'pug',
-        plugins: [plugin],
+      const { actual, expected } = compareFiles(__dirname, {
+        target: 'new-line.pug',
       });
-
       expect(actual).toBe(expected);
     });
   });

@@ -1,34 +1,20 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { format } from 'prettier';
-import { plugin } from 'src/index';
 import type { PugSortAttributes } from 'src/options/attribute-sorting/index';
 import {
   compareAttributeToken,
   stableSort,
 } from 'src/options/attribute-sorting/utils';
 import { describe, expect, it } from 'vitest';
-import { createAttributeToken } from '../../common';
+import { compareFiles, createAttributeToken } from '../../common';
 
 describe('Options', () => {
   describe('sortAttributes', () => {
     it('should sort attributes', () => {
-      const expected: string = readFileSync(
-        resolve(__dirname, 'formatted.pug'),
-        'utf8',
-      );
-      const code: string = readFileSync(
-        resolve(__dirname, 'unformatted.pug'),
-        'utf8',
-      );
-      const actual: string = format(code, {
-        parser: 'pug',
-        plugins: [plugin],
-
-        pugSortAttributesBeginning: ['v-for', ':key', 'src', 'alt'],
-        pugSortAttributesEnd: ['@click'],
+      const { actual, expected } = compareFiles(__dirname, {
+        formatOptions: {
+          pugSortAttributesBeginning: ['v-for', ':key', 'src', 'alt'],
+          pugSortAttributesEnd: ['@click'],
+        },
       });
-
       expect(actual).toBe(expected);
     });
   });
