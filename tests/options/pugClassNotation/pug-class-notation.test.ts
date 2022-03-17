@@ -20,6 +20,7 @@ describe('Options', () => {
 
       expect(actual).toBe(code);
     });
+
     it('should keep classes as literals', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted-literal.pug'),
@@ -38,6 +39,7 @@ describe('Options', () => {
 
       expect(actual).toBe(expected);
     });
+
     it('should keep classes as attributes', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted-attribute.pug'),
@@ -56,6 +58,7 @@ describe('Options', () => {
 
       expect(actual).toBe(expected);
     });
+
     it('should keep classes as literals by default', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted-literal.pug'),

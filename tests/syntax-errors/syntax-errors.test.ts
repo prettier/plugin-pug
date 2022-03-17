@@ -14,6 +14,7 @@ describe('Syntax-Errors', () => {
       format(code, { parser: 'pug', plugins: [plugin] });
     }).toThrow();
   });
+
   it('should not format if pipeless script tag has syntax error', () => {
     const code: string = readFileSync(
       resolve(__dirname, 'pipeless-script-tag.pug'),
@@ -23,6 +24,7 @@ describe('Syntax-Errors', () => {
       format(code, { parser: 'pug', plugins: [plugin] });
     }).toThrow();
   });
+
   it('should format non-JS script without syntax error', () => {
     const code: string = readFileSync(
       resolve(__dirname, 'scripts-with-non-js-contents.pug'),

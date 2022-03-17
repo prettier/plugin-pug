@@ -26,6 +26,7 @@ describe('Options', () => {
 
       expect(actual).toBe(expected);
     });
+
     it("should work with 'none' option and angular syntax, but produce invalid output", () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'angular-formatted.pug'),

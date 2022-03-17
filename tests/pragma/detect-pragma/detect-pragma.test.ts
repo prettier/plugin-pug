@@ -19,6 +19,7 @@ describe('Pragma', () => {
 
     expect(actual).toBeTruthy();
   });
+
   it('should detect pragma @format', () => {
     const code: string = readFileSync(
       resolve(__dirname, 'pragma-format.pug'),
@@ -28,6 +29,7 @@ describe('Pragma', () => {
 
     expect(actual).toBeTruthy();
   });
+
   it('should detect no pragma ', () => {
     const code: string = readFileSync(
       resolve(__dirname, 'no-pragma.pug'),

@@ -23,6 +23,7 @@ describe('Pragma', () => {
 
     expect(actual).toBe(expected);
   });
+
   it('should not insert multiple pragma if option is set', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'with-pragma.pug'),
@@ -47,6 +48,7 @@ describe('Pragma', () => {
 
     expect(actual).toBe(expected);
   });
+
   it('should not insert pragma if option is not set', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'no-pragma.pug'),

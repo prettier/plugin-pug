@@ -26,6 +26,7 @@ describe('Options', () => {
 
       expect(actual).toBe(expected);
     });
+
     it('should always insert commas between attributes by default', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted.pug'),

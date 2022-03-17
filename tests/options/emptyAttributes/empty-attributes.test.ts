@@ -51,6 +51,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
+
     it('should work with single quotes', () => {
       const name: string = 'disabled';
       const pugEmptyAttributes: PugEmptyAttributes = 'none';
@@ -67,6 +68,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
+
     it('should format truthy boolean attributes as empty quotes', () => {
       const name: string = 'disabled';
       const pugEmptyAttributes: PugEmptyAttributes = 'all';
@@ -83,6 +85,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
+
     it('should do nothing if the option is "as-is" (boolean)', () => {
       const name: string = 'disabled';
       const val: boolean = true;
@@ -100,6 +103,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
+
     it('should do nothing if the option is "as-is" (quotes)', () => {
       const name: string = 'disabled';
       const val: string = '""';
@@ -117,6 +121,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
+
     it('should force quotes on attributes with name starting with #', () => {
       const name: string = '#boom';
       const pugEmptyAttributes: PugEmptyAttributes = 'none';
@@ -135,6 +140,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
+
     it('should do nothing if the value is not empty', () => {
       const name: string = 'type';
       const val: string = 'text';
@@ -152,6 +158,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
+
     it('should do nothing if the forced quotes value is not empty', () => {
       const name: string = 'type';
       const val: string = 'text';
@@ -171,6 +178,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
+
     it('should do nothing if the value already boolean true', () => {
       const name: string = 'type';
       const pugEmptyAttributes: PugEmptyAttributes = 'none';
@@ -187,6 +195,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
+
     it('should do nothing if the value already empty quotes', () => {
       const name: string = 'type';
       const pugEmptyAttributes: PugEmptyAttributes = 'all';

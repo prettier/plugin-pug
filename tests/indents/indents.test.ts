@@ -21,6 +21,7 @@ describe('Indents', () => {
 
     expect(actual).toBe(expected);
   });
+
   it('should indent with 2 spaces', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted-2-spaces.pug'),
@@ -38,6 +39,7 @@ describe('Indents', () => {
 
     expect(actual).toBe(expected);
   });
+
   it('should indent with 3 spaces', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted-3-spaces.pug'),
@@ -55,6 +57,7 @@ describe('Indents', () => {
 
     expect(actual).toBe(expected);
   });
+
   it('should indent with 4 spaces', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted-4-spaces.pug'),
@@ -72,6 +75,7 @@ describe('Indents', () => {
 
     expect(actual).toBe(expected);
   });
+
   it('should indent with tabs', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted-tabs.pug'),

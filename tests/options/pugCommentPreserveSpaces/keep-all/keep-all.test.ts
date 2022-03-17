@@ -24,6 +24,7 @@ describe('Options', () => {
 
       expect(actual).toBe(expected);
     });
+
     it('should keep all spaces within comments by default', () => {
       const actual: string = format(code, {
         parser: 'pug',

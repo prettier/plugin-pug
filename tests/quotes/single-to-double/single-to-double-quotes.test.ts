@@ -22,6 +22,7 @@ describe('Quotes', () => {
 
     expect(actual).toBe(expected);
   });
+
   it('should use double quotes by default', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.pug'),

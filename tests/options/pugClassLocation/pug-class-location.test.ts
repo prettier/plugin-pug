@@ -24,6 +24,7 @@ describe('Options', () => {
 
       expect(actual).toBe(expected);
     });
+
     it('should position class literals after attributes', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted-after.pug'),
