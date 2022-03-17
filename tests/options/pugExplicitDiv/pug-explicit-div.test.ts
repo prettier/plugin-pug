@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import type { Options } from 'prettier';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from '../../../src/index';
 
 describe('Options', () => {
@@ -20,7 +20,7 @@ describe('Options', () => {
       pugPrintWidth: 80,
     };
 
-    test('should handle unspecified pugExplicitDiv', () => {
+    it('should handle unspecified pugExplicitDiv', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted-implicit-div.pug'),
         'utf8',
@@ -32,7 +32,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should handle pugExplicitDiv:false', () => {
+    it('should handle pugExplicitDiv:false', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted-implicit-div.pug'),
         'utf8',
@@ -46,7 +46,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should handle pugExplicitDiv:true', () => {
+    it('should handle pugExplicitDiv:true', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted-explicit-div.pug'),
         'utf8',

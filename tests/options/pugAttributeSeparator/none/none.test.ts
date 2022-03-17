@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { parsers, plugin } from './../../../../src/index';
 
 describe('Options', () => {
   describe('pugAttributeSeparator', () => {
-    test('should never insert commas between attributes', () => {
+    it('should never insert commas between attributes', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted.pug'),
         'utf8',
@@ -26,7 +26,7 @@ describe('Options', () => {
 
       expect(actual).toBe(expected);
     });
-    test("should work with 'none' option and angular syntax, but produce invalid output", () => {
+    it("should work with 'none' option and angular syntax, but produce invalid output", () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'angular-formatted.pug'),
         'utf8',

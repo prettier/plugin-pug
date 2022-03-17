@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-  test('should handle singleQuote:true + pugSingleQuote:false in framework interpolation', () => {
+  it('should handle singleQuote:true + pugSingleQuote:false in framework interpolation', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'single-quotes.pug'),
       'utf8',
@@ -24,7 +24,7 @@ describe('Issues', () => {
     expect(actual).toBe(expected);
   });
 
-  test('should handle singleQuote:false + pugSingleQuote:true in framework interpolation', () => {
+  it('should handle singleQuote:false + pugSingleQuote:true in framework interpolation', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'double-quotes.pug'),
       'utf8',

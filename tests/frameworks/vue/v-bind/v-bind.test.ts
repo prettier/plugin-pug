@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../../src/index';
 
 describe('Frameworks', () => {
   describe('Vue', () => {
-    test('should format v-bind', () => {
+    it('should format v-bind', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted.pug'),
         'utf8',

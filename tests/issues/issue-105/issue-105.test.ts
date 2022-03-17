@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-  test('should prefer pug aliased option', () => {
+  it('should prefer pug aliased option', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.vue'),
       'utf8',

@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../../src/index';
 
 describe('Options', () => {
@@ -14,7 +14,7 @@ describe('Options', () => {
       resolve(__dirname, 'unformatted.pug'),
       'utf8',
     );
-    test('should keep leading spaces within comments', () => {
+    it('should keep leading spaces within comments', () => {
       const actual: string = format(code, {
         parser: 'pug',
         plugins: [plugin],

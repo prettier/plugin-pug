@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../../src/index';
 
 describe('Options', () => {
   describe('pugAttributeSeparator', () => {
-    test('should always insert commas between attributes', () => {
+    it('should always insert commas between attributes', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted.pug'),
         'utf8',
@@ -26,7 +26,7 @@ describe('Options', () => {
 
       expect(actual).toBe(expected);
     });
-    test('should always insert commas between attributes by default', () => {
+    it('should always insert commas between attributes by default', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted.pug'),
         'utf8',

@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from '../../../src/index';
 
 describe('Issues', () => {
-  test('should indent templates starting with literal class when using pugSingleFileComponentIndentation', () => {
+  it('should indent templates starting with literal class when using pugSingleFileComponentIndentation', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'class-indented.vue'),
       'utf8',
@@ -24,7 +24,7 @@ describe('Issues', () => {
     expect(actual).toBe(expected);
   });
 
-  test('should indent templates starting with literal ID when using pugSingleFileComponentIndentation', () => {
+  it('should indent templates starting with literal ID when using pugSingleFileComponentIndentation', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'id-indented.vue'),
       'utf8',

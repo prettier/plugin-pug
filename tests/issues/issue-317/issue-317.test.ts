@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-  test('should respect printWidth and pugClassLocation with pugSortAttributesEnd', () => {
+  it('should respect printWidth and pugClassLocation with pugSortAttributesEnd', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.pug'),
       'utf8',
@@ -27,7 +27,7 @@ describe('Issues', () => {
     expect(actual).toBe(expected);
   });
 
-  test('should keep same format after two runs with printWidth and pugClassLocation', () => {
+  it('should keep same format after two runs with printWidth and pugClassLocation', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.pug'),
       'utf8',

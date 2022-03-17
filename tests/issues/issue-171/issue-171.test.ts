@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-  test('should not indent blank lines with an indent in inline syntax', () => {
+  it('should not indent blank lines with an indent in inline syntax', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.pug'),
       'utf8',

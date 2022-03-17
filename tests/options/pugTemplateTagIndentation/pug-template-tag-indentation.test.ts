@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Options', () => {
   describe('pugSingleFileComponentIndentation', () => {
-    test('should indent', () => {
+    it('should indent', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'indented.vue'),
         'utf8',
@@ -25,7 +25,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should not indent', () => {
+    it('should not indent', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'not-indented.vue'),
         'utf8',
@@ -44,7 +44,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should not indent by default', () => {
+    it('should not indent by default', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'not-indented.vue'),
         'utf8',
@@ -61,7 +61,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should not affect markdown', () => {
+    it('should not affect markdown', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'not-indented.md'),
         'utf8',
@@ -80,7 +80,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should not change two-div-not-indented-flat', () => {
+    it('should not change two-div-not-indented-flat', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'two-div-not-indented-flat.vue'),
         'utf8',
@@ -97,7 +97,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should not change two-div-not-indented-tree', () => {
+    it('should not change two-div-not-indented-tree', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'two-div-not-indented-tree.vue'),
         'utf8',
@@ -114,7 +114,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should not change two-div-indented-flat', () => {
+    it('should not change two-div-indented-flat', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'two-div-indented-flat.vue'),
         'utf8',
@@ -133,7 +133,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should not change two-div-indented-tree', () => {
+    it('should not change two-div-indented-tree', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'two-div-indented-tree.vue'),
         'utf8',
@@ -152,7 +152,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should indent two-div-not-indented-flat', () => {
+    it('should indent two-div-not-indented-flat', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'two-div-indented-flat.vue'),
         'utf8',
@@ -171,7 +171,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should indent two-div-not-indented-tree', () => {
+    it('should indent two-div-not-indented-tree', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'two-div-indented-tree.vue'),
         'utf8',
@@ -190,7 +190,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should not indent two-div-indented-flat', () => {
+    it('should not indent two-div-indented-flat', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'two-div-not-indented-flat.vue'),
         'utf8',
@@ -207,7 +207,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should not indent two-div-indented-tree', () => {
+    it('should not indent two-div-indented-tree', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'two-div-not-indented-tree.vue'),
         'utf8',

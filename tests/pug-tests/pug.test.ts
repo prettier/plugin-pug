@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../src/index';
 
 describe('Pug Tests', () => {
@@ -30,7 +30,7 @@ describe('Pug Tests', () => {
     if (filename.endsWith('.formatted.pug')) {
       const unformattedFilename: string = filename.replace('.formatted', '');
       if (!ignores.includes(unformattedFilename)) {
-        test(unformattedFilename, () => {
+        it(unformattedFilename, () => {
           const expected: string = readFileSync(
             resolve(__dirname, filename),
             'utf8',

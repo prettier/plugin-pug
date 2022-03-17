@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-  test('should not wrap pug in brackets into multi line', () => {
+  it('should not wrap pug in brackets into multi line', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.pug'),
       'utf8',

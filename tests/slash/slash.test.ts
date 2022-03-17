@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../src/index';
 
 describe('Slash', () => {
-  test('should handle slash token', () => {
+  it('should handle slash token', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.pug'),
       'utf8',

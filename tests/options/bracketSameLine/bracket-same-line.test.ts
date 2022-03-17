@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Options', () => {
   describe('bracketSameLine', () => {
-    test('should handle bracketSameLine:true', () => {
+    it('should handle bracketSameLine:true', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'same-line.pug'),
         'utf8',
@@ -24,7 +24,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should handle pugBracketSameLine:true', () => {
+    it('should handle pugBracketSameLine:true', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'same-line.pug'),
         'utf8',
@@ -43,7 +43,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should handle bracketSameLine:false', () => {
+    it('should handle bracketSameLine:false', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'new-line.pug'),
         'utf8',
@@ -61,7 +61,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should handle pugBracketSameLine:false', () => {
+    it('should handle pugBracketSameLine:false', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'new-line.pug'),
         'utf8',
@@ -80,7 +80,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    test('should handle default', () => {
+    it('should handle default', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'new-line.pug'),
         'utf8',

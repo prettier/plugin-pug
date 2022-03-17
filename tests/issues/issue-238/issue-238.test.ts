@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-  test('should interpolate pug variable in a Vue directive', () => {
+  it('should interpolate pug variable in a Vue directive', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.pug'),
       'utf8',

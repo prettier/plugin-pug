@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
-  test('should preserve multi-root nodes', () => {
+  it('should preserve multi-root nodes', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.pug'),
       'utf8',
@@ -22,7 +22,7 @@ describe('Issues', () => {
     expect(actual).toBe(expected);
   });
 
-  test('should preserve multi-root nodes with pugSingleFileComponentIndentation', () => {
+  it('should preserve multi-root nodes with pugSingleFileComponentIndentation', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.vue'),
       'utf8',
@@ -41,7 +41,7 @@ describe('Issues', () => {
     expect(actual).toBe(expected);
   });
 
-  test('should preserve multi-root nodes with pugSingleFileComponentIndentation for extends', () => {
+  it('should preserve multi-root nodes with pugSingleFileComponentIndentation for extends', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'extends-formatted.vue'),
       'utf8',

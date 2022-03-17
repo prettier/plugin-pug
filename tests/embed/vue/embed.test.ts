@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Embedded', () => {
-  test('should format when embedded in vue', () => {
+  it('should format when embedded in vue', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.vue'),
       'utf8',
@@ -22,7 +22,7 @@ describe('Embedded', () => {
     expect(actual).toBe(expected);
   });
 
-  test('should format when embedded in vue html reference', () => {
+  it('should format when embedded in vue html reference', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted-html-reference.vue'),
       'utf8',
@@ -39,7 +39,7 @@ describe('Embedded', () => {
     expect(actual).toBe(expected);
   });
 
-  test('should format when embedded in vue empty template', () => {
+  it('should format when embedded in vue empty template', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted-empty-template.vue'),
       'utf8',

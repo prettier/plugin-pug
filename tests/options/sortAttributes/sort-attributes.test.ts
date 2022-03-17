@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import type { PugSortAttributes } from '../../../src/options/attribute-sorting/index';
 import {
   compareAttributeToken,
@@ -12,7 +12,7 @@ import { plugin } from './../../../src/index';
 
 describe('Options', () => {
   describe('sortAttributes', () => {
-    test('should sort attributes', () => {
+    it('should sort attributes', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted.pug'),
         'utf8',
@@ -34,7 +34,7 @@ describe('Options', () => {
   });
 
   describe('sort utilities', () => {
-    test('should sort only the beginning attributes', () => {
+    it('should sort only the beginning attributes', () => {
       const pugSortAttributes: PugSortAttributes = 'as-is';
       const pugSortAttributesBeginning: string[] = [
         'v-for',
@@ -57,7 +57,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
-    test('should sort only the end attributes', () => {
+    it('should sort only the end attributes', () => {
       const pugSortAttributes: PugSortAttributes = 'as-is';
       const pugSortAttributesBeginning: string[] = [];
       const pugSortAttributesEnd: string[] = [
@@ -96,7 +96,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
-    test('should sort both beginning and end, but keep middle attributes as is', () => {
+    it('should sort both beginning and end, but keep middle attributes as is', () => {
       const pugSortAttributes: PugSortAttributes = 'as-is';
       const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
       const pugSortAttributesEnd: string[] = [
@@ -147,7 +147,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
-    test('should sort beginning, end, and middle should be sorted ascending', () => {
+    it('should sort beginning, end, and middle should be sorted ascending', () => {
       const pugSortAttributes: PugSortAttributes = 'asc';
       const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
       const pugSortAttributesEnd: string[] = [
@@ -200,7 +200,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
-    test('should sort beginning, end, and middle should be sorted descending', () => {
+    it('should sort beginning, end, and middle should be sorted descending', () => {
       const pugSortAttributes: PugSortAttributes = 'desc';
       const pugSortAttributesBeginning: string[] = ['^x$', '^y$', '^z$'];
       const pugSortAttributesEnd: string[] = [
@@ -251,7 +251,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
-    test('should keep middle attributes untouched', () => {
+    it('should keep middle attributes untouched', () => {
       const pugSortAttributes: PugSortAttributes = 'as-is';
       const pugSortAttributesBeginning: string[] = ['a'];
       const pugSortAttributesEnd: string[] = ['b'];
@@ -271,7 +271,7 @@ describe('Options', () => {
 
       expect(actual).toStrictEqual(expected);
     });
-    test('should keep every attribute untouched', () => {
+    it('should keep every attribute untouched', () => {
       const pugSortAttributes: PugSortAttributes = 'as-is';
       const pugSortAttributesBeginning: string[] = [];
       const pugSortAttributesEnd: string[] = [];

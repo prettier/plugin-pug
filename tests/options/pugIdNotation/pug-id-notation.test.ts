@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Options', () => {
   describe('useIdLiterals', () => {
-    test('should keep classes as is', () => {
+    it('should keep classes as is', () => {
       const code: string = readFileSync(
         resolve(__dirname, 'formatted-attribute.pug'),
         'utf8',
@@ -20,7 +20,7 @@ describe('Options', () => {
 
       expect(actual).toBe(code);
     });
-    test('should keep classes as literals', () => {
+    it('should keep classes as literals', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted-literal.pug'),
         'utf8',
@@ -38,7 +38,7 @@ describe('Options', () => {
 
       expect(actual).toBe(expected);
     });
-    test('should keep classes as literals by default', () => {
+    it('should keep classes as literals by default', () => {
       const expected: string = readFileSync(
         resolve(__dirname, 'formatted-literal.pug'),
         'utf8',

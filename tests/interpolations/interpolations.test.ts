@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { afterEach, describe, expect, test } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { plugin } from './../../src/index';
 
 describe('Interpolations', () => {
@@ -11,7 +11,7 @@ describe('Interpolations', () => {
     process.env = { ...backupProcessEnv };
   });
 
-  test('should handle Neutral interpolations', () => {
+  it('should handle Neutral interpolations', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted_none.pug'),
       'utf8',
@@ -28,7 +28,7 @@ describe('Interpolations', () => {
     expect(actual).toBe(expected);
   });
 
-  test('should handle Angular interpolations', () => {
+  it('should handle Angular interpolations', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted_angular.pug'),
       'utf8',
@@ -51,7 +51,7 @@ describe('Interpolations', () => {
     expect(actual).toBe(expected);
   });
 
-  test('should handle Vue interpolations', () => {
+  it('should handle Vue interpolations', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted_vue.pug'),
       'utf8',

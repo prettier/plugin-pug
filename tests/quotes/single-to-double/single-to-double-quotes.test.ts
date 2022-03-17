@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { plugin } from './../../../src/index';
 
 describe('Quotes', () => {
-  test('should format single to double quotes', () => {
+  it('should format single to double quotes', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.pug'),
       'utf8',
@@ -22,7 +22,7 @@ describe('Quotes', () => {
 
     expect(actual).toBe(expected);
   });
-  test('should use double quotes by default', () => {
+  it('should use double quotes by default', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted.pug'),
       'utf8',
