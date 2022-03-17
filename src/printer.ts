@@ -456,6 +456,7 @@ export class PugPrinter {
       // see https://github.com/prettier/plugin-pug/issues/339
       singleQuote: this.options.singleQuote,
     };
+
     switch (this.framework) {
       case 'angular':
         options.parser = '__ng_interpolation';
@@ -466,6 +467,7 @@ export class PugPrinter {
         options.parser = 'babel';
         options.semi = false;
     }
+
     let result: string = format(code, options);
     if (result[0] === ';') {
       result = result.slice(1);
