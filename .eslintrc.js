@@ -89,7 +89,7 @@ module.exports = defineConfig({
       'warn',
       {
         mainDescription:
-          '/^[A-Z`].+?(\\.|:)(\\n\\n.*((\\n{1,2}- .+)|(_.+_)|`.+`|\\n\\n---))?$/us',
+          '/^[A-Z`].+?(\\.|:)(\\n\\n.*((\\n{1,2}- .+)|(_.+_)|`.+`|\\n\\n---))?\\s?$/us',
         matchDescription: '^[A-Z`].+(\\.|`.+`)$',
         contexts: ['any'],
         tags: {
