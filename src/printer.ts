@@ -450,7 +450,13 @@ export class PugPrinter {
   }
 
   private frameworkFormat(code: string): string {
-    const options: Options = { ...this.codeInterpolationOptions };
+    const options: Options = {
+      ...this.codeInterpolationOptions,
+      // we need to keep the original singleQuote option
+      // see https://github.com/prettier/plugin-pug/issues/339
+      singleQuote: this.options.singleQuote,
+    };
+
     switch (this.framework) {
       case 'angular':
         options.parser = '__ng_interpolation';
