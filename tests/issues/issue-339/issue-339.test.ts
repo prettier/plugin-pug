@@ -4,7 +4,7 @@ import { format } from 'prettier';
 import { describe, expect, test } from 'vitest';
 import { plugin } from './../../../src/index';
 
-describe('Issue339', () => {
+describe('Issues', () => {
   test('should handle singleQuote:true + pugSingleQuote:false in framework interpolation', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'single-quotes.pug'),
@@ -23,6 +23,7 @@ describe('Issue339', () => {
 
     expect(actual).toBe(expected);
   });
+
   test('should handle singleQuote:false + pugSingleQuote:true in framework interpolation', () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'double-quotes.pug'),
@@ -38,6 +39,7 @@ describe('Issue339', () => {
       singleQuote: false,
       pugSingleQuote: true,
     });
+
     expect(actual).toBe(expected);
   });
 });
