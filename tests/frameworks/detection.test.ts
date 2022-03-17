@@ -1,5 +1,5 @@
+import { detectFramework } from 'src/utils/common';
 import { afterEach, describe, expect, it } from 'vitest';
-import { detectFramework } from '../../src/utils/common';
 
 describe('Frameworks', () => {
   describe('Detection', () => {

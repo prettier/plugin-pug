@@ -1,8 +1,8 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
+import { plugin } from 'src/index';
 import { describe, expect, it } from 'vitest';
-import { plugin } from './../../../src/index';
 
 describe('Issues', () => {
   it('should prefer pug aliased option', () => {

@@ -2,17 +2,13 @@
   "compilerOptions": {
     "target": "ES2018",
     "module": "CommonJS",
-    "inlineSourceMap": true,
     "lib": ["ES2018", "DOM"],
-    "outDir": "dist",
     "moduleResolution": "Node",
-    "rootDir": "src",
+    "rootDir": ".",
     "strict": true,
-    "noImplicitOverride": true,
-    "noUncheckedIndexedAccess": true,
-    "removeComments": true,
-    "esModuleInterop": true
+    "noEmit": true,
+    "esModuleInterop": true,
+    "baseUrl": "./"
   },
-  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }

@@ -1,8 +1,8 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import type { Parser } from 'prettier';
+import { parsers } from 'src/index';
 import { describe, expect, it } from 'vitest';
-import { parsers } from './../../../src/index';
 
 /* eslint @typescript-eslint/no-non-null-assertion: off */
 

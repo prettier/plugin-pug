@@ -1,14 +1,14 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
-import { describe, expect, it } from 'vitest';
-import type { PugSortAttributes } from '../../../src/options/attribute-sorting/index';
+import { plugin } from 'src/index';
+import type { PugSortAttributes } from 'src/options/attribute-sorting/index';
 import {
   compareAttributeToken,
   stableSort,
-} from '../../../src/options/attribute-sorting/utils';
+} from 'src/options/attribute-sorting/utils';
+import { describe, expect, it } from 'vitest';
 import { createAttributeToken } from '../../common';
-import { plugin } from './../../../src/index';
 
 describe('Options', () => {
   describe('sortAttributes', () => {

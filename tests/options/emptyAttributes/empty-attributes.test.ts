@@ -2,14 +2,14 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
 import type { AttributeToken } from 'pug-lexer';
-import { describe, expect, it } from 'vitest';
+import { plugin } from 'src/index';
 import type {
   PugEmptyAttributes,
   PugEmptyAttributesForceQuotes,
-} from '../../../src/options/empty-attributes';
-import { formatEmptyAttribute } from '../../../src/options/empty-attributes/utils';
+} from 'src/options/empty-attributes';
+import { formatEmptyAttribute } from 'src/options/empty-attributes/utils';
+import { describe, expect, it } from 'vitest';
 import { createAttributeToken } from '../../common';
-import { plugin } from './../../../src/index';
 
 describe('Options', () => {
   describe('emptyAttributes', () => {

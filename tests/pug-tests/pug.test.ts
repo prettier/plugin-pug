@@ -1,8 +1,8 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
+import { plugin } from 'src/index';
 import { describe, expect, it } from 'vitest';
-import { plugin } from './../../src/index';
 
 describe('Pug Tests', () => {
   const filenames: string[] = readdirSync(resolve(__dirname), 'utf8');

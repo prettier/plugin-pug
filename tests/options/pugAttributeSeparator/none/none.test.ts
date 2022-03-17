@@ -1,8 +1,8 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { format } from 'prettier';
+import { parsers, plugin } from 'src/index';
 import { describe, expect, it } from 'vitest';
-import { parsers, plugin } from './../../../../src/index';
 
 describe('Options', () => {
   describe('pugAttributeSeparator', () => {

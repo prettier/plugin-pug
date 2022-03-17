@@ -2,8 +2,8 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import type { Options } from 'prettier';
 import { format } from 'prettier';
+import { plugin } from 'src/index';
 import { describe, expect, it } from 'vitest';
-import { plugin } from '../../../src/index';
 
 describe('Options', () => {
   describe('pugExplicitDiv', () => {
