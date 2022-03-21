@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.19.3...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.20.0...main)
+
+# 1.20.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.19.3...1.20.0)
+
+- Fix single quotes in framework interpolation ([#339])
+
+[#339]: https://github.com/prettier/plugin-pug/issues/339
 
 # 1.19.3
 
