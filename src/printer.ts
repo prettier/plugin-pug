@@ -102,6 +102,7 @@ import {
   isVueEventBinding,
   isVueExpression,
   isVueVBindExpression,
+  isVueVDirective,
   isVueVForWithOf,
   isVueVOnExpression,
 } from './utils/vue';
@@ -1080,6 +1081,8 @@ export class PugPrinter {
         val = this.formatVueExpression(val);
       } else if (isVueEventBinding(token.name)) {
         val = this.formatVueEventBinding(val);
+      } else if (this.framework === 'vue' && isVueVDirective(token.name)) {
+        val = this.formatVueExpression(val);
       } else if (isVueVBindExpression(token.name)) {
         val = this.formatDelegatePrettier(val, '__js_expression');
       } else if (isVueVOnExpression(token.name)) {

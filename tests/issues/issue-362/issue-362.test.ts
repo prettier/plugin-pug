@@ -7,6 +7,7 @@ describe('Issues', () => {
       formatOptions: {
         singleQuote: false,
         pugSingleQuote: false,
+        pugFramework: 'vue',
       },
     });
     expect(actual).toBe(expected);

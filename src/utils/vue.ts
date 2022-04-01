@@ -130,3 +130,28 @@ export function isVueVBindExpression(name: string): boolean {
 export function isVueVOnExpression(name: string): boolean {
   return 'v-on' === name;
 }
+
+/**
+ * Indicates whether the attribute name is a Vue `v-` directive.
+ *
+ * ---
+ *
+ * Example expression:
+ * ```
+ * div(v-some="thing")
+ * ```
+ *
+ * In this case `name` is `v-some`.
+ *
+ * ---
+ *
+ * Checks for: `v-`.
+ *
+ * ---
+ *
+ * @param name Name of tag attribute.
+ * @returns `true` if `name` passes the vue `v-` check, otherwise `false`.
+ */
+export function isVueVDirective(name: string): boolean {
+  return name.startsWith('v-');
+}
