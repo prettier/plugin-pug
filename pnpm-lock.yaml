@@ -11,7 +11,7 @@ specifiers:
   eslint-define-config: ~1.3.0
   eslint-gitignore: ~0.1.0
   eslint-plugin-inclusive-language: ~2.2.0
-  eslint-plugin-jsdoc: ~38.1.4
+  eslint-plugin-jsdoc: ~38.1.6
   eslint-plugin-prettier: ~4.0.0
   eslint-plugin-spellcheck: ~0.0.19
   prettier: 2.6.1
@@ -36,7 +36,7 @@ devDependencies:
   eslint-define-config: 1.3.0
   eslint-gitignore: 0.1.0_eslint@8.12.0
   eslint-plugin-inclusive-language: 2.2.0
-  eslint-plugin-jsdoc: 38.1.4_eslint@8.12.0
+  eslint-plugin-jsdoc: 38.1.6_eslint@8.12.0
   eslint-plugin-prettier: 4.0.0_b253a92c95b42c3296c682f11cccb3bd
   eslint-plugin-spellcheck: 0.0.19_eslint@8.12.0
   prettier: 2.6.1
@@ -1007,8 +1007,8 @@ packages:
       humps: 2.0.1
     dev: true
 
-  /eslint-plugin-jsdoc/38.1.4_eslint@8.12.0:
-    resolution: {integrity: sha512-x4sG6oJ+wj7aOGXtTaUeA4EL6kkgGsaFyIf+237/cdSXmC5zKKROccZxNZVUkaXE5QEiBGi7pyRfWNZYf+2OFg==}
+  /eslint-plugin-jsdoc/38.1.6_eslint@8.12.0:
+    resolution: {integrity: sha512-n4s95oYlg0L43Bs8C0dkzIldxYf8pLCutC/tCbjIdF7VDiobuzPI+HZn9Q0BvgOvgPNgh5n7CSStql25HUG4Tw==}
     engines: {node: ^12 || ^14 || ^16 || ^17}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0
