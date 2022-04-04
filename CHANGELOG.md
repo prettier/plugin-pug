@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.20.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/1.20.1...main)
+
+# 1.20.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.20.0...1.20.1)
+
+- Handle vue `v-` directives when framework is set to vue ([#362])
+
+[#362]: https://github.com/prettier/plugin-pug/pull/362
 
 # 1.20.0
 
