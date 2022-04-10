@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@types/node": "~16.11.26",
-    "@types/prettier": "~2.4.4",
+    "@types/prettier": "~2.6.0",
     "@typescript-eslint/eslint-plugin": "~5.17.0",
     "@typescript-eslint/parser": "~5.17.0",
     "benchmark": "~2.1.4",
