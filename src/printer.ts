@@ -158,20 +158,23 @@ interface FormatDelegatePrettierOptions {
 /**
  * Supported parsers for the `formatDelegatePrettier` function.
  */
-type FormatDelegatePrettierSupportedParser = keyof Pick<
-  typeof PrettierAngularPlugin.parsers &
-    typeof PrettierBabelPlugin.parsers &
-    typeof PrettierHtmlPlugin.parsers &
-    typeof PrettierPostcssPlugin.parsers,
-  | 'css'
-  | 'vue'
-  | '__vue_event_binding'
-  | '__vue_expression'
-  | '__js_expression'
-  | '__ng_binding'
-  | '__ng_action'
-  | '__ng_directive'
->;
+type FormatDelegatePrettierSupportedParser =
+  | keyof Pick<
+      typeof PrettierAngularPlugin.parsers &
+        typeof PrettierBabelPlugin.parsers &
+        typeof PrettierHtmlPlugin.parsers &
+        typeof PrettierPostcssPlugin.parsers,
+      | 'css'
+      | 'vue'
+      | '__vue_event_binding'
+      | '__vue_expression'
+      | '__js_expression'
+      | '__ng_binding'
+      | '__ng_action'
+      | '__ng_directive'
+    >
+  | '__vue_ts_event_binding'
+  | '__vue_ts_expression';
 
 /**
  * The printer class.
@@ -721,13 +724,31 @@ export class PugPrinter {
   }
 
   private async formatVueEventBinding(val: string): Promise<string> {
-    return this.formatDelegatePrettier(val, '__vue_event_binding', {
+    try {
+      return await this.formatDelegatePrettier(val, '__vue_event_binding', {
+        trimTrailingSemicolon: true,
+      });
+    } catch {
+      return this.formatVueTsEventBinding(val);
+    }
+  }
+
+  private async formatVueTsEventBinding(val: string): Promise<string> {
+    return this.formatDelegatePrettier(val, '__vue_ts_event_binding', {
       trimTrailingSemicolon: true,
     });
   }
 
   private async formatVueExpression(val: string): Promise<string> {
-    return this.formatDelegatePrettier(val, '__vue_expression');
+    try {
+      return await this.formatDelegatePrettier(val, '__vue_expression');
+    } catch {
+      return this.formatVueTsExpression(val);
+    }
+  }
+
+  private async formatVueTsExpression(val: string): Promise<string> {
+    return this.formatDelegatePrettier(val, '__vue_ts_expression');
   }
 
   private async formatAngularBinding(val: string): Promise<string> {
