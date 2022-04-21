@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/1.20.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.0.0...main)
+
+# 2.0.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/1.20.1...2.0.0)
+
+## BREAKING CHANGES
+
+- **Dropped support for node v12** ([faf9f2e])
+
+[faf9f2e]: https://github.com/prettier/plugin-pug/commit/faf9f2ebbc862b84d4646ecc7c6394cfe89c114d
 
 # 1.20.1
 
