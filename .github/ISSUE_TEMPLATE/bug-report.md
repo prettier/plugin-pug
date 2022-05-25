@@ -10,7 +10,7 @@ assignees: ''
 
 | Tool      | Version                 |
 | --------- | ----------------------- |
-| Plugin    | v1.x.x                  |
+| Plugin    | v2.x.x                  |
 | Prettier  | v2.x.x                  |
 | Framework | none,vue,angular,svelte |
 | Node      | vx.x.x                  |
