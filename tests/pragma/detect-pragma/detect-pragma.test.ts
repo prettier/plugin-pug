@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import type { Parser } from 'prettier';
 import { parsers } from 'src/index';
 import { describe, expect, it } from 'vitest';

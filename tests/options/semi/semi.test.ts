@@ -1,5 +1,4 @@
-import path from 'path';
-
+import { join } from 'node:path';
 import type { CompareFilesOptions } from 'tests/common';
 import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
@@ -13,7 +12,7 @@ describe('semi handling', () => {
   ] as const)(
     'should format script tags with %s inline code to %s',
     (from, to) => {
-      const fixturesPath: string = path.join(__dirname, `${from}-${to}`);
+      const fixturesPath: string = join(__dirname, `${from}-${to}`);
       const options: CompareFilesOptions = {
         formatOptions: { semi: to === 'semi' },
       };

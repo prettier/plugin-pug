@@ -1,6 +1,5 @@
 import type { ChoiceSupportOption, PathArraySupportOption } from 'prettier';
 import { CATEGORY_PUG } from '../constants';
-
 import type { PugEmptyAttributes } from './types';
 
 /** Pug empty attributes option. */

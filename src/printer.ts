@@ -1,3 +1,4 @@
+import { types } from 'node:util';
 import type { BuiltInParserName, Options, RequiredOptions } from 'prettier';
 import { format } from 'prettier';
 import type { parsers as AngularParsers } from 'prettier/parser-angular';
@@ -52,7 +53,6 @@ import type {
   WhileToken,
   YieldToken,
 } from 'pug-lexer';
-import { types } from 'util';
 import type { DoctypeShortcut } from './doctype-shortcut-registry';
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
 import { logger } from './logger';
