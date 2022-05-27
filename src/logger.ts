@@ -135,3 +135,21 @@ export class Logger implements ILogger {
 export function createLogger(logger: ILogger = console): Logger {
   return new Logger(logger);
 }
+
+/**
+ * Logger for @prettier/plugin-pug.
+ */
+export const logger: Logger = createLogger(console);
+
+// Configure the logger based on the environment.
+if (process.env.NODE_ENV === 'test') {
+  logger.setLogLevel(LogLevel.DEBUG);
+}
+
+let logLevel: string | undefined = process.env.PRETTIER_PLUGIN_PUG_LOG_LEVEL;
+if (logLevel) {
+  logLevel = logLevel.toLowerCase();
+  if (Logger.isSupportedLogLevel(logLevel)) {
+    logger.setLogLevel(logLevel);
+  }
+}

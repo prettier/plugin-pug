@@ -12,24 +12,12 @@ import type {
 } from 'prettier';
 import type { Token } from 'pug-lexer';
 import lex from 'pug-lexer';
-import { createLogger, Logger, LogLevel } from './logger';
+import { logger } from './logger';
 import type { PugParserOptions } from './options';
 import { options as pugOptions } from './options';
 import { convergeOptions } from './options/converge';
 import type { PugPrinterOptions } from './printer';
 import { PugPrinter } from './printer';
-
-const logger: Logger = createLogger(console);
-if (process.env.NODE_ENV === 'test') {
-  logger.setLogLevel(LogLevel.DEBUG);
-}
-let logLevel: string | undefined = process.env.PRETTIER_PLUGIN_PUG_LOG_LEVEL;
-if (logLevel) {
-  logLevel = logLevel.toLowerCase();
-  if (Logger.isSupportedLogLevel(logLevel)) {
-    logger.setLogLevel(logLevel);
-  }
-}
 
 /** Ast path stack entry. */
 interface AstPathStackEntry {
