@@ -9,24 +9,13 @@ export const enum LogLevel {
 }
 
 /** Interface definition for the logger. */
-export interface ILogger {
-  debug: typeof console.debug;
-  log: typeof console.log;
-  info: typeof console.info;
-  warn: typeof console.warn;
-  error: typeof console.error;
-}
+export type ILogger = Pick<
+  typeof console,
+  'debug' | 'log' | 'info' | 'warn' | 'error'
+>;
 
 /** The logger class. */
 export class Logger implements ILogger {
-  private static readonly LOG_LEVELS: [
-    'debug',
-    'log',
-    'info',
-    'warn',
-    'error',
-  ] = ['debug', 'log', 'info', 'warn', 'error'];
-
   /**
    * Constructs a new logger.
    *
@@ -37,6 +26,24 @@ export class Logger implements ILogger {
     private readonly logger: ILogger = console,
     private level: LogLevel = LogLevel.INFO,
   ) {}
+
+  /**
+   * Checks if the given value is a supported log level.
+   *
+   * @param value The value to check.
+   * @returns `true` if the given value is a supported log level, otherwise `false`.
+   */
+  public static isSupportedLogLevel(value: any): value is LogLevel {
+    return (
+      typeof value === 'string' &&
+      (value === 'debug' ||
+        value === 'log' ||
+        value === 'info' ||
+        value === 'warn' ||
+        value === 'error' ||
+        value === 'off')
+    );
+  }
 
   /**
    * Set the log level to the given level.
