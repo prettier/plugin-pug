@@ -141,3 +141,5 @@ export const options: SupportOptions | undefined = plugin.options;
 /** The default options object that is picked up by prettier. */
 export const defaultOptions: Partial<RequiredOptions> | undefined =
   plugin.defaultOptions;
+
+export { createLogger, ILogger, Logger, logger, LogLevel } from './logger';
