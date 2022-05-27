@@ -1,11 +1,11 @@
 /** Log levels. */
-export enum LogLevel {
-  DEBUG,
-  LOG,
-  INFO,
-  WARN,
-  ERROR,
-  OFF,
+export const enum LogLevel {
+  DEBUG = 'debug',
+  LOG = 'log',
+  INFO = 'info',
+  WARN = 'warn',
+  ERROR = 'error',
+  OFF = 'off',
 }
 
 /** Interface definition for the logger. */
@@ -31,7 +31,7 @@ export class Logger implements ILogger {
    * Constructs a new logger.
    *
    * @param logger The wrapped logger that will be used for printing messages. Default: `console`.
-   * @param level The log level. Default: `2` ('info').
+   * @param level The log level. Default: `'info'`.
    */
   public constructor(
     private readonly logger: ILogger = console,
@@ -112,10 +112,8 @@ export class Logger implements ILogger {
     ...optionalParams: any[]
   ): void {
     if (this.level !== LogLevel.OFF && this.level <= level) {
-      const logLevel: 'debug' | 'log' | 'info' | 'warn' | 'error' | undefined =
-        Logger.LOG_LEVELS[level as number];
-      if (logLevel) {
-        this.logger[logLevel](message, ...optionalParams);
+      if (level !== LogLevel.OFF) {
+        this.logger[level](message, ...optionalParams);
       }
     }
   }
