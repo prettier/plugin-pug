@@ -1,0 +1,95 @@
+/**
+ * Colors
+ * -------------------------------------------------------------------------- */
+
+/* pug light   #ccac8d */
+/* pug lighter #efcca3 */
+/* pug dark    #56332b */
+/* pug darker  #442823 */
+
+:root {
+  --vp-c-brand: #56332b;
+  --vp-c-brand-light: #ccac8d;
+  --vp-c-brand-lighter: #efcca3;
+  --vp-c-brand-dark: #56332b;
+  --vp-c-brand-darker: #442823;
+  --vp-c-brand-dimm: rgba(100, 108, 255, 0.08);
+}
+
+/**
+ * Component: Button
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-button-brand-border: var(--vp-c-brand);
+  --vp-button-brand-text: var(--vp-c-text-dark-1);
+  --vp-button-brand-bg: var(--vp-c-brand-darker);
+  --vp-button-brand-hover-border: var(--vp-c-brand-dark);
+  --vp-button-brand-hover-text: var(--vp-c-text-dark-1);
+  --vp-button-brand-hover-bg: var(--vp-c-brand-dark);
+  --vp-button-brand-active-border: var(--vp-c-brand-light);
+  --vp-button-brand-active-text: var(--vp-c-text-dark-1);
+  --vp-button-brand-active-bg: var(--vp-button-brand-bg);
+}
+
+/**
+ * Component: Home
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    94deg,
+    #56332b 20%,
+    #efcca3
+  );
+
+  --vp-home-hero-image-background-image: linear-gradient(
+    -10deg,
+    #56332b 50%,
+    #efcca3 50%
+  );
+  --vp-home-hero-image-filter: blur(40px);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --vp-home-hero-image-filter: blur(56px);
+  }
+}
+
+@media (min-width: 960px) {
+  :root {
+    --vp-home-hero-image-filter: blur(72px);
+  }
+}
+
+/**
+ * Component: Custom Block
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-custom-block-tip-border: var(--vp-c-brand);
+  --vp-custom-block-tip-text: var(--vp-c-brand-darker);
+  --vp-custom-block-tip-bg: var(--vp-c-brand-dimm);
+}
+
+.dark {
+  --vp-custom-block-tip-border: var(--vp-c-brand);
+  --vp-custom-block-tip-text: var(--vp-c-brand-lighter);
+  --vp-custom-block-tip-bg: var(--vp-c-brand-dimm);
+}
+
+.dark .vp-doc a,
+.dark .edit-link-button,
+.dark .title,
+.dark .link.active,
+.dark .link.active .link-text,
+.dark .VPNavBarMenuLink.active {
+  color: var(--vp-c-brand-light);
+}
+
+.dark .link:hover,
+.dark .VPNavBarMenuLink:hover {
+  color: var(--vp-c-brand-lighter);
+}
