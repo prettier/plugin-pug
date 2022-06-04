@@ -1,42 +1,49 @@
 /** Log levels. */
 export enum LogLevel {
-  DEBUG,
-  LOG,
-  INFO,
-  WARN,
-  ERROR,
-  OFF,
+  DEBUG = 'debug',
+  LOG = 'log',
+  INFO = 'info',
+  WARN = 'warn',
+  ERROR = 'error',
+  OFF = 'off',
 }
 
 /** Interface definition for the logger. */
-export interface ILogger {
-  debug: typeof console.debug;
-  log: typeof console.log;
-  info: typeof console.info;
-  warn: typeof console.warn;
-  error: typeof console.error;
-}
+export type ILogger = Pick<
+  typeof console,
+  'debug' | 'log' | 'info' | 'warn' | 'error'
+>;
 
 /** The logger class. */
 export class Logger implements ILogger {
-  private static readonly LOG_LEVELS: [
-    'debug',
-    'log',
-    'info',
-    'warn',
-    'error',
-  ] = ['debug', 'log', 'info', 'warn', 'error'];
-
   /**
    * Constructs a new logger.
    *
    * @param logger The wrapped logger that will be used for printing messages. Default: `console`.
-   * @param level The log level. Default: `2` ('info').
+   * @param level The log level. Default: `'info'`.
    */
   public constructor(
     private readonly logger: ILogger = console,
     private level: LogLevel = LogLevel.INFO,
   ) {}
+
+  /**
+   * Checks if the given value is a supported log level.
+   *
+   * @param value The value to check.
+   * @returns `true` if the given value is a supported log level, otherwise `false`.
+   */
+  public static isSupportedLogLevel(value: any): value is LogLevel {
+    return (
+      typeof value === 'string' &&
+      (value === 'debug' ||
+        value === 'log' ||
+        value === 'info' ||
+        value === 'warn' ||
+        value === 'error' ||
+        value === 'off')
+    );
+  }
 
   /**
    * Set the log level to the given level.
@@ -112,10 +119,8 @@ export class Logger implements ILogger {
     ...optionalParams: any[]
   ): void {
     if (this.level !== LogLevel.OFF && this.level <= level) {
-      const logLevel: 'debug' | 'log' | 'info' | 'warn' | 'error' | undefined =
-        Logger.LOG_LEVELS[level as number];
-      if (logLevel) {
-        this.logger[logLevel](message, ...optionalParams);
+      if (level !== LogLevel.OFF) {
+        this.logger[level](message, ...optionalParams);
       }
     }
   }
@@ -129,4 +134,22 @@ export class Logger implements ILogger {
  */
 export function createLogger(logger: ILogger = console): Logger {
   return new Logger(logger);
+}
+
+/**
+ * Logger for @prettier/plugin-pug.
+ */
+export const logger: Logger = createLogger(console);
+
+// Configure the logger based on the environment.
+if (process.env.NODE_ENV === 'test') {
+  logger.setLogLevel(LogLevel.DEBUG);
+}
+
+let logLevel: string | undefined = process.env.PRETTIER_PLUGIN_PUG_LOG_LEVEL;
+if (logLevel) {
+  logLevel = logLevel.toLowerCase();
+  if (Logger.isSupportedLogLevel(logLevel)) {
+    logger.setLogLevel(logLevel);
+  }
 }

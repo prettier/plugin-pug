@@ -55,8 +55,7 @@ import type {
 import { types } from 'util';
 import type { DoctypeShortcut } from './doctype-shortcut-registry';
 import { DOCTYPE_SHORTCUT_REGISTRY } from './doctype-shortcut-registry';
-import type { Logger } from './logger';
-import { createLogger, LogLevel } from './logger';
+import { logger } from './logger';
 import type { PugSortAttributes } from './options/attribute-sorting';
 import {
   compareAttributeToken,
@@ -106,11 +105,6 @@ import {
   isVueVForWithOf,
   isVueVOnExpression,
 } from './utils/vue';
-
-const logger: Logger = createLogger(console);
-if (process.env.NODE_ENV === 'test') {
-  logger.setLogLevel(LogLevel.DEBUG);
-}
 
 /**
  * Options for `@prettier/plugin-pug`.

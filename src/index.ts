@@ -12,18 +12,12 @@ import type {
 } from 'prettier';
 import type { Token } from 'pug-lexer';
 import lex from 'pug-lexer';
-import type { Logger } from './logger';
-import { createLogger, LogLevel } from './logger';
+import { logger } from './logger';
 import type { PugParserOptions } from './options';
 import { options as pugOptions } from './options';
 import { convergeOptions } from './options/converge';
 import type { PugPrinterOptions } from './printer';
 import { PugPrinter } from './printer';
-
-const logger: Logger = createLogger(console);
-if (process.env.NODE_ENV === 'test') {
-  logger.setLogLevel(LogLevel.DEBUG);
-}
 
 /** Ast path stack entry. */
 interface AstPathStackEntry {
@@ -147,3 +141,5 @@ export const options: SupportOptions | undefined = plugin.options;
 /** The default options object that is picked up by prettier. */
 export const defaultOptions: Partial<RequiredOptions> | undefined =
   plugin.defaultOptions;
+
+export { createLogger, ILogger, Logger, logger, LogLevel } from './logger';
