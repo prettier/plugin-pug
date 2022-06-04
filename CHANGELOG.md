@@ -1,6 +1,17 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.0.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.1.0...main)
+
+# 2.1.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.0.0...2.1.0)
+
+- Rework logging ([#172])
+- Update docs to VitePress v1 (alpha)
+  - _Known issue_: The "Get Started" link is not working correctly right now.  
+    Click on "Guide" in the upper right nav menu for now.
+
+[#172]: https://github.com/prettier/plugin-pug/issues/172
 
 # 2.0.0
 
