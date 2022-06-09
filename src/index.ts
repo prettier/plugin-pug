@@ -1,3 +1,4 @@
+import matter = require('gray-matter');
 import type {
   AstPath,
   Doc,
@@ -23,6 +24,7 @@ import { PugPrinter } from './printer';
 interface AstPathStackEntry {
   content: string;
   tokens: Token[];
+  frontmatter: matter.GrayMatterFile<string>;
 }
 
 /** The plugin object that is picked up by prettier. */
@@ -49,6 +51,8 @@ export const plugin: Plugin = {
         options: ParserOptions,
       ): AstPathStackEntry {
         logger.debug('[parsers:pug:parse]:', { text });
+        const frontmatter = matter(text);
+        text = frontmatter.content;
 
         let trimmedAndAlignedContent: string = text.replace(/^\s*\n/, '');
         const contentIndentation: RegExpExecArray | null = /^\s*/.exec(
@@ -72,7 +76,7 @@ export const plugin: Plugin = {
         // logger.debug('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
         // const ast: AST = parse(tokens, {});
         // logger.debug('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
-        return { content, tokens };
+        return { content, tokens, frontmatter };
       },
       astFormat: 'pug-ast',
       hasPragma(text: string): boolean {
@@ -102,9 +106,14 @@ export const plugin: Plugin = {
         print: (path: AstPath) => Doc,
       ): Doc {
         const entry: AstPathStackEntry = path.stack[0];
-        const { content, tokens } = entry;
+        const { content, tokens, frontmatter } = entry;
         const pugOptions: PugPrinterOptions = convergeOptions(options);
-        const printer: PugPrinter = new PugPrinter(content, tokens, pugOptions);
+        const printer: PugPrinter = new PugPrinter(
+          content,
+          tokens,
+          pugOptions,
+          frontmatter,
+        );
         const result: string = printer.build();
         logger.debug('[printers:pug-ast:print]:', result);
         return result;

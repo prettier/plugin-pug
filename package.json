@@ -47,6 +47,7 @@
     "tsconfig.json"
   ],
   "dependencies": {
+    "gray-matter": "^4.0.3",
     "pug-lexer": "^5.0.0"
   },
   "devDependencies": {
