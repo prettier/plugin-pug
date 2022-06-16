@@ -15,7 +15,7 @@ specifiers:
   eslint-plugin-prettier: ~4.0.0
   eslint-plugin-spellcheck: ~0.0.19
   prettier: 2.7.0
-  prettier-plugin-organize-imports: ~2.3.4
+  prettier-plugin-organize-imports: ~3.0.0
   pug-lexer: ^5.0.0
   typescript: ~4.7.3
   vite: ~2.9.12
@@ -40,7 +40,7 @@ devDependencies:
   eslint-plugin-prettier: 4.0.0_nguwan5pqsajixjz57ffz7bkde
   eslint-plugin-spellcheck: 0.0.19_eslint@8.17.0
   prettier: 2.7.0
-  prettier-plugin-organize-imports: 2.3.4_qinmk7yenpcxm2r4gdnfx2czaa
+  prettier-plugin-organize-imports: 3.0.0_qinmk7yenpcxm2r4gdnfx2czaa
   typescript: 4.7.3
   vite: 2.9.12
   vitepress: 1.0.0-alpha.2
@@ -1783,8 +1783,8 @@ packages:
       fast-diff: 1.2.0
     dev: true
 
-  /prettier-plugin-organize-imports/2.3.4_qinmk7yenpcxm2r4gdnfx2czaa:
-    resolution: {integrity: sha512-R8o23sf5iVL/U71h9SFUdhdOEPsi3nm42FD/oDYIZ2PQa4TNWWuWecxln6jlIQzpZTDMUeO1NicJP6lLn2TtRw==}
+  /prettier-plugin-organize-imports/3.0.0_qinmk7yenpcxm2r4gdnfx2czaa:
+    resolution: {integrity: sha512-juSCJs5TMOqGGPaN/A/1xzWFzRPH2LG1LPLCr64dzKaVnPafJdtgDNmDVlU+8A4LbQzVJg0DTvgA8swBuIUhlg==}
     peerDependencies:
       prettier: '>=2.0'
       typescript: '>=2.9'
