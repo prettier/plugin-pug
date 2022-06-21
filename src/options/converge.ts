@@ -1,6 +1,6 @@
 import type { ParserOptions } from 'prettier';
-import type { PugParserOptions } from '.';
 import type { PugPrinterOptions } from '../printer';
+import type { PugParserOptions } from './types';
 
 /**
  * Convert and merge options from Prettier and `pug`-specific options into one option object with normalized default values.

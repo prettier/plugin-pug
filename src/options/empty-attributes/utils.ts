@@ -1,5 +1,8 @@
 import type { AttributeToken } from 'pug-lexer';
-import type { PugEmptyAttributes, PugEmptyAttributesForceQuotes } from '.';
+import type {
+  PugEmptyAttributes,
+  PugEmptyAttributesForceQuotes,
+} from './types';
 
 const EMPTY_VALUES: [boolean, string, string] = [true, '""', "''"];
 

@@ -1,5 +1,5 @@
 import type { BooleanSupportOption } from 'prettier';
-import { CATEGORY_PUG } from '.';
+import { CATEGORY_PUG } from './constants';
 
 /** Pug single file component indentation. */
 export const PUG_SINGLE_FILE_COMPONENT_INDENTATION: BooleanSupportOption = {
