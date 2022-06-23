@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.1.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.1.1...main)
+
+# 2.1.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.1.0...2.1.1)
+
+- Avoid use `.` or circular dependency in `src/options` files ([#398])
+
+[#398]: https://github.com/prettier/plugin-pug/issues/398
 
 # 2.1.0
 
