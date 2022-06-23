@@ -1,5 +1,5 @@
 import type { ChoiceSupportOption } from 'prettier';
-import { CATEGORY_PUG } from '.';
+import { CATEGORY_PUG } from './constants';
 
 /** Pug attribute separator option. */
 export const PUG_ATTRIBUTE_SEPARATOR_OPTION: ChoiceSupportOption<PugAttributeSeparator> =

@@ -1,5 +1,5 @@
 import type { ChoiceSupportOption } from 'prettier';
-import { CATEGORY_PUG } from '.';
+import { CATEGORY_PUG } from './constants';
 
 /** Pug id notation. */
 export const PUG_ID_NOTATION: ChoiceSupportOption = {

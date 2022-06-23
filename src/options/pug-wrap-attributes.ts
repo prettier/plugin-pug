@@ -1,5 +1,5 @@
 import type { IntSupportOption, PathSupportOption } from 'prettier';
-import { CATEGORY_PUG } from '.';
+import { CATEGORY_PUG } from './constants';
 
 /** Wrap attributes threshold. */
 export const PUG_WRAP_ATTRIBUTES_THRESHOLD: IntSupportOption = {

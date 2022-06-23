@@ -1,5 +1,5 @@
 import type { ChoiceSupportOption } from 'prettier';
-import { CATEGORY_PUG } from '.';
+import { CATEGORY_PUG } from './constants';
 
 /** Pug comment preserve spaces option. */
 export const PUG_COMMENT_PRESERVE_SPACES_OPTION: ChoiceSupportOption<PugCommentPreserveSpaces> =

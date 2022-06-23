@@ -1,5 +1,5 @@
 import type { BooleanSupportOption } from 'prettier';
-import { CATEGORY_PUG } from '.';
+import { CATEGORY_PUG } from './constants';
 
 /** Pug default div tag. */
 export const PUG_EXPLICIT_DIV: BooleanSupportOption = {

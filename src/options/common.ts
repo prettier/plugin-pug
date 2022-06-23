@@ -1,5 +1,5 @@
 import type { ChoiceSupportOption, IntSupportOption } from 'prettier';
-import { CATEGORY_PUG } from '.';
+import { CATEGORY_PUG } from './constants';
 
 /** Pug print width option. */
 export const PUG_PRINT_WIDTH_OPTION: IntSupportOption = {

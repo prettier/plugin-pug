@@ -1,5 +1,5 @@
 import type { ChoiceSupportOption } from 'prettier';
-import { CATEGORY_PUG } from '.';
+import { CATEGORY_PUG } from './constants';
 
 /** Pug Framework. */
 export const PUG_FRAMEWORK: ChoiceSupportOption<PugFramework> = {
