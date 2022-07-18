@@ -18,7 +18,7 @@ specifiers:
   prettier-plugin-organize-imports: ~3.0.0
   pug-lexer: ^5.0.0
   typescript: ~4.7.4
-  vite: ~2.9.13
+  vite: ~3.0.2
   vitepress: 1.0.0-alpha.4
   vitest: ~0.16.0
 
@@ -42,7 +42,7 @@ devDependencies:
   prettier: 2.7.1
   prettier-plugin-organize-imports: 3.0.0_gd3y7r3s3evy6b2vthd7dmacga
   typescript: 4.7.4
-  vite: 2.9.13
+  vite: 3.0.2
   vitepress: 1.0.0-alpha.4
   vitest: 0.16.0
 
@@ -2102,6 +2102,33 @@ packages:
       sass:
         optional: true
       stylus:
+        optional: true
+    dependencies:
+      esbuild: 0.14.48
+      postcss: 8.4.14
+      resolve: 1.22.1
+      rollup: 2.75.7
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite/3.0.2:
+    resolution: {integrity: sha512-TAqydxW/w0U5AoL5AsD9DApTvGb2iNbGs3sN4u2VdT1GFkQVUfgUldt+t08TZgi23uIauh1TUOQJALduo9GXqw==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      terser:
         optional: true
     dependencies:
       esbuild: 0.14.48
