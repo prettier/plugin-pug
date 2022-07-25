@@ -1095,7 +1095,7 @@ export class PugPrinter {
         val = this.formatStyleAttribute(val);
       } else {
         // Prevent wrong quotation if there is an extra whitespace at the end
-        const rightTrimmedVal: string = val.trimRight();
+        const rightTrimmedVal: string = val.trimEnd();
         if (isQuoted(rightTrimmedVal)) {
           val = makeString(rightTrimmedVal.slice(1, -1), this.quotes);
         } else if (val === 'true') {
@@ -1169,7 +1169,7 @@ export class PugPrinter {
       this.result = this.result.slice(0, -1);
     } else if (this.previousToken?.type === 'attribute') {
       if (this.options.pugBracketSameLine) {
-        this.result = this.result.trimRight();
+        this.result = this.result.trimEnd();
       }
       this.result += ')';
     }
@@ -1413,7 +1413,7 @@ export class PugPrinter {
           // Trim the last line, since indentation of formatted pug is handled separately.
           const lastLine: string | undefined = lines.pop();
           if (lastLine !== undefined) {
-            lines.push(lastLine.trimRight());
+            lines.push(lastLine.trimEnd());
           }
           result += lines.join('\n');
           if (token.type === 'eos') {
@@ -1753,7 +1753,7 @@ export class PugPrinter {
           result = rawText;
         }
 
-        result = result.trimRight();
+        result = result.trimEnd();
         const indentString: string = this.indentString.repeat(
           this.indentLevel + 1,
         );
