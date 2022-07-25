@@ -1400,6 +1400,8 @@ export class PugPrinter {
               }
               break;
             }
+          } else if (type === 'eos') {
+            break;
           }
           token = this.getNextToken();
         }
