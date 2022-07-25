@@ -60,4 +60,6 @@ export interface PugParserOptions
   pugSingleFileComponentIndentation: boolean;
 
   pugFramework: PugFramework;
+
+  pugPreserveAttributeBrackets: boolean;
 }

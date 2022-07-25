@@ -50,5 +50,6 @@ export function convergeOptions(
       options.__embeddedInHtml === true,
     pugFramework: options.pugFramework,
     pugExplicitDiv: options.pugExplicitDiv,
+    pugPreserveAttributeBrackets: options.pugPreserveAttributeBrackets,
   };
 }

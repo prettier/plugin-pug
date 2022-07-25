@@ -142,5 +142,11 @@ declare module 'prettier' {
      * @default 'auto'
      */
     pugFramework?: PugParserOptions['pugFramework'];
+    /**
+     * Preserve attribute brackets.
+     *
+     * @default false
+     */
+    pugPreserveAttributeBrackets?: PugParserOptions['pugPreserveAttributeBrackets'];
   }
 }

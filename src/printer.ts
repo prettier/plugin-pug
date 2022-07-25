@@ -142,6 +142,7 @@ export interface PugPrinterOptions {
   readonly pugSingleFileComponentIndentation: boolean;
   readonly pugFramework: PugFramework;
   readonly pugExplicitDiv: boolean;
+  readonly pugPreserveAttributeBrackets: boolean;
 }
 
 /**
@@ -1172,6 +1173,11 @@ export class PugPrinter {
         this.result = this.result.trimEnd();
       }
       this.result += ')';
+    } else if (
+      this.options.pugPreserveAttributeBrackets &&
+      this.previousToken?.type === 'start-attributes'
+    ) {
+      this.result += '()';
     }
     if (
       this.result[this.result.length - 1] === ')' &&
