@@ -10,7 +10,7 @@
     "docs:build": "vitepress build docs",
     "format": "prettier --write .",
     "lint": "eslint .",
-    "test": "vitest --run",
+    "test": "vitest",
     "prepublishOnly": "pnpm run clean && pnpm install && pnpm run build"
   },
   "keywords": [

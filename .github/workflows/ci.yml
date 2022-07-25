@@ -61,7 +61,7 @@ jobs:
         run: pnpm run build
 
       - name: Test
-        run: pnpm vitest --silent
+        run: pnpm run test
 
   lint:
     runs-on: ubuntu-latest
