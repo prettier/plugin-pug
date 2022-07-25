@@ -1400,6 +1400,8 @@ export class PugPrinter {
               }
               break;
             }
+          } else if (type === 'eos') {
+            break;
           }
           token = this.getNextToken();
         }
@@ -1414,6 +1416,9 @@ export class PugPrinter {
             lines.push(lastLine.trimRight());
           }
           result += lines.join('\n');
+          if (token.type === 'eos') {
+            result += '\n';
+          }
         }
       }
     } else {
