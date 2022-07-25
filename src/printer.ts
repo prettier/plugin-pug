@@ -1416,6 +1416,9 @@ export class PugPrinter {
             lines.push(lastLine.trimRight());
           }
           result += lines.join('\n');
+          if (token.type === 'eos') {
+            result += '\n';
+          }
         }
       }
     } else {
