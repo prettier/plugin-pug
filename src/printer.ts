@@ -1238,14 +1238,16 @@ export class PugPrinter {
       }
       if (
         this.nextToken &&
-        ['text', 'newline', 'indent', 'eos'].includes(this.nextToken?.type)
+        ['text', 'newline', 'indent', 'outdent', 'eos'].includes(
+          this.nextToken.type,
+        )
       ) {
         const classes: string[] = this.classLiteralToAttribute.splice(
           0,
           this.classLiteralToAttribute.length,
         );
         this.result += `(class=${this.quoteString(classes.join(' '))})`;
-        if (this.nextToken?.type === 'text') {
+        if (this.nextToken.type === 'text') {
           this.result += ' ';
         }
       }
