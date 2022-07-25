@@ -497,3 +497,46 @@ Output:
 ```pug
 div.foo.bar
 ```
+
+---
+
+## Preserve attribute brackets
+
+`pugPreserveAttributeBrackets`
+
+### Description
+
+Define if brackets should be preserved while formatting attributes, even if empty.
+
+### Options
+
+**Type:** `boolean`  
+**Default:** `false`
+
+#### `false`
+
+Input:
+
+```pug
+.text-red-400()&attributes(attributes)
+```
+
+Output:
+
+```pug
+.text-red-400&attributes(attributes)
+```
+
+#### `true`
+
+Input:
+
+```pug
+.text-red-400()&attributes(attributes)
+```
+
+Output:
+
+```pug
+.text-red-400()&attributes(attributes)
+```
