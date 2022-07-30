@@ -1234,14 +1234,7 @@ export class PugPrinter {
         this.previousToken?.type !== 'tag' &&
         this.previousToken?.type !== 'class'
       ) {
-        this.result += 'div';
-        if (
-          this.indentLevel === 0 &&
-          this.previousToken?.type !== 'newline' &&
-          this.previousToken?.type !== 'outdent'
-        ) {
-          this.indentLevel++;
-        }
+        this.result += `${this.computedIndent}div`;
       }
       if (
         this.nextToken &&
