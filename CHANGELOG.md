@@ -1,6 +1,20 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.1.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.2.0...main)
+
+# 2.2.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.1.1...2.2.0)
+
+- Preserve script tag after `//- prettier-ignore` ([#402])
+- Fix indent with `pugExplicitDiv` and `pugClassNotation=attribute` ([#405])
+- Add `pugPreserveAttributeBrackets` option ([#404])
+- Replace `trimRight` with `trimEnd` ([c955b9f])
+
+[c955b9f]: https://github.com/prettier/plugin-pug/commit/c955b9f5935dc75f8cc9b50adf3de611e1e75499
+[#402]: https://github.com/prettier/plugin-pug/issues/402
+[#404]: https://github.com/prettier/plugin-pug/issues/404
+[#405]: https://github.com/prettier/plugin-pug/issues/405
 
 # 2.1.1
 
