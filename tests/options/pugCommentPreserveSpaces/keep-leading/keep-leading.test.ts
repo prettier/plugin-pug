@@ -15,8 +15,8 @@ describe('Options', () => {
       'utf8',
     );
 
-    it('should keep leading spaces within comments', () => {
-      const actual: string = format(code, {
+    it('should keep leading spaces within comments', async () => {
+      const actual: string = await format(code, {
         parser: 'pug',
         plugins: [plugin],
 

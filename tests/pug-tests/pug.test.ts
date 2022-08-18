@@ -30,7 +30,7 @@ describe('Pug Tests', () => {
     if (filename.endsWith('.formatted.pug')) {
       const unformattedFilename: string = filename.replace('.formatted', '');
       if (!ignores.includes(unformattedFilename)) {
-        it(unformattedFilename, () => {
+        it(unformattedFilename, async () => {
           const expected: string = readFileSync(
             resolve(__dirname, filename),
             'utf8',
@@ -39,7 +39,7 @@ describe('Pug Tests', () => {
             resolve(__dirname, unformattedFilename),
             'utf8',
           );
-          const actual: string = format(code, {
+          const actual: string = await format(code, {
             parser: 'pug',
             plugins: [plugin],
           });

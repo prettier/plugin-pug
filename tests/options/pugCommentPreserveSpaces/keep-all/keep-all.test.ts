@@ -15,8 +15,8 @@ describe('Options', () => {
       'utf8',
     );
 
-    it('should keep all spaces within comments', () => {
-      const actual: string = format(code, {
+    it('should keep all spaces within comments', async () => {
+      const actual: string = await format(code, {
         parser: 'pug',
         plugins: [plugin],
 
@@ -26,8 +26,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should keep all spaces within comments by default', () => {
-      const actual: string = format(code, {
+    it('should keep all spaces within comments by default', async () => {
+      const actual: string = await format(code, {
         parser: 'pug',
         plugins: [plugin],
       });
