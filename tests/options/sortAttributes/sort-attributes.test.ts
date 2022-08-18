@@ -8,8 +8,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('sortAttributes', () => {
-    it('should sort attributes', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should sort attributes', async () => {
+      const { actual, expected } = await compareFiles(__dirname, {
         formatOptions: {
           pugSortAttributesBeginning: ['v-for', ':key', 'src', 'alt'],
           pugSortAttributesEnd: ['@click'],

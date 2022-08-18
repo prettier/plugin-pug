@@ -2,8 +2,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
-  it('should ignore escaping chars in vue prop', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should ignore escaping chars in vue prop', async () => {
+    const { actual, expected } = await compareFiles(__dirname, {
       formatOptions: {
         singleQuote: true,
 

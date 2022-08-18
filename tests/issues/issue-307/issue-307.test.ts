@@ -2,8 +2,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
-  it('should set tab to 4 spaces', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should set tab to 4 spaces', async () => {
+    const { actual, expected } = await compareFiles(__dirname, {
       formatOptions: {
         arrowParens: 'avoid',
         singleQuote: true,

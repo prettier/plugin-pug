@@ -12,15 +12,15 @@ describe('Interpolations', () => {
     process.env = { ...backupProcessEnv };
   });
 
-  it('should handle Neutral interpolations', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should handle Neutral interpolations', async () => {
+    const { actual, expected } = await compareFiles(__dirname, {
       source: 'unformatted_none.pug',
       target: 'formatted_none.pug',
     });
     expect(actual).toBe(expected);
   });
 
-  it('should handle Angular interpolations', () => {
+  it('should handle Angular interpolations', async () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted_angular.pug'),
       'utf8',
@@ -33,7 +33,7 @@ describe('Interpolations', () => {
     // process.env should be ignored
     process.env.npm_package_dependencies_vue = 'some version';
 
-    const actual: string = format(code, {
+    const actual: string = await format(code, {
       parser: 'pug',
       plugins: [plugin],
 
@@ -42,7 +42,7 @@ describe('Interpolations', () => {
     expect(actual).toBe(expected);
   });
 
-  it('should handle Vue interpolations', () => {
+  it('should handle Vue interpolations', async () => {
     const expected: string = readFileSync(
       resolve(__dirname, 'formatted_vue.pug'),
       'utf8',
@@ -55,7 +55,7 @@ describe('Interpolations', () => {
     // process.env should be ignored
     process.env.npm_package_devDependencies_svelte = 'some version';
 
-    const actual: string = format(code, {
+    const actual: string = await format(code, {
       parser: 'pug',
       plugins: [plugin],
 

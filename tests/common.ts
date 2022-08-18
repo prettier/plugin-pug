@@ -82,19 +82,19 @@ export interface CompareFilesResult {
  * @param param1.formatOptions Further format options. Default `{ parser: 'pug', plugins: [plugin] }`. You can also override the parser and plugins key.
  * @returns The result to be passed in expect calls.
  */
-export function compareFiles(
+export async function compareFiles(
   dirname: string,
   {
     source = 'unformatted.pug',
     target = 'formatted.pug',
     formatOptions = {},
   }: CompareFilesOptions = {},
-): CompareFilesResult {
+): Promise<CompareFilesResult> {
   const expected: string | null = target
     ? readFileSync(resolve(dirname, target), 'utf8')
     : null;
   const code: string = readFileSync(resolve(dirname, source), 'utf8');
-  const actual: string = format(code, {
+  const actual: string = await format(code, {
     parser: 'pug',
     plugins: [plugin],
     ...formatOptions,
