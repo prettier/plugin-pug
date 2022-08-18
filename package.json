@@ -80,7 +80,7 @@
     "vitest": "~0.33.0"
   },
   "peerDependencies": {
-    "prettier": "^2.3.0"
+    "prettier": "^3.0.0"
   },
   "packageManager": "pnpm@8.6.9",
   "engines": {
