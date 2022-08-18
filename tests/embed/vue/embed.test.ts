@@ -2,8 +2,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Embedded', () => {
-  it('should format when embedded in vue', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should format when embedded in vue', async () => {
+    const { actual, expected } = await compareFiles(__dirname, {
       source: 'unformatted.vue',
       target: 'formatted.vue',
       formatOptions: {
@@ -13,8 +13,8 @@ describe('Embedded', () => {
     expect(actual).toBe(expected);
   });
 
-  it('should format when embedded in vue html reference', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should format when embedded in vue html reference', async () => {
+    const { actual, expected } = await compareFiles(__dirname, {
       source: 'unformatted-html-reference.vue',
       target: 'formatted-html-reference.vue',
       formatOptions: {
@@ -24,8 +24,8 @@ describe('Embedded', () => {
     expect(actual).toBe(expected);
   });
 
-  it('should format when embedded in vue empty template', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should format when embedded in vue empty template', async () => {
+    const { actual, expected } = await compareFiles(__dirname, {
       source: 'unformatted-empty-template.vue',
       target: 'formatted-empty-template.vue',
       formatOptions: {

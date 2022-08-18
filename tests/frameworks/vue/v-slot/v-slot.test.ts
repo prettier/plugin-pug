@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Frameworks', () => {
   describe('Vue', () => {
-    it('should format v-slot', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should format v-slot', async () => {
+      const { actual, expected } = await compareFiles(__dirname, {
         formatOptions: { pugFramework: 'vue' },
       });
 

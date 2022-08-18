@@ -9,8 +9,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('emptyAttributes', () => {
-    it('should remove empty quotes and keep attributes starting with #', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should remove empty quotes and keep attributes starting with #', async () => {
+      const { actual, expected } = await compareFiles(__dirname, {
         formatOptions: {
           pugEmptyAttributes: 'none',
           pugEmptyAttributesForceQuotes: ['foo'],

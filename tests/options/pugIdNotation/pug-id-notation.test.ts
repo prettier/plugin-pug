@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('useIdLiterals', () => {
-    it('should keep classes as is', () => {
-      const { actual, code } = compareFiles(__dirname, {
+    it('should keep classes as is', async () => {
+      const { actual, code } = await compareFiles(__dirname, {
         source: 'formatted-attribute.pug',
         target: null,
         formatOptions: {
@@ -14,8 +14,8 @@ describe('Options', () => {
       expect(actual).toBe(code);
     });
 
-    it('should keep classes as literals', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should keep classes as literals', async () => {
+      const { actual, expected } = await compareFiles(__dirname, {
         source: 'formatted-attribute.pug',
         target: 'formatted-literal.pug',
         formatOptions: {
@@ -25,8 +25,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should keep classes as literals by default', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should keep classes as literals by default', async () => {
+      const { actual, expected } = await compareFiles(__dirname, {
         source: 'formatted-attribute.pug',
         target: 'formatted-literal.pug',
       });
