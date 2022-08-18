@@ -43,11 +43,7 @@ export const plugin: Plugin = {
   /* eslint-disable jsdoc/require-jsdoc */
   parsers: {
     pug: {
-      parse(
-        text: string,
-        parsers: { [parserName: string]: Parser },
-        options: ParserOptions,
-      ): AstPathStackEntry {
+      parse(text, options) {
         logger.debug('[parsers:pug:parse]:', { text });
 
         let trimmedAndAlignedContent: string = text.replace(/^\s*\n/, '');
