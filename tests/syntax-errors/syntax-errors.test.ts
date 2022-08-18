@@ -5,33 +5,33 @@ import { plugin } from 'src/index';
 import { describe, expect, it } from 'vitest';
 
 describe('Syntax-Errors', () => {
-  it('should not format if attributes is not closed', () => {
+  it('should not format if attributes is not closed', async () => {
     const code: string = readFileSync(
       resolve(__dirname, 'attributes-not-closed.pug'),
       'utf8',
     );
-    expect(() => {
-      format(code, { parser: 'pug', plugins: [plugin] });
-    }).toThrow();
+    await expect(
+      format(code, { parser: 'pug', plugins: [plugin] }),
+    ).rejects.toThrow();
   });
 
-  it('should not format if pipeless script tag has syntax error', () => {
+  it('should not format if pipeless script tag has syntax error', async () => {
     const code: string = readFileSync(
       resolve(__dirname, 'pipeless-script-tag.pug'),
       'utf8',
     );
-    expect(() => {
-      format(code, { parser: 'pug', plugins: [plugin] });
-    }).toThrow();
+    await expect(
+      format(code, { parser: 'pug', plugins: [plugin] }),
+    ).rejects.toThrow();
   });
 
-  it('should format non-JS script without syntax error', () => {
+  it('should format non-JS script without syntax error', async () => {
     const code: string = readFileSync(
       resolve(__dirname, 'scripts-with-non-js-contents.pug'),
       'utf8',
     );
-    expect(() => {
-      format(code, { parser: 'pug', plugins: [plugin] });
-    }).not.toThrow();
+    await expect(
+      format(code, { parser: 'pug', plugins: [plugin] }),
+    ).rejects.not.toThrow();
   });
 });
