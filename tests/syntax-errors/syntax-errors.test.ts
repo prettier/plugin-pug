@@ -32,6 +32,6 @@ describe('Syntax-Errors', () => {
     );
     await expect(
       format(code, { parser: 'pug', plugins: [plugin] }),
-    ).rejects.not.toThrow();
+    ).resolves.not.toThrow();
   });
 });
