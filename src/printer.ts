@@ -514,6 +514,12 @@ export class PugPrinter {
               code = await this.frameworkFormat(code);
             }
           } catch (error: unknown) {
+            if (
+              typeof error === 'object' &&
+              typeof (error as Error | undefined)?.message === 'string'
+            ) {
+              error = (error as Error).message;
+            }
             if (typeof error === 'string') {
               if (error.includes('Unexpected token Lexer Error')) {
                 if (!error.includes('Unexpected character [`]')) {
