@@ -90,16 +90,16 @@ export const plugin: Plugin = {
   },
   printers: {
     'pug-ast': {
-      print(
+      async print(
         path: AstPath,
         options: ParserOptions & PugParserOptions,
         print: (path: AstPath) => Doc,
-      ): Doc {
+      ) {
         const entry: AstPathStackEntry = path.stack[0];
         const { content, tokens } = entry;
         const pugOptions: PugPrinterOptions = convergeOptions(options);
         const printer: PugPrinter = new PugPrinter(content, tokens, pugOptions);
-        const result: string = printer.build();
+        const result: string = await printer.build();
         logger.debug('[printers:pug-ast:print]:', result);
         return result;
       },

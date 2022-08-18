@@ -313,7 +313,7 @@ export class PugPrinter {
    *
    * @returns The formatted pug content.
    */
-  public build(): string {
+  public async build(): Promise<string> {
     if (logger.isDebugEnabled()) {
       logger.debug('[PugPrinter]:', JSON.stringify(this.tokens));
     }
@@ -336,8 +336,10 @@ export class PugPrinter {
           case 'eos':
             // TODO: These tokens write directly into the result
             this.result = results.join('');
-            // @ts-expect-error: The function is always valid
-            this[token.type](token);
+            await this[token.type](
+              // @ts-expect-error: The function is always valid
+              token,
+            );
             results.length = 0;
             results.push(this.result);
             break;
@@ -353,8 +355,12 @@ export class PugPrinter {
             if (typeof this[token.type] !== 'function') {
               throw new Error('Unhandled token: ' + JSON.stringify(token));
             }
-            // @ts-expect-error: If the function would be invalid, it would be caught above
-            results.push(this[token.type](token));
+            results.push(
+              await this[token.type](
+                // @ts-expect-error: If the function would be invalid, it would be caught above
+                token,
+              ),
+            );
             break;
           }
         }
@@ -448,7 +454,7 @@ export class PugPrinter {
     }
   }
 
-  private frameworkFormat(code: string): string {
+  private async frameworkFormat(code: string): Promise<string> {
     const options: Options = {
       ...this.codeInterpolationOptions,
       // we need to keep the original singleQuote option
@@ -467,14 +473,14 @@ export class PugPrinter {
         options.semi = false;
     }
 
-    let result: string = format(code, options);
+    let result: string = await format(code, options);
     if (result[0] === ';') {
       result = result.slice(1);
     }
     return result;
   }
 
-  private formatText(text: string): string {
+  private async formatText(text: string): Promise<string> {
     let result: string = '';
     while (text) {
       // Find double curly brackets
@@ -505,7 +511,7 @@ export class PugPrinter {
               text = text.slice(end + 2);
               continue;
             } else {
-              code = this.frameworkFormat(code);
+              code = await this.frameworkFormat(code);
             }
           } catch (error: unknown) {
             if (typeof error === 'string') {
@@ -551,7 +557,7 @@ export class PugPrinter {
               logger.warn('[PugPrinter:formatText]: ', error);
             }
             try {
-              code = format(code, {
+              code = await format(code, {
                 parser: 'babel',
                 ...this.codeInterpolationOptions,
                 semi: false,
@@ -600,12 +606,12 @@ export class PugPrinter {
                 text = text.slice(end2 + 1);
                 continue;
               } else {
-                code = this.frameworkFormat(code);
+                code = await this.frameworkFormat(code);
               }
             } catch (error: unknown) {
               logger.warn('[PugPrinter:formatText]: ', error);
               try {
-                code = format(code, {
+                code = await format(code, {
                   parser: 'babel',
                   ...this.codeInterpolationOptions,
                   semi: false,
@@ -638,11 +644,11 @@ export class PugPrinter {
     return result;
   }
 
-  private formatDelegatePrettier(
+  private async formatDelegatePrettier(
     val: string,
     parser: FormatDelegatePrettierSupportedParser,
     formatOptions: FormatDelegatePrettierOptions = {},
-  ): string {
+  ): Promise<string> {
     const { trimTrailingSemicolon = false, trimLeadingSemicolon = true } =
       formatOptions;
     val = val.trim();
@@ -652,7 +658,7 @@ export class PugPrinter {
       options.singleQuote = !this.options.pugSingleQuote;
       val = val.slice(1, -1); // Remove quotes
     }
-    val = format(val, { parser, ...options });
+    val = await format(val, { parser, ...options });
     if (this.quotes === '"') {
       val = val.replace(/"/g, '\\"');
     } else {
@@ -668,39 +674,39 @@ export class PugPrinter {
     return wasQuoted ? this.quoteString(val) : val;
   }
 
-  private formatStyleAttribute(val: string): string {
-    return this.formatDelegatePrettier(val, 'css', {
+  private async formatStyleAttribute(val: string): Promise<string> {
+    return await this.formatDelegatePrettier(val, 'css', {
       trimTrailingSemicolon: true,
     });
   }
 
-  private formatVueEventBinding(val: string): string {
-    return this.formatDelegatePrettier(val, '__vue_event_binding', {
+  private async formatVueEventBinding(val: string): Promise<string> {
+    return await this.formatDelegatePrettier(val, '__vue_event_binding', {
       trimTrailingSemicolon: true,
     });
   }
 
-  private formatVueExpression(val: string): string {
-    return this.formatDelegatePrettier(val, '__vue_expression');
+  private async formatVueExpression(val: string): Promise<string> {
+    return await this.formatDelegatePrettier(val, '__vue_expression');
   }
 
-  private formatAngularBinding(val: string): string {
-    return this.formatDelegatePrettier(val, '__ng_binding');
+  private async formatAngularBinding(val: string): Promise<string> {
+    return await this.formatDelegatePrettier(val, '__ng_binding');
   }
 
-  private formatAngularAction(val: string): string {
-    return this.formatDelegatePrettier(val, '__ng_action');
+  private async formatAngularAction(val: string): Promise<string> {
+    return await this.formatDelegatePrettier(val, '__ng_action');
   }
 
-  private formatAngularDirective(val: string): string {
-    return this.formatDelegatePrettier(val, '__ng_directive');
+  private async formatAngularDirective(val: string): Promise<string> {
+    return await this.formatDelegatePrettier(val, '__ng_directive');
   }
 
-  private formatFrameworkInterpolation(
+  private async formatFrameworkInterpolation(
     val: string,
     parser: keyof Pick<typeof AngularParsers, '__ng_interpolation'>, // TODO: may be changed to allow a special parser for svelte
     [opening, closing]: ['{{', '}}'] | ['{', '}'],
-  ): string {
+  ): Promise<string> {
     val = val.slice(1, -1); // Remove quotes
     val = val.slice(opening.length, -closing.length); // Remove braces
     val = val.trim();
@@ -715,7 +721,7 @@ export class PugPrinter {
         singleQuote: !this.options.pugSingleQuote,
       };
       try {
-        val = format(val, { parser, ...options });
+        val = await format(val, { parser, ...options });
       } catch (error) {
         logger.warn(
           'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
@@ -731,15 +737,15 @@ export class PugPrinter {
     return this.quoteString(val);
   }
 
-  private formatAngularInterpolation(val: string): string {
-    return this.formatFrameworkInterpolation(val, '__ng_interpolation', [
+  private async formatAngularInterpolation(val: string): Promise<string> {
+    return await this.formatFrameworkInterpolation(val, '__ng_interpolation', [
       '{{',
       '}}',
     ]);
   }
 
-  private formatSvelteInterpolation(val: string): string {
-    return this.formatFrameworkInterpolation(val, '__ng_interpolation', [
+  private async formatSvelteInterpolation(val: string): Promise<string> {
+    return await this.formatFrameworkInterpolation(val, '__ng_interpolation', [
       '{',
       '}',
     ]);
@@ -932,7 +938,7 @@ export class PugPrinter {
     return result;
   }
 
-  private attribute(token: AttributeToken): void {
+  private async attribute(token: AttributeToken): Promise<void> {
     formatEmptyAttribute(
       token,
       this.options.pugEmptyAttributes,
@@ -1079,29 +1085,29 @@ export class PugPrinter {
         // cannot format due to it would expect e.g. json in js and then see a dollar sign that cannot be handled
         // see https://github.com/prettier/plugin-pug/issues/238#issuecomment-873224173
       } else if (isVueVForWithOf(token.name, val)) {
-        val = this.formatDelegatePrettier(val, 'vue');
+        val = await this.formatDelegatePrettier(val, 'vue');
       } else if (isVueExpression(token.name)) {
-        val = this.formatVueExpression(val);
+        val = await this.formatVueExpression(val);
       } else if (isVueEventBinding(token.name)) {
-        val = this.formatVueEventBinding(val);
+        val = await this.formatVueEventBinding(val);
       } else if (this.framework === 'vue' && isVueVDirective(token.name)) {
-        val = this.formatVueExpression(val);
+        val = await this.formatVueExpression(val);
       } else if (isVueVBindExpression(token.name)) {
-        val = this.formatDelegatePrettier(val, '__js_expression');
+        val = await this.formatDelegatePrettier(val, '__js_expression');
       } else if (isVueVOnExpression(token.name)) {
-        val = this.formatDelegatePrettier(val, '__js_expression');
+        val = await this.formatDelegatePrettier(val, '__js_expression');
       } else if (isAngularBinding(token.name)) {
-        val = this.formatAngularBinding(val);
+        val = await this.formatAngularBinding(val);
       } else if (isAngularAction(token.name)) {
-        val = this.formatAngularAction(val);
+        val = await this.formatAngularAction(val);
       } else if (isAngularDirective(token.name)) {
-        val = this.formatAngularDirective(val);
+        val = await this.formatAngularDirective(val);
       } else if (isAngularInterpolation(val)) {
-        val = this.formatAngularInterpolation(val);
+        val = await this.formatAngularInterpolation(val);
       } else if (isSvelteInterpolation(val)) {
-        val = this.formatSvelteInterpolation(val);
+        val = await this.formatSvelteInterpolation(val);
       } else if (isStyleAttribute(token.name, token.val)) {
-        val = this.formatStyleAttribute(val);
+        val = await this.formatStyleAttribute(val);
       } else {
         // Prevent wrong quotation if there is an extra whitespace at the end
         const rightTrimmedVal: string = val.trimEnd();
@@ -1111,7 +1117,7 @@ export class PugPrinter {
           // The value is exactly true and is not quoted
           return;
         } else if (token.mustEscape) {
-          val = format(val, {
+          val = await format(val, {
             parser: '__js_expression',
             ...this.codeInterpolationOptions,
           });
@@ -1485,7 +1491,7 @@ export class PugPrinter {
     return result;
   }
 
-  private text(token: TextToken): string {
+  private async text(token: TextToken): Promise<string> {
     let result: string = '';
     let val: string = token.val;
     let needsTrailingWhitespace: boolean = false;
@@ -1562,7 +1568,7 @@ export class PugPrinter {
       }
 
       val = val.trim();
-      val = this.formatText(val);
+      val = await this.formatText(val);
       val = val.replace(/#(\{|\[)/g, '\\#$1');
     }
 
@@ -1623,7 +1629,7 @@ export class PugPrinter {
     return result;
   }
 
-  private code(token: CodeToken): string {
+  private async code(token: CodeToken): Promise<string> {
     let result: string = this.computedIndent;
     if (!token.mustEscape && token.buffer) {
       result += '!';
@@ -1636,7 +1642,7 @@ export class PugPrinter {
     let val: string = token.val;
     try {
       const valBackup: string = val;
-      val = format(val, {
+      val = await format(val, {
         parser: 'babel',
         ...this.codeInterpolationOptions,
         semi: useSemi,
@@ -1685,7 +1691,9 @@ export class PugPrinter {
     }
   }
 
-  private ['start-pipeless-text'](token: StartPipelessTextToken): string {
+  private async ['start-pipeless-text'](
+    token: StartPipelessTextToken,
+  ): Promise<string> {
     this.pipelessText = true;
 
     let result: string = `\n${this.indentString.repeat(this.indentLevel)}`;
@@ -1742,7 +1750,7 @@ export class PugPrinter {
         }
 
         try {
-          result = format(rawText, {
+          result = await format(rawText, {
             parser,
             ...this.codeInterpolationOptions,
           });
@@ -1961,9 +1969,9 @@ export class PugPrinter {
     return result;
   }
 
-  private eachOf(token: EachOfToken): string {
+  private async eachOf(token: EachOfToken): Promise<string> {
     let value: string = token.value.trim();
-    value = format(value, {
+    value = await format(value, {
       parser: 'babel',
       ...this.codeInterpolationOptions,
       semi: false,
