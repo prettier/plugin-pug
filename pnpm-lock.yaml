@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@types/node': ~18.7.6
-  '@types/prettier': ~2.7.0
+  '@types/prettier': ~2.7.1
   '@typescript-eslint/eslint-plugin': ~5.33.1
   '@typescript-eslint/parser': ~5.33.1
   '@vitest/coverage-c8': ~0.22.0
@@ -28,7 +28,7 @@ dependencies:
 
 devDependencies:
   '@types/node': 18.7.6
-  '@types/prettier': 2.7.0
+  '@types/prettier': 2.7.1
   '@typescript-eslint/eslint-plugin': 5.33.1_vsoshirnpb7xw6mr7xomgfas2i
   '@typescript-eslint/parser': 5.33.1_4rv7y5c6xz3vfxwhbrcxxi73bq
   '@vitest/coverage-c8': 0.22.0
@@ -350,8 +350,8 @@ packages:
     resolution: {integrity: sha512-EdxgKRXgYsNITy5mjjXjVE/CS8YENSdhiagGrLqjG0pvA2owgJ6i4l7wy/PFZGC0B1/H20lWKN7ONVDNYDZm7A==}
     dev: true
 
-  /@types/prettier/2.7.0:
-    resolution: {integrity: sha512-RI1L7N4JnW5gQw2spvL7Sllfuf1SaHdrZpCHiBlCXjIlufi1SMNnbu2teze3/QE67Fg2tBlH7W+mi4hVNk4p0A==}
+  /@types/prettier/2.7.1:
+    resolution: {integrity: sha512-ri0UmynRRvZiiUJdiz38MmIblKK+oH30MztdBVR95dv/Ubw6neWSb8u1XpRb72L4qsZOhz+L+z9JD40SJmfWow==}
     dev: true
 
   /@types/web-bluetooth/0.0.15:

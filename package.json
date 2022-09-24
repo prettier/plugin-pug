@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@types/node": "~18.7.6",
-    "@types/prettier": "~2.7.0",
+    "@types/prettier": "~2.7.1",
     "@typescript-eslint/eslint-plugin": "~5.33.1",
     "@typescript-eslint/parser": "~5.33.1",
     "@vitest/coverage-c8": "~0.22.0",
