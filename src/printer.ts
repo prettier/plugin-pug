@@ -1479,6 +1479,8 @@ export class PugPrinter {
     let val: string = token.val;
     let needsTrailingWhitespace: boolean = false;
 
+    const endsWithWhitespace: boolean = val[val.length - 1] === ' ';
+
     if (this.pipelessText) {
       switch (this.previousToken?.type) {
         case 'newline':
@@ -1499,7 +1501,7 @@ export class PugPrinter {
         );
       }
     } else {
-      if (this.nextToken && val[val.length - 1] === ' ') {
+      if (this.nextToken && endsWithWhitespace) {
         switch (this.nextToken.type) {
           case 'interpolated-code':
           case 'start-pug-interpolation':
@@ -1566,6 +1568,10 @@ export class PugPrinter {
     result += val;
     if (needsTrailingWhitespace) {
       result += ' ';
+    }
+
+    if (endsWithWhitespace && this.nextToken?.type === 'indent') {
+      result += '\n' + this.computedIndent + this.indentString + '|';
     }
 
     return result;
