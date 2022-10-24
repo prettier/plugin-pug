@@ -1571,7 +1571,7 @@ export class PugPrinter {
     }
 
     if (endsWithWhitespace && this.nextToken?.type === 'indent') {
-      result += '\n' + this.computedIndent + this.indentString + '|';
+      result += '\n' + this.indentString.repeat(this.indentLevel + 1) + '|';
     }
 
     return result;
