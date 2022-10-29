@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.2.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.3.0...main)
+
+# 2.3.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.2.0...2.3.0)
+
+- Transform trailing whitespace to recommended way ([#417])
+
+[#417]: https://github.com/prettier/plugin-pug/issues/417
 
 # 2.2.0
 
