@@ -97,6 +97,7 @@ export function compareFiles(
   const actual: string = format(code, {
     parser: 'pug',
     plugins: [plugin],
+    pluginSearchDirs: false,
     ...formatOptions,
   });
 
