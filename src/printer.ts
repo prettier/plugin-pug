@@ -261,6 +261,7 @@ export class PugPrinter {
       : null;
 
     this.codeInterpolationOptions = {
+      semi: options.pugSemi ?? options.semi,
       singleQuote: options.pugSingleQuote ?? options.singleQuote,
       bracketSpacing: options.pugBracketSpacing ?? options.bracketSpacing,
       arrowParens: options.pugArrowParens ?? options.arrowParens,
