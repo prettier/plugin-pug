@@ -1567,6 +1567,10 @@ export class PugPrinter {
       val = ` ${val}`;
     }
 
+    if (val === ' ' && this.nextToken?.type === 'indent') {
+      val = val.trimEnd();
+    }
+
     result += val;
     if (needsTrailingWhitespace) {
       result += ' ';
