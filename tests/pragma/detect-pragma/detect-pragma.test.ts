@@ -4,7 +4,8 @@ import type { Parser } from 'prettier';
 import { parsers } from 'src/index';
 import { describe, expect, it } from 'vitest';
 
-/* eslint @typescript-eslint/no-non-null-assertion: off */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 
 // ts-jest needs the exclamation mark, so it does not have the impression that the variables are undefined
 const pugParser: Parser = parsers!.pug!;
