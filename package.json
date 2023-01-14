@@ -52,29 +52,29 @@
   "devDependencies": {
     "@types/node": "~18.11.18",
     "@types/prettier": "~2.7.2",
-    "@typescript-eslint/eslint-plugin": "~5.48.0",
-    "@typescript-eslint/parser": "~5.48.0",
-    "@vitest/coverage-c8": "~0.26.3",
+    "@typescript-eslint/eslint-plugin": "~5.48.1",
+    "@typescript-eslint/parser": "~5.48.1",
+    "@vitest/coverage-c8": "~0.27.1",
     "benchmark": "~2.1.4",
     "eslint": "~8.31.0",
     "eslint-config-prettier": "~8.6.0",
-    "eslint-define-config": "~1.13.0",
+    "eslint-define-config": "~1.14.0",
     "eslint-gitignore": "~0.1.0",
     "eslint-plugin-inclusive-language": "~2.2.0",
     "eslint-plugin-jsdoc": "~39.6.4",
     "eslint-plugin-prettier": "~4.2.1",
     "eslint-plugin-spellcheck": "~0.0.20",
-    "prettier": "2.7.1",
-    "prettier-plugin-organize-imports": "~3.2.1",
+    "prettier": "2.8.3",
+    "prettier-plugin-organize-imports": "~3.2.2",
     "typescript": "~4.9.4",
     "vite": "~4.0.4",
-    "vitepress": "1.0.0-alpha.35",
-    "vitest": "~0.26.3"
+    "vitepress": "1.0.0-alpha.36",
+    "vitest": "~0.27.1"
   },
   "peerDependencies": {
     "prettier": "^2.3.0"
   },
-  "packageManager": "pnpm@7.22.0",
+  "packageManager": "pnpm@7.25.0",
   "engines": {
     "node": "^14.17.0 || ^16.13.0 || >=18.0.0",
     "npm": ">=6.14.13"
