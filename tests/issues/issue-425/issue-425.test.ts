@@ -2,7 +2,7 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
-  it('should add empty piped line after tag when trailing whitespace', () => {
+  it('should trim trailing whitespace after tag', () => {
     const { expected, actual } = compareFiles(__dirname);
     expect(actual).toBe(expected);
   });

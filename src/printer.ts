@@ -1481,7 +1481,7 @@ export class PugPrinter {
     let val: string = token.val;
     let needsTrailingWhitespace: boolean = false;
 
-    const endsWithWhitespace: boolean = val[val.length - 1] === ' ';
+    let endsWithWhitespace: boolean = val[val.length - 1] === ' ';
 
     if (this.pipelessText) {
       switch (this.previousToken?.type) {
@@ -1564,11 +1564,11 @@ export class PugPrinter {
         'filter',
       ])
     ) {
-      val = ` ${val}`;
-    }
-
-    if (val === ' ' && this.nextToken?.type === 'indent') {
-      val = val.trimEnd();
+      if (val.length === 0 && this.nextToken?.type === 'indent') {
+        endsWithWhitespace = false;
+      } else {
+        val = ` ${val}`;
+      }
     }
 
     result += val;
