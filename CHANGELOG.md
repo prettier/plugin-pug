@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.3.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.4.0...main)
+
+# 2.4.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.3.0...2.4.0)
+
+- Fix trailing whitespace after tag ([#425])
+- Add `semi` code interpolation option ([#426])
+
+[#425]: https://github.com/prettier/plugin-pug/issues/425
+[#426]: https://github.com/prettier/plugin-pug/pull/426
 
 # 2.3.0
 
