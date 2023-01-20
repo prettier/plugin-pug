@@ -12,7 +12,7 @@ set -e
 # Prepare
 pnpm install
 pnpm run lint
-pnpm run test -- --silent
+pnpm run test --silent
 pnpm audit --prod
 
 set +e
