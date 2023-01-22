@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.4.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.4.1...main)
+
+# 2.4.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.4.0...2.4.1)
+
+- Omit leading semicolon in code expressions ([#428])
+
+[#428]: https://github.com/prettier/plugin-pug/issues/428
 
 # 2.4.0
 
