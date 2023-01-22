@@ -150,6 +150,7 @@ export interface PugPrinterOptions {
  */
 interface FormatDelegatePrettierOptions {
   trimTrailingSemicolon?: boolean;
+  trimLeadingSemicolon?: boolean;
 }
 
 /**
@@ -640,8 +641,10 @@ export class PugPrinter {
   private formatDelegatePrettier(
     val: string,
     parser: FormatDelegatePrettierSupportedParser,
-    { trimTrailingSemicolon = false }: FormatDelegatePrettierOptions = {},
+    formatOptions: FormatDelegatePrettierOptions = {},
   ): string {
+    const { trimTrailingSemicolon = false, trimLeadingSemicolon = true } =
+      formatOptions;
     val = val.trim();
     const options: Options = { ...this.codeInterpolationOptions };
     const wasQuoted: boolean = isQuoted(val);
@@ -658,6 +661,9 @@ export class PugPrinter {
     val = unwrapLineFeeds(val);
     if (trimTrailingSemicolon && val[val.length - 1] === ';') {
       val = val.slice(0, -1);
+    }
+    if (trimLeadingSemicolon && val[0] === ';') {
+      val = val.slice(1);
     }
     return wasQuoted ? this.quoteString(val) : val;
   }
