@@ -3,7 +3,6 @@ import { CATEGORY_PUG } from './constants';
 
 /** Pug class location. */
 export const PUG_CLASS_LOCATION: ChoiceSupportOption = {
-  since: '1.19.0',
   category: CATEGORY_PUG,
   type: 'choice',
   default: 'before-attributes',

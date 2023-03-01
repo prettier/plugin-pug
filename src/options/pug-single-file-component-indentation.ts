@@ -3,7 +3,6 @@ import { CATEGORY_PUG } from './constants';
 
 /** Pug single file component indentation. */
 export const PUG_SINGLE_FILE_COMPONENT_INDENTATION: BooleanSupportOption = {
-  since: '1.9.0',
   category: CATEGORY_PUG,
   type: 'boolean',
   default: false,

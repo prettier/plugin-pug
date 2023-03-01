@@ -3,7 +3,6 @@ import { CATEGORY_PUG } from './constants';
 
 /** Pug Framework. */
 export const PUG_FRAMEWORK: ChoiceSupportOption<PugFramework> = {
-  since: '1.14.0',
   category: CATEGORY_PUG,
   type: 'choice',
   default: 'auto',

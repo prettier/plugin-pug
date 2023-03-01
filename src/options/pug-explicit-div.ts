@@ -3,7 +3,6 @@ import { CATEGORY_PUG } from './constants';
 
 /** Pug default div tag. */
 export const PUG_EXPLICIT_DIV: BooleanSupportOption = {
-  since: '1.16.0',
   category: CATEGORY_PUG,
   type: 'boolean',
   default: false,
