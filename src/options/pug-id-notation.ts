@@ -3,7 +3,7 @@ import { CATEGORY_PUG } from './constants';
 
 /** Pug id notation. */
 export const PUG_ID_NOTATION: ChoiceSupportOption = {
-  since: '1.13.0',
+  // since: '1.13.0',
   category: CATEGORY_PUG,
   type: 'choice',
   default: 'literal',
