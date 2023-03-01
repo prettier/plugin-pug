@@ -1,10 +1,10 @@
 import { types } from 'node:util';
 import type { BuiltInParserName, Options, RequiredOptions } from 'prettier';
 import { format } from 'prettier';
-import type { parsers as AngularParsers } from 'prettier/parser-angular';
-import type { parsers as BabelParsers } from 'prettier/parser-babel';
-import type { parsers as HtmlParsers } from 'prettier/parser-html';
-import type { parsers as PostCssParsers } from 'prettier/parser-postcss';
+import type { parsers as AngularParsers } from 'prettier/plugins/angular';
+import type { parsers as BabelParsers } from 'prettier/plugins/babel';
+import type { parsers as HtmlParsers } from 'prettier/plugins/html';
+import type { parsers as PostCssParsers } from 'prettier/plugins/postcss';
 import type {
   AndAttributesToken,
   AttributeToken,
