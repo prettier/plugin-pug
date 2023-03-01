@@ -1,6 +1,32 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.2.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.4.1...main)
+
+# 2.4.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.4.0...2.4.1)
+
+- Omit leading semicolon in code expressions ([#428])
+
+[#428]: https://github.com/prettier/plugin-pug/issues/428
+
+# 2.4.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.3.0...2.4.0)
+
+- Fix trailing whitespace after tag ([#425])
+- Add `semi` code interpolation option ([#426])
+
+[#425]: https://github.com/prettier/plugin-pug/issues/425
+[#426]: https://github.com/prettier/plugin-pug/pull/426
+
+# 2.3.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.2.0...2.3.0)
+
+- Transform trailing whitespace to recommended way ([#417])
+
+[#417]: https://github.com/prettier/plugin-pug/issues/417
 
 # 2.2.0
 

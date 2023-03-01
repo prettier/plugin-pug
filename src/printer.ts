@@ -150,6 +150,7 @@ export interface PugPrinterOptions {
  */
 interface FormatDelegatePrettierOptions {
   trimTrailingSemicolon?: boolean;
+  trimLeadingSemicolon?: boolean;
 }
 
 /**
@@ -197,6 +198,7 @@ export class PugPrinter {
 
   private readonly codeInterpolationOptions: Pick<
     RequiredOptions,
+    | 'semi'
     | 'singleQuote'
     | 'bracketSpacing'
     | 'arrowParens'
@@ -261,6 +263,7 @@ export class PugPrinter {
       : null;
 
     this.codeInterpolationOptions = {
+      semi: options.pugSemi ?? options.semi,
       singleQuote: options.pugSingleQuote ?? options.singleQuote,
       bracketSpacing: options.pugBracketSpacing ?? options.bracketSpacing,
       arrowParens: options.pugArrowParens ?? options.arrowParens,
@@ -650,8 +653,10 @@ export class PugPrinter {
   private async formatDelegatePrettier(
     val: string,
     parser: FormatDelegatePrettierSupportedParser,
-    { trimTrailingSemicolon = false }: FormatDelegatePrettierOptions = {},
+    formatOptions: FormatDelegatePrettierOptions = {},
   ): Promise<string> {
+    const { trimTrailingSemicolon = false, trimLeadingSemicolon = true } =
+      formatOptions;
     val = val.trim();
     const options: Options = { ...this.codeInterpolationOptions };
     const wasQuoted: boolean = isQuoted(val);
@@ -668,6 +673,9 @@ export class PugPrinter {
     val = unwrapLineFeeds(val);
     if (trimTrailingSemicolon && val[val.length - 1] === ';') {
       val = val.slice(0, -1);
+    }
+    if (trimLeadingSemicolon && val[0] === ';') {
+      val = val.slice(1);
     }
     return wasQuoted ? this.quoteString(val) : val;
   }
@@ -1491,6 +1499,8 @@ export class PugPrinter {
     let val: string = token.val;
     let needsTrailingWhitespace: boolean = false;
 
+    let endsWithWhitespace: boolean = val[val.length - 1] === ' ';
+
     if (this.pipelessText) {
       switch (this.previousToken?.type) {
         case 'newline':
@@ -1511,7 +1521,7 @@ export class PugPrinter {
         );
       }
     } else {
-      if (this.nextToken && val[val.length - 1] === ' ') {
+      if (this.nextToken && endsWithWhitespace) {
         switch (this.nextToken.type) {
           case 'interpolated-code':
           case 'start-pug-interpolation':
@@ -1572,12 +1582,20 @@ export class PugPrinter {
         'filter',
       ])
     ) {
-      val = ` ${val}`;
+      if (val.length === 0 && this.nextToken?.type === 'indent') {
+        endsWithWhitespace = false;
+      } else {
+        val = ` ${val}`;
+      }
     }
 
     result += val;
     if (needsTrailingWhitespace) {
       result += ' ';
+    }
+
+    if (endsWithWhitespace && this.nextToken?.type === 'indent') {
+      result += '\n' + this.indentString.repeat(this.indentLevel + 1) + '|';
     }
 
     return result;
