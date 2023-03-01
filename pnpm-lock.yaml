@@ -2,7 +2,6 @@ lockfileVersion: 5.4
 
 specifiers:
   '@types/node': ~18.11.18
-  '@types/prettier': ~2.7.2
   '@typescript-eslint/eslint-plugin': ~5.48.2
   '@typescript-eslint/parser': ~5.48.2
   '@vitest/coverage-c8': ~0.27.3
@@ -28,7 +27,6 @@ dependencies:
 
 devDependencies:
   '@types/node': 18.11.18
-  '@types/prettier': 2.7.2
   '@typescript-eslint/eslint-plugin': 5.48.2_caon6io6stgpr7lz2rtbhekxqy
   '@typescript-eslint/parser': 5.48.2_7uibuqfxkfaozanbtbziikiqje
   '@vitest/coverage-c8': 0.27.3
@@ -538,10 +536,6 @@ packages:
 
   /@types/node/18.11.18:
     resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==}
-    dev: true
-
-  /@types/prettier/2.7.2:
-    resolution: {integrity: sha512-KufADq8uQqo1pYKVIYzfKbJfBAc0sOeXqGbFaSpv8MRmC/zXgowNZmFcbngndGk922QDmOASEXUZCaY48gs4cg==}
     dev: true
 
   /@types/semver/7.3.13:
