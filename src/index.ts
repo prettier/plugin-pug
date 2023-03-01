@@ -92,6 +92,7 @@ export const plugin: Plugin = {
   },
   printers: {
     'pug-ast': {
+      // @ts-expect-error -- Prettier allow it to be async if we don't do recursively print
       async print(
         path: AstPath,
         options: ParserOptions & PugParserOptions,
@@ -118,7 +119,7 @@ export const plugin: Plugin = {
 /** The languages that are picked up by prettier. */
 export const languages: SupportLanguage[] | undefined = plugin.languages;
 /** The parsers object that is picked up by prettier. */
-export const parsers: { [parserName: string]: Parser } | undefined =
+export const parsers =
   plugin.parsers;
 /** The printers object that is picked up by prettier. */
 export const printers: { [astFormat: string]: Printer } | undefined =
