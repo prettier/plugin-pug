@@ -1,10 +1,10 @@
 import { types } from 'node:util';
 import type { BuiltInParserName, Options, RequiredOptions } from 'prettier';
 import { format } from 'prettier';
-import type { parsers as AngularParsers } from 'prettier/plugins/angular';
-import type { parsers as BabelParsers } from 'prettier/plugins/babel';
-import type { parsers as HtmlParsers } from 'prettier/plugins/html';
-import type { parsers as PostCssParsers } from 'prettier/plugins/postcss';
+import type PrettierAngularPlugin from 'prettier/plugins/angular';
+import type PrettierBabelPlugin from 'prettier/plugins/babel';
+import type PrettierHtmlPlugin from 'prettier/plugins/html';
+import type PrettierPostcssPlugin from 'prettier/plugins/postcss';
 import type {
   AndAttributesToken,
   AttributeToken,
@@ -157,10 +157,10 @@ interface FormatDelegatePrettierOptions {
  * Supported parsers for the `formatDelegatePrettier` function.
  */
 type FormatDelegatePrettierSupportedParser = keyof Pick<
-  typeof AngularParsers &
-    typeof BabelParsers &
-    typeof HtmlParsers &
-    typeof PostCssParsers,
+  typeof PrettierAngularPlugin.parsers &
+    typeof PrettierBabelPlugin.parsers &
+    typeof PrettierHtmlPlugin.parsers &
+    typeof PrettierPostcssPlugin.parsers,
   | 'css'
   | 'vue'
   | '__vue_event_binding'
@@ -710,7 +710,7 @@ export class PugPrinter {
 
   private async formatFrameworkInterpolation(
     val: string,
-    parser: keyof Pick<typeof AngularParsers, '__ng_interpolation'>, // TODO: may be changed to allow a special parser for svelte
+    parser: keyof Pick<typeof PrettierAngularPlugin.parsers, '__ng_interpolation'>, // TODO: may be changed to allow a special parser for svelte
     [opening, closing]: ['{{', '}}'] | ['{', '}'],
   ): Promise<string> {
     val = val.slice(1, -1); // Remove quotes
