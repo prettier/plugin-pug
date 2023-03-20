@@ -7,8 +7,8 @@ import type PrettierPostcssPlugin from 'prettier/plugins/postcss';
 import type {
   AndAttributesToken,
   AttributeToken,
-  BlockcodeToken,
   BlockToken,
+  BlockcodeToken,
   CallToken,
   CaseToken,
   ClassToken,
@@ -710,7 +710,10 @@ export class PugPrinter {
 
   private async formatFrameworkInterpolation(
     val: string,
-    parser: keyof Pick<typeof PrettierAngularPlugin.parsers, '__ng_interpolation'>, // TODO: may be changed to allow a special parser for svelte
+    parser: keyof Pick<
+      typeof PrettierAngularPlugin.parsers,
+      '__ng_interpolation'
+    >, // TODO: may be changed to allow a special parser for svelte
     [opening, closing]: ['{{', '}}'] | ['{', '}'],
   ): Promise<string> {
     val = val.slice(1, -1); // Remove quotes

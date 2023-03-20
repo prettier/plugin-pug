@@ -1,8 +1,6 @@
 import type {
   AstPath,
   Doc,
-  Options,
-  Parser,
   ParserOptions,
   Plugin,
   Printer,
@@ -119,8 +117,7 @@ export const plugin: Plugin = {
 /** The languages that are picked up by prettier. */
 export const languages: SupportLanguage[] | undefined = plugin.languages;
 /** The parsers object that is picked up by prettier. */
-export const parsers =
-  plugin.parsers;
+export const parsers = plugin.parsers;
 /** The printers object that is picked up by prettier. */
 export const printers: { [astFormat: string]: Printer } | undefined =
   plugin.printers;
@@ -130,4 +127,4 @@ export const options: SupportOptions | undefined = plugin.options;
 export const defaultOptions: Partial<RequiredOptions> | undefined =
   plugin.defaultOptions;
 
-export { createLogger, ILogger, Logger, logger, LogLevel } from './logger';
+export { ILogger, LogLevel, Logger, createLogger, logger } from './logger';
