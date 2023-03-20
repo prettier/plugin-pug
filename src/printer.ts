@@ -7,8 +7,8 @@ import type { parsers as PostCssParsers } from 'prettier/parser-postcss';
 import type {
   AndAttributesToken,
   AttributeToken,
-  BlockcodeToken,
   BlockToken,
+  BlockcodeToken,
   CallToken,
   CaseToken,
   ClassToken,
