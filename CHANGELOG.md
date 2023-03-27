@@ -1,6 +1,12 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.4.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.4.2...main)
+
+# 2.4.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.4.1...2.4.2)
+
+- No changes, just an update to TypeScript v5 and therefore possibly better emitted code.
 
 # 2.4.1
 
