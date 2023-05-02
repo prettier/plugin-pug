@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { format } from 'prettier';
 import { plugin } from 'src/index';
 import { compareFiles } from 'tests/common';

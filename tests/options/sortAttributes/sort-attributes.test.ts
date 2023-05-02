@@ -3,8 +3,8 @@ import {
   compareAttributeToken,
   stableSort,
 } from 'src/options/attribute-sorting/utils';
+import { compareFiles, createAttributeToken } from 'tests/common';
 import { describe, expect, it } from 'vitest';
-import { compareFiles, createAttributeToken } from '../../common';
 
 describe('Options', () => {
   describe('sortAttributes', () => {
