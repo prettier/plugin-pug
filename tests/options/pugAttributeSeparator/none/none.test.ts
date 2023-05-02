@@ -28,7 +28,6 @@ describe('Options', () => {
       expect(() => {
         // ts-jest needs the exclamation mark, so it does not have the impression that the variables are undefined
         /* eslint-disable @typescript-eslint/no-non-null-assertion */
-        /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
         parsers!.pug!.parse(actual, parsers!, null!);
       }).toThrow('Assigning to rvalue');
     });

@@ -66,9 +66,7 @@ export const plugin: Plugin = {
         }
         const content: string = trimmedAndAlignedContent;
 
-        const tokens: Token[] =
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-          lex(content);
+        const tokens: Token[] = lex(content);
         // logger.debug('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
         // const ast: AST = parse(tokens, {});
         // logger.debug('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
