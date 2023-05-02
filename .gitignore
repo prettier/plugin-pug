@@ -69,6 +69,8 @@ dist
 .temp
 .cache
 
+.DS_Store
+
 # yarn no zero-install
 .yarn/*
 !.yarn/patches
