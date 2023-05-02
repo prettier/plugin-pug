@@ -68,6 +68,7 @@ dist
 # docs
 .temp
 .cache
+docs/.vitepress/cache
 
 .DS_Store
 

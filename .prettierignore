@@ -5,5 +5,7 @@ pnpm-lock.yaml
 benchmark/
 coverage/
 dist/
+docs/.vitepress/cache
+docs/.vitepress/dist
 tests/**/*.vue
 tests/**/*.pug
