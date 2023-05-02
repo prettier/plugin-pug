@@ -16,18 +16,17 @@ module.exports = defineConfig({
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:jsdoc/recommended',
     'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: ['./tsconfig.json'],
+    sourceType: 'module',
     warnOnUnsupportedTypeScriptVersion: false,
   },
   plugins: [
     '@typescript-eslint',
     'prettier',
-    'jsdoc',
     'spellcheck',
     'inclusive-language',
   ],
@@ -84,40 +83,6 @@ module.exports = defineConfig({
       'warn',
       { memberVariableDeclaration: true, variableDeclaration: true },
     ],
-
-    'jsdoc/match-description': [
-      'warn',
-      {
-        mainDescription:
-          '/^[A-Z`].+?(\\.|:)(\\n\\n.*((\\n{1,2}- .+)|(_.+_)|`.+`|\\n\\n---))?\\s?$/us',
-        matchDescription: '^[A-Z`].+(\\.|`.+`)$',
-        contexts: ['any'],
-        tags: {
-          param: true,
-          returns: true,
-        },
-      },
-    ],
-    'jsdoc/no-types': 'error',
-    'jsdoc/require-jsdoc': [
-      'warn',
-      {
-        contexts: [
-          'ClassDeclaration',
-          "ClassProperty:not([accessibility='private'])",
-          'ExportNamedDeclaration:has(VariableDeclaration)',
-          'FunctionExpression',
-          "MethodDefinition:not([accessibility='private']) > FunctionExpression",
-          'TSEnumDeclaration',
-          'TSInterfaceDeclaration',
-          'TSMethodSignature',
-          // 'TSPropertySignature',
-          'TSTypeAliasDeclaration',
-        ],
-      },
-    ],
-    'jsdoc/require-param-type': 'off',
-    'jsdoc/require-returns-type': 'off',
 
     'spellcheck/spell-checker': [
       'warn',
@@ -197,9 +162,52 @@ module.exports = defineConfig({
       },
     ],
   },
-  settings: {
-    jsdoc: {
-      mode: 'typescript',
+  overrides: [
+    {
+      files: ['src/**/*.ts'],
+      plugins: ['jsdoc'],
+      extends: ['plugin:jsdoc/recommended'],
+      rules: {
+        'jsdoc/match-description': [
+          'warn',
+          {
+            mainDescription:
+              '/^[A-Z`].+?(\\.|:)(\\n\\n.*((\\n{1,2}- .+)|(_.+_)|`.+`|\\n\\n---))?\\s?$/us',
+            matchDescription: '^[A-Z`].+(\\.|`.+`)$',
+            contexts: ['any'],
+            tags: {
+              param: true,
+              returns: true,
+            },
+          },
+        ],
+        'jsdoc/no-types': 'error',
+        'jsdoc/require-jsdoc': [
+          'warn',
+          {
+            contexts: [
+              'ClassDeclaration',
+              "ClassProperty:not([accessibility='private'])",
+              'ExportNamedDeclaration:has(VariableDeclaration)',
+              'FunctionExpression',
+              "MethodDefinition:not([accessibility='private']) > FunctionExpression",
+              'TSEnumDeclaration',
+              'TSInterfaceDeclaration',
+              'TSMethodSignature',
+              // 'TSPropertySignature',
+              'TSTypeAliasDeclaration',
+            ],
+          },
+        ],
+        'jsdoc/require-param-type': 'off',
+        'jsdoc/require-returns-type': 'off',
+        'jsdoc/tag-lines': 'off',
+      },
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
     },
-  },
+  ],
 });
