@@ -84,8 +84,8 @@
   },
   "packageManager": "pnpm@8.2.0",
   "engines": {
-    "node": "^14.17.0 || ^16.13.0 || >=18.0.0",
-    "npm": ">=6.14.13"
+    "node": "^16.13.0 || >=18.0.0",
+    "npm": ">=7.10.0"
   },
   "pnpm": {
     "peerDependencyRules": {
