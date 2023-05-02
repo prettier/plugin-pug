@@ -1,18 +1,11 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "target": "ES2020",
-    "module": "CommonJS",
+    "noEmit": false,
     "inlineSourceMap": true,
-    "lib": ["ES2020", "DOM"],
-    "outDir": "dist",
-    "moduleResolution": "Node",
     "rootDir": "src",
-    "strict": true,
-    "noImplicitOverride": true,
-    "noUncheckedIndexedAccess": true,
-    "removeComments": true,
-    "esModuleInterop": true
+    "outDir": "dist"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }

@@ -2,13 +2,17 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
-    "lib": ["ES2020", "DOM"],
-    "moduleResolution": "Node",
-    "rootDir": ".",
+    "moduleResolution": "node",
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "declaration": true,
+    "stripInternal": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "removeComments": true,
+    "rootDir": ".",
     "baseUrl": "./"
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }
