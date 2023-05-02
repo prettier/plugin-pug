@@ -11,17 +11,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node_version: [14, 16, 18]
-        include:
-          - os: macos-latest
-            node_version: 16
-          - os: macos-latest
-            node_version: 18
-          - os: windows-latest
-            node_version: 16
-          - os: windows-latest
-            node_version: 18
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node_version: [16, 18, 20]
       fail-fast: false
 
     name: 'Build&Test: node-${{ matrix.node_version }}, ${{ matrix.os }}'
@@ -35,14 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install pnpm (node 14, pnpm 7)
-        if: matrix.node_version == 14
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7
-
       - name: Install pnpm
-        if: matrix.node_version != 14
         uses: pnpm/action-setup@v2
 
       - name: Set node version to ${{ matrix.node_version }}
@@ -79,8 +63,6 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
-        with:
-          version: 7
 
       - name: Set node version to 18
         uses: actions/setup-node@v3
@@ -108,8 +90,6 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
-        with:
-          version: 7
 
       - name: Set node version to 18
         uses: actions/setup-node@v3
