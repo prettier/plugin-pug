@@ -1564,6 +1564,7 @@ export class PugPrinter {
       this.checkTokenType(this.previousToken, [
         'tag',
         'id',
+        'class',
         'interpolation',
         'call',
         '&attributes',
