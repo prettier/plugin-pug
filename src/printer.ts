@@ -1369,7 +1369,10 @@ export class PugPrinter {
         { result: this.result, val, length: val.length },
         this.currentLineLength,
       );
-      if (this.nextToken?.type === 'text') {
+      if (
+        this.nextToken?.type === 'text' &&
+        !/^\s+$/.test(this.nextToken.val)
+      ) {
         this.currentLineLength += 1;
         this.result += ' ';
       }
@@ -1487,7 +1490,8 @@ export class PugPrinter {
     let val: string = token.val;
     let needsTrailingWhitespace: boolean = false;
 
-    let endsWithWhitespace: boolean = val[val.length - 1] === ' ';
+    let endsWithWhitespace: boolean =
+      val[val.length - 1] === ' ' && !/^\s+$/.test(val);
 
     if (this.pipelessText) {
       switch (this.previousToken?.type) {
