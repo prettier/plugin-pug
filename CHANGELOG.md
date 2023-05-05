@@ -1,6 +1,21 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.4.2...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.5.0...main)
+
+# 2.5.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.4.2...2.5.0)
+
+## BREAKING CHANGES
+
+- **Dropped support for node v14** ([#441])
+
+## Other changes
+
+- Fix trailing whitespace after class ([#442])
+
+[#441]: https://github.com/prettier/plugin-pug/pull/441
+[#442]: https://github.com/prettier/plugin-pug/pull/442
 
 # 2.4.2
 
