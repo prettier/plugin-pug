@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.5.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.5.1...main)
+
+# 2.5.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.5.0...2.5.1)
+
+- Fix whitespace in interpolations ([#447])
+
+[#447]: https://github.com/prettier/plugin-pug/issues/447
 
 # 2.5.0
 
