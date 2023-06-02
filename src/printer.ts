@@ -1553,8 +1553,10 @@ export class PugPrinter {
           break;
         case 'interpolated-code':
         case 'end-pug-interpolation':
-          if (/^ .+$/.test(val)) {
+          if (/^ .+$/.test(val) || val === ' ') {
             result += ' ';
+          } else if (/^.+ $/.test(val)) {
+            needsTrailingWhitespace = true;
           }
           break;
       }
