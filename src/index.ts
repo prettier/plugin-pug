@@ -1,7 +1,6 @@
 import type {
   AstPath,
   Doc,
-  Options,
   Parser,
   ParserOptions,
   Plugin,
@@ -107,12 +106,7 @@ export const plugin: Plugin = {
         logger.debug('[printers:pug-ast:print]:', result);
         return result;
       },
-      embed(
-        path: AstPath,
-        print: (path: AstPath) => Doc,
-        textToDoc: (text: string, options: Options) => Doc,
-        options: ParserOptions,
-      ): Doc | null {
+      embed(path: AstPath): Doc | null {
         // logger.debug('[printers:pug-ast:embed]:', JSON.stringify(path, undefined, 2));
         return null;
       },
