@@ -21,8 +21,8 @@ export function convergeOptions(
     tabWidth: options.tabWidth,
     pugTabWidth:
       options.pugTabWidth !== -1 ? options.pugTabWidth : options.tabWidth,
-    useTabs: options.useTabs,
-    pugUseTabs: options.pugUseTabs ?? options.useTabs,
+    useTabs: options.useTabs ?? false,
+    pugUseTabs: options.pugUseTabs ?? options.useTabs ?? false,
     bracketSpacing: options.bracketSpacing,
     pugBracketSpacing: options.pugBracketSpacing ?? options.bracketSpacing,
     arrowParens: options.arrowParens,
