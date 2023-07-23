@@ -82,7 +82,7 @@
   "peerDependencies": {
     "prettier": "^2.3.0"
   },
-  "packageManager": "pnpm@8.6.0",
+  "packageManager": "pnpm@8.6.9",
   "engines": {
     "node": "^16.13.0 || >=18.0.0",
     "npm": ">=7.10.0"
