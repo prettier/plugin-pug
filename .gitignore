@@ -37,6 +37,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+.pnpm-store/
 
 # TypeScript v1 declaration files
 typings/
@@ -120,4 +121,3 @@ tests/pug-tests/text.pug
 # benchmarking
 benchmark/
 processed-*.txt
-
