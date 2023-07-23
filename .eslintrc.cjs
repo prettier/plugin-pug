@@ -5,7 +5,7 @@ const { readGitignoreFiles } = require('eslint-gitignore');
 module.exports = defineConfig({
   ignorePatterns: [
     ...readGitignoreFiles(),
-    '.eslintrc.js', // Skip self linting
+    '.eslintrc.cjs', // Skip self linting
   ],
   root: true,
   env: {
