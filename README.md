@@ -125,6 +125,8 @@ To run `@prettier/plugin-pug` locally:
 This project was inspired by https://github.com/gicentre/prettier-plugin-elm.  
 Many thanks also to [@j-f1](https://github.com/j-f1), [@lipis](https://github.com/lipis) and [@azz](https://github.com/azz) for the help in transferring this repository to the prettier organization.
 
+Thanks to [@fisker](https://github.com/fisker) for the constant help and support in terms of Prettier Core support.
+
 Thanks to [@Peilonrayz](https://github.com/Peilonrayz), who gave me the [idea](https://codereview.stackexchange.com/a/236031/128216) to rewrite the printer into a [class](https://github.com/prettier/plugin-pug/commit/a6e3a4b776ce67f0d5d763aaf1f88c0c860c6ed3) and thus make the code a lot more maintainable.
 
 Thanks to [@lehni](https://github.com/lehni), [@SkyaTura](https://github.com/SkyaTura) and [@shadowgate15](https://github.com/shadowgate15) for the massive contribution and the introduction of many new features into the project.
