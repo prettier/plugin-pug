@@ -1,6 +1,15 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.5.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/2.5.2...main)
+
+# 2.5.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.5.1...2.5.2)
+
+This version does not contain any changes to the plugin itself, but only internal changes to the docs, build and CI.
+
+This might be the last version that supports Prettier v2 as well as CJS.  
+The next version will probably the v3 release and will only support Prettier v3 and ESM.
 
 # 2.5.1
 
