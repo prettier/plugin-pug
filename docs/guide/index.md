@@ -4,27 +4,49 @@
 
 Simply install `prettier` and `@prettier/plugin-pug` as your project’s npm `devDependencies`:
 
-```bash
+::: code-group
+
+```shell [npm]
 npm add --save-dev prettier @prettier/plugin-pug
-yarn add --dev prettier @prettier/plugin-pug
+```
+
+```shell [pnpm]
 pnpm add --save-dev prettier @prettier/plugin-pug
 ```
+
+```shell [yarn]
+yarn add --dev prettier @prettier/plugin-pug
+```
+
+:::
 
 ## Usage
 
 Format all pug files in your project:
 
-```bash
+::: code-group
+
+```shell [npm]
 npx prettier --write "**/*.pug"
-yarn prettier --write "**/*.pug"
+```
+
+```shell [pnpm]
 pnpm prettier --write "**/*.pug"
 ```
+
+```shell [yarn]
+yarn prettier --write "**/*.pug"
+```
+
+:::
 
 ### Selectively ignoring automatic formatting
 
 You can disable code formatting for a particular element by adding `//- prettier-ignore` comments in your pug templates:
 
-```pug
+::: code-group
+
+```pug [Input]
 div.text( color =   "primary",  disabled  ="true"  )
 //- prettier-ignore
 div.text( color =   "primary",  disabled  ="true"  )
@@ -33,9 +55,7 @@ div
   div.text( color =   "primary",  disabled  ="true"  )
 ```
 
-Prettified output:
-
-```pug
+```pug [Output]
 .text(color="primary", disabled)
 //- prettier-ignore
 div.text( color =   "primary",  disabled  ="true"  )
@@ -43,6 +63,8 @@ div.text( color =   "primary",  disabled  ="true"  )
 div
   div.text( color =   "primary",  disabled  ="true"  )
 ```
+
+:::
 
 You can also disable code formatting in Markdown for a particular ` ```pug ` block by adding`<!-- prettier-ignore -->` before the block:
 
