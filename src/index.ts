@@ -1,7 +1,6 @@
 import type {
   AstPath,
   Doc,
-  Options,
   Parser,
   ParserOptions,
   Plugin,
@@ -117,7 +116,7 @@ export const plugin: Plugin = {
 /** The languages that are picked up by prettier. */
 export const languages: SupportLanguage[] | undefined = plugin.languages;
 /** The parsers object that is picked up by prettier. */
-export const parsers =
+export const parsers: { [parserName: string]: Parser } | undefined =
   plugin.parsers;
 /** The printers object that is picked up by prettier. */
 export const printers: { [astFormat: string]: Printer } | undefined =

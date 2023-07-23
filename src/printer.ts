@@ -518,6 +518,7 @@ export class PugPrinter {
               typeof error === 'object' &&
               typeof (error as Error | undefined)?.message === 'string'
             ) {
+              // eslint-disable-next-line no-ex-assign
               error = (error as Error).message;
             }
             if (typeof error === 'string') {
@@ -710,7 +711,10 @@ export class PugPrinter {
 
   private async formatFrameworkInterpolation(
     val: string,
-    parser: keyof Pick<typeof PrettierAngularPlugin.parsers, '__ng_interpolation'>, // TODO: may be changed to allow a special parser for svelte
+    parser: keyof Pick<
+      typeof PrettierAngularPlugin.parsers,
+      '__ng_interpolation'
+    >, // TODO: may be changed to allow a special parser for svelte
     [opening, closing]: ['{{', '}}'] | ['{', '}'],
   ): Promise<string> {
     val = val.slice(1, -1); // Remove quotes
