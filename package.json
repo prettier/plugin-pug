@@ -1,6 +1,6 @@
 {
   "name": "@prettier/plugin-pug",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Prettier Pug Plugin",
   "main": "dist/index.js",
   "scripts": {
