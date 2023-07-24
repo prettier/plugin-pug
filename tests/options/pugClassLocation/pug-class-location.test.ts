@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('pugClassLocation', () => {
-    it('should position class literals before attributes', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should position class literals before attributes', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         target: 'formatted-before.pug',
         formatOptions: {
           pugClassLocation: 'before-attributes',
@@ -13,8 +13,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should position class literals after attributes', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should position class literals after attributes', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         target: 'formatted-after.pug',
         formatOptions: {
           pugClassLocation: 'after-attributes',

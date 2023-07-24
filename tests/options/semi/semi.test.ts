@@ -1,4 +1,3 @@
-import { join } from 'node:path';
 import type { CompareFilesOptions } from 'tests/common';
 import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
@@ -11,13 +10,14 @@ describe('semi handling', () => {
     ['none', 'none'],
   ] as const)(
     'should format script tags with %s inline code to %s',
-    (from, to) => {
-      const fixturesPath: string = join(__dirname, `${from}-${to}`);
+    async (from, to) => {
       const options: CompareFilesOptions = {
+        source: `${from}-${to}/unformatted.pug`,
+        target: `${from}-${to}/formatted.pug`,
         formatOptions: { semi: to === 'semi' },
       };
 
-      const { expected, actual } = compareFiles(fixturesPath, options);
+      const { expected, actual } = await compareFiles(import.meta.url, options);
 
       expect(actual).toBe(expected);
     },

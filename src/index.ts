@@ -1,7 +1,4 @@
 import type {
-  AstPath,
-  Doc,
-  Options,
   Parser,
   ParserOptions,
   Plugin,
@@ -26,7 +23,7 @@ interface AstPathStackEntry {
 }
 
 /** The plugin object that is picked up by prettier. */
-export const plugin: Plugin = {
+export const plugin: Plugin<AstPathStackEntry> = {
   languages: [
     {
       name: 'Pug',
@@ -43,11 +40,7 @@ export const plugin: Plugin = {
   /* eslint-disable jsdoc/require-jsdoc */
   parsers: {
     pug: {
-      parse(
-        text: string,
-        parsers: { [parserName: string]: Parser },
-        options: ParserOptions,
-      ): AstPathStackEntry {
+      parse(text, options) {
         logger.debug('[parsers:pug:parse]:', { text });
 
         let trimmedAndAlignedContent: string = text.replace(/^\s*\n/, '');
@@ -72,21 +65,26 @@ export const plugin: Plugin = {
         // logger.debug('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
         return { content, tokens };
       },
+
       astFormat: 'pug-ast',
-      hasPragma(text: string): boolean {
+
+      hasPragma(text) {
         return (
           text.startsWith('//- @prettier\n') || text.startsWith('//- @format\n')
         );
       },
-      locStart(node: unknown): number {
+
+      locStart(node) {
         logger.debug('[parsers:pug:locStart]:', { node });
         return 0;
       },
-      locEnd(node: unknown): number {
+
+      locEnd(node) {
         logger.debug('[parsers:pug:locEnd]:', { node });
         return 0;
       },
-      preprocess(text: string, options: ParserOptions): string {
+
+      preprocess(text, options) {
         logger.debug('[parsers:pug:preprocess]:', { text });
         return text;
       },
@@ -94,28 +92,17 @@ export const plugin: Plugin = {
   },
   printers: {
     'pug-ast': {
-      print(
-        path: AstPath,
-        options: ParserOptions & PugParserOptions,
-        print: (path: AstPath) => Doc,
-      ): Doc {
-        const entry: AstPathStackEntry = path.stack[0];
+      // @ts-expect-error: Prettier allow it to be async if we don't do recursively print
+      async print(path, options: ParserOptions & PugParserOptions) {
+        const entry: AstPathStackEntry = path.stack[0]!;
         const { content, tokens } = entry;
         const pugOptions: PugPrinterOptions = convergeOptions(options);
         const printer: PugPrinter = new PugPrinter(content, tokens, pugOptions);
-        const result: string = printer.build();
+        const result: string = await printer.build();
         logger.debug('[printers:pug-ast:print]:', result);
         return result;
       },
-      embed(
-        path: AstPath,
-        print: (path: AstPath) => Doc,
-        textToDoc: (text: string, options: Options) => Doc,
-        options: ParserOptions,
-      ): Doc | null {
-        // logger.debug('[printers:pug-ast:embed]:', JSON.stringify(path, undefined, 2));
-        return null;
-      },
+
       insertPragma(text: string): string {
         return `//- @prettier\n${text}`;
       },

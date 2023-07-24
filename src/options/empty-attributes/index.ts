@@ -5,7 +5,7 @@ import type { PugEmptyAttributes } from './types';
 /** Pug empty attributes option. */
 export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption<PugEmptyAttributes> =
   {
-    since: '1.10.0',
+    // since: '1.10.0',
     category: CATEGORY_PUG,
     type: 'choice',
     default: 'as-is',
@@ -31,7 +31,7 @@ export const PUG_EMPTY_ATTRIBUTES_OPTION: ChoiceSupportOption<PugEmptyAttributes
 /** Pug empty attributes force quotes option. */
 export const PUG_EMPTY_ATTRIBUTES_FORCE_QUOTES_OPTION: PathArraySupportOption =
   {
-    since: '1.10.0',
+    // since: '1.10.0',
     category: CATEGORY_PUG,
     type: 'path',
     default: [{ value: [] }],

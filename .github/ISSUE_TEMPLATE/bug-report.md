@@ -10,8 +10,8 @@ assignees: ''
 
 | Tool      | Version                 |
 | --------- | ----------------------- |
-| Plugin    | v2.x.x                  |
-| Prettier  | v2.x.x                  |
+| Plugin    | v3.x.x                  |
+| Prettier  | v3.x.x                  |
 | Framework | none,vue,angular,svelte |
 | Node      | vx.x.x                  |
 | OS        | win,linux,mac           |

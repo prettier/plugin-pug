@@ -2,8 +2,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
-  it('should escape quotes correctly in angular', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should escape quotes correctly in angular', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
       formatOptions: {
         pugFramework: 'angular',
         printWidth: 120,

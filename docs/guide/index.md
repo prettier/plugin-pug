@@ -95,8 +95,7 @@ You can write your `.prettierrc.cjs` like this to get fully type check support w
  * @type {import('prettier').Options}
  */
 module.exports = {
-  // `require.resolve` is needed for e.g. `pnpm`
-  plugins: [require.resolve('@prettier/plugin-pug')],
+  plugins: ['@prettier/plugin-pug'],
 
   printWidth: 120,
   singleQuote: true,

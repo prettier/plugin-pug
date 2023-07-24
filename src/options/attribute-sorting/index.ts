@@ -2,7 +2,7 @@ import type { ChoiceSupportOption, PathArraySupportOption } from 'prettier';
 import { CATEGORY_PUG } from '../constants';
 
 const pugSortAttributesOption: PathArraySupportOption = {
-  since: '1.7.0',
+  // since: '1.7.0',
   category: CATEGORY_PUG,
   type: 'path',
   array: true,
@@ -27,7 +27,7 @@ export const PUG_SORT_ATTRIBUTES_END_OPTION: PathArraySupportOption = {
 /** Pug sort attributes option. */
 export const PUG_SORT_ATTRIBUTES_OPTION: ChoiceSupportOption<PugSortAttributes> =
   {
-    since: '1.8.0',
+    // since: '1.8.0',
     category: CATEGORY_PUG,
     type: 'choice',
     default: 'as-is',

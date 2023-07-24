@@ -2,8 +2,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
-  it('should not log error', () => {
-    const { expected, actual } = compareFiles(__dirname, {
+  it('should not log error', async () => {
+    const { expected, actual } = await compareFiles(import.meta.url, {
       formatOptions: {
         semi: false,
         singleQuote: true,

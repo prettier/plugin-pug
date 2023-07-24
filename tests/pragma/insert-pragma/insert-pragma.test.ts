@@ -4,8 +4,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Pragma', () => {
-  it('should insert pragma if option is set', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should insert pragma if option is set', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
       source: 'no-pragma.pug',
       target: 'with-pragma.pug',
       formatOptions: {
@@ -16,8 +16,8 @@ describe('Pragma', () => {
     expect(actual).toBe(expected);
   });
 
-  it('should not insert multiple pragma if option is set', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should not insert multiple pragma if option is set', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
       source: 'no-pragma.pug',
       target: 'with-pragma.pug',
       formatOptions: {
@@ -25,7 +25,7 @@ describe('Pragma', () => {
         bracketSpacing: false,
       },
     });
-    const actualSecondRun: string = format(actual, {
+    const actualSecondRun: string = await format(actual, {
       parser: 'pug',
       plugins: [plugin],
 
@@ -35,8 +35,8 @@ describe('Pragma', () => {
     expect(actualSecondRun).toBe(expected);
   });
 
-  it('should not insert pragma if option is not set', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should not insert pragma if option is not set', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
       source: 'no-pragma.pug',
       target: 'no-pragma.pug',
       formatOptions: {

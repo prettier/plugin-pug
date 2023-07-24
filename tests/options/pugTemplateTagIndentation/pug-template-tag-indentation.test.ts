@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('pugSingleFileComponentIndentation', () => {
-    it('should indent', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should indent', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'not-indented.vue',
         target: 'indented.vue',
         formatOptions: {
@@ -16,8 +16,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not indent', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not indent', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'indented.vue',
         target: 'not-indented.vue',
         formatOptions: {
@@ -29,8 +29,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not indent by default', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not indent by default', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'indented.vue',
         target: 'not-indented.vue',
         formatOptions: {
@@ -40,8 +40,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not affect markdown', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not affect markdown', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'not-indented.md',
         target: 'not-indented.md',
         formatOptions: {
@@ -53,8 +53,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not change two-div-not-indented-flat', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not change two-div-not-indented-flat', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'two-div-not-indented-flat.vue',
         target: 'two-div-not-indented-flat.vue',
         formatOptions: {
@@ -64,8 +64,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not change two-div-not-indented-tree', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not change two-div-not-indented-tree', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'two-div-not-indented-tree.vue',
         target: 'two-div-not-indented-tree.vue',
         formatOptions: {
@@ -75,8 +75,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not change two-div-indented-flat', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not change two-div-indented-flat', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'two-div-indented-flat.vue',
         target: 'two-div-indented-flat.vue',
         formatOptions: {
@@ -88,8 +88,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not change two-div-indented-tree', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not change two-div-indented-tree', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'two-div-indented-tree.vue',
         target: 'two-div-indented-tree.vue',
         formatOptions: {
@@ -101,8 +101,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should indent two-div-not-indented-flat', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should indent two-div-not-indented-flat', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'two-div-not-indented-flat.vue',
         target: 'two-div-indented-flat.vue',
         formatOptions: {
@@ -114,8 +114,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should indent two-div-not-indented-tree', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should indent two-div-not-indented-tree', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'two-div-not-indented-tree.vue',
         target: 'two-div-indented-tree.vue',
         formatOptions: {
@@ -127,8 +127,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not indent two-div-indented-flat', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not indent two-div-indented-flat', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'two-div-indented-flat.vue',
         target: 'two-div-not-indented-flat.vue',
         formatOptions: {
@@ -138,8 +138,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not indent two-div-indented-tree', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not indent two-div-indented-tree', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'two-div-indented-tree.vue',
         target: 'two-div-not-indented-tree.vue',
         formatOptions: {

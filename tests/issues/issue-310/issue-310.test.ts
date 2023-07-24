@@ -2,8 +2,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
-  it('should format v-t directive from vue-i18n', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should format v-t directive from vue-i18n', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
       formatOptions: {
         pugFramework: 'vue',
       },
