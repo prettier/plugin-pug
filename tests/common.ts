@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { URL, fileURLToPath } from 'node:url';
 import type { Options } from 'prettier';
 import { format } from 'prettier';
 import type { AttributeToken } from 'pug-lexer';
@@ -75,26 +76,28 @@ export interface CompareFilesResult {
 /**
  * Compare two files with each other and returns the result to be passed in expect calls.
  *
- * @param dirname Pass `__dirname`, so the function can relative resolve the files.
+ * @param metaUrl Pass `import.meta.url`, so the function can relative resolve the files.
  * @param param1 Compare options.
  * @param param1.source The source file. Default `'unformatted.pug'`.
  * @param param1.target The target file. Default `'formatted.pug'`. Pass `null` to explicitly only check the given source.
  * @param param1.formatOptions Further format options. Default `{ parser: 'pug', plugins: [plugin] }`. You can also override the parser and plugins key.
  * @returns The result to be passed in expect calls.
  */
-export function compareFiles(
-  dirname: string,
+export async function compareFiles(
+  metaUrl: string,
   {
     source = 'unformatted.pug',
     target = 'formatted.pug',
     formatOptions = {},
   }: CompareFilesOptions = {},
-): CompareFilesResult {
+): Promise<CompareFilesResult> {
+  const dirname: string = fileURLToPath(new URL('.', metaUrl));
+
   const expected: string | null = target
     ? readFileSync(resolve(dirname, target), 'utf8')
     : null;
   const code: string = readFileSync(resolve(dirname, source), 'utf8');
-  const actual: string = format(code, {
+  const actual: string = await format(code, {
     parser: 'pug',
     plugins: [plugin],
     ...formatOptions,

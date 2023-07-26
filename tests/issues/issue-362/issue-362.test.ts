@@ -2,8 +2,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
-  it('should handle nested quotes in properties', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should handle nested quotes in properties', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
       formatOptions: {
         singleQuote: false,
         pugSingleQuote: false,
@@ -13,8 +13,8 @@ describe('Issues', () => {
     expect(actual).toBe(expected);
   });
 
-  it('should handle nested quotes in properties in vue files', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should handle nested quotes in properties in vue files', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
       source: 'unformatted.vue',
       target: 'formatted.vue',
       formatOptions: {

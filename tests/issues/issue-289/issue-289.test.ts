@@ -2,13 +2,13 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
-  it('should handle vue slot shorthand syntax', () => {
-    const { expected, actual } = compareFiles(__dirname);
+  it('should handle vue slot shorthand syntax', async () => {
+    const { expected, actual } = await compareFiles(import.meta.url);
     expect(actual).toBe(expected);
   });
 
-  it('should handle vue slot shorthand syntax in vue file', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should handle vue slot shorthand syntax in vue file', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
       source: 'unformatted.vue',
       target: 'formatted.vue',
       formatOptions: {

@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('bracketSameLine', () => {
-    it('should handle bracketSameLine:true', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should handle bracketSameLine:true', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         target: 'same-line.pug',
         formatOptions: {
           bracketSameLine: true,
@@ -13,8 +13,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should handle pugBracketSameLine:true', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should handle pugBracketSameLine:true', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         target: 'same-line.pug',
         formatOptions: {
           pugBracketSameLine: true,
@@ -23,8 +23,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should handle bracketSameLine:false', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should handle bracketSameLine:false', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         target: 'new-line.pug',
         formatOptions: {
           bracketSameLine: false,
@@ -33,8 +33,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should handle pugBracketSameLine:false', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should handle pugBracketSameLine:false', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         target: 'new-line.pug',
         formatOptions: {
           pugBracketSameLine: false,
@@ -43,8 +43,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should handle default', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should handle default', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         target: 'new-line.pug',
       });
       expect(actual).toBe(expected);

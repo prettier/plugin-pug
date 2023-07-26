@@ -2,8 +2,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
-  it('should sort more stabilized', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should sort more stabilized', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
       formatOptions: {
         pugSortAttributesBeginning: [
           '^v-else$',

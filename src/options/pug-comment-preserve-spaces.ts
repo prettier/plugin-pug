@@ -4,7 +4,7 @@ import { CATEGORY_PUG } from './constants';
 /** Pug comment preserve spaces option. */
 export const PUG_COMMENT_PRESERVE_SPACES_OPTION: ChoiceSupportOption<PugCommentPreserveSpaces> =
   {
-    since: '1.6.0',
+    // since: '1.6.0',
     category: CATEGORY_PUG,
     type: 'choice',
     default: 'keep-all',

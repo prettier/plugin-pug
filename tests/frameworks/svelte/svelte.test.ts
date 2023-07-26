@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Frameworks', () => {
   describe('Svelte', () => {
-    it('should format svelte', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should format svelte', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         formatOptions: { pugFramework: 'svelte' },
       });
 

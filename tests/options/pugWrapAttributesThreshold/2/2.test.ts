@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('pugWrapAttributesThreshold', () => {
-    it('should not allow more than two attributes as one-liner', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not allow more than two attributes as one-liner', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         formatOptions: { pugWrapAttributesThreshold: 2 },
       });
 

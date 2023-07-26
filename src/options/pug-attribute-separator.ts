@@ -4,7 +4,7 @@ import { CATEGORY_PUG } from './constants';
 /** Pug attribute separator option. */
 export const PUG_ATTRIBUTE_SEPARATOR_OPTION: ChoiceSupportOption<PugAttributeSeparator> =
   {
-    since: '1.6.0',
+    // since: '1.6.0',
     category: CATEGORY_PUG,
     type: 'choice',
     default: 'always',

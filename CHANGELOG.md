@@ -1,6 +1,18 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/2.5.2...main)
+[diff](https://github.com/prettier/plugin-pug/compare/3.0.0...main)
+
+# 3.0.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/2.5.2...3.0.0)
+
+## BREAKING CHANGES
+
+**Dropped support for Prettier v2 and CJS** ([#458])
+
+If you are using Prettier v2 / CJS, you need to stay on `2.5.2`.
+
+[#458]: https://github.com/prettier/plugin-pug/pull/458
 
 # 2.5.2
 

@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('pugAttributeSeparator', () => {
-    it('should always insert commas between attributes', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should always insert commas between attributes', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         formatOptions: {
           // The `.length-test` elements are tested against a `printWidth` of 80 (currently also the default):
           printWidth: 80,
@@ -15,8 +15,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should always insert commas between attributes by default', () => {
-      const { actual, expected } = compareFiles(__dirname);
+    it('should always insert commas between attributes by default', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url);
       expect(actual).toBe(expected);
     });
   });

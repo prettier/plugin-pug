@@ -8,14 +8,14 @@ body:
     id: plugin-version
     attributes:
       label: Plugin Version
-      placeholder: v2.x.x
+      placeholder: v3.x.x
     validations:
       required: true
   - type: input
     id: prettier-version
     attributes:
       label: Prettier Version
-      placeholder: v2.x.x
+      placeholder: v3.x.x
     validations:
       required: true
   - type: checkboxes

@@ -3,7 +3,7 @@ import { CATEGORY_PUG } from './constants';
 
 /** Wrap attributes threshold. */
 export const PUG_WRAP_ATTRIBUTES_THRESHOLD: IntSupportOption = {
-  since: '1.8.0',
+  // since: '1.8.0',
   category: CATEGORY_PUG,
   type: 'int',
   default: -1,
@@ -14,7 +14,7 @@ export const PUG_WRAP_ATTRIBUTES_THRESHOLD: IntSupportOption = {
 
 /** Wrap attributes pattern. */
 export const PUG_WRAP_ATTRIBUTES_PATTERN: PathSupportOption = {
-  since: '1.8.0',
+  // since: '1.8.0',
   category: CATEGORY_PUG,
   type: 'path',
   default: '',

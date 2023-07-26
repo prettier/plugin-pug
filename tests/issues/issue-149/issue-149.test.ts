@@ -2,8 +2,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
-  it('should not break attribute wrapping in interpolated tags', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should not break attribute wrapping in interpolated tags', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
       formatOptions: {
         arrowParens: 'avoid',
         bracketSpacing: true,

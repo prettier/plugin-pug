@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('pugPreserveAttributeBrackets', () => {
-    it('should preserve attribute brackets', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should preserve attribute brackets', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'unformatted.pug',
         target: 'formatted-true.pug',
         formatOptions: {
@@ -14,8 +14,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not preserve attribute brackets', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not preserve attribute brackets', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'unformatted.pug',
         target: 'formatted-false.pug',
         formatOptions: {
@@ -25,8 +25,8 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not preserve attribute brackets by default', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should not preserve attribute brackets by default', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'unformatted.pug',
         target: 'formatted-false.pug',
       });

@@ -2,8 +2,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Issues', () => {
-  it('should prefer pug aliased option', () => {
-    const { actual, expected } = compareFiles(__dirname, {
+  it('should prefer pug aliased option', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
       source: 'unformatted.vue',
       target: 'formatted.vue',
       formatOptions: {

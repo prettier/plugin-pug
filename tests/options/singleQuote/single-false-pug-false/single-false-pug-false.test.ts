@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
   describe('singleQuote', () => {
-    it('should handle singleQuote:false + pugSingleQuote:false', () => {
-      const { actual, expected } = compareFiles(__dirname, {
+    it('should handle singleQuote:false + pugSingleQuote:false', async () => {
+      const { actual, expected } = await compareFiles(import.meta.url, {
         formatOptions: {
           singleQuote: false,
           pugSingleQuote: false,

@@ -3,7 +3,7 @@ import { CATEGORY_PUG } from './constants';
 
 /** Pug print width option. */
 export const PUG_PRINT_WIDTH_OPTION: IntSupportOption = {
-  since: '1.6.0',
+  // since: '1.6.0',
   category: CATEGORY_PUG,
   type: 'int',
   default: -1,
@@ -15,7 +15,7 @@ export const PUG_PRINT_WIDTH_OPTION: IntSupportOption = {
 export const PUG_SINGLE_QUOTE_OPTION: ChoiceSupportOption<
   boolean | 'true' | null
 > = {
-  since: '1.6.0',
+  // since: '1.6.0',
   category: CATEGORY_PUG,
   type: 'choice',
   default: null,
@@ -43,7 +43,7 @@ export const PUG_SINGLE_QUOTE_OPTION: ChoiceSupportOption<
 
 /** Pug tab width option. */
 export const PUG_TAB_WIDTH_OPTION: IntSupportOption = {
-  since: '1.6.0',
+  // since: '1.6.0',
   category: CATEGORY_PUG,
   type: 'int',
   default: -1,
@@ -54,7 +54,7 @@ export const PUG_TAB_WIDTH_OPTION: IntSupportOption = {
 /** Pug use tabs option. */
 export const PUG_USE_TABS_OPTION: ChoiceSupportOption<boolean | 'true' | null> =
   {
-    since: '1.6.0',
+    // since: '1.6.0',
     category: CATEGORY_PUG,
     type: 'choice',
     default: null,
@@ -84,7 +84,7 @@ export const PUG_USE_TABS_OPTION: ChoiceSupportOption<boolean | 'true' | null> =
 export const PUG_BRACKET_SPACING_OPTION: ChoiceSupportOption<
   boolean | 'true' | null
 > = {
-  since: '1.6.0',
+  // since: '1.6.0',
   category: CATEGORY_PUG,
   type: 'choice',
   default: null,
@@ -112,7 +112,7 @@ export const PUG_BRACKET_SPACING_OPTION: ChoiceSupportOption<
 
 /** Pug semi option. */
 export const PUG_SEMI_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
-  since: '1.6.0',
+  // since: '1.6.0',
   category: CATEGORY_PUG,
   type: 'choice',
   default: null,
@@ -142,7 +142,7 @@ export const PUG_SEMI_OPTION: ChoiceSupportOption<boolean | 'true' | null> = {
 /** Pug arrow parens option. */
 export const PUG_ARROW_PARENS_OPTION: ChoiceSupportOption<ArrowParens | null> =
   {
-    since: '1.7.0',
+    // since: '1.7.0',
     category: CATEGORY_PUG,
     type: 'choice',
     default: null,
@@ -170,7 +170,7 @@ export type ArrowParens = 'avoid' | 'always';
 export const PUG_BRACKET_SAME_LINE_OPTION: ChoiceSupportOption<
   boolean | 'true' | null
 > = {
-  since: '1.17.0',
+  // since: '1.17.0',
   category: CATEGORY_PUG,
   type: 'choice',
   default: null,
