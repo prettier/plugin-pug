@@ -63,11 +63,11 @@ pnpm add --save-dev prettier @prettier/plugin-pug
 ## Usage
 
 ```bash
-npx prettier --write "**/*.pug"
+npx prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 # or
-yarn prettier --write "**/*.pug"
+yarn prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 # or
-pnpm prettier --write "**/*.pug"
+pnpm prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 ```
 
 ## Configuration
