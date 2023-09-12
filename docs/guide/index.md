@@ -27,15 +27,15 @@ Format all pug files in your project:
 ::: code-group
 
 ```shell [npm]
-npx prettier --write "**/*.pug"
+npx prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 ```
 
 ```shell [pnpm]
-pnpm prettier --write "**/*.pug"
+pnpm prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 ```
 
 ```shell [yarn]
-yarn prettier --write "**/*.pug"
+yarn prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 ```
 
 :::
