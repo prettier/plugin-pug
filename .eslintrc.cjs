@@ -18,6 +18,7 @@ module.exports = defineConfig({
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:prettier/recommended',
+    'plugin:unicorn/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -30,6 +31,7 @@ module.exports = defineConfig({
     'prettier',
     'spellcheck',
     'inclusive-language',
+    'unicorn',
   ],
   rules: {
     curly: ['error'],
@@ -44,6 +46,11 @@ module.exports = defineConfig({
     ],
     quotes: ['error', 'single', { avoidEscape: true }],
     semi: ['error', 'always'],
+
+    'unicorn/consistent-destructuring': 'off',
+    'unicorn/no-null': 'off',
+    'unicorn/no-useless-switch-case': 'off',
+    'unicorn/prevent-abbreviations': 'off',
 
     '@typescript-eslint/array-type': [
       'warn',

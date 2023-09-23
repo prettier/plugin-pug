@@ -4,7 +4,7 @@ import type { AttributeToken } from 'pug-lexer';
 // NOTE: XML would be useful, but it's not a default parser.
 //       YAML is not official, but it costs nothing to support it right now.
 const jsonSuffixRe: RegExp = /\+(json|yaml)$/i;
-const wrappingQuotesRe: RegExp = /(^("|'|`))|(("|'|`)$)/g;
+const wrappingQuotesRe: RegExp = /(^(["'`]))|((["'`])$)/g;
 
 // Matches IANA media types to the required parser for them
 // https://iana.org/assignments/media-types/media-types.xhtml
@@ -42,7 +42,7 @@ export function getScriptParserName(
     return;
   }
 
-  const type: string = typeRaw.replace(wrappingQuotesRe, '');
+  const type: string = typeRaw.replaceAll(wrappingQuotesRe, '');
 
   // Empty type is equivalent to omission
   if (!type) {

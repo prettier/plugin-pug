@@ -118,10 +118,12 @@ export class Logger implements ILogger {
     message?: any,
     ...optionalParams: any[]
   ): void {
-    if (this.level !== LogLevel.OFF && this.level <= level) {
-      if (level !== LogLevel.OFF) {
-        this.logger[level](message, ...optionalParams);
-      }
+    if (
+      this.level !== LogLevel.OFF &&
+      this.level <= level &&
+      level !== LogLevel.OFF
+    ) {
+      this.logger[level](message, ...optionalParams);
     }
   }
 }

@@ -8,7 +8,7 @@ export const PUG_PRINT_WIDTH_OPTION: IntSupportOption = {
   type: 'int',
   default: -1,
   description: 'The line length where Prettier will try wrap.',
-  range: { start: -1, end: Infinity, step: 1 },
+  range: { start: -1, end: Number.POSITIVE_INFINITY, step: 1 },
 };
 
 /** Pug single quote option. */
@@ -48,7 +48,7 @@ export const PUG_TAB_WIDTH_OPTION: IntSupportOption = {
   type: 'int',
   default: -1,
   description: 'Number of spaces per indentation level.',
-  range: { start: -1, end: Infinity, step: 1 },
+  range: { start: -1, end: Number.POSITIVE_INFINITY, step: 1 },
 };
 
 /** Pug use tabs option. */

@@ -4,7 +4,7 @@ import type {
   PugEmptyAttributesForceQuotes,
 } from './types';
 
-const EMPTY_VALUES: [boolean, string, string] = [true, '""', "''"];
+const EMPTY_VALUES: Set<string | boolean> = new Set([true, '""', "''"]);
 
 /**
  * Formats the token's `val` if it's empty, based on the `pugEmptyAttributes` option.
@@ -33,7 +33,7 @@ export function formatEmptyAttribute(
     return;
   }
 
-  if (pugEmptyAttributes === 'as-is' || !EMPTY_VALUES.includes(val)) {
+  if (pugEmptyAttributes === 'as-is' || !EMPTY_VALUES.has(val)) {
     return;
   }
 
