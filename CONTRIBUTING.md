@@ -5,7 +5,7 @@ At first: Thank you for being interested and using my plugin. :smiley_cat:
 # Basic steps
 
 1. Create a fork and checkout your fork.
-2. Run `./release.sh` or at least the `Cleanup` and `Prepare` steps in this script.
+2. Run `pnpm run preflight`.
 3. Create an issue for your feature or fix.
 4. Create a `Draft` pull request that also references your created issue.  
    <img src="https://user-images.githubusercontent.com/7195563/94909445-78ee5e00-04a3-11eb-8c9b-8e743c6d6c0e.png" width="197px" />

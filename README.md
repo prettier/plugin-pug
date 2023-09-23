@@ -63,11 +63,11 @@ pnpm add --save-dev prettier @prettier/plugin-pug
 ## Usage
 
 ```bash
-npx prettier --write "**/*.pug"
+npx prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 # or
-yarn prettier --write "**/*.pug"
+yarn prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 # or
-pnpm prettier --write "**/*.pug"
+pnpm prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 ```
 
 ## Configuration
@@ -116,9 +116,7 @@ If you’re interested in contributing to the development of Prettier for Pug, y
 To run `@prettier/plugin-pug` locally:
 
 - Clone this repository.
-- Execute `pnpm install`.
-- Execute `pnpm run lint` to make sure that the code passes formatting and linting.
-- Execute `pnpm run test` to make sure that TypeScript successfully compiles into JavaScript and all unit tests pass.
+- Execute `pnpm run preflight`.
 
 ## Credits
 
