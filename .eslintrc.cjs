@@ -16,7 +16,7 @@ module.exports = defineConfig({
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:prettier/recommended',
     'plugin:unicorn/recommended',
   ],
@@ -185,7 +185,7 @@ module.exports = defineConfig({
     {
       files: ['src/**/*.ts'],
       plugins: ['jsdoc'],
-      extends: ['plugin:jsdoc/recommended'],
+      extends: ['plugin:jsdoc/recommended-typescript-error'],
       rules: {
         'jsdoc/match-description': [
           'warn',
