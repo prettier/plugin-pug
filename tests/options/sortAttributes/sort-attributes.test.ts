@@ -247,9 +247,9 @@ describe('Options', () => {
       const pugSortAttributesBeginning: string[] = ['a'];
       const pugSortAttributesEnd: string[] = ['b'];
       // eslint-disable-next-line spellcheck/spell-checker
-      const expected: string[] = 'aedcfghilnb'.split('');
+      const expected: string[] = [...'aedcfghilnb'];
       // eslint-disable-next-line spellcheck/spell-checker
-      const code: string[] = 'aedcfbghiln'.split('');
+      const code: string[] = [...'aedcfbghiln'];
       const actual: string[] = stableSort(code, (a, b) =>
         compareAttributeToken(
           createAttributeToken(a),
@@ -268,9 +268,9 @@ describe('Options', () => {
       const pugSortAttributesBeginning: string[] = [];
       const pugSortAttributesEnd: string[] = [];
       // eslint-disable-next-line spellcheck/spell-checker
-      const expected: string[] = 'aedcfghilnb'.split('');
+      const expected: string[] = [...'aedcfghilnb'];
       // eslint-disable-next-line spellcheck/spell-checker
-      const code: string[] = 'aedcfghilnb'.split('');
+      const code: string[] = [...'aedcfghilnb'];
       const actual: string[] = stableSort(code, (a, b) =>
         compareAttributeToken(
           createAttributeToken(a),

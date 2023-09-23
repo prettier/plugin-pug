@@ -18,7 +18,7 @@ import { isQuoted, isWrappedWith } from './common';
  * @returns `true` if `name` passes the angular binding check, otherwise `false`.
  */
 export function isAngularBinding(name: string): boolean {
-  return name.length >= 3 && name[0] === '[' && name[name.length - 1] === ']';
+  return name.length >= 3 && name[0] === '[' && name.at(-1) === ']';
 }
 
 /**
@@ -39,7 +39,7 @@ export function isAngularBinding(name: string): boolean {
  * @returns `true` if `name` passes the angular action check, otherwise `false`.
  */
 export function isAngularAction(name: string): boolean {
-  return name.length >= 3 && name[0] === '(' && name[name.length - 1] === ')';
+  return name.length >= 3 && name[0] === '(' && name.at(-1) === ')';
 }
 
 /**

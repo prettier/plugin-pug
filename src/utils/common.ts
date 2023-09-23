@@ -41,10 +41,12 @@ export function previousNormalAttributeToken(
     if (!token || token.type === 'start-attributes') {
       return;
     }
-    if (token.type === 'attribute') {
-      if (token.name !== 'class' && token.name !== 'id') {
-        return token;
-      }
+    if (
+      token.type === 'attribute' &&
+      token.name !== 'class' &&
+      token.name !== 'id'
+    ) {
+      return token;
     }
   }
   return;
@@ -66,10 +68,8 @@ export function previousTypeAttributeToken(
     if (!token || token.type === 'start-attributes' || token.type === 'tag') {
       return;
     }
-    if (token.type === 'attribute') {
-      if (token.name === 'type') {
-        return token;
-      }
+    if (token.type === 'attribute' && token.name === 'type') {
+      return token;
     }
   }
   return;
@@ -196,7 +196,7 @@ export function isQuoted(val: string): boolean {
  * @returns `true` if it's a single line interpolation, otherwise `false`.
  */
 export function isSingleLineWithInterpolation(val: string): boolean {
-  return /^`[\s\S]*`$/.test(val) && val.includes('${');
+  return /^`[\S\s]*`$/.test(val) && val.includes('${');
 }
 
 /**
@@ -206,7 +206,7 @@ export function isSingleLineWithInterpolation(val: string): boolean {
  * @returns `true` if it's a multiline interpolation, otherwise `false`.
  */
 export function isMultilineInterpolation(val: string): boolean {
-  return /^`[\s\S]*`$/m.test(val) && val.includes('\n');
+  return /^`[\S\s]*`$/m.test(val) && val.includes('\n');
 }
 
 /**
@@ -244,8 +244,8 @@ export function makeString(
   unescapeUnnecessaryEscapes: boolean = false,
 ): string {
   const otherQuote: "'" | '"' = enclosingQuote === '"' ? "'" : '"';
-  const newContent: string = rawContent.replace(
-    /\\([\s\S])|(['"])/g,
+  const newContent: string = rawContent.replaceAll(
+    /\\([\S\s])|(["'])/g,
     (match, escaped: "'" | '"', quote: "'" | '"') => {
       if (escaped === otherQuote) {
         return escaped;
@@ -257,7 +257,7 @@ export function makeString(
         return quote;
       }
       return unescapeUnnecessaryEscapes &&
-        /^[^\\nrvtbfux\r\n\u2028\u2029"'0-7]$/.test(escaped)
+        /^[^\n\r"'0-7\\bfnrt-vx\u2028\u2029]$/.test(escaped)
         ? escaped
         : `\\${escaped}`;
     },

@@ -44,8 +44,9 @@ export function resolvePugAttributeSeparatorOption(
   switch (pugAttributeSeparator) {
     case 'always':
     case 'as-needed':
-    case 'none':
+    case 'none': {
       return pugAttributeSeparator;
+    }
   }
   throw new Error(
     `Invalid option for pugAttributeSeparator. Found '${pugAttributeSeparator}'. Possible options: 'always', 'as-needed' or 'none'`,

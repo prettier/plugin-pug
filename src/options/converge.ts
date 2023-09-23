@@ -15,12 +15,12 @@ export function convergeOptions(
     // Prettier base options
     printWidth: options.printWidth,
     pugPrintWidth:
-      options.pugPrintWidth !== -1 ? options.pugPrintWidth : options.printWidth,
+      options.pugPrintWidth === -1 ? options.printWidth : options.pugPrintWidth,
     singleQuote: options.singleQuote,
     pugSingleQuote: options.pugSingleQuote ?? options.singleQuote,
     tabWidth: options.tabWidth,
     pugTabWidth:
-      options.pugTabWidth !== -1 ? options.pugTabWidth : options.tabWidth,
+      options.pugTabWidth === -1 ? options.tabWidth : options.pugTabWidth,
     useTabs: options.useTabs ?? false,
     pugUseTabs: options.pugUseTabs ?? options.useTabs ?? false,
     bracketSpacing: options.bracketSpacing,

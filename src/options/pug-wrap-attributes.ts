@@ -9,7 +9,7 @@ export const PUG_WRAP_ATTRIBUTES_THRESHOLD: IntSupportOption = {
   default: -1,
   description:
     'The maximum amount of attributes that an element can appear with on one line before it gets wrapped.',
-  range: { start: -1, end: Infinity, step: 1 },
+  range: { start: -1, end: Number.POSITIVE_INFINITY, step: 1 },
 };
 
 /** Wrap attributes pattern. */

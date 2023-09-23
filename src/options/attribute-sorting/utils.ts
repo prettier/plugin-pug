@@ -109,7 +109,7 @@ export function stableSort<T>(
   entries.sort((a, b) => {
     const order: CompareResult = compare(a[0], b[0]);
     // When order is 0, sort by index to make the sort stable
-    return order !== 0 ? order : a[1] - b[1];
+    return order === 0 ? a[1] - b[1] : order;
   });
   return entries.map(([value]) => value);
 }

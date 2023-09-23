@@ -245,9 +245,9 @@ export class PugPrinter {
       this.indentLevel++;
     }
     this.framework =
-      options.pugFramework !== 'auto'
-        ? options.pugFramework
-        : detectFramework();
+      options.pugFramework === 'auto'
+        ? detectFramework()
+        : options.pugFramework;
 
     this.quotes = this.options.pugSingleQuote ? "'" : '"';
     this.otherQuotes = this.options.pugSingleQuote ? '"' : "'";
@@ -288,12 +288,15 @@ export class PugPrinter {
   private get computedIndent(): string {
     switch (this.previousToken?.type) {
       case 'newline':
-      case 'outdent':
+      case 'outdent': {
         return this.indentString.repeat(this.indentLevel);
-      case 'indent':
+      }
+      case 'indent': {
         return this.indentString;
-      case 'start-pug-interpolation':
+      }
+      case 'start-pug-interpolation': {
         return '';
+      }
     }
     return this.options.pugSingleFileComponentIndentation
       ? this.indentString
@@ -333,7 +336,7 @@ export class PugPrinter {
           case 'class':
           case 'end-attributes':
           case 'id':
-          case 'eos':
+          case 'eos': {
             // TODO: These tokens write directly into the result
             this.result = results.join('');
             await this[token.type](
@@ -343,16 +346,19 @@ export class PugPrinter {
             results.length = 0;
             results.push(this.result);
             break;
+          }
           case 'tag':
           case 'start-attributes':
           case 'interpolation':
           case 'call':
-          case ':':
+          case ':': {
             // TODO: These tokens read the length of the result
             this.result = results.join('');
+          }
           // eslint-disable-next-line no-fallthrough
           default: {
             if (typeof this[token.type] !== 'function') {
+              // eslint-disable-next-line unicorn/prefer-type-error
               throw new Error('Unhandled token: ' + JSON.stringify(token));
             }
             results.push(
@@ -392,7 +398,7 @@ export class PugPrinter {
   private tokenNeedsSeparator(token: AttributeToken): boolean {
     return this.neverUseAttributeSeparator
       ? false
-      : this.alwaysUseAttributeSeparator || /^(\(|\[|:).*/.test(token.name);
+      : this.alwaysUseAttributeSeparator || /^([(:[]).*/.test(token.name);
   }
 
   private getUnformattedContentLines(
@@ -463,14 +469,17 @@ export class PugPrinter {
     };
 
     switch (this.framework) {
-      case 'angular':
+      case 'angular': {
         options.parser = '__ng_interpolation';
         break;
+      }
+
       case 'svelte':
       case 'vue':
-      default:
+      default: {
         options.parser = 'babel';
         options.semi = false;
+      }
     }
 
     let result: string = await format(code, options);
@@ -485,11 +494,77 @@ export class PugPrinter {
     while (text) {
       // Find double curly brackets
       const start: number = text.indexOf('{{');
-      if (start !== -1) {
+      if (start === -1) {
+        // Find single curly brackets for svelte
+        const start2: number = text.indexOf('{');
+        if (this.options.pugFramework === 'svelte' && start2 !== -1) {
+          result += text.slice(0, start2);
+          text = text.slice(start2 + 1);
+          const end2: number = text.indexOf('}');
+          if (end2 === -1) {
+            result += '{';
+            result += text;
+            text = '';
+          } else {
+            let code: string = text.slice(0, end2);
+            try {
+              const dangerousQuoteCombination: boolean =
+                detectDangerousQuoteCombination(
+                  code,
+                  this.quotes,
+                  this.otherQuotes,
+                  logger,
+                );
+              if (dangerousQuoteCombination) {
+                logger.warn(
+                  'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
+                  code,
+                );
+                result += handleBracketSpacing(
+                  this.options.pugBracketSpacing,
+                  code,
+                );
+                text = text.slice(end2 + 1);
+                continue;
+              } else {
+                code = await this.frameworkFormat(code);
+              }
+            } catch (error: unknown) {
+              logger.warn('[PugPrinter:formatText]: ', error);
+              try {
+                code = await format(code, {
+                  parser: 'babel',
+                  ...this.codeInterpolationOptions,
+                  semi: false,
+                });
+                if (code[0] === ';') {
+                  code = code.slice(1);
+                }
+              } catch (error: unknown) {
+                logger.warn(error);
+              }
+            }
+            code = unwrapLineFeeds(code);
+            result += handleBracketSpacing(
+              this.options.pugBracketSpacing,
+              code,
+              ['{', '}'],
+            );
+            text = text.slice(end2 + 1);
+          }
+        } else {
+          result += text;
+          text = '';
+        }
+      } else {
         result += text.slice(0, start);
         text = text.slice(start + 2);
         const end: number = text.indexOf('}}');
-        if (end !== -1) {
+        if (end === -1) {
+          result += '{{';
+          result += text;
+          text = '';
+        } else {
           let code: string = text.slice(0, end);
           try {
             const dangerousQuoteCombination: boolean =
@@ -572,72 +647,6 @@ export class PugPrinter {
           code = unwrapLineFeeds(code);
           result += handleBracketSpacing(this.options.pugBracketSpacing, code);
           text = text.slice(end + 2);
-        } else {
-          result += '{{';
-          result += text;
-          text = '';
-        }
-      } else {
-        // Find single curly brackets for svelte
-        const start2: number = text.indexOf('{');
-        if (this.options.pugFramework === 'svelte' && start2 !== -1) {
-          result += text.slice(0, start2);
-          text = text.slice(start2 + 1);
-          const end2: number = text.indexOf('}');
-          if (end2 !== -1) {
-            let code: string = text.slice(0, end2);
-            try {
-              const dangerousQuoteCombination: boolean =
-                detectDangerousQuoteCombination(
-                  code,
-                  this.quotes,
-                  this.otherQuotes,
-                  logger,
-                );
-              if (dangerousQuoteCombination) {
-                logger.warn(
-                  'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
-                  code,
-                );
-                result += handleBracketSpacing(
-                  this.options.pugBracketSpacing,
-                  code,
-                );
-                text = text.slice(end2 + 1);
-                continue;
-              } else {
-                code = await this.frameworkFormat(code);
-              }
-            } catch (error: unknown) {
-              logger.warn('[PugPrinter:formatText]: ', error);
-              try {
-                code = await format(code, {
-                  parser: 'babel',
-                  ...this.codeInterpolationOptions,
-                  semi: false,
-                });
-                if (code[0] === ';') {
-                  code = code.slice(1);
-                }
-              } catch (error: unknown) {
-                logger.warn(error);
-              }
-            }
-            code = unwrapLineFeeds(code);
-            result += handleBracketSpacing(
-              this.options.pugBracketSpacing,
-              code,
-              ['{', '}'],
-            );
-            text = text.slice(end2 + 1);
-          } else {
-            result += '{';
-            result += text;
-            text = '';
-          }
-        } else {
-          result += text;
-          text = '';
         }
       }
     }
@@ -659,13 +668,12 @@ export class PugPrinter {
       val = val.slice(1, -1); // Remove quotes
     }
     val = await format(val, { parser, ...options });
-    if (this.quotes === '"') {
-      val = val.replace(/"/g, '\\"');
-    } else {
-      val = val.replace(/'/g, "\\'");
-    }
+    val =
+      this.quotes === '"'
+        ? val.replaceAll('"', '\\"')
+        : val.replaceAll("'", "\\'");
     val = unwrapLineFeeds(val);
-    if (trimTrailingSemicolon && val[val.length - 1] === ';') {
+    if (trimTrailingSemicolon && val.at(-1) === ';') {
       val = val.slice(0, -1);
     }
     if (trimLeadingSemicolon && val[0] === ';') {
@@ -725,7 +733,7 @@ export class PugPrinter {
       };
       try {
         val = await format(val, { parser, ...options });
-      } catch (error) {
+      } catch {
         logger.warn(
           'The following expression could not be formatted correctly. Please try to fix it yourself and if there is a problem, please open a bug issue:',
           val,
@@ -868,15 +876,13 @@ export class PugPrinter {
           | EndAttributesToken;
       }
       logger.debug('after token', this.currentLineLength);
-      if (hasLiteralAttributes) {
-        // Remove div as it will be replaced with the literal for id and/or class
-        if (
-          this.previousToken?.type === 'tag' &&
-          this.previousToken.val === 'div' &&
-          !this.options.pugExplicitDiv
-        ) {
-          this.currentLineLength -= 3;
-        }
+      if (
+        hasLiteralAttributes && // Remove div as it will be replaced with the literal for id and/or class
+        this.previousToken?.type === 'tag' &&
+        this.previousToken.val === 'div' &&
+        !this.options.pugExplicitDiv
+      ) {
+        this.currentLineLength -= 3;
       }
       if (numNormalAttributes > 0) {
         // Add leading and trailing parentheses
@@ -948,81 +954,83 @@ export class PugPrinter {
       this.options.pugEmptyAttributesForceQuotes,
     );
 
-    if (typeof token.val === 'string') {
-      if (isQuoted(token.val) && token.val[0] !== '`') {
-        if (
-          token.name === 'class' &&
-          this.options.pugClassNotation === 'literal'
-        ) {
-          // Handle class attribute
-          const val: string = token.val.slice(1, -1).trim();
-          const classes: string[] = val.split(/\s+/);
-          const specialClasses: string[] = [];
-          const normalClasses: string[] = [];
-          const validClassNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
-          for (const className of classes) {
-            if (!validClassNameRegex.test(className)) {
-              specialClasses.push(className);
+    if (
+      typeof token.val === 'string' &&
+      isQuoted(token.val) &&
+      token.val[0] !== '`'
+    ) {
+      if (
+        token.name === 'class' &&
+        this.options.pugClassNotation === 'literal'
+      ) {
+        // Handle class attribute
+        const val: string = token.val.slice(1, -1).trim();
+        const classes: string[] = val.split(/\s+/);
+        const specialClasses: string[] = [];
+        const normalClasses: string[] = [];
+        const validClassNameRegex: RegExp = /^-?[A-Z_a-z]+[\w-]*$/;
+        for (const className of classes) {
+          if (validClassNameRegex.test(className)) {
+            if (this.options.pugClassLocation === 'after-attributes') {
+              this.classLiteralAfterAttributes.push(className);
             } else {
-              if (this.options.pugClassLocation === 'after-attributes') {
-                this.classLiteralAfterAttributes.push(className);
-              } else {
-                normalClasses.push(className);
-              }
+              normalClasses.push(className);
             }
-          }
-          if (normalClasses.length > 0) {
-            // Write css-class in front of attributes
-            const position: number = this.possibleClassPosition;
-            this.result = [
-              this.result.slice(0, position),
-              '.',
-              normalClasses.join('.'),
-              this.result.slice(position),
-            ].join('');
-            this.possibleClassPosition += 1 + normalClasses.join('.').length;
-            if (this.options.pugClassLocation === 'before-attributes') {
-              this.replaceTagWithLiteralIfPossible(/div\./, '.');
-            }
-          }
-          if (specialClasses.length > 0) {
-            token.val = makeString(specialClasses.join(' '), this.quotes);
-            this.previousAttributeRemapped = false;
           } else {
-            this.previousAttributeRemapped = true;
-            return;
+            specialClasses.push(className);
           }
-        } else if (
-          token.name === 'id' &&
-          this.options.pugIdNotation !== 'as-is'
-        ) {
-          // Handle id attribute
-          let val: string = token.val;
-          val = val.slice(1, -1);
-          val = val.trim();
-          const validIdNameRegex: RegExp = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
-          if (!validIdNameRegex.test(val)) {
-            val = makeString(val, this.quotes);
-            this.result += 'id';
-            if (token.mustEscape === false) {
-              this.result += '!';
-            }
-            this.result += `=${val}`;
-            return;
-          }
-          // Write css-id in front of css-classes
-          const position: number = this.possibleIdPosition;
-          const literal: string = `#${val}`;
+        }
+        if (normalClasses.length > 0) {
+          // Write css-class in front of attributes
+          const position: number = this.possibleClassPosition;
           this.result = [
             this.result.slice(0, position),
-            literal,
+            '.',
+            normalClasses.join('.'),
             this.result.slice(position),
           ].join('');
-          this.possibleClassPosition += literal.length;
-          this.replaceTagWithLiteralIfPossible(/div#/, '#');
+          this.possibleClassPosition += 1 + normalClasses.join('.').length;
+          if (this.options.pugClassLocation === 'before-attributes') {
+            this.replaceTagWithLiteralIfPossible(/div\./, '.');
+          }
+        }
+        if (specialClasses.length > 0) {
+          token.val = makeString(specialClasses.join(' '), this.quotes);
+          this.previousAttributeRemapped = false;
+        } else {
           this.previousAttributeRemapped = true;
           return;
         }
+      } else if (
+        token.name === 'id' &&
+        this.options.pugIdNotation !== 'as-is'
+      ) {
+        // Handle id attribute
+        let val: string = token.val;
+        val = val.slice(1, -1);
+        val = val.trim();
+        const validIdNameRegex: RegExp = /^-?[A-Z_a-z]+[\w-]*$/;
+        if (!validIdNameRegex.test(val)) {
+          val = makeString(val, this.quotes);
+          this.result += 'id';
+          if (token.mustEscape === false) {
+            this.result += '!';
+          }
+          this.result += `=${val}`;
+          return;
+        }
+        // Write css-id in front of css-classes
+        const position: number = this.possibleIdPosition;
+        const literal: string = `#${val}`;
+        this.result = [
+          this.result.slice(0, position),
+          literal,
+          this.result.slice(position),
+        ].join('');
+        this.possibleClassPosition += literal.length;
+        this.replaceTagWithLiteralIfPossible(/div#/, '#');
+        this.previousAttributeRemapped = true;
+        return;
       }
     }
 
@@ -1060,7 +1068,7 @@ export class PugPrinter {
         : token.val;
       const classes: string[] = val.split(/\s+/);
 
-      if (this.classLiteralToAttribute.length) {
+      if (this.classLiteralToAttribute.length > 0) {
         for (
           let i: number = this.classLiteralToAttribute.length - 1;
           i > -1;
@@ -1140,7 +1148,7 @@ export class PugPrinter {
         } else {
           // The value is not quoted and may be js-code
           val = val.trim();
-          val = val.replace(/\s\s+/g, ' ');
+          val = val.replaceAll(/\s\s+/g, ' ');
           if (val[0] === '{' && val[1] === ' ') {
             val = `{${val.slice(2, val.length)}`;
           }
@@ -1156,7 +1164,7 @@ export class PugPrinter {
   }
 
   private ['end-attributes'](token: EndAttributesToken): void {
-    if (this.wrapAttributes && this.result[this.result.length - 1] !== '(') {
+    if (this.wrapAttributes && this.result.at(-1) !== '(') {
       if (!this.options.pugBracketSameLine) {
         this.result += '\n';
       }
@@ -1164,7 +1172,7 @@ export class PugPrinter {
     }
     this.wrapAttributes = false;
 
-    if (this.classLiteralToAttribute.length) {
+    if (this.classLiteralToAttribute.length > 0) {
       if (this.previousToken?.type === 'start-attributes') {
         this.result += '(';
       } else if (this.previousToken?.type === 'attribute') {
@@ -1182,7 +1190,7 @@ export class PugPrinter {
       }
     }
 
-    if (this.result[this.result.length - 1] === '(') {
+    if (this.result.at(-1) === '(') {
       // There were no attributes
       this.result = this.result.slice(0, -1);
     } else if (this.previousToken?.type === 'attribute') {
@@ -1197,7 +1205,7 @@ export class PugPrinter {
       this.result += '()';
     }
     if (
-      this.result[this.result.length - 1] === ')' &&
+      this.result.at(-1) === ')' &&
       this.classLiteralAfterAttributes.length > 0
     ) {
       const classes: string[] = this.classLiteralAfterAttributes.splice(
@@ -1390,7 +1398,7 @@ export class PugPrinter {
 
   private eos(token: EosToken): void {
     // Remove all newlines at the end
-    while (this.result[this.result.length - 1] === '\n') {
+    while (this.result.at(-1) === '\n') {
       this.result = this.result.slice(0, -1);
     }
     // Insert one newline
@@ -1402,7 +1410,7 @@ export class PugPrinter {
     // See if this is a `//- prettier-ignore` comment, which would indicate that the part of the template
     // that follows should be left unformatted. Support the same format as typescript-eslint is using for descriptions:
     // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/ban-ts-comment.md#allow-with-description
-    if (/^ prettier-ignore($|[: ])/.test(commentToken.val)) {
+    if (/^ prettier-ignore($|[ :])/.test(commentToken.val)) {
       // Use a separate token processing loop to find the end of the stream of tokens to be ignored by formatting,
       // and uses their `loc` properties to retrieve the original pug code to be used instead.
       let token: Token | null = this.getNextToken();
@@ -1418,7 +1426,9 @@ export class PugPrinter {
             } else {
               break;
             }
-          } else if (type === 'indent') {
+          }
+          // eslint-disable-next-line unicorn/prefer-switch
+          else if (type === 'indent') {
             ignoreLevel++;
           } else if (type === 'outdent') {
             ignoreLevel--;
@@ -1499,19 +1509,20 @@ export class PugPrinter {
     let val: string = token.val;
     let needsTrailingWhitespace: boolean = false;
 
-    let endsWithWhitespace: boolean =
-      val[val.length - 1] === ' ' && !/^\s+$/.test(val);
+    let endsWithWhitespace: boolean = val.at(-1) === ' ' && !/^\s+$/.test(val);
 
     if (this.pipelessText) {
       switch (this.previousToken?.type) {
-        case 'newline':
+        case 'newline': {
           if (val.trim().length > 0) {
             result += this.indentString.repeat(this.indentLevel + 1);
           }
           break;
-        case 'start-pipeless-text':
+        }
+        case 'start-pipeless-text': {
           result += this.indentString;
           break;
+        }
       }
 
       if (this.pipelessComment) {
@@ -1525,16 +1536,17 @@ export class PugPrinter {
       if (this.nextToken && endsWithWhitespace) {
         switch (this.nextToken.type) {
           case 'interpolated-code':
-          case 'start-pug-interpolation':
+          case 'start-pug-interpolation': {
             needsTrailingWhitespace = true;
             break;
+          }
         }
       }
 
-      val = val.replace(/\s\s+/g, ' ');
+      val = val.replaceAll(/\s\s+/g, ' ');
 
       switch (this.previousToken?.type) {
-        case 'newline':
+        case 'newline': {
           result += this.indentString.repeat(this.indentLevel);
           if (/^ .+$/.test(val)) {
             result += '|\n';
@@ -1548,8 +1560,9 @@ export class PugPrinter {
             result += ' ';
           }
           break;
+        }
         case 'indent':
-        case 'outdent':
+        case 'outdent': {
           result += this.computedIndent;
           if (/^ .+$/.test(val)) {
             result += '|\n';
@@ -1560,19 +1573,21 @@ export class PugPrinter {
             result += ' ';
           }
           break;
+        }
         case 'interpolated-code':
-        case 'end-pug-interpolation':
+        case 'end-pug-interpolation': {
           if (/^ .+$/.test(val) || val === ' ') {
             result += ' ';
           } else if (/^.+ $/.test(val)) {
             needsTrailingWhitespace = true;
           }
           break;
+        }
       }
 
       val = val.trim();
       val = await this.formatText(val);
-      val = val.replace(/#(\{|\[)/g, '\\#$1');
+      val = val.replaceAll(/#([[{])/g, '\\#$1');
     }
 
     if (
@@ -1610,18 +1625,21 @@ export class PugPrinter {
       case 'tag':
       case 'class':
       case 'id':
-      case 'end-attributes':
+      case 'end-attributes': {
         result = ' ';
         break;
-      case 'start-pug-interpolation':
+      }
+      case 'start-pug-interpolation': {
         result = '| ';
         break;
+      }
       case 'indent':
       case 'newline':
-      case 'outdent':
+      case 'outdent': {
         result = this.computedIndent;
         result += this.pipelessText ? this.indentString : '| ';
         break;
+      }
     }
     result += token.mustEscape ? '#' : '!';
     result += handleBracketSpacing(
@@ -1709,16 +1727,19 @@ export class PugPrinter {
 
       let parser: BuiltInParserName | undefined;
       switch (lastTagToken?.val) {
-        case 'script':
+        case 'script': {
           parser = getScriptParserName(
             previousTypeAttributeToken(this.tokens, this.currentIndex),
           );
           break;
-        case 'style':
+        }
+        case 'style': {
           parser = 'css';
           break;
-        default:
+        }
+        default: {
           break;
+        }
       }
 
       if (parser) {
@@ -1728,24 +1749,28 @@ export class PugPrinter {
         let usedInterpolatedCode: boolean = false;
         while (tok && tok?.type !== 'end-pipeless-text') {
           switch (tok.type) {
-            case 'text':
+            case 'text': {
               rawText += tok.val;
               break;
-            case 'newline':
+            }
+            case 'newline': {
               rawText += '\n';
               break;
-            case 'interpolated-code':
+            }
+            case 'interpolated-code': {
               usedInterpolatedCode = true;
               rawText += tok.mustEscape ? '#' : '!';
               rawText += `{${tok.val}}`;
               break;
-            default:
+            }
+            default: {
               logger.warn(
                 '[PugPrinter:start-pipeless-text]:',
                 'Unhandled token for pipeless script tag:',
                 JSON.stringify(tok),
               );
               break;
+            }
           }
 
           index++;
@@ -1772,10 +1797,9 @@ export class PugPrinter {
             'If you think this is a bug, please open a bug issue.',
           ];
 
-          warningContext.push(`\ncode: \`${rawText.trim()}\``);
-
           // TODO: If other token types occur use `if (usedInterpolatedCode)`
           warningContext.push(
+            `\ncode: \`${rawText.trim()}\``,
             '\nYou used interpolated code in your pipeless script tag, so you may ignore this warning.',
           );
 
@@ -1904,7 +1928,7 @@ export class PugPrinter {
     let args: string | null = token.args;
     if (args) {
       args = args.trim();
-      args = args.replace(/\s\s+/g, ' ');
+      args = args.replaceAll(/\s\s+/g, ' ');
       result += `(${args})`;
     }
     this.currentLineLength += result.length;
@@ -1918,7 +1942,7 @@ export class PugPrinter {
     let args: string | null = token.args;
     if (args) {
       args = args.trim();
-      args = args.replace(/\s\s+/g, ' ');
+      args = args.replaceAll(/\s\s+/g, ' ');
       result += `(${args})`;
     }
     return result;
@@ -1928,7 +1952,7 @@ export class PugPrinter {
     let result: string = this.computedIndent;
     const match: RegExpExecArray | null = /^!\((.*)\)$/.exec(token.val);
     logger.debug('[PugPrinter]:', match);
-    result += !match ? `if ${token.val}` : `unless ${match[1]}`;
+    result += match ? `unless ${match[1]}` : `if ${token.val}`;
     return result;
   }
 

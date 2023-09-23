@@ -10,7 +10,7 @@ const __dirname: string = fileURLToPath(new URL('.', import.meta.url));
 describe('Pug Tests', () => {
   const filenames: string[] = readdirSync(resolve(__dirname), 'utf8');
 
-  const ignores: string[] = [
+  const ignores: Set<string> = new Set([
     'attrs.pug',
     'attrs.js.pug',
     'comments.pug',
@@ -27,12 +27,12 @@ describe('Pug Tests', () => {
     'tags.self-closing.pug',
     'template.pug',
     'text.pug',
-  ];
+  ]);
 
   for (const filename of filenames) {
     if (filename.endsWith('.formatted.pug')) {
       const unformattedFilename: string = filename.replace('.formatted', '');
-      if (!ignores.includes(unformattedFilename)) {
+      if (!ignores.has(unformattedFilename)) {
         it(unformattedFilename, async () => {
           const expected: string = readFileSync(
             resolve(__dirname, filename),
