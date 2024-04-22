@@ -22,7 +22,7 @@ export default defineConfig({
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2019-2023 Christopher Quadflieg',
+      copyright: 'Copyright © 2019-2024 Christopher Quadflieg',
     },
 
     nav: [
