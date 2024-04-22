@@ -22,7 +22,7 @@ yarn add --dev prettier @prettier/plugin-pug
 
 ## Usage
 
-#### [CLI](https://prettier.io/docs/en/cli)
+### CLI
 
 Format all pug files in your project:
 
@@ -42,18 +42,7 @@ yarn prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 
 :::
 
-#### [API](https://prettier.io/docs/en/api#prettierformatsource-options)
-
-Using the `plugins` option on the API, you can format .pug files:
-
-```js
-await prettier.format('code', {
-  parser: 'pug',
-  plugins: ['prettier-plugin-pug'],
-});
-```
-
-#### [Configuration file](https://prettier.io/docs/en/configuration)
+### Configuration file
 
 You can write your `.prettierrc.cjs` like this to get fully type check support with documentation:
 
@@ -73,6 +62,17 @@ module.exports = {
   pugSingleQuote: false,
   // ... more pug* options
 };
+```
+
+### API
+
+Using the `plugins` option on the API, you can format .pug files:
+
+```js
+await prettier.format('code', {
+  parser: 'pug',
+  plugins: ['@prettier/plugin-pug'],
+});
 ```
 
 ### Selectively ignoring automatic formatting

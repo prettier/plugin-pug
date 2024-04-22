@@ -62,7 +62,7 @@ pnpm add --save-dev prettier @prettier/plugin-pug
 
 ## Usage
 
-#### [CLI](https://prettier.github.io/plugin-pug/guide/#cli)
+### CLI
 
 ```bash
 npx prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
@@ -72,16 +72,7 @@ yarn prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 pnpm prettier --write "**/*.pug" --plugin="@prettier/plugin-pug"
 ```
 
-#### [API](https://prettier.github.io/plugin-pug/guide/#api)
-
-```js
-await prettier.format('code', {
-  parser: 'pug',
-  plugins: ['prettier-plugin-pug'],
-});
-```
-
-#### [Configuration file](https://prettier.github.io/plugin-pug/guide/#configuration-file) (.prettierrc)
+### Configuration file (.prettierrc)
 
 ```json
 {
@@ -89,9 +80,16 @@ await prettier.format('code', {
 }
 ```
 
-## Configuration
+See [Standard Prettier overrides](https://prettier.github.io/plugin-pug/guide/standard-prettier-overrides.html) and [Pug specific options](https://prettier.github.io/plugin-pug/guide/pug-specific-options.html) for more options.
 
-See [documentation](https://prettier.github.io/plugin-pug/guide)
+### API
+
+```js
+await prettier.format('code', {
+  parser: 'pug',
+  plugins: ['@prettier/plugin-pug'],
+});
+```
 
 ## Workaround / Known Issue
 
