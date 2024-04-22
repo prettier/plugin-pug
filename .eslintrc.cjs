@@ -2,6 +2,11 @@
 const { defineConfig } = require('eslint-define-config');
 const { readGitignoreFiles } = require('eslint-gitignore');
 
+/// <reference types="@eslint-types/jsdoc" />
+/// <reference types="@eslint-types/prettier" />
+/// <reference types="@eslint-types/typescript-eslint" />
+/// <reference types="@eslint-types/unicorn" />
+
 module.exports = defineConfig({
   ignorePatterns: [
     ...readGitignoreFiles(),
@@ -48,6 +53,10 @@ module.exports = defineConfig({
     semi: ['error', 'always'],
 
     'unicorn/consistent-destructuring': 'off',
+    'unicorn/import-style': [
+      'error',
+      { styles: { 'node:path': { named: true } } },
+    ],
     'unicorn/no-null': 'off',
     'unicorn/no-useless-switch-case': 'off',
     'unicorn/prevent-abbreviations': 'off',
