@@ -59,6 +59,7 @@ module.exports = defineConfig({
     ],
     'unicorn/no-null': 'off',
     'unicorn/no-useless-switch-case': 'off',
+    'unicorn/prefer-string-raw': 'off',
     'unicorn/prevent-abbreviations': 'off',
 
     '@typescript-eslint/array-type': [
