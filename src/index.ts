@@ -127,4 +127,5 @@ export const options: SupportOptions | undefined = plugin.options;
 export const defaultOptions: Partial<RequiredOptions> | undefined =
   plugin.defaultOptions;
 
-export { ILogger, LogLevel, Logger, createLogger, logger } from './logger';
+export { createLogger, Logger, logger, LogLevel } from './logger';
+export type { ILogger } from './logger';
