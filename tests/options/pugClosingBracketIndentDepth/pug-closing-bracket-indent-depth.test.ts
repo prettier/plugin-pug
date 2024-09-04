@@ -2,8 +2,8 @@ import { compareFiles } from 'tests/common';
 import { describe, expect, it } from 'vitest';
 
 describe('Options', () => {
-  describe('bracketSameLine', () => {
-    it('should handle pugBracketSameLine:0', async () => {
+  describe('pugClosingBracketIndentDepth', () => {
+    it('should handle pugClosingBracketIndentDepth:0', async () => {
       const { actual, expected } = await compareFiles(import.meta.url, {
         target: 'depth-0.pug',
         formatOptions: {
@@ -14,7 +14,7 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should handle pugBracketSameLine:1', async () => {
+    it('should handle pugClosingBracketIndentDepth:1', async () => {
       const { actual, expected } = await compareFiles(import.meta.url, {
         target: 'depth-1.pug',
         formatOptions: {
