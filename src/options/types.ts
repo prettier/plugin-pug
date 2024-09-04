@@ -35,6 +35,7 @@ export interface PugParserOptions
   pugArrowParens: ArrowParens | null;
   pugSemi: boolean | null;
   pugBracketSameLine: boolean | null;
+  pugClosingBracketIndentDepth: 0 | 1 | null;
 
   pugAttributeSeparator: PugAttributeSeparator;
 

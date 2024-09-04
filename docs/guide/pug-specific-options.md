@@ -540,3 +540,72 @@ Output:
 ```pug
 .text-red-400()&attributes(attributes)
 ```
+
+## Indent Closing Bracket in Multiline Elements
+
+`pugClosingBracketIndentDepth`
+
+### Description
+
+Define if the closing bracket of a multiline element should be indented to align with the element or its attributes. This only takes effect if the `bracketSameLine` or `pugBracketSameLine` options are set to false.
+
+The benefit of aligning closing brackets with the element's attributes is that elements are easier to comment out.
+
+### Options
+
+**Type:** `choice`  
+**Default:** `0`
+
+#### `0`
+
+Input:
+
+```pug
+foo(
+  bar="baz"
+)
+```
+
+Output:
+
+```pug
+foo(
+  bar="baz"
+)
+```
+
+Comment example:
+
+```pug
+// This will error.
+//foo(
+  bar="baz"
+)
+```
+
+#### `1`
+
+Input:
+
+```pug
+foo(
+  bar="baz"
+)
+```
+
+Output:
+
+```pug
+foo(
+  bar="baz"
+  )
+```
+
+Comment example:
+
+```pug
+// This will work as expected.
+//foo(
+  bar="baz"
+  )
+```

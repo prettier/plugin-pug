@@ -143,6 +143,7 @@ export interface PugPrinterOptions {
   readonly pugFramework: PugFramework;
   readonly pugExplicitDiv: boolean;
   readonly pugPreserveAttributeBrackets: boolean;
+  readonly pugClosingBracketIndentDepth: 0 | 1;
 }
 
 /**
@@ -1168,7 +1169,9 @@ export class PugPrinter {
       if (!this.options.pugBracketSameLine) {
         this.result += '\n';
       }
-      this.result += this.indentString.repeat(this.indentLevel);
+      this.result += this.indentString.repeat(
+        this.indentLevel + this.options.pugClosingBracketIndentDepth,
+      );
     }
     this.wrapAttributes = false;
 
