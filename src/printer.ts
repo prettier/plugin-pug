@@ -827,7 +827,7 @@ export class PugPrinter {
         switch (tempToken.name) {
           case 'class':
           case 'id': {
-            // If classes are forced as attributes, count them toward attribute wrapping.
+            // If classes are defined as attributes and not converted to literals, count them toward attribute wrapping.
             if (
               tempToken.name === 'class' &&
               this.options.pugClassNotation !== 'literal'
