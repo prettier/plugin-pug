@@ -71,6 +71,7 @@ import type { PugAttributeSeparator } from './options/pug-attribute-separator';
 import { resolvePugAttributeSeparatorOption } from './options/pug-attribute-separator';
 import type { PugClassLocation } from './options/pug-class-location';
 import type { PugClassNotation } from './options/pug-class-notation';
+import type { PugClosingBracketIndentDepth } from './options/pug-closing-bracket-indent-depth';
 import type { PugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
 import { formatPugCommentPreserveSpaces } from './options/pug-comment-preserve-spaces';
 import type { PugFramework } from './options/pug-framework';
@@ -143,6 +144,7 @@ export interface PugPrinterOptions {
   readonly pugFramework: PugFramework;
   readonly pugExplicitDiv: boolean;
   readonly pugPreserveAttributeBrackets: boolean;
+  readonly pugClosingBracketIndentDepth: PugClosingBracketIndentDepth;
 }
 
 /**
@@ -1175,7 +1177,9 @@ export class PugPrinter {
       if (!this.options.pugBracketSameLine) {
         this.result += '\n';
       }
-      this.result += this.indentString.repeat(this.indentLevel);
+      this.result += this.indentString.repeat(
+        this.indentLevel + this.options.pugClosingBracketIndentDepth,
+      );
     }
     this.wrapAttributes = false;
 
