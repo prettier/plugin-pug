@@ -1,0 +1,25 @@
+button(type="submit", (click)="play()", disabled)
+
+hello-framework([name]="name", [version]="version", (release)="onVersionRelease()")
+
+nav-component(locale-relative-redirect="true", highlight="home", pin="false")
+
+.wrapper(data-nav=true data-next="Next" data-prev="Prev" data-slides=4 data-arr=[1,2,3,4,5,6] data-obj={att: 1, attr2: 2})
+
+div
+  div(
+    class="nested-div-1",
+    type="text",
+    value="my_value1",
+    name="my_name1",
+    alt="my_alt1",
+    autocomplete="on"
+  )
+    div(
+      class="nested-div-2",
+      type="text",
+      value="my_value2",
+      name="my_name2",
+      alt="my_alt2",
+      autocomplete="on"
+    )
