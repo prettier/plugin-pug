@@ -8,6 +8,7 @@ import type {
 import type { PugAttributeSeparator } from './pug-attribute-separator';
 import type { PugClassLocation } from './pug-class-location';
 import type { PugClassNotation } from './pug-class-notation';
+import type { PugClosingBracketIndentDepth } from './pug-closing-bracket-indent-depth';
 import type { PugCommentPreserveSpaces } from './pug-comment-preserve-spaces';
 import type { PugFramework } from './pug-framework';
 import type { PugIdNotation } from './pug-id-notation';
@@ -35,7 +36,7 @@ export interface PugParserOptions
   pugArrowParens: ArrowParens | null;
   pugSemi: boolean | null;
   pugBracketSameLine: boolean | null;
-  pugClosingBracketIndentDepth: 0 | 1 | null;
+  pugClosingBracketIndentDepth: PugClosingBracketIndentDepth;
 
   pugAttributeSeparator: PugAttributeSeparator;
 
