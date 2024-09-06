@@ -541,6 +541,8 @@ Output:
 .text-red-400()&attributes(attributes)
 ```
 
+---
+
 ## Indent Closing Bracket in Multiline Elements
 
 `pugClosingBracketIndentDepth`
