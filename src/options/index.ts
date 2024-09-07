@@ -21,6 +21,7 @@ import {
 import { PUG_ATTRIBUTE_SEPARATOR_OPTION } from './pug-attribute-separator';
 import { PUG_CLASS_LOCATION } from './pug-class-location';
 import { PUG_CLASS_NOTATION } from './pug-class-notation';
+import { PUG_CLOSING_BRACKET_INDENT_DEPTH_OPTION } from './pug-closing-bracket-indent-depth';
 import { PUG_COMMENT_PRESERVE_SPACES_OPTION } from './pug-comment-preserve-spaces';
 import { PUG_EXPLICIT_DIV } from './pug-explicit-div';
 import { PUG_FRAMEWORK } from './pug-framework';
@@ -44,6 +45,7 @@ export const options: SupportOptions = {
   pugArrowParens: PUG_ARROW_PARENS_OPTION,
   pugSemi: PUG_SEMI_OPTION,
   pugBracketSameLine: PUG_BRACKET_SAME_LINE_OPTION,
+  pugClosingBracketIndentDepth: PUG_CLOSING_BRACKET_INDENT_DEPTH_OPTION,
   pugAttributeSeparator: PUG_ATTRIBUTE_SEPARATOR_OPTION,
   pugCommentPreserveSpaces: PUG_COMMENT_PRESERVE_SPACES_OPTION,
   pugSortAttributes: PUG_SORT_ATTRIBUTES_OPTION,

@@ -51,5 +51,6 @@ export function convergeOptions(
     pugFramework: options.pugFramework,
     pugExplicitDiv: options.pugExplicitDiv,
     pugPreserveAttributeBrackets: options.pugPreserveAttributeBrackets,
+    pugClosingBracketIndentDepth: options.pugClosingBracketIndentDepth ?? 0,
   };
 }
