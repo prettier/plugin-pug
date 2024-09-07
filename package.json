@@ -14,7 +14,7 @@
     "lint": "eslint --cache --cache-strategy content --report-unused-disable-directives .",
     "ts-check": "tsc",
     "test": "vitest",
-    "coverage": "vitest run --coverage",
+    "test:coverage": "vitest run --coverage",
     "prepublishOnly": "pnpm run clean && pnpm install && pnpm run build",
     "preflight": "pnpm install && run-s format lint build test ts-check"
   },
