@@ -1161,7 +1161,7 @@ export class PugPrinter {
           val = val.trim();
           val = val.replaceAll(/\s\s+/g, ' ');
           if (val[0] === '{' && val[1] === ' ') {
-            val = `{${val.slice(2, val.length)}`;
+            val = `{${val.slice(2)}`;
           }
         }
       }
