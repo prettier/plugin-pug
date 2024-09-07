@@ -12,12 +12,11 @@
     "enabled": true
   },
   "reviewersFromCodeOwners": true,
-  "rangeStrategy": "bump",
+  "rangeStrategy": "pin",
   "packageRules": [
     {
       "groupName": "devDependencies",
-      "matchDepTypes": ["devDependencies"],
-      "rangeStrategy": "bump"
+      "matchDepTypes": ["devDependencies"]
     },
     {
       "groupName": "dependencies",
@@ -36,15 +35,18 @@
     },
     {
       "groupName": "eslint",
-      "matchPackagePrefixes": [
-        "@typescript-eslint/",
-        "@eslint-types/",
-        "eslint"
+      "matchPackageNames": [
+        "@eslint-types/**",
+        "@eslint/**",
+        "eslint",
+        "eslint-**",
+        "@typescript-eslint/**",
+        "typescript-eslint"
       ]
     },
     {
       "groupName": "vitest",
-      "matchPackagePrefixes": ["@vitest/", "vitest"]
+      "matchPackageNames": ["@vitest/**", "vitest"]
     },
     {
       "groupName": "prettier",
