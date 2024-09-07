@@ -1,14 +1,30 @@
 import { resolve } from 'node:path';
-import { URL, fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
-const __dirname: string = fileURLToPath(new URL('.', import.meta.url));
-
+// https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
     alias: {
-      src: resolve(__dirname, './src'),
-      tests: resolve(__dirname, './tests'),
+      src: resolve(import.meta.dirname, './src'),
+      tests: resolve(import.meta.dirname, './tests'),
     },
+  },
+  test: {
+    coverage: {
+      all: true,
+      provider: 'v8',
+      reporter: ['clover', 'cobertura', 'json-summary', 'json', 'lcov', 'text'],
+      include: ['src'],
+      reportOnFailure: true,
+      thresholds: {
+        lines: 90,
+        statements: 90,
+        functions: 90,
+        branches: 90,
+      },
+    },
+    reporters: process.env.CI_PREFLIGHT
+      ? ['basic', 'github-actions']
+      : ['basic'],
   },
 });
