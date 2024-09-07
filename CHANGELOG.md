@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/3.0.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/3.1.0...main)
+
+# 3.1.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/3.0.0...3.1.0)
+
+- Add option to set indent depth of closing brackets ([#502])
+- Fix class attributes not counting towards attribute wrapping ([#503])
+
+[#502]: https://github.com/prettier/plugin-pug/pull/502
+[#503]: https://github.com/prettier/plugin-pug/pull/503
 
 # 3.0.0
 
