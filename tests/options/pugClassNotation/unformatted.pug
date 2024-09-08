@@ -14,3 +14,16 @@ input.bar.baz(
 .bar foo
 - var code = "ma-2 px-1";
 div(class=code)
+div.foo
+div(attribute="value").foo
+div(attribute="value" class="bar").foo
+div(attribute="value" class="bar").foo.baz
+div(
+  attribute="value"
+  class="bar"
+).foo.baz
+div.foo(attribute="value" class="bar").baz
+div: span.foo
+div: span(class="foo")
+div.foo: span.bar(class="baz").foo
+div.foo(class="bar").baz: h1.foo(class="bar").baz Let's really #[span.foo(class="bar").baz get nasty]!
