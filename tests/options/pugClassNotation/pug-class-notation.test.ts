@@ -4,13 +4,13 @@ import { describe, expect, it } from 'vitest';
 describe('Options', () => {
   describe('pugClassNotation', () => {
     it('should keep classes as is', async () => {
-      const { actual, code } = await compareFiles(import.meta.url, {
-        target: null,
+      const { actual, expected } = await compareFiles(import.meta.url, {
+        target: 'formatted-as-is.pug',
         formatOptions: {
           pugClassNotation: 'as-is',
         },
       });
-      expect(actual).toBe(code);
+      expect(actual).toBe(expected);
     });
 
     it('should keep classes as literals', async () => {
