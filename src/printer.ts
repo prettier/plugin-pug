@@ -1271,6 +1271,14 @@ export class PugPrinter {
     return result;
   }
 
+  /**
+   * Processes the class token and appends the class name to the result.
+   * 
+   * This method handles the class token by either converting it to an attribute
+   * or appending it directly to the result based on the `pugClassNotation` option.
+   * 
+   * @param token - The class token to process.
+   */
   private class(token: ClassToken): void {
     if (this.options.pugClassNotation === 'attribute') {
       this.classLiteralToAttribute.push(token.val);
