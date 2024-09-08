@@ -1271,33 +1271,38 @@ export class PugPrinter {
     return result;
   }
 
-  /**
-   * Processes the class token and appends the class name to the result.
-   * 
-   * This method handles the class token by either converting it to an attribute
-   * or appending it directly to the result based on the `pugClassNotation` option.
-   * 
-   * @param token - The class token to process.
-   */
   private class(token: ClassToken): void {
     if (this.options.pugClassNotation === 'attribute') {
       this.classLiteralToAttribute.push(token.val);
+
+      // An extra div should be printed if...
       if (
-        this.previousToken?.type !== 'tag' &&
-        this.previousToken?.type !== 'class'
+        // ...the previous token indicates that this was the first class literal and thus a div did not previously exist...
+        (this.previousToken?.type !== 'tag' &&
+          this.previousToken?.type !== 'class' &&
+          this.previousToken?.type !== 'end-attributes') ||
+        // ...OR the previous token is a div that will be removed because of the no explicit divs rule.
+        (this.previousToken?.type === 'tag' &&
+          this.previousToken.val === 'div' &&
+          this.nextToken?.type !== 'attribute' &&
+          !this.options.pugExplicitDiv)
       ) {
         this.result += `${this.computedIndent}div`;
       }
+
       if (
         this.nextToken &&
-        ['text', 'newline', 'indent', 'outdent', 'eos'].includes(
+        ['text', 'newline', 'indent', 'outdent', 'eos', ':'].includes(
           this.nextToken.type,
         )
       ) {
+        // Copy and clear the class literals list.
         const classes: string[] = this.classLiteralToAttribute.splice(
           0,
           this.classLiteralToAttribute.length,
         );
+
+        // TODO: This does not work if we have already passed the end of the attributes. What to do?
         this.result += `(class=${this.quoteString(classes.join(' '))})`;
         if (this.nextToken.type === 'text') {
           this.result += ' ';
