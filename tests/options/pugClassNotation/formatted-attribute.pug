@@ -10,12 +10,12 @@ div(class="bar") foo
 div(class=code)
 div(class="foo")
 div(attribute="value", class="foo")
-div(attribute="value", class="bar foo")
-div(attribute="value", class="bar foo baz")
-div(attribute="value", class="bar foo baz")
-div(attribute="value", class="bar foo baz")
-div(class="foo bar"): span Text
+div(class="foo bar", attribute="value")
+div(attribute="value", class="foo baz bar")
+div(attribute="value", class="foo baz bar")
+div(attribute="value", class="baz foo bar")
+div(class="bar foo"): span Text
 div: span(class="foo")
 div: span(class="foo")
-div(class="foo"): span(class="bar baz foo")
-div(class="foo bar baz"): h1(class="foo bar baz") Let's really #[span(class="foo bar baz") get nasty]!
+div(class="foo"): span(class="foo bar baz")
+div(class="baz foo bar"): h1(class="baz foo bar") Let's really #[span(class="baz foo bar") get nasty]!

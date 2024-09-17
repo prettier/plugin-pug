@@ -1290,6 +1290,24 @@ export class PugPrinter {
         this.result += `${this.computedIndent}div`;
       }
 
+      // If last token was the end of attributes...
+      // if (this.previousToken?.type === 'end-attributes') {
+      //   // ...and the attributes contained a class attribute...
+      //   const lastClassIndex: number = this.tokens
+      //     .slice(0, this.currentIndex)
+      //     .findIndex((t) => t.type === 'attribute' && t.name === 'class');
+
+      //   if (lastClassIndex > -1) {
+      //     // ...then find the last class attribute and insert the new class into it.
+      //     const position: number = this.result.lastIndexOf('class=') + 7;
+      //     this.result = [
+      //       this.result.slice(0, position),
+      //       `${token.val} `,
+      //       this.result.slice(position),
+      //     ].join('');
+      //   }
+      // }
+
       if (
         this.nextToken &&
         ['text', 'newline', 'indent', 'outdent', 'eos', ':'].includes(
@@ -1302,8 +1320,37 @@ export class PugPrinter {
           this.classLiteralToAttribute.length,
         );
 
-        // TODO: This does not work if we have already passed the end of the attributes. What to do?
-        this.result += `(class=${this.quoteString(classes.join(' '))})`;
+        // If the last result character was a )...
+        if (this.result.at(-1) === ')') {
+          // Look for 'class=' that is before the last '('...
+          const attributesStartIndex: number = this.result.lastIndexOf('(');
+          const lastClassIndex: number = this.result.indexOf(
+            'class=',
+            attributesStartIndex,
+          );
+
+          // If a 'class=' is found...
+          // eslint-disable-next-line unicorn/prefer-ternary -- This is more readable without ternaries.
+          if (lastClassIndex > -1) {
+            // ...then insert the new class into it.
+            this.result = [
+              this.result.slice(0, lastClassIndex + 7),
+              classes.join(' '),
+              ' ',
+              this.result.slice(lastClassIndex + 7),
+            ].join('');
+          } else {
+            // ...otherwise add a new class attribute into the existing attributes.
+            this.result =
+              this.result.slice(0, -1) +
+              `${this.neverUseAttributeSeparator ? ' ' : ', '}class=${this.quoteString(classes.join(' '))})`;
+          }
+          // ...or if the element has no attributes...
+        } else {
+          // Start a new attribute list with the class attribute in it.
+          this.result += `(class=${this.quoteString(classes.join(' '))})`;
+        }
+
         if (this.nextToken.type === 'text') {
           this.result += ' ';
         }
