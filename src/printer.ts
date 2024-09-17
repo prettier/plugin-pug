@@ -1290,24 +1290,6 @@ export class PugPrinter {
         this.result += `${this.computedIndent}div`;
       }
 
-      // If last token was the end of attributes...
-      // if (this.previousToken?.type === 'end-attributes') {
-      //   // ...and the attributes contained a class attribute...
-      //   const lastClassIndex: number = this.tokens
-      //     .slice(0, this.currentIndex)
-      //     .findIndex((t) => t.type === 'attribute' && t.name === 'class');
-
-      //   if (lastClassIndex > -1) {
-      //     // ...then find the last class attribute and insert the new class into it.
-      //     const position: number = this.result.lastIndexOf('class=') + 7;
-      //     this.result = [
-      //       this.result.slice(0, position),
-      //       `${token.val} `,
-      //       this.result.slice(position),
-      //     ].join('');
-      //   }
-      // }
-
       if (
         this.nextToken &&
         ['text', 'newline', 'indent', 'outdent', 'eos', ':'].includes(
