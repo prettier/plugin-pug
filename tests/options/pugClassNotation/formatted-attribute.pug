@@ -8,3 +8,14 @@ div(class="baz")
 div(class="bar") foo
 - var code = "ma-2 px-1";
 div(class=code)
+div(class="foo")
+div(attribute="value", class="foo")
+div(class="foo bar", attribute="value")
+div(attribute="value", class="foo baz bar")
+div(attribute="value", class="foo baz bar")
+div(attribute="value", class="baz foo bar")
+div(class="bar foo"): span Text
+div: span(class="foo")
+div: span(class="foo")
+div(class="foo"): span(class="foo bar baz")
+div(class="baz foo bar"): h1(class="baz foo bar") Let's really #[span(class="baz foo bar") get nasty]!
