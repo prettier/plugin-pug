@@ -85,8 +85,8 @@ importers:
         specifier: 5.6.3
         version: 5.6.3
       vite:
-        specifier: 5.4.3
-        version: 5.4.3(@types/node@20.16.11)
+        specifier: 5.4.6
+        version: 5.4.6(@types/node@20.16.11)
       vitepress:
         specifier: 1.4.0
         version: 1.4.0(@algolia/client-search@4.24.0)(@types/node@20.16.11)(postcss@8.4.47)(search-insights@2.17.1)(typescript@5.6.3)
@@ -2054,10 +2054,6 @@ packages:
       yaml:
         optional: true
 
-  postcss@8.4.45:
-    resolution: {integrity: sha512-7KTLTdzdZZYscUc65XmjFiB73vBhBfbPztCYdUNvlaso9PrzjzcmjqBPR0lNGkcVlcO4BjiO5rK/qNz+XAen1Q==}
-    engines: {node: ^10 || ^12 || >=14}
-
   postcss@8.4.47:
     resolution: {integrity: sha512-56rxCq7G/XfB4EkXq9Egn5GCqugWvDFjafDOThIdMBsI15iqPqR5r15TfSr1YPYeEI19YeaXMCbY6u88Y76GLQ==}
     engines: {node: ^10 || ^12 || >=14}
@@ -2511,8 +2507,8 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
-  vite@5.4.3:
-    resolution: {integrity: sha512-IH+nl64eq9lJjFqU+/yrRnrHPVTlgy42/+IzbOdaFDVlyLgI/wDlf+FCobXLX1cT0X5+7LMyH1mIy2xJdLfo8Q==}
+  vite@5.4.6:
+    resolution: {integrity: sha512-IeL5f8OO5nylsgzd9tq4qD2QqI0k2CQLGrWD0rCN0EQJZpBK5vJAx0I+GDkMOXxQX/OfFHMuLIx6ddAxGX/k+Q==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -3293,13 +3289,13 @@ snapshots:
       chai: 5.1.1
       tinyrainbow: 1.2.0
 
-  '@vitest/mocker@2.1.2(@vitest/spy@2.1.2)(vite@5.4.3(@types/node@20.16.11))':
+  '@vitest/mocker@2.1.2(@vitest/spy@2.1.2)(vite@5.4.6(@types/node@20.16.11))':
     dependencies:
       '@vitest/spy': 2.1.2
       estree-walker: 3.0.3
       magic-string: 0.30.11
     optionalDependencies:
-      vite: 5.4.3(@types/node@20.16.11)
+      vite: 5.4.6(@types/node@20.16.11)
 
   '@vitest/pretty-format@2.1.2':
     dependencies:
@@ -3332,7 +3328,7 @@ snapshots:
       '@vue/shared': 3.5.12
       entities: 4.5.0
       estree-walker: 2.0.2
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   '@vue/compiler-dom@3.5.12':
     dependencies:
@@ -3349,7 +3345,7 @@ snapshots:
       estree-walker: 2.0.2
       magic-string: 0.30.11
       postcss: 8.4.47
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.12':
     dependencies:
@@ -4683,12 +4679,6 @@ snapshots:
     optionalDependencies:
       postcss: 8.4.47
 
-  postcss@8.4.45:
-    dependencies:
-      nanoid: 3.3.7
-      picocolors: 1.1.0
-      source-map-js: 1.2.0
-
   postcss@8.4.47:
     dependencies:
       nanoid: 3.3.7
@@ -5183,7 +5173,7 @@ snapshots:
       cac: 6.7.14
       debug: 4.3.7
       pathe: 1.1.2
-      vite: 5.4.3(@types/node@20.16.11)
+      vite: 5.4.6(@types/node@20.16.11)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -5195,10 +5185,10 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.4.3(@types/node@20.16.11):
+  vite@5.4.6(@types/node@20.16.11):
     dependencies:
       esbuild: 0.21.5
-      postcss: 8.4.45
+      postcss: 8.4.47
       rollup: 4.21.2
     optionalDependencies:
       '@types/node': 20.16.11
@@ -5207,7 +5197,7 @@ snapshots:
   vite@5.4.8(@types/node@20.16.11):
     dependencies:
       esbuild: 0.21.5
-      postcss: 8.4.45
+      postcss: 8.4.47
       rollup: 4.21.2
     optionalDependencies:
       '@types/node': 20.16.11
@@ -5265,7 +5255,7 @@ snapshots:
   vitest@2.1.2(@types/node@20.16.11):
     dependencies:
       '@vitest/expect': 2.1.2
-      '@vitest/mocker': 2.1.2(@vitest/spy@2.1.2)(vite@5.4.3(@types/node@20.16.11))
+      '@vitest/mocker': 2.1.2(@vitest/spy@2.1.2)(vite@5.4.6(@types/node@20.16.11))
       '@vitest/pretty-format': 2.1.2
       '@vitest/runner': 2.1.2
       '@vitest/snapshot': 2.1.2
@@ -5280,7 +5270,7 @@ snapshots:
       tinyexec: 0.3.0
       tinypool: 1.0.1
       tinyrainbow: 1.2.0
-      vite: 5.4.3(@types/node@20.16.11)
+      vite: 5.4.6(@types/node@20.16.11)
       vite-node: 2.1.2(@types/node@20.16.11)
       why-is-node-running: 2.3.0
     optionalDependencies:
