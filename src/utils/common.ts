@@ -18,10 +18,12 @@ export function previousTagToken(
     if (!token) {
       return;
     }
+
     if (token.type === 'tag') {
       return token;
     }
   }
+
   return;
 }
 
@@ -41,6 +43,7 @@ export function previousNormalAttributeToken(
     if (!token || token.type === 'start-attributes') {
       return;
     }
+
     if (
       token.type === 'attribute' &&
       token.name !== 'class' &&
@@ -49,6 +52,7 @@ export function previousNormalAttributeToken(
       return token;
     }
   }
+
   return;
 }
 
@@ -68,10 +72,12 @@ export function previousTypeAttributeToken(
     if (!token || token.type === 'start-attributes' || token.type === 'tag') {
       return;
     }
+
     if (token.type === 'attribute' && token.name === 'type') {
       return token;
     }
   }
+
   return;
 }
 
@@ -186,6 +192,7 @@ export function isQuoted(val: string): boolean {
     const regex: RegExp = new RegExp(`${val[0]}(?<!\\\\${val[0]})`);
     return !regex.test(val.slice(1, -1));
   }
+
   return false;
 }
 
@@ -250,12 +257,16 @@ export function makeString(
       if (escaped === otherQuote) {
         return escaped;
       }
+
       if (quote === enclosingQuote) {
         return `\\${quote}`;
       }
+
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (quote) {
         return quote;
       }
+
       return unescapeUnnecessaryEscapes &&
         /^[^\n\r"'0-7\\bfnrt-vx\u2028\u2029]$/.test(escaped)
         ? escaped
@@ -287,6 +298,7 @@ export function detectDangerousQuoteCombination(
   // Index of backtick
   const qb: number = code.indexOf('`');
 
+  // eslint-disable-next-line unicorn/consistent-existence-index-check
   if (q1 >= 0 && q2 >= 0 && q2 > q1 && (qb < 0 || q1 < qb)) {
     logger.log({ code, quotes, otherQuotes, q1, q2, qb });
     return true;
@@ -319,5 +331,6 @@ export function detectFramework(): PugFramework {
   } catch {
     return 'auto';
   }
+
   return 'auto';
 }

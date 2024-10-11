@@ -48,6 +48,7 @@ export function resolvePugAttributeSeparatorOption(
       return pugAttributeSeparator;
     }
   }
+
   throw new Error(
     `Invalid option for pugAttributeSeparator. Found '${pugAttributeSeparator}'. Possible options: 'always', 'as-needed' or 'none'`,
   );

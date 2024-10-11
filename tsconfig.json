@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
+    "target": "ESNext",
     "moduleResolution": "Bundler",
+    "module": "ESNext",
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "declaration": true,
     "stripInternal": true,
+    "verbatimModuleSyntax": true,
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
     "removeComments": true,

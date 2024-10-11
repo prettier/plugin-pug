@@ -33,7 +33,7 @@ export class Logger implements ILogger {
    * @param value The value to check.
    * @returns `true` if the given value is a supported log level, otherwise `false`.
    */
-  public static isSupportedLogLevel(value: any): value is LogLevel {
+  public static isSupportedLogLevel(value: unknown): value is LogLevel {
     return (
       typeof value === 'string' &&
       (value === 'debug' ||

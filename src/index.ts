@@ -57,6 +57,7 @@ export const plugin: Plugin<AstPathStackEntry> = {
             '$1',
           );
         }
+
         const content: string = trimmedAndAlignedContent;
 
         const tokens: Token[] = lex(content);

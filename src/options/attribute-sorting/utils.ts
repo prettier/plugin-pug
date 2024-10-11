@@ -45,6 +45,7 @@ export function compareAttributeToken(
     if (beginning > 0) {
       return -1;
     }
+
     if (beginning < 0) {
       return 1;
     }
@@ -62,6 +63,7 @@ export function compareAttributeToken(
     if (end > 0) {
       return 1;
     }
+
     if (end < 0) {
       return -1;
     }
@@ -72,18 +74,23 @@ export function compareAttributeToken(
       if (aName > bName) {
         return 1;
       }
+
       if (aName < bName) {
         return -1;
       }
+
       break;
     }
+
     case 'desc': {
       if (aName > bName) {
         return -1;
       }
+
       if (aName < bName) {
         return 1;
       }
+
       break;
     }
   }
