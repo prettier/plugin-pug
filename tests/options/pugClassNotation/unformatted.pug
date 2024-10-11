@@ -28,3 +28,34 @@ div: span.foo
 div: span(class="foo")
 div.foo: span.bar(class="baz").foo
 div.foo(class="bar").baz: h1.foo(class="bar").baz Let's really #[span.foo(class="bar").baz get nasty]!
+.indent
+  input.bar.baz(class="foo")
+  input.bar.baz(
+    readonly,
+    class="foo",
+    name="test-input",
+    type="password",
+    value="Hello World"
+  )
+  .foo bar
+  .foo(bar="baz") Hello World
+  .foo
+    div(class="bar") baz
+  .baz
+  .bar foo
+  - var code = "ma-2 px-1";
+  div(class=code)
+  div.foo
+  div(attribute="value").foo
+  div(class="bar", attribute="value").foo
+  div(attribute="value", class="bar").foo.baz
+  div(
+    attribute="value"
+    class="bar"
+  ).foo.baz
+  div.foo(attribute="value" class="bar").baz
+  div(class="foo").bar: span Text
+  div: span.foo
+  div: span(class="foo")
+  div.foo: span.bar(class="baz").foo
+  div.foo(class="bar").baz: h1.foo(class="bar").baz Let's really #[span.foo(class="bar").baz get nasty]!

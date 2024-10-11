@@ -1277,12 +1277,15 @@ export class PugPrinter {
 
       // An extra div should be printed if...
       if (
+        this.previousToken === undefined ||
         // ...the previous token indicates that this was the first class literal and thus a div did not previously exist...
-        (this.previousToken?.type !== 'tag' &&
-          this.previousToken?.type !== 'class' &&
-          this.previousToken?.type !== 'end-attributes') ||
+        this.checkTokenType(
+          this.previousToken,
+          ['tag', 'class', 'end-attributes'],
+          true,
+        ) ||
         // ...OR the previous token is a div that will be removed because of the no explicit divs rule.
-        (this.previousToken?.type === 'tag' &&
+        (this.previousToken.type === 'tag' &&
           this.previousToken.val === 'div' &&
           this.nextToken?.type !== 'attribute' &&
           !this.options.pugExplicitDiv)
@@ -1291,10 +1294,14 @@ export class PugPrinter {
       }
 
       if (
-        this.nextToken &&
-        ['text', 'newline', 'indent', 'outdent', 'eos', ':'].includes(
-          this.nextToken.type,
-        )
+        this.checkTokenType(this.nextToken, [
+          'text',
+          'newline',
+          'indent',
+          'outdent',
+          'eos',
+          ':',
+        ])
       ) {
         // Copy and clear the class literals list.
         const classes: string[] = this.classLiteralToAttribute.splice(
@@ -1333,7 +1340,7 @@ export class PugPrinter {
           this.result += `(class=${this.quoteString(classes.join(' '))})`;
         }
 
-        if (this.nextToken.type === 'text') {
+        if (this.nextToken?.type === 'text') {
           this.result += ' ';
         }
       }

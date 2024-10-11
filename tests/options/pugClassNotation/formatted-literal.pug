@@ -24,3 +24,30 @@ div: span.foo
 div: span.foo
 .foo: span.bar.baz.foo
 .foo.bar.baz: h1.foo.bar.baz Let's really #[span.foo.bar.baz get nasty]!
+.indent
+  input.bar.baz.foo
+  input.bar.baz.foo(
+    readonly,
+    name="test-input",
+    type="password",
+    value="Hello World"
+  )
+  .foo bar
+  .foo(bar="baz") Hello World
+  .foo
+    .bar baz
+  .baz
+  .bar foo
+  - var code = "ma-2 px-1";
+  div(class=code)
+  .foo
+  div.foo(attribute="value")
+  .bar.foo(attribute="value")
+  .bar.foo.baz(attribute="value")
+  .bar.foo.baz(attribute="value")
+  .foo.bar.baz(attribute="value")
+  .foo.bar: span Text
+  div: span.foo
+  div: span.foo
+  .foo: span.bar.baz.foo
+  .foo.bar.baz: h1.foo.bar.baz Let's really #[span.foo.bar.baz get nasty]!
