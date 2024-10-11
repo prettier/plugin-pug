@@ -55,17 +55,21 @@ export function formatPugCommentPreserveSpaces(
       ) {
         result += ' ';
       }
+
       result += input.slice(firstNonSpace).trim().replaceAll(/\s\s+/g, ' ');
       return result;
     }
+
     case 'trim-all': {
       let result: string = input.trim();
       result = result.replaceAll(/\s\s+/g, ' ');
       if (!pipeless && input[0] === ' ') {
         result = ` ${result}`;
       }
+
       return result;
     }
+
     case 'keep-all':
     default: {
       // Don't touch comment

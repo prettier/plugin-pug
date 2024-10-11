@@ -30,6 +30,7 @@ export function formatEmptyAttribute(
     if (token.val === true) {
       token.val = '""';
     }
+
     return;
   }
 
@@ -42,12 +43,15 @@ export function formatEmptyAttribute(
       if (token.val === true) {
         token.val = '""';
       }
+
       break;
     }
+
     case 'none': {
       if (token.val === '""' || token.val === "''") {
         token.val = true;
       }
+
       break;
     }
   }
