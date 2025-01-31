@@ -89,7 +89,7 @@
     "prettier-plugin-packagejson": "2.5.8",
     "rimraf": "6.0.1",
     "tsup": "8.3.6",
-    "typescript": "5.6.3",
+    "typescript": "5.7.3",
     "typescript-eslint": "8.8.1",
     "vite": "6.0.11",
     "vitepress": "1.6.3",
