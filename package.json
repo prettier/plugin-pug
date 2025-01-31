@@ -11,7 +11,7 @@
     "docs:dev": "vitepress dev docs",
     "docs:serve": "vitepress serve docs --port 5173",
     "format": "prettier --cache --write .",
-    "lint": "eslint --cache --cache-strategy content --flag unstable_ts_config .",
+    "lint": "eslint --cache --cache-strategy content .",
     "ts-check": "tsc",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",

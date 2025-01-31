@@ -31,9 +31,6 @@
     "vuepress",
     "yaml"
   ],
-  "eslint.options": {
-    "flags": ["unstable_ts_config"]
-  },
   "eslint.validate": ["javascript", "typescript"],
   "files.associations": {
     "*.json5": "jsonc"
