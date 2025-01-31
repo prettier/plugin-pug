@@ -691,7 +691,8 @@ export class PugPrinter {
     val = await format(val, { parser, ...options });
     val =
       this.quotes === '"'
-        ? val.replaceAll(/(?<!\\)"/g, '\\"')
+        ? // Escape double quotes, but only if they are not already escaped
+          val.replaceAll(/(?<!\\)((?:\\\\)*)"/g, '$1\\"')
         : val.replaceAll("'", "\\'");
     val = unwrapLineFeeds(val);
     if (trimTrailingSemicolon && val.at(-1) === ';') {
