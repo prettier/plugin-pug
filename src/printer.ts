@@ -324,7 +324,7 @@ export class PugPrinter {
    */
   public async build(): Promise<string> {
     if (logger.isDebugEnabled()) {
-      logger.debug('[PugPrinter]:', JSON.stringify(this.tokens));
+      logger.debug('[PugPrinter:build]:', JSON.stringify(this.tokens));
     }
 
     const results: string[] = [];
@@ -336,7 +336,7 @@ export class PugPrinter {
 
     let token: Token | null = this.getNextToken();
     while (token) {
-      logger.debug('[PugPrinter]:', JSON.stringify(token));
+      logger.debug('[PugPrinter:build]:', JSON.stringify(token));
       try {
         switch (token.type) {
           case 'attribute':
@@ -691,7 +691,7 @@ export class PugPrinter {
     val = await format(val, { parser, ...options });
     val =
       this.quotes === '"'
-        ? val.replaceAll('"', '\\"')
+        ? val.replaceAll(/(?<!\\)"/g, '\\"')
         : val.replaceAll("'", "\\'");
     val = unwrapLineFeeds(val);
     if (trimTrailingSemicolon && val.at(-1) === ';') {
