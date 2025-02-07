@@ -1,6 +1,22 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/3.1.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/3.2.1...main)
+
+# 3.2.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/3.2.0...3.2.1)
+
+- Fix special case for escaped double quotes in Vue expressions ([#529])
+
+[#529]: https://github.com/prettier/plugin-pug/pull/529
+
+# 3.2.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/3.1.0...3.2.0)
+
+- Multiple fixes for class attribute conversions ([#509])
+
+[#509]: https://github.com/prettier/plugin-pug/pull/509
 
 # 3.1.0
 
