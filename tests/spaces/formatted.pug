@@ -9,10 +9,8 @@ v-btn(
   :loading="saving"
 )
   v-icon save
-  |
   | {{ $t("mylangkeys.crud.save") }}
 
 div
   span(v-if="condition")
-    |
     | ({{ content }})

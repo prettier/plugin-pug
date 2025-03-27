@@ -1680,10 +1680,6 @@ export class PugPrinter {
       switch (this.previousToken?.type) {
         case 'newline': {
           result += this.indentString.repeat(this.indentLevel);
-          if (/^ .+$/.test(val)) {
-            result += '|\n';
-            result += this.indentString.repeat(this.indentLevel);
-          }
 
           result += '|';
           if (
@@ -1699,10 +1695,6 @@ export class PugPrinter {
         case 'indent':
         case 'outdent': {
           result += this.computedIndent;
-          if (/^ .+$/.test(val)) {
-            result += '|\n';
-            result += this.indentString.repeat(this.indentLevel);
-          }
 
           result += '|';
           if (/.*\S.*/.test(token.val)) {
