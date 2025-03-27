@@ -1697,7 +1697,10 @@ export class PugPrinter {
           result += this.computedIndent;
 
           result += '|';
-          if (/.*\S.*/.test(token.val)) {
+          if (
+            /.*\S.*/.test(token.val) ||
+            this.nextToken?.type === 'start-pug-interpolation'
+          ) {
             result += ' ';
           }
 
@@ -2038,6 +2041,7 @@ export class PugPrinter {
   ): string {
     let result: string = '';
     if (
+      this.pipelessText &&
       this.tokens[this.currentIndex - 2]?.type === 'newline' &&
       this.previousToken?.type === 'text' &&
       this.previousToken.val.trim().length === 0
