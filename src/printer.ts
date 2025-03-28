@@ -127,7 +127,6 @@ export interface PugPrinterOptions {
   readonly pugSemi: boolean;
   readonly bracketSameLine: boolean;
   readonly pugBracketSameLine: boolean;
-
   readonly pugAttributeSeparator: PugAttributeSeparator;
   readonly pugCommentPreserveSpaces: PugCommentPreserveSpaces;
   readonly pugSortAttributes: PugSortAttributes;
@@ -144,6 +143,7 @@ export interface PugPrinterOptions {
   readonly pugFramework: PugFramework;
   readonly pugExplicitDiv: boolean;
   readonly pugPreserveAttributeBrackets: boolean;
+  readonly pugPreserveWhitespace: boolean;
   readonly pugClosingBracketIndentDepth: PugClosingBracketIndentDepth;
 }
 
@@ -1680,6 +1680,10 @@ export class PugPrinter {
       switch (this.previousToken?.type) {
         case 'newline': {
           result += this.indentString.repeat(this.indentLevel);
+          if (this.options.pugPreserveWhitespace && /^ .+$/.test(val)) {
+            result += '|\n';
+            result += this.indentString.repeat(this.indentLevel);
+          }
 
           result += '|';
           if (
@@ -1695,6 +1699,10 @@ export class PugPrinter {
         case 'indent':
         case 'outdent': {
           result += this.computedIndent;
+          if (this.options.pugPreserveWhitespace && /^ .+$/.test(val)) {
+            result += '|\n';
+            result += this.indentString.repeat(this.indentLevel);
+          }
 
           result += '|';
           if (

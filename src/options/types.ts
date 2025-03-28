@@ -64,4 +64,6 @@ export interface PugParserOptions
   pugFramework: PugFramework;
 
   pugPreserveAttributeBrackets: boolean;
+
+  pugPreserveWhitespace: boolean;
 }

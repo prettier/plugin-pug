@@ -32,6 +32,7 @@ import {
   PUG_WRAP_ATTRIBUTES_PATTERN,
   PUG_WRAP_ATTRIBUTES_THRESHOLD,
 } from './pug-wrap-attributes';
+import { PUG_PRESERVE_WHITESPACE } from './pug-preserve-whitespace';
 
 /**
  * All supported options by `@prettier/plugin-pug`.
@@ -62,6 +63,7 @@ export const options: SupportOptions = {
   pugSingleFileComponentIndentation: PUG_SINGLE_FILE_COMPONENT_INDENTATION,
   pugFramework: PUG_FRAMEWORK,
   pugPreserveAttributeBrackets: PUG_PRESERVE_ATTRIBUTE_BRACKETS,
+  pugPreserveWhitespace: PUG_PRESERVE_WHITESPACE,
 };
 
 export { CATEGORY_PUG } from './constants';
