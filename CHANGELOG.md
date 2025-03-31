@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/3.2.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/3.3.0...main)
+
+# 3.3.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/3.2.1...3.3.0)
+
+- Add `pugPreserveWhitespace` option ([#567])
+
+[#567]: https://github.com/prettier/plugin-pug/pull/567
 
 # 3.2.1
 
