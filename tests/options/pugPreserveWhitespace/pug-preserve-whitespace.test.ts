@@ -25,10 +25,10 @@ describe('Options', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should not preserve whitespace by default', async () => {
+    it('should preserve whitespace by default', async () => {
       const { actual, expected } = await compareFiles(import.meta.url, {
         source: 'unformatted.pug',
-        target: 'formatted-false.pug',
+        target: 'formatted-true.pug',
       });
       expect(actual).toBe(expected);
     });

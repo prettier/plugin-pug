@@ -151,7 +151,7 @@ declare module 'prettier' {
     /**
      * Preserve additional whitespace in text.
      *
-     * @default false
+     * @default true
      */
     pugPreserveWhitespace?: PugParserOptions['pugPreserveWhitespace'];
   }

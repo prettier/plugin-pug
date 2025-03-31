@@ -554,7 +554,7 @@ Define if additional whitespace should be preserved in text.
 ### Options
 
 **Type:** `boolean`  
-**Default:** `false`
+**Default:** `true`
 
 #### `false`
 
