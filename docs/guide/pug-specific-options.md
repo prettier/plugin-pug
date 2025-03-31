@@ -543,6 +543,54 @@ Output:
 
 ---
 
+## Preserve whitespace
+
+`pugPreserveWhitespace`
+
+### Description
+
+Define if additional whitespace should be preserved in text.
+
+### Options
+
+**Type:** `boolean`  
+**Default:** `true`
+
+#### `false`
+
+Input:
+
+```pug
+p
+  |  whitespace gets removed
+```
+
+Output:
+
+```pug
+p
+  | whitespace gets removed
+```
+
+#### `true`
+
+Input:
+
+```pug
+p
+  |  whitespace does not get removed
+```
+
+Output:
+
+```pug
+p
+  |
+  | whitespace does not get removed
+```
+
+---
+
 ## Indent Closing Bracket in Multiline Elements
 
 `pugClosingBracketIndentDepth`

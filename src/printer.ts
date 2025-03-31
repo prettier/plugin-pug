@@ -127,7 +127,6 @@ export interface PugPrinterOptions {
   readonly pugSemi: boolean;
   readonly bracketSameLine: boolean;
   readonly pugBracketSameLine: boolean;
-
   readonly pugAttributeSeparator: PugAttributeSeparator;
   readonly pugCommentPreserveSpaces: PugCommentPreserveSpaces;
   readonly pugSortAttributes: PugSortAttributes;
@@ -144,6 +143,7 @@ export interface PugPrinterOptions {
   readonly pugFramework: PugFramework;
   readonly pugExplicitDiv: boolean;
   readonly pugPreserveAttributeBrackets: boolean;
+  readonly pugPreserveWhitespace: boolean;
   readonly pugClosingBracketIndentDepth: PugClosingBracketIndentDepth;
 }
 
@@ -1680,7 +1680,7 @@ export class PugPrinter {
       switch (this.previousToken?.type) {
         case 'newline': {
           result += this.indentString.repeat(this.indentLevel);
-          if (/^ .+$/.test(val)) {
+          if (this.options.pugPreserveWhitespace && /^ .+$/.test(val)) {
             result += '|\n';
             result += this.indentString.repeat(this.indentLevel);
           }
@@ -1699,13 +1699,16 @@ export class PugPrinter {
         case 'indent':
         case 'outdent': {
           result += this.computedIndent;
-          if (/^ .+$/.test(val)) {
+          if (this.options.pugPreserveWhitespace && /^ .+$/.test(val)) {
             result += '|\n';
             result += this.indentString.repeat(this.indentLevel);
           }
 
           result += '|';
-          if (/.*\S.*/.test(token.val)) {
+          if (
+            /.*\S.*/.test(token.val) ||
+            this.nextToken?.type === 'start-pug-interpolation'
+          ) {
             result += ' ';
           }
 
@@ -2046,6 +2049,7 @@ export class PugPrinter {
   ): string {
     let result: string = '';
     if (
+      this.pipelessText &&
       this.tokens[this.currentIndex - 2]?.type === 'newline' &&
       this.previousToken?.type === 'text' &&
       this.previousToken.val.trim().length === 0

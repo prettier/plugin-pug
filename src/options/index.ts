@@ -27,6 +27,7 @@ import { PUG_EXPLICIT_DIV } from './pug-explicit-div';
 import { PUG_FRAMEWORK } from './pug-framework';
 import { PUG_ID_NOTATION } from './pug-id-notation';
 import { PUG_PRESERVE_ATTRIBUTE_BRACKETS } from './pug-preserve-attribute-brackets';
+import { PUG_PRESERVE_WHITESPACE } from './pug-preserve-whitespace';
 import { PUG_SINGLE_FILE_COMPONENT_INDENTATION } from './pug-single-file-component-indentation';
 import {
   PUG_WRAP_ATTRIBUTES_PATTERN,
@@ -62,6 +63,7 @@ export const options: SupportOptions = {
   pugSingleFileComponentIndentation: PUG_SINGLE_FILE_COMPONENT_INDENTATION,
   pugFramework: PUG_FRAMEWORK,
   pugPreserveAttributeBrackets: PUG_PRESERVE_ATTRIBUTE_BRACKETS,
+  pugPreserveWhitespace: PUG_PRESERVE_WHITESPACE,
 };
 
 export { CATEGORY_PUG } from './constants';
