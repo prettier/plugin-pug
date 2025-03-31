@@ -74,7 +74,6 @@
     "benchmark": "2.1.4",
     "eslint": "9.21.0",
     "eslint-config-prettier": "10.0.2",
-    "eslint-define-config": "2.1.0",
     "eslint-gitignore": "0.1.0",
     "eslint-plugin-inclusive-language": "2.2.1",
     "eslint-plugin-jsdoc": "50.6.3",
