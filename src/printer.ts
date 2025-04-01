@@ -1796,7 +1796,8 @@ export class PugPrinter {
   }
 
   private async code(token: CodeToken): Promise<string> {
-    let result: string = this.computedIndent;
+    let result: string =
+      this.previousToken?.type === 'tag' ? '' : this.computedIndent;
     if (!token.mustEscape && token.buffer) {
       result += '!';
     }
