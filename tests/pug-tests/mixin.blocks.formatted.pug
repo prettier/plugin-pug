@@ -6,19 +6,19 @@ mixin form(method, action)
 
 html
   body
-    +form('GET', '/search')
+    +form("GET", "/search")
       input(type="text", name="query", placeholder="Search")
       input(type="submit", value="Search")
 
 html
   body
-    +form('POST', '/search')
+    +form("POST", "/search")
       input(type="text", name="query", placeholder="Search")
       input(type="submit", value="Search")
 
 html
   body
-    +form('POST', '/search')
+    +form("POST", "/search")
 
 mixin bar
   #bar

@@ -2091,13 +2091,21 @@ export class PugPrinter {
     return `${this.computedIndent}:${token.val}`;
   }
 
-  private call(token: CallToken): string {
+  private async call(token: CallToken): Promise<string> {
     let result: string = `${this.computedIndent}+${token.val}`;
     let args: string | null = token.args;
     if (args) {
-      args = args.trim();
-      args = args.replaceAll(/\s\s+/g, ' ');
-      result += `(${args})`;
+      args = args.trim().replaceAll(/\s\s+/g, ' ');
+      // Place an x at the beginning to preserve brackets,
+      // then remove the x after format.
+      args = await format(`x(${args})`, {
+        parser: 'babel',
+        ...this.codeInterpolationOptions,
+        semi: false,
+      });
+      args = args.trim().slice(1);
+
+      result += args;
     }
 
     this.currentLineLength += result.length;
@@ -2106,23 +2114,48 @@ export class PugPrinter {
     return result;
   }
 
-  private mixin(token: MixinToken): string {
+  private async mixin(token: MixinToken): Promise<string> {
     let result: string = `${this.computedIndent}mixin ${token.val}`;
     let args: string | null = token.args;
     if (args) {
-      args = args.trim();
-      args = args.replaceAll(/\s\s+/g, ' ');
-      result += `(${args})`;
+      args = args.trim().replaceAll(/\s\s+/g, ' ');
+
+      // Let args act as args of js function during format.
+      args = await format(`function x(${args}) {}`, {
+        parser: 'babel',
+        ...this.codeInterpolationOptions,
+      });
+      args = args.trim().slice(10, -3);
+
+      result += args;
     }
 
     return result;
   }
 
-  private if(token: IfToken): string {
+  private async if(token: IfToken): Promise<string> {
     let result: string = this.computedIndent;
     const match: RegExpExecArray | null = /^!\((.*)\)$/.exec(token.val);
     logger.debug('[PugPrinter]:', match);
-    result += match ? `unless ${match[1]}` : `if ${token.val}`;
+
+    let append: string = 'if ';
+    let code: string | undefined = token.val;
+
+    if (match) {
+      append = 'unless ';
+      code = match[1];
+    }
+
+    result += append;
+
+    if (typeof code === 'string') {
+      code = await format(code, {
+        parser: '__js_expression',
+        ...this.codeInterpolationOptions,
+      });
+    }
+
+    result += String(code).trim();
     return result;
   }
 
@@ -2134,8 +2167,13 @@ export class PugPrinter {
     return `${this.computedIndent}else`;
   }
 
-  private ['&attributes'](token: AndAttributesToken): string {
-    const result: string = `&attributes(${token.val})`;
+  private async ['&attributes'](token: AndAttributesToken): Promise<string> {
+    const code: string = await format(token.val, {
+      parser: '__js_expression',
+      ...this.codeInterpolationOptions,
+    });
+
+    const result: string = `&attributes(${code})`;
     this.currentLineLength += result.length;
     return result;
   }
@@ -2159,13 +2197,21 @@ export class PugPrinter {
     return `${this.computedIndent}${token.val}`;
   }
 
-  private each(token: EachToken): string {
+  private async each(token: EachToken): Promise<string> {
     let result: string = `${this.computedIndent}each ${token.val}`;
+
     if (token.key !== null) {
       result += `, ${token.key}`;
     }
 
-    result += ` in ${token.code}`;
+    const code: string = await format(token.code, {
+      parser: '__js_expression',
+      ...this.codeInterpolationOptions,
+      semi: false,
+    });
+
+    result += ` in ${code}`;
+
     return result;
   }
 
@@ -2181,20 +2227,41 @@ export class PugPrinter {
     }
 
     value = unwrapLineFeeds(value);
-    const code: string = token.code.trim();
+    let code: string = await format(token.code, {
+      parser: '__js_expression',
+      ...this.codeInterpolationOptions,
+      semi: true,
+    });
+    code = code.trim();
+
     return `${this.computedIndent}each ${value} of ${code}`;
   }
 
-  private while(token: WhileToken): string {
-    return `${this.computedIndent}while ${token.val}`;
+  private async while(token: WhileToken): Promise<string> {
+    const code: string = await format(token.val, {
+      parser: '__js_expression',
+      ...this.codeInterpolationOptions,
+    });
+
+    return `${this.computedIndent}while ${code.trim()}`;
   }
 
-  private case(token: CaseToken): string {
-    return `${this.computedIndent}case ${token.val}`;
+  private async case(token: CaseToken): Promise<string> {
+    const code: string = await format(token.val, {
+      parser: '__js_expression',
+      ...this.codeInterpolationOptions,
+    });
+
+    return `${this.computedIndent}case ${code.trim()}`;
   }
 
-  private when(token: WhenToken): string {
-    return `${this.computedIndent}when ${token.val}`;
+  private async when(token: WhenToken): Promise<string> {
+    const code: string = await format(token.val, {
+      parser: '__js_expression',
+      ...this.codeInterpolationOptions,
+    });
+
+    return `${this.computedIndent}when ${code.trim()}`;
   }
 
   private [':'](token: ColonToken): string {
@@ -2207,8 +2274,13 @@ export class PugPrinter {
     return `${this.computedIndent}default`;
   }
 
-  private ['else-if'](token: ElseIfToken): string {
-    return `${this.computedIndent}else if ${token.val}`;
+  private async ['else-if'](token: ElseIfToken): Promise<string> {
+    const code: string = await format(token.val, {
+      parser: '__js_expression',
+      ...this.codeInterpolationOptions,
+    });
+
+    return `${this.computedIndent}else if ${code.trim()}`;
   }
 
   private blockcode(token: BlockcodeToken): string {
