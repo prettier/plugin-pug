@@ -18,9 +18,9 @@ mixin list
       mixin pet(name)
         li.pet= name
       ul
-        +pet('cat')
-        +pet('dog')
-        +pet('pig')
+        +pet("cat")
+        +pet("dog")
+        +pet("pig")
 
       mixin article(title)
         .article
@@ -31,9 +31,9 @@ mixin list
             else
               p No content provided
 
-+article('Hello world')
++article("Hello world")
 
-+article('Hello world')
++article("Hello world")
   p This is my
   p Amazing article
 
@@ -41,9 +41,19 @@ mixin link(href, name)
   //- attributes == {class: "btn"}
   a(class!=attributes.class, href=href)= name
 
-+link('/foo', 'foo').btn
++link("/foo", "foo").btn
 
 mixin link2(href, name)
   a(href=href)&attributes(attributes)= name
 
-+link2('/foo', 'foo').btn
++link2("/foo", "foo").btn
+
+//- Params have default values
+mixin coords(x = { x1: 1, x2: 2 }, y = { y1: 1, y2: 2 })
+  p= "coords"
+
+//- Args keep parentheses after prettier format
++coords((2 + 2) * 2, 2 * (2 + 2))
+
+//- Args include object
++coords({ x1: 1, x2: 2 }, { y1: 1, y2: 2 })

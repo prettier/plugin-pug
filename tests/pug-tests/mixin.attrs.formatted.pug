@@ -18,11 +18,11 @@ mixin bottom
 
 body
   +centered#First Hello World
-  +centered('Section 1')#Second
+  +centered("Section 1")#Second
     p Some important content.
-  +centered('Section 2')#Third.foo.bar(href="menu.html")
+  +centered("Section 2")#Third.foo.bar(href="menu.html")
     p Even more important content.
-  +main('Section 3')(href="#")
+  +main("Section 3")(href="#")
     p Last content.
   +bottom#Last.foo.bar(name="end", data-attr="baz")
     p Some final words.
@@ -38,7 +38,7 @@ mixin foo
 //- Regression test for #1424
 mixin work_filmstrip_item(work)
   div&attributes(attributes)= work
-+work_filmstrip_item('work')(data-profile="profile", data-creator-name="name")
++work_filmstrip_item("work")(data-profile="profile", data-creator-name="name")
 
 mixin my-mixin(arg1, arg2, arg3, arg4)
   p= arg1
@@ -48,4 +48,4 @@ mixin my-mixin(arg1, arg2, arg3, arg4)
 
 +foo.baz(attr3="qux")
 
-+my-mixin('1', '2', '3', '4')
++my-mixin("1", "2", "3", "4")
