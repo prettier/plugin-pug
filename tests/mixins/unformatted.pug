@@ -47,3 +47,13 @@ mixin link2(href, name)
   a(href=href)&attributes(attributes)= name
 
 +link2('/foo', 'foo')(class="btn")
+
+//- Params have default values
+mixin coords(x={x1: 1, x2: 2}, y={y1: 1, y2: 2})
+  p= 'coords'
+
+//- Args keep parentheses after prettier format
++coords((2 + 2) * 2, 2 * (2 + 2))
+
+//- Args include object
++coords({x1: 1, x2: 2}, {y1: 1, y2: 2})

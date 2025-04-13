@@ -11,7 +11,7 @@ mixin comment(title, str)
 #user
   h1 Tobi
   .comments
-    +comment('This', (('is regular, javascript')))
+    +comment("This", "is regular, javascript")
 
 mixin list
   ul
@@ -27,4 +27,4 @@ mixin foobar(str)
   #interpolation= str + "interpolated"
 
 - var suffix = "bar";
-+#{'foo' + suffix}('This is ')
++#{'foo' + suffix}("This is ")
