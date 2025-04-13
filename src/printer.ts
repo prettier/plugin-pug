@@ -680,21 +680,19 @@ export class PugPrinter {
   ): Promise<string> {
     const { trimTrailingSemicolon = false, trimLeadingSemicolon = true } =
       formatOptions;
-    val = val.trim();
     const options: Options = { ...this.codeInterpolationOptions };
+
+    val = val.trim();
     const wasQuoted: boolean = isQuoted(val);
+
     if (wasQuoted) {
       options.singleQuote = !this.options.pugSingleQuote;
       val = val.slice(1, -1); // Remove quotes
     }
 
     val = await format(val, { parser, ...options });
-    val =
-      this.quotes === '"'
-        ? // Escape double quotes, but only if they are not already escaped
-          val.replaceAll(/(?<!\\)((?:\\\\)*)"/g, '$1\\"')
-        : val.replaceAll("'", "\\'");
     val = unwrapLineFeeds(val);
+
     if (trimTrailingSemicolon && val.at(-1) === ';') {
       val = val.slice(0, -1);
     }
@@ -703,7 +701,17 @@ export class PugPrinter {
       val = val.slice(1);
     }
 
-    return wasQuoted ? this.quoteString(val) : val;
+    if (wasQuoted) {
+      val =
+        this.quotes === '"'
+          ? // Escape double quotes, but only if they are not already escaped
+            (val = val.replaceAll(/(?<!\\)((?:\\\\)*)"/g, '$1\\"'))
+          : (val = val.replaceAll("'", "\\'"));
+
+      val = this.quoteString(val);
+    }
+
+    return val;
   }
 
   private async formatStyleAttribute(val: string): Promise<string> {
