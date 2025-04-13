@@ -1,0 +1,14 @@
+- const test = "test";
+
+#test
+  .a(color="primary")
+
+.grey--text {{ $t("my-language-key.title") }}
+  v-text-field(
+    :label="$t('my-language-key')",
+    type="text",
+    name="aName",
+    v-model="model",
+    :rules="[(model.values !== null && model.values.length <= 15) || $t('my-other-language-key.error')]",
+    :disabled="invalid"
+  )

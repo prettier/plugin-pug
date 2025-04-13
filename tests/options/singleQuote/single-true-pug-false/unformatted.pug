@@ -4,32 +4,47 @@
 - const maybeThisName = `name ${"last" + name}`
 - const orThisName = `${'first' + anotherName} name`
 
+- const nameArray = []
+
+div(:class='{ "pt-2": !dense }', test='blah')
+  each name in nameArray.length > 0 ? nameArray : ["The 'Rock'"]
+    p= `${name}`
+    p= "single quoted"
+
+each quote of ["quote1", 'quote2']
+  p= quote
+
+div(data-tab=name ? name : "The 'Rock'")
+
+if name === "test"
+  p= name
+
 //- Case statement
 case 'red'
-	when 'red'
-		p It is red
-	default
-		p It is not red
+  when 'red'
+    p It is red
+  default
+    p It is not red
 
 //- Conditionals
 if 'red' === '\'red\''
-	p Red is red
+  p Red is red
 else if 'blue' === '"blue"'
-	p Blue is blue
+  p Blue is blue
 
 unless 'blue' !== "\"blue\""
-	p Blue is blue
+  p Blue is blue
 
 //- Iteration
 each val in ['One', "Two"]
-	p= val
+  p= val
 
 while 'red' === "'blue'"
-	- break
+  - break
 
 //- Mixin def
 mixin element(el='button')
-	p= el
+  p= el
 
 //- Mixin call
 +element('button')
@@ -38,11 +53,11 @@ mixin element(el='button')
 div&attributes({ x: 'x', y: 'y' })
 
 .grey--text {{ $t('my-language-key.title') }}
-	v-text-field(
-		:label='$t("my-language-key")',
-		type='text',
-		name='aName',
-		v-model="model",
-		:rules='[ (model.values !== null && model.values.length <= 15) || $t("my-other-language-key.error")]',
-		:disabled="invalid"
-	)
+  v-text-field(
+    :label='$t("my-language-key")',
+    type='text',
+    name='aName',
+    v-model="model",
+    :rules='[ (model.values !== null && model.values.length <= 15) || $t("my-other-language-key.error")]',
+    :disabled="invalid"
+  )

@@ -1,0 +1,20 @@
+- const name = 'name'
+- const anotherName = "name"
+- const middleName = "The 'Rock'";
+- const maybeThisName = `name ${"last" + name}`
+- const orThisName = `${'first' + anotherName} name`
+
+- const nameArray = []
+
+div(:class="{ 'pt-2': !dense }", test="blah")
+  each name in nameArray.length > 0 ? nameArray : ["The 'Rock'"]
+    p= `${name}`
+    p= "single quoted"
+
+each quote of ["quote1", 'quote2']
+  p= quote
+
+div(data-tab=name ? name : "The 'Rock'")
+
+if name === "test"
+  p= name
