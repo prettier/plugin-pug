@@ -1,6 +1,6 @@
 {
   "name": "@prettier/plugin-pug",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "Prettier Pug Plugin",
   "scripts": {
     "clean": "rimraf coverage .eslintcache dist junit.xml docs/.vitepress/dist pnpm-lock.yaml node_modules",
