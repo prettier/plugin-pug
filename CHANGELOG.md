@@ -1,6 +1,18 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/3.3.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/3.4.0...main)
+
+# 3.4.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/3.3.0...3.4.0)
+
+- Handle TS syntax in vue context ([#365])
+- Enhance quotation of variable formatting ([#512])
+- Enhance quotation of vue v-bind ([#531])
+
+[#365]: https://github.com/prettier/plugin-pug/issues/365
+[#512]: https://github.com/prettier/plugin-pug/issues/512
+[#531]: https://github.com/prettier/plugin-pug/issues/531
 
 # 3.3.0
 
