@@ -1246,10 +1246,7 @@ export class PugPrinter {
         this.result += ' ';
       }
 
-      const classes: string[] = this.classLiteralToAttribute.splice(
-        0,
-        this.classLiteralToAttribute.length,
-      );
+      const classes: string[] = this.classLiteralToAttribute.splice(0);
       this.result += `class=${this.quoteString(classes.join(' '))}`;
 
       if (this.previousToken?.type === 'start-attributes') {
@@ -1277,10 +1274,7 @@ export class PugPrinter {
       this.result.at(-1) === ')' &&
       this.classLiteralAfterAttributes.length > 0
     ) {
-      const classes: string[] = this.classLiteralAfterAttributes.splice(
-        0,
-        this.classLiteralAfterAttributes.length,
-      );
+      const classes: string[] = this.classLiteralAfterAttributes.splice(0);
       this.result += `.${classes.join('.')}`;
     }
 
@@ -1364,10 +1358,7 @@ export class PugPrinter {
         ])
       ) {
         // Copy and clear the class literals list.
-        const classes: string[] = this.classLiteralToAttribute.splice(
-          0,
-          this.classLiteralToAttribute.length,
-        );
+        const classes: string[] = this.classLiteralToAttribute.splice(0);
 
         // If the last result character was a )...
         if (this.result.at(-1) === ')') {
@@ -1495,10 +1486,7 @@ export class PugPrinter {
             undefined,
           ].includes(this.nextToken?.type)
         ) {
-          const classes: string[] = this.classLiteralAfterAttributes.splice(
-            0,
-            this.classLiteralAfterAttributes.length,
-          );
+          const classes: string[] = this.classLiteralAfterAttributes.splice(0);
           result += '.' + classes.join('.');
         }
 
