@@ -65,7 +65,7 @@
     "pug-lexer": "^5.0.1"
   },
   "devDependencies": {
-    "@eslint/compat": "1.2.8",
+    "@eslint/compat": "1.2.9",
     "@eslint/js": "9.25.1",
     "@stylistic/eslint-plugin": "4.2.0",
     "@types/node": "22.15.3",
