@@ -5,13 +5,10 @@ import eslintPluginVitest from '@vitest/eslint-plugin';
 import eslintPluginJsdoc from 'eslint-plugin-jsdoc';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 import tseslint from 'typescript-eslint';
 
-const __filename: string = fileURLToPath(import.meta.url);
-const __dirname: string = dirname(__filename);
-const gitignorePath: string = resolve(__dirname, '.gitignore');
+const gitignorePath: string = resolve(import.meta.dirname, '.gitignore');
 
 const config: ReturnType<typeof tseslint.config> = tseslint.config(
   //#region global
@@ -38,14 +35,6 @@ const config: ReturnType<typeof tseslint.config> = tseslint.config(
       curly: ['error'],
       'linebreak-style': ['error', 'unix'],
       'no-case-declarations': 'error',
-      'no-restricted-globals': [
-        'error',
-        {
-          name: '__dirname',
-          message:
-            "Use `fileURLToPath(new URL('.', import.meta.url))` instead.",
-        },
-      ],
       quotes: ['error', 'single', { avoidEscape: true }],
       semi: ['error', 'always'],
     },

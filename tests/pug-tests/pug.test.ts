@@ -1,14 +1,11 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { fileURLToPath, URL } from 'node:url';
 import { format } from 'prettier';
 import { plugin } from 'src/index';
 import { describe, expect, it } from 'vitest';
 
-const __dirname: string = fileURLToPath(new URL('.', import.meta.url));
-
 describe('Pug Tests', () => {
-  const filenames: string[] = readdirSync(resolve(__dirname), 'utf8');
+  const filenames: string[] = readdirSync(resolve(import.meta.dirname), 'utf8');
 
   const ignores: Set<string> = new Set([
     'attrs.pug',
@@ -35,11 +32,11 @@ describe('Pug Tests', () => {
       if (!ignores.has(unformattedFilename)) {
         it(unformattedFilename, async () => {
           const expected: string = readFileSync(
-            resolve(__dirname, filename),
+            resolve(import.meta.dirname, filename),
             'utf8',
           );
           const code: string = readFileSync(
-            resolve(__dirname, unformattedFilename),
+            resolve(import.meta.dirname, unformattedFilename),
             'utf8',
           );
           const actual: string = await format(code, {

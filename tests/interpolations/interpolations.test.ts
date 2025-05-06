@@ -1,12 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { URL, fileURLToPath } from 'node:url';
 import { format } from 'prettier';
 import { plugin } from 'src/index';
 import { compareFiles } from 'tests/common';
 import { afterEach, describe, expect, it } from 'vitest';
-
-const __dirname: string = fileURLToPath(new URL('.', import.meta.url));
 
 describe('Interpolations', () => {
   const backupProcessEnv: Record<string, string | undefined> = process.env;
@@ -25,11 +22,11 @@ describe('Interpolations', () => {
 
   it('should handle Angular interpolations', async () => {
     const expected: string = readFileSync(
-      resolve(__dirname, 'formatted_angular.pug'),
+      resolve(import.meta.dirname, 'formatted_angular.pug'),
       'utf8',
     );
     const code: string = readFileSync(
-      resolve(__dirname, 'unformatted_angular.pug'),
+      resolve(import.meta.dirname, 'unformatted_angular.pug'),
       'utf8',
     );
 
@@ -47,11 +44,11 @@ describe('Interpolations', () => {
 
   it('should handle Vue interpolations', async () => {
     const expected: string = readFileSync(
-      resolve(__dirname, 'formatted_vue.pug'),
+      resolve(import.meta.dirname, 'formatted_vue.pug'),
       'utf8',
     );
     const code: string = readFileSync(
-      resolve(__dirname, 'unformatted_vue.pug'),
+      resolve(import.meta.dirname, 'unformatted_vue.pug'),
       'utf8',
     );
 

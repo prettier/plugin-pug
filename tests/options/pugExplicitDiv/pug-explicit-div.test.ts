@@ -1,17 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { URL, fileURLToPath } from 'node:url';
 import type { Options } from 'prettier';
 import { format } from 'prettier';
 import { plugin } from 'src/index';
 import { describe, expect, it } from 'vitest';
 
-const __dirname: string = fileURLToPath(new URL('.', import.meta.url));
-
 describe('Options', () => {
   describe('pugExplicitDiv', () => {
     const code: string = readFileSync(
-      resolve(__dirname, 'unformatted.pug'),
+      resolve(import.meta.dirname, 'unformatted.pug'),
       'utf8',
     );
     const commonOptions: Options = {
@@ -26,7 +23,7 @@ describe('Options', () => {
 
     it('should handle unspecified pugExplicitDiv', async () => {
       const expected: string = readFileSync(
-        resolve(__dirname, 'formatted-implicit-div.pug'),
+        resolve(import.meta.dirname, 'formatted-implicit-div.pug'),
         'utf8',
       );
       const actual: string = await format(code, {
@@ -38,7 +35,7 @@ describe('Options', () => {
 
     it('should handle pugExplicitDiv:false', async () => {
       const expected: string = readFileSync(
-        resolve(__dirname, 'formatted-implicit-div.pug'),
+        resolve(import.meta.dirname, 'formatted-implicit-div.pug'),
         'utf8',
       );
       const actual: string = await format(code, {
@@ -52,7 +49,7 @@ describe('Options', () => {
 
     it('should handle pugExplicitDiv:true', async () => {
       const expected: string = readFileSync(
-        resolve(__dirname, 'formatted-explicit-div.pug'),
+        resolve(import.meta.dirname, 'formatted-explicit-div.pug'),
         'utf8',
       );
       const actual: string = await format(code, {
