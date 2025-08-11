@@ -1847,16 +1847,9 @@ export class PugPrinter {
         val = await this.formatRawCode(val + '{}', useSemi);
 
         // Dynamically find the index of the last `{` in the code, which is the start of the empty block, since it's been reformatted at this point and a newline has likely been added between (shouldn't rely on that behavior though)
-        let cutoffIndex: number = val.length - 1;
-        while (val[cutoffIndex] !== '{') {
-          cutoffIndex -= 1;
-        }
-
-        // Minus 1 to account for any newly-introduced whitespace right before the empty block
-        const lastChar: string | undefined = val[cutoffIndex - 1];
-        if (typeof lastChar === 'string' && /\s/.test(lastChar)) {
-          cutoffIndex -= 1;
-        }
+        // Also account for any newly-introduced whitespace right before the empty block
+        const cutoffIndex: number = val.search(/\s?{\s?}\s?$/);
+        if (cutoffIndex === -1) throw new Error('No empty block found');
 
         return val.slice(0, cutoffIndex);
       } catch (secondError: unknown) {
