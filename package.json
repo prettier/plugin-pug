@@ -90,7 +90,7 @@
     "typescript": "5.9.2",
     "typescript-eslint": "8.31.1",
     "vite": "7.1.1",
-    "vitepress": "1.6.3",
+    "vitepress": "1.6.4",
     "vitest": "3.2.4"
   },
   "peerDependencies": {
