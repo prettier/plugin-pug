@@ -1882,6 +1882,7 @@ export class PugPrinter {
       }
     }
   }
+
   // Since every line is parsed independently, babel will throw a SyntaxError if the line of code is only valid when there is another statement after it, or if the line starts with `else if` or `else`. This is a hack to get babel to properly parse what would otherwise be an invalid standalone JS line (e.g., `if (foo)`, `else if (bar)`, `else`)
   private async formatRawCodeWithFallback(
     val: string,
@@ -1889,13 +1890,13 @@ export class PugPrinter {
   ): Promise<string> {
     if (val.startsWith('else')) {
       // If the code starts with `else`, then we can format the code without the `else` keyword, and then add it back onto the start.
-      // We can call the same helper function so then we can easily handle both `if`, `else if`, and `else` cases without having to write out each one.
+      // We can call the same helper function in each case, just with different inputs, so we can easily handle all `if`, `else if`, and `else` cases without having to write out each one.
       const noElse: string = await this.formatRawCodeWithFallbackNoElse(
         val.slice(4),
         useSemi,
       );
-      // `noElse` will either be an empty string or it will contain a comment. Now we just prepend `else` onto the start and add a space if `noElse` has something in it
-      return 'else' + (noElse ? ` ${noElse}` : '');
+      // `noElse` will either be an empty string or it will contain a comment. Now we just prepend `else` onto the start and trim in case `noElse` is empty
+      return `else ${noElse}`.trim();
     } else {
       return await this.formatRawCodeWithFallbackNoElse(val, useSemi);
     }
