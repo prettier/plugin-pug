@@ -25,7 +25,7 @@ export function compareAttributeToken(
 ): CompareResult {
   const sortPatternsBeginning: RegExp[] = sortAttributesBeginning
     .map((sort) => new RegExp(sort))
-    .reverse();
+    .toReversed();
   const sortPatternsEnd: RegExp[] = sortAttributesEnd.map(
     (sort) => new RegExp(sort),
   );
