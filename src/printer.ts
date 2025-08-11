@@ -1823,13 +1823,24 @@ export class PugPrinter {
     return val.slice(0, -1);
   }
 
-  // Since every line is parsed independently, babel will throw a SyntaxError if the line of code is only valid when there is another statement after it. This is a hack to get babel to properly parse what would otherwise be an invalid standalone JS line (e.g., `if (foo)`)
+  // Since every line is parsed independently, babel will throw a SyntaxError if the line of code is only valid when there is another statement after it, or if the line starts with `else if` or `else`. This is a hack to get babel to properly parse what would otherwise be an invalid standalone JS line (e.g., `if (foo)`, `else if (bar)`, `else`)
   private async formatRawCodeWithFallback(
     val: string,
     useSemi: boolean,
   ): Promise<string> {
     try {
-      return await this.formatRawCode(val, useSemi);
+      if (val.startsWith('else')) {
+        // If the code starts with `else`, then we can format the code without the `else` keyword, and then add it back onto the start.
+        // We can call this function recursively since then we can easily handle `else if` cases without having to write a special case.
+        const noElse: string = await this.formatRawCodeWithFallback(
+          val.slice(4),
+          useSemi,
+        );
+        // `noElse` will either be an empty string or it will contain a comment. Now we just prepend `else` onto the start and add a space if `noElse` has something in it
+        return 'else' + (noElse ? ` ${noElse}` : '');
+      } else {
+        return await this.formatRawCode(val, useSemi);
+      }
     } catch (error: unknown) {
       if (!(error instanceof SyntaxError)) throw error;
 
@@ -1844,14 +1855,38 @@ export class PugPrinter {
       // At this point, we know the SyntaxError is from the fact that there's no statement after our val's statement, implying we likely need a block after it. Using an empty block to get babel to parse it without affecting the code semantics.
       // Example: `if (foo)` is not valid JS on its own, but `if (foo) {}` is.
       try {
-        val = await this.formatRawCode(val + '{}', useSemi);
+        // Look for comments at the end of the line, since we have to insert the block in between the statement and the comment or else the block will potentially be commented out
+        const commentIndex: number = val.search(/\/(?:\/|\*).*$/);
+        if (commentIndex === -1) {
+          val += '{}';
+        } else {
+          val = `${val.slice(0, commentIndex)}{}${val.slice(commentIndex)}`;
+        }
 
-        // Dynamically find the index of the last `{` in the code, which is the start of the empty block, since it's been reformatted at this point and a newline has likely been added between (shouldn't rely on that behavior though)
-        // Also account for any newly-introduced whitespace right before the empty block
-        const cutoffIndex: number = val.search(/\s?{\s?}\s?$/);
-        if (cutoffIndex === -1) throw new Error('No empty block found');
+        val = await this.formatRawCode(val, useSemi);
 
-        return val.slice(0, cutoffIndex);
+        /*
+        Strip out the empty block, which prettier has now formatted to split across two lines, and if there was a comment, it's now at the end of the second line. The first \s is to account for the space prettier inserted between the statement and the empty block.
+        Input:
+        `if (foo)   // comment`
+
+        Transformed:
+        `if (foo)   {}// comment`
+
+        Initial formatted:
+        `if (foo) {
+         } // comment`
+
+        Final formatted:
+        `if (foo) // comment`
+        */
+        const ma: RegExpExecArray | null = /\s{\n?}(.*)$/.exec(val);
+        if (!ma) throw new Error('No follow-up block found');
+
+        const comment: string | undefined = ma[1];
+
+        val = val.slice(0, ma.index) + (comment ?? '');
+        return val.trim();
       } catch (secondError: unknown) {
         logger.debug('[PugPrinter] fallback format error', secondError);
         // throw original error since our fallback didn't work
