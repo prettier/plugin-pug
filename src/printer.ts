@@ -1812,6 +1812,54 @@ export class PugPrinter {
     return result;
   }
 
+  private async formatRawCode(val: string, useSemi: boolean): Promise<string> {
+    val = await format(val, {
+      parser: 'babel',
+      ...this.codeInterpolationOptions,
+      semi: useSemi,
+      // Always pass endOfLine 'lf' here to be sure that the next `val.slice(0, -1)` call is always working
+      endOfLine: 'lf',
+    });
+    return val.slice(0, -1);
+  }
+
+  // Since every line is parsed independently, babel will throw a SyntaxError if the line of code is only valid when there is another statement after it. This is a hack to get babel to properly parse what would otherwise be an invalid standalone JS line (e.g., `if (foo)`)
+  private async formatRawCodeWithFallback(
+    val: string,
+    useSemi: boolean,
+  ): Promise<string> {
+    try {
+      return await this.formatRawCode(val, useSemi);
+    } catch (error: unknown) {
+      if (!(error instanceof SyntaxError)) throw error;
+
+      const m: RegExpExecArray | null = /Unexpected token \(1:(\d+)\)/.exec(
+        error.message,
+      );
+      const n: number = Number(m?.[1]);
+
+      // If the error is not from the very end of the code, then this fallback approach won't work, so we throw the original error.
+      if (val.length + 1 !== n) throw error;
+
+      // At this point, we know the SyntaxError is from the fact that there's no statement after our val's statement, implying we likely need a block after it. Using an empty block to get babel to parse it without affecting the code semantics.
+      // Example: `if (foo)` is not valid JS on its own, but `if (foo) {}` is.
+      try {
+        val = await this.formatRawCode(val + '{}', useSemi);
+
+        // Dynamically find the index of the last `{` in the code, which is the start of the empty block, since it's been reformatted at this point and a newline has likely been added between (shouldn't rely on that behavior though)
+        // Also account for any newly-introduced whitespace right before the empty block
+        const cutoffIndex: number = val.search(/\s?{\s?}\s?$/);
+        if (cutoffIndex === -1) throw new Error('No empty block found');
+
+        return val.slice(0, cutoffIndex);
+      } catch (secondError: unknown) {
+        logger.debug('[PugPrinter] fallback format error', secondError);
+        // throw original error since our fallback didn't work
+        throw error;
+      }
+    }
+  }
+
   private async code(token: CodeToken): Promise<string> {
     let result: string = this.computedIndent;
     if (!token.mustEscape && token.buffer) {
@@ -1827,14 +1875,7 @@ export class PugPrinter {
     let val: string = token.val;
     try {
       const valBackup: string = val;
-      val = await format(val, {
-        parser: 'babel',
-        ...this.codeInterpolationOptions,
-        semi: useSemi,
-        // Always pass endOfLine 'lf' here to be sure that the next `val.slice(0, -1)` call is always working
-        endOfLine: 'lf',
-      });
-      val = val.slice(0, -1);
+      val = await this.formatRawCodeWithFallback(val, useSemi);
       if (val[0] === ';') {
         val = val.slice(1);
       }
