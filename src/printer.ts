@@ -969,7 +969,7 @@ export class PugPrinter {
           ++tempClassIndex
         ] as EndAttributesToken | ClassToken;
         while (tempClassToken.type === 'class') {
-          const val: string = tempClassToken.val.toString();
+          const val: string = tempClassToken.val;
           // Add leading . for classes
           this.currentLineLength += 1 + val.length;
           logger.debug(
