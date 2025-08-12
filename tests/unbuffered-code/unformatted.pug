@@ -1,5 +1,22 @@
-- if (         obj?.name      )
+- if (         obj?.name      )      /* Block comment */
   p #{ obj.name } is the name, if it exists
+- if (         obj?.name2      )    // Double-slash comment
+  p #{ obj.name2 } is the second name, if it exists
+- if (         obj?.name3      )
+  p #{ obj.name3 } is the third name, if it exists
+- else if (   obj?.color   )   /* Comment */
+  p #{ obj.color } is the color, if it exists
+-       else     // Comment, plus the else has whitespace before it
+  p No name or color
+-  if (         obj?.color2      )
+  p #{ obj.color2 } is the second color, if it exists
+-    else
+  p Else without a comment
+- for (const k of        obj?.items         || [])    // Comment
+  p #{ k }
 - for (const k of        obj?.items         || [])
   p #{ k }
+- let n = 2;
+- while (   n--    )    // Comment!
+  p #{ n }
 p This should always appear
