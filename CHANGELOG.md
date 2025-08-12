@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/3.4.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/3.4.2...main)
+
+# 3.4.2
+
+[diff](https://github.com/prettier/plugin-pug/compare/3.4.1...3.4.2)
+
+- Followup for: Handle unexpected missing block SyntaxError when parsing unbuffered code ([#600])
+
+[#600]: https://github.com/prettier/plugin-pug/issues/600
 
 # 3.4.1
 
