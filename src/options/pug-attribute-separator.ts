@@ -36,7 +36,7 @@ export type PugAttributeSeparator = 'always' | 'as-needed' | 'none';
  *
  * @param pugAttributeSeparator The pugAttributeSeparator.
  * @returns The given `pugAttributeSeparator`.
- * @throws Error if the pugAttributeSeparator was not valid.
+ * @throws {Error} Error if the pugAttributeSeparator was not valid.
  */
 export function resolvePugAttributeSeparatorOption(
   pugAttributeSeparator: PugAttributeSeparator,
