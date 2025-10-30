@@ -139,7 +139,7 @@ export function createLogger(logger: ILogger = console): Logger {
 }
 
 /**
- * Logger for @prettier/plugin-pug.
+ * Logger for \@prettier/plugin-pug.
  */
 export const logger: Logger = createLogger(console);
 

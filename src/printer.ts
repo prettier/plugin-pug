@@ -2053,6 +2053,7 @@ export class PugPrinter {
           ];
 
           // TODO: If other token types occur use `if (usedInterpolatedCode)`
+          // eslint-disable-next-line unicorn/no-immediate-mutation
           warningContext.push(
             `\ncode: \`${rawText.trim()}\``,
             '\nYou used interpolated code in your pipeless script tag, so you may ignore this warning.',
