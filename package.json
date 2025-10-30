@@ -95,7 +95,7 @@
   "peerDependencies": {
     "prettier": "^3.0.0"
   },
-  "packageManager": "pnpm@10.14.0",
+  "packageManager": "pnpm@10.20.0",
   "engines": {
     "node": ">=20.0.0",
     "npm": ">=10.0.0"
