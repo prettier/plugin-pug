@@ -5,6 +5,7 @@ import eslintPluginVitest from '@vitest/eslint-plugin';
 import eslintPluginJsdoc from 'eslint-plugin-jsdoc';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
+import { defineConfig } from 'eslint/config';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import tseslint from 'typescript-eslint';
@@ -13,7 +14,7 @@ const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = dirname(__filename);
 const gitignorePath: string = resolve(__dirname, '.gitignore');
 
-const config: ReturnType<typeof tseslint.config> = tseslint.config(
+export default defineConfig([
   //#region global
   includeIgnoreFile(gitignorePath),
   {
@@ -234,6 +235,4 @@ const config: ReturnType<typeof tseslint.config> = tseslint.config(
     },
   },
   //#endregion
-);
-
-export default config;
+]);
