@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "declaration": true,
     "stripInternal": true,
+    "skipLibCheck": true,
     "verbatimModuleSyntax": true,
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
