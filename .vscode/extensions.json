@@ -3,7 +3,7 @@
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
     "esbenp.prettier-vscode",
-    "pflannery.vscode-versionlens",
+    "legalfina.npm-version-lens",
     "streetsidesoftware.code-spell-checker"
   ]
 }
