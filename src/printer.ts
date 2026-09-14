@@ -2186,6 +2186,9 @@ export class PugPrinter {
 
   private async call(token: CallToken): Promise<string> {
     let result: string = `${this.computedIndent}+${token.val}`;
+    const callIndent: string = this.indentString.repeat(this.indentLevel);
+    const callPrefixWidth: number =
+      this.indentLevel * this.options.pugTabWidth + token.val.length + 1;
     let args: string | null = token.args;
     if (args) {
       args = args.trim().replaceAll(/\s\s+/g, ' ');
@@ -2194,9 +2197,22 @@ export class PugPrinter {
       args = await format(`x(${args})`, {
         parser: 'babel',
         ...this.codeInterpolationOptions,
+        printWidth: Math.max(this.options.pugPrintWidth - callPrefixWidth, 1),
         semi: false,
       });
       args = args.trim().slice(1);
+      const lines: string[] = args.split('\n');
+      if (lines.length > 1) {
+        args = lines
+          .map((line, index) => {
+            if (index === 0) {
+              return line;
+            }
+
+            return callIndent + line;
+          })
+          .join('\n');
+      }
 
       result += args;
     }
