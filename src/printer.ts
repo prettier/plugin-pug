@@ -2194,22 +2194,25 @@ export class PugPrinter {
       args = args.trim().replaceAll(/\s\s+/g, ' ');
       // Place an x at the beginning to preserve brackets,
       // then remove the x after format.
+      // Reserve the prefix on every line conservatively, crediting the wrapper's x.
       args = await format(`x(${args})`, {
         parser: 'babel',
         ...this.codeInterpolationOptions,
-        printWidth: Math.max(this.options.pugPrintWidth - callPrefixWidth, 1),
+        printWidth: this.currentlyInPugInterpolation
+          ? this.codeInterpolationOptions.printWidth
+          : Math.max(this.options.pugPrintWidth - callPrefixWidth + 1, 1),
         semi: false,
       });
       args = args.trim().slice(1);
-      const lines: string[] = args.split('\n');
-      if (lines.length > 1) {
-        args = lines
+      if (!this.currentlyInPugInterpolation) {
+        args = args
+          .split('\n')
           .map((line, index) => {
             if (index === 0) {
               return line;
             }
 
-            return callIndent + line;
+            return line ? callIndent + line : '';
           })
           .join('\n');
       }
@@ -2217,7 +2220,11 @@ export class PugPrinter {
       result += args;
     }
 
-    this.currentLineLength += result.length;
+    const lastNewline: number = result.lastIndexOf('\n');
+    this.currentLineLength =
+      lastNewline === -1
+        ? this.currentLineLength + result.length
+        : result.length - lastNewline - 1;
     this.possibleIdPosition = this.result.length + result.length;
     this.possibleClassPosition = this.result.length + result.length;
     return result;
