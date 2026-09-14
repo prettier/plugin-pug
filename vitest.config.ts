@@ -11,7 +11,6 @@ export default defineConfig({
   },
   test: {
     coverage: {
-      all: true,
       provider: 'v8',
       reporter: ['clover', 'cobertura', 'json-summary', 'json', 'lcov', 'text'],
       include: ['src'],
