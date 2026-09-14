@@ -1,11 +1,10 @@
-import { includeIgnoreFile } from '@eslint/compat';
 import eslint from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import eslintPluginVitest from '@vitest/eslint-plugin';
 import eslintPluginJsdoc from 'eslint-plugin-jsdoc';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, includeIgnoreFile } from 'eslint/config';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import tseslint from 'typescript-eslint';
@@ -47,6 +46,8 @@ export default defineConfig([
             "Use `fileURLToPath(new URL('.', import.meta.url))` instead.",
         },
       ],
+      'no-useless-assignment': 'off',
+      'preserve-caught-error': 'off',
       quotes: ['error', 'single', { avoidEscape: true }],
       semi: ['error', 'always'],
     },
@@ -92,6 +93,7 @@ export default defineConfig([
       ],
       '@typescript-eslint/member-ordering': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-deprecated': 'off',
       '@typescript-eslint/no-inferrable-types': 'off',
       '@typescript-eslint/no-misused-spread': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
@@ -133,15 +135,30 @@ export default defineConfig([
   eslintPluginUnicorn.configs.recommended,
   {
     rules: {
+      'unicorn/consistent-boolean-name': 'off',
+      'unicorn/consistent-class-member-order': 'off',
       'unicorn/consistent-destructuring': 'off',
+      'unicorn/filename-case': 'off',
       'unicorn/import-style': [
-        'error',
+        'off',
         { styles: { 'node:path': { named: true } } },
       ],
+      'unicorn/name-replacements': 'off',
+      'unicorn/no-break-in-nested-loop': 'off',
+      'unicorn/no-duplicate-if-branches': 'off',
       'unicorn/no-null': 'off',
+      'unicorn/no-unsafe-string-replacement': 'off',
+      'unicorn/no-useless-else': 'off',
       'unicorn/no-useless-switch-case': 'off',
+      'unicorn/prefer-continue': 'off',
+      'unicorn/prefer-global-number-constants': 'off',
+      'unicorn/prefer-https': 'off',
+      'unicorn/prefer-includes-over-repeated-comparisons': 'off',
+      'unicorn/prefer-simple-condition-first': 'off',
       'unicorn/prefer-string-raw': 'off',
+      'unicorn/prefer-unicode-code-point-escapes': 'off',
       'unicorn/prevent-abbreviations': 'off',
+      'unicorn/single-line-block-comment-style': 'off',
     },
   },
   //#endregion
