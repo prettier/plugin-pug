@@ -1,0 +1,14 @@
+.test
+  +btn({ color: "red", color1: "red", color2: [{ color3: "red" }, { color4: "red" }], color5: "red", color6: "red", color7: "red", color8: "red", color9: "red", color10: "red", color11: "red", color12: "red" })
+
+  .nested
+    +tools-group({
+  icon: "/static/tool.svg",
+  label: "tool",
+  title: "Tool title",
+  tools: [
+    { icon: "/static/tool-item-1.svg", title: "Tool item title" },
+    { icon: "/static/tool-item-2.svg", title: "Tool item title" },
+    { icon: "/static/tool-item-3.svg", title: "Tool item title" },
+  ],
+})
