@@ -16,18 +16,17 @@ import type { PugIdNotation } from './pug-id-notation';
 /**
  * Extended pug option object.
  */
-export interface PugParserOptions
-  extends Pick<
-    ParserOptions,
-    | 'printWidth'
-    | 'singleQuote'
-    | 'tabWidth'
-    | 'useTabs'
-    | 'bracketSpacing'
-    | 'arrowParens'
-    | 'semi'
-    | 'bracketSameLine'
-  > {
+export interface PugParserOptions extends Pick<
+  ParserOptions,
+  | 'printWidth'
+  | 'singleQuote'
+  | 'tabWidth'
+  | 'useTabs'
+  | 'bracketSpacing'
+  | 'arrowParens'
+  | 'semi'
+  | 'bracketSameLine'
+> {
   pugPrintWidth: number;
   pugSingleQuote: boolean | null;
   pugTabWidth: number;

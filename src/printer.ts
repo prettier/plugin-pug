@@ -944,8 +944,7 @@ export class PugPrinter {
         }
 
         tempToken = this.tokens[++tempIndex] as
-          | AttributeToken
-          | EndAttributesToken;
+          AttributeToken | EndAttributesToken;
       }
 
       logger.debug('after token', this.currentLineLength);
@@ -978,8 +977,7 @@ export class PugPrinter {
           );
 
           tempClassToken = this.tokens[++tempClassIndex] as
-            | EndAttributesToken
-            | ClassToken;
+            EndAttributesToken | ClassToken;
         }
       }
 
