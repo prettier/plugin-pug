@@ -237,12 +237,15 @@ export class PugPrinter {
    * @param content The pug content string.
    * @param tokens The pug token array.
    * @param options Options for the printer.
+   * @param frontmatter The extracted frontmatter part.
    */
   public constructor(
     private readonly content: string,
     private tokens: Token[],
     private readonly options: PugPrinterOptions,
+    private readonly frontmatter: string,
   ) {
+    this.frontmatter = frontmatter;
     this.indentString = options.pugUseTabs
       ? '\t'
       : ' '.repeat(options.pugTabWidth);
@@ -390,6 +393,18 @@ export class PugPrinter {
       token = this.getNextToken();
     }
 
+    if (this.frontmatter) {
+      try {
+        results.unshift(
+          '---\n',
+          await this.frontmatterFormat(this.frontmatter),
+          '---\n',
+        );
+      } catch (error: any) {
+        logger.warn(error);
+      }
+    }
+
     return results.join('');
   }
 
@@ -476,6 +491,17 @@ export class PugPrinter {
       this.possibleIdPosition -= diff;
       this.possibleClassPosition -= diff;
     }
+  }
+
+  private async frontmatterFormat(frontmatter: string): Promise<string> {
+    const options: Options = {
+      parser: 'yaml',
+      collectionStyle: 'block',
+    };
+
+    const result: string = await format(frontmatter, options);
+
+    return result;
   }
 
   private async frameworkFormat(code: string): Promise<string> {
