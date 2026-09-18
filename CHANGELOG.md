@@ -1,6 +1,21 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/3.4.2...main)
+[diff](https://github.com/prettier/plugin-pug/compare/3.5.0...main)
+
+# 3.5.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/3.4.2...3.5.0)
+
+## BREAKING CHANGES
+
+- **Dropped support for node v20** ([#656])
+
+## Other changes
+
+- Fix multiline mixin call indentation ([#655])
+
+[#655]: https://github.com/prettier/plugin-pug/pull/655
+[#656]: https://github.com/prettier/plugin-pug/pull/656
 
 # 3.4.2
 
