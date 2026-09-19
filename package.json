@@ -94,7 +94,7 @@
   "peerDependencies": {
     "prettier": "^3.0.0"
   },
-  "packageManager": "pnpm@12.4.1",
+  "packageManager": "pnpm@12.4.2",
   "engines": {
     "node": ">=22.0.0"
   },
