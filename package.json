@@ -67,7 +67,7 @@
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@stylistic/eslint-plugin": "5.10.0",
-    "@types/node": "26.5.1",
+    "@types/node": "26.6.2",
     "@vitest/coverage-v8": "5.0.0",
     "@vitest/eslint-plugin": "1.6.27",
     "benchmark": "2.1.4",
