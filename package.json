@@ -78,7 +78,7 @@
     "eslint-plugin-jsdoc": "64.5.0",
     "eslint-plugin-prettier": "5.5.6",
     "eslint-plugin-spellcheck": "0.0.20",
-    "eslint-plugin-unicorn": "74.0.0",
+    "eslint-plugin-unicorn": "76.0.0",
     "jiti": "2.7.0",
     "npm-run-all2": "9.0.3",
     "prettier": "3.9.6",
