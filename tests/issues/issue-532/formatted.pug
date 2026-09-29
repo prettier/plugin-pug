@@ -29,3 +29,13 @@ style.
   :host {
     display: inline;
   }
+
+//- An empty type is formatted with the builtin css parser
+style(type="").
+  :host {
+    display: inline;
+  }
+
+//- Stays unchanged, because a type without a value is not a string
+style(type).
+  :host {  display:inline }
