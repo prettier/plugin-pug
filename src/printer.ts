@@ -393,6 +393,19 @@ export class PugPrinter {
     return results.join('');
   }
 
+  /**
+   * Visual width of the indentation for the given level.
+   *
+   * A tab is counted as `pugTabWidth` columns, so that line length calculations
+   * are the same regardless of `pugUseTabs`.
+   *
+   * @param indentLevel The indentation level.
+   * @returns The visual width in columns.
+   */
+  private indentWidth(indentLevel: number): number {
+    return indentLevel * this.options.pugTabWidth;
+  }
+
   private getNextToken(): Token | null {
     this.currentIndex++;
     return this.tokens[this.currentIndex] ?? null;
@@ -1309,7 +1322,7 @@ export class PugPrinter {
   private indent(token: IndentToken): string {
     const result: string = `\n${this.indentString.repeat(this.indentLevel)}`;
     this.indentLevel++;
-    this.currentLineLength = result.length - 1 + 1 + this.options.pugTabWidth; // -1 for \n, +1 for non zero based
+    this.currentLineLength = 1 + this.indentWidth(this.indentLevel); // +1 for non zero based
     logger.debug(
       'indent',
       {
@@ -1334,8 +1347,7 @@ export class PugPrinter {
     }
 
     this.indentLevel--;
-    this.currentLineLength =
-      1 + this.indentString.repeat(this.indentLevel).length; // -1 for \n, +1 for non zero based
+    this.currentLineLength = 1 + this.indentWidth(this.indentLevel); // +1 for non zero based
     logger.debug(
       'outdent',
       { result, indentLevel: this.indentLevel },
@@ -1639,8 +1651,7 @@ export class PugPrinter {
     }
 
     result += '\n';
-    this.currentLineLength =
-      1 + this.indentString.repeat(this.indentLevel).length; // -1 for \n, +1 for non zero based
+    this.currentLineLength = 1 + this.indentWidth(this.indentLevel); // +1 for non zero based
     logger.debug(
       'newline',
       { result, indentLevel: this.indentLevel },
