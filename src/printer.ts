@@ -2045,6 +2045,10 @@ export class PugPrinter {
           result = await format(rawText, {
             parser,
             ...this.codeInterpolationOptions,
+            // The content will be indented one level deeper than the tag
+            printWidth:
+              this.options.pugPrintWidth -
+              this.indentWidth(this.indentLevel + 1),
           });
         } catch (error: unknown) {
           if (!usedInterpolatedCode) {

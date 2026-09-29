@@ -1,0 +1,22 @@
+html
+        head
+                script.
+                        const config = {
+                                apiEndpoint: "https://example.com/api/v1",
+                                timeout: 5000,
+                                retries: 3,
+                        };
+                        function initialize(options) {
+                                return fetchData(options.apiEndpoint, {
+                                        timeout: options.timeout,
+                                });
+                        }
+                        track("page_view", { path: location.pathname });
+        body
+                main
+                        section
+                                div
+                                        script.
+                                                track("page_view", {
+                                                        path: location.pathname,
+                                                });

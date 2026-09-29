@@ -23,4 +23,28 @@ describe('Issues', () => {
     });
     expect(actual).toBe(expected);
   });
+
+  it('should wrap script content considering tabWidth when using useTabs', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
+      source: 'unformatted-script.pug',
+      target: 'formatted-script-tabs.pug',
+      formatOptions: {
+        useTabs: true,
+        tabWidth: 8,
+      },
+    });
+    expect(actual).toBe(expected);
+  });
+
+  it('should wrap script content considering indentation when using spaces', async () => {
+    const { actual, expected } = await compareFiles(import.meta.url, {
+      source: 'unformatted-script.pug',
+      target: 'formatted-script-spaces.pug',
+      formatOptions: {
+        useTabs: false,
+        tabWidth: 8,
+      },
+    });
+    expect(actual).toBe(expected);
+  });
 });
