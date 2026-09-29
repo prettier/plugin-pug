@@ -1,0 +1,23 @@
+//- Stays unchanged, because no loaded plugin provides a parser for sass
+style(type="sass").
+  :host
+    display: inline
+
+//- Formatted with the builtin scss parser
+style(type='text/scss').
+  :host  {
+    .a { display:inline }
+  }
+
+//- Formatted with the builtin less parser
+style(type="less").
+  @color:  red;
+  .a { color:@color }
+
+//- Formatted with the builtin css parser
+style(type="text/css").
+  :host {  display:inline }
+
+//- Without a type, formatted with the builtin css parser
+style.
+  :host {  display:inline }

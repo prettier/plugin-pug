@@ -97,6 +97,7 @@ import {
   unwrapLineFeeds,
 } from './utils/common';
 import { getScriptParserName } from './utils/script-mime-types';
+import { getStyleParserName } from './utils/style-mime-types';
 import { isSvelteInterpolation } from './utils/svelte';
 import {
   isVueEventBinding,
@@ -1994,7 +1995,9 @@ export class PugPrinter {
         }
 
         case 'style': {
-          parser = 'css';
+          parser = getStyleParserName(
+            previousTypeAttributeToken(this.tokens, this.currentIndex),
+          );
           break;
         }
 
