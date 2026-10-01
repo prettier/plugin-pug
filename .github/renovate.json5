@@ -34,6 +34,10 @@
       "rangeStrategy": "replace"
     },
     {
+      "groupName": "pnpm",
+      "matchPackageNames": ["pnpm"]
+    },
+    {
       "groupName": "eslint",
       "matchPackageNames": [
         "@eslint-types/**",
@@ -59,6 +63,17 @@
     {
       "groupName": "doc-dependencies",
       "matchPackageNames": ["@algolia/client-search", "vitepress"]
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^package\\.json$/"],
+      "matchStrings": [
+        "\"devEngines\"\\s*:\\s*\\{\\s*\"packageManager\"\\s*:\\s*\\{[^}]*?\"name\"\\s*:\\s*\"(?<depName>[^\"]+)\"[^}]*?\"version\"\\s*:\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "npm",
+      "depTypeTemplate": "devEngines"
     }
   ],
   "vulnerabilityAlerts": {
