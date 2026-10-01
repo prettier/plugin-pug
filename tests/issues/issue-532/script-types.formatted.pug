@@ -1,0 +1,7 @@
+//- An empty type is formatted with the builtin babel parser
+script(type="").
+  const a = 1;
+
+//- Stays unchanged, because a type without a value is not a string
+script(type).
+  const  a  =  1
