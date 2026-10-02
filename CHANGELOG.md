@@ -1,6 +1,16 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/3.5.0...main)
+[diff](https://github.com/prettier/plugin-pug/compare/3.5.1...main)
+
+# 3.5.1
+
+[diff](https://github.com/prettier/plugin-pug/compare/3.5.0...3.5.1)
+
+- Respect `tabWidth` when using `useTabs` and for script/style line width ([#268])
+- Respect style tag `type` attribute when formatting ([#532])
+
+[#268]: https://github.com/prettier/plugin-pug/issues/268
+[#532]: https://github.com/prettier/plugin-pug/issues/532
 
 # 3.5.0
 
