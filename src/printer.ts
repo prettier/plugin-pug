@@ -112,6 +112,7 @@ import {
  * Options for `@prettier/plugin-pug`.
  */
 export interface PugPrinterOptions {
+  readonly plugins: RequiredOptions['plugins'];
   readonly printWidth: number;
   readonly pugPrintWidth: number;
   readonly singleQuote: boolean;
@@ -204,6 +205,7 @@ export class PugPrinter {
 
   private readonly codeInterpolationOptions: Pick<
     RequiredOptions,
+    | 'plugins'
     | 'semi'
     | 'singleQuote'
     | 'bracketSpacing'
@@ -270,6 +272,9 @@ export class PugPrinter {
       : null;
 
     this.codeInterpolationOptions = {
+      // Format embedded code with the same plugins, e.g. ones that change how
+      // JavaScript is printed.
+      plugins: options.plugins,
       semi: options.pugSemi ?? options.semi,
       singleQuote: options.pugSingleQuote ?? options.singleQuote,
       bracketSpacing: options.pugBracketSpacing ?? options.bracketSpacing,

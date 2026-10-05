@@ -13,6 +13,7 @@ export function convergeOptions(
 ): PugPrinterOptions {
   return {
     // Prettier base options
+    plugins: options.plugins,
     printWidth: options.printWidth,
     pugPrintWidth:
       options.pugPrintWidth === -1 ? options.printWidth : options.pugPrintWidth,
