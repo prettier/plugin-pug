@@ -38,9 +38,5 @@ export function getStyleParserName(
   const type: string = typeRaw.replaceAll(wrappingQuotesRe, '').toLowerCase();
 
   // Empty type is equivalent to omission
-  if (!type) {
-    return 'css';
-  }
-
-  return styleTypeToParserMap.get(type);
+  return type ? styleTypeToParserMap.get(type) : 'css';
 }
