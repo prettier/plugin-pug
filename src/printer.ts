@@ -430,9 +430,10 @@ export class PugPrinter {
   }
 
   private tokenNeedsSeparator(token: AttributeToken): boolean {
-    return this.neverUseAttributeSeparator
-      ? false
-      : this.alwaysUseAttributeSeparator || /^([(:[]).*/.test(token.name);
+    return (
+      !this.neverUseAttributeSeparator &&
+      (this.alwaysUseAttributeSeparator || /^([(:[]).*/.test(token.name))
+    );
   }
 
   private getUnformattedContentLines(
@@ -486,15 +487,17 @@ export class PugPrinter {
       currentTagEnd,
     );
     const replaced: string = tag.replace(search, replace);
-    if (replaced !== tag) {
-      const prefix: string = this.result.slice(0, this.currentTagPosition);
-      const suffix: string = this.result.slice(currentTagEnd);
-      this.result = `${prefix}${replaced}${suffix}`;
-      // tag was replaced, so adjust possible positions as well
-      const diff: number = tag.length - replaced.length;
-      this.possibleIdPosition -= diff;
-      this.possibleClassPosition -= diff;
+    if (replaced === tag) {
+      return;
     }
+
+    const prefix: string = this.result.slice(0, this.currentTagPosition);
+    const suffix: string = this.result.slice(currentTagEnd);
+    this.result = `${prefix}${replaced}${suffix}`;
+    // tag was replaced, so adjust possible positions as well
+    const diff: number = tag.length - replaced.length;
+    this.possibleIdPosition -= diff;
+    this.possibleClassPosition -= diff;
   }
 
   private async frameworkFormat(code: string): Promise<string> {
@@ -1407,7 +1410,7 @@ export class PugPrinter {
           );
 
           // If a 'class=' is found...
-          // eslint-disable-next-line unicorn/prefer-ternary, unicorn/consistent-existence-index-check -- This is more readable without ternaries.
+          // eslint-disable-next-line unicorn/consistent-existence-index-check -- This is more readable without ternaries.
           if (lastClassIndex > -1) {
             // ...then insert the new class into it.
             this.result = [
@@ -2327,11 +2330,9 @@ export class PugPrinter {
     const entry: [string, DoctypeShortcut] | undefined = Object.entries(
       DOCTYPE_SHORTCUT_REGISTRY,
     ).find(([key]) => key === token.val.toLowerCase());
-    if (entry) {
-      return `${this.computedIndent}${entry[1]}`;
-    }
-
-    return `${this.computedIndent}${token.val}`;
+    return entry
+      ? `${this.computedIndent}${entry[1]}`
+      : `${this.computedIndent}${token.val}`;
   }
 
   private async each(token: EachToken): Promise<string> {

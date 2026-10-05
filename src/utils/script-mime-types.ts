@@ -50,9 +50,7 @@ export function getScriptParserName(
   }
 
   const suffixExec: RegExpExecArray | null = jsonSuffixRe.exec(type);
-  if (suffixExec) {
-    return suffixExec[1] as unknown as 'json' | 'yaml';
-  }
-
-  return scriptTypeToParserMap.get(type);
+  return suffixExec
+    ? (suffixExec[1] as unknown as 'json' | 'yaml')
+    : scriptTypeToParserMap.get(type);
 }
