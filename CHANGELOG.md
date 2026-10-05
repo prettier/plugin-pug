@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/prettier/plugin-pug/compare/3.5.1...main)
+[diff](https://github.com/prettier/plugin-pug/compare/3.6.0...main)
+
+# 3.6.0
+
+[diff](https://github.com/prettier/plugin-pug/compare/3.5.1...3.6.0)
+
+- Format embedded code with the configured plugins ([#682])
+
+[#682]: https://github.com/prettier/plugin-pug/pull/682
 
 # 3.5.1
 
