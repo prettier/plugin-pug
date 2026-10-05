@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "git clean -fdx",
     "build:clean": "git clean -fdx dist",
-    "build:code": "tsup-node",
+    "build:code": "tsdown",
     "build": "run-s build:clean build:code",
     "docs:build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
@@ -84,7 +84,7 @@
     "prettier": "3.9.9",
     "prettier-plugin-organize-imports": "4.3.0",
     "prettier-plugin-pkg": "0.22.1",
-    "tsup": "8.5.1",
+    "tsdown": "0.23.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.71.0",
     "vite": "8.3.2",
