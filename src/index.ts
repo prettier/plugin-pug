@@ -15,11 +15,13 @@ import { options as pugOptions } from './options';
 import { convergeOptions } from './options/converge';
 import type { PugPrinterOptions } from './printer';
 import { PugPrinter } from './printer';
+import parseFrontmatter from './utils/frontmatter/parse';
 
 /** Ast path stack entry. */
 interface AstPathStackEntry {
   content: string;
   tokens: Token[];
+  frontmatter: string;
 }
 
 /** The plugin object that is picked up by prettier. */
@@ -43,6 +45,12 @@ export const plugin: Plugin<AstPathStackEntry> = {
       parse(text, options) {
         logger.debug('[parsers:pug:parse]:', { text });
 
+        const parts: FrontMatter = parseFrontmatter(text);
+        const frontmatter: string = parts.frontMatter
+          ? parts.frontMatter.value
+          : undefined;
+        text = parts.content;
+
         let trimmedAndAlignedContent: string = text.replace(/^\s*\n/, '');
         const contentIndentation: RegExpExecArray | null = /^\s*/.exec(
           trimmedAndAlignedContent,
@@ -64,7 +72,7 @@ export const plugin: Plugin<AstPathStackEntry> = {
         // logger.debug('[parsers:pug:parse]: tokens', JSON.stringify(tokens, undefined, 2));
         // const ast: AST = parse(tokens, {});
         // logger.debug('[parsers:pug:parse]: ast', JSON.stringify(ast, undefined, 2));
-        return { content, tokens };
+        return { content, tokens, frontmatter };
       },
 
       astFormat: 'pug-ast',
@@ -94,11 +102,20 @@ export const plugin: Plugin<AstPathStackEntry> = {
   printers: {
     'pug-ast': {
       // @ts-expect-error: Prettier allow it to be async if we don't do recursively print
-      async print(path, options: ParserOptions & PugParserOptions) {
-        const entry: AstPathStackEntry = path.stack[0]!;
-        const { content, tokens } = entry;
+      async print(
+        path: AstPath,
+        options: ParserOptions & PugParserOptions,
+        print: (path: AstPath) => Doc,
+      ): Doc {
+        const entry: AstPathStackEntry = path.stack[0];
+        const { content, tokens, frontmatter } = entry;
         const pugOptions: PugPrinterOptions = convergeOptions(options);
-        const printer: PugPrinter = new PugPrinter(content, tokens, pugOptions);
+        const printer: PugPrinter = new PugPrinter(
+          content,
+          tokens,
+          pugOptions,
+          frontmatter,
+        );
         const result: string = await printer.build();
         logger.debug('[printers:pug-ast:print]:', result);
         return result;
