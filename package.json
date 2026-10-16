@@ -94,14 +94,14 @@
   "peerDependencies": {
     "prettier": "^3.0.0"
   },
-  "packageManager": "pnpm@12.8.2",
+  "packageManager": "pnpm@12.13.0",
   "engines": {
     "node": ">=22.0.0"
   },
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "12.8.2",
+      "version": "12.13.0",
       "onFail": "download"
     }
   }
